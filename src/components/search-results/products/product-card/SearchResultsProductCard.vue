@@ -1,0 +1,174 @@
+<template>
+  <div
+    id="lupa-search-result-product-card"
+    data-cy="lupa-search-result-product-card"
+    :class="!isInStock ? 'lupa-out-of-stock' : ''"
+    @click="handleClick"
+  >
+    <SearchResultsBadgeWrapper :options="badgesOptions" />
+    <div :class="['lupa-search-result-product-contents', listLayoutClass]">
+      <a
+        class="lupa-search-result-product-image-section"
+        :href="link || undefined"
+      >
+        <SearchResultsProductCardElement
+          class="lupa-search-results-product-element"
+          v-for="element in imageElements"
+          :item="product"
+          :element="element"
+          :key="element.key"
+          :labels="labels"
+          :inStock="isInStock"
+          :link="link"
+        />
+      </a>
+      <div class="lupa-search-result-product-details-section">
+        <SearchResultsProductCardElement
+          class="lupa-search-results-product-element"
+          v-for="element in detailElements"
+          :item="product"
+          :element="element"
+          :key="element.key"
+          :labels="labels"
+          :inStock="isInStock"
+          :link="link"
+          @productEvent="handleProductEvent"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import { DocumentElement, DocumentElementType } from "@/types/DocumentElement";
+import { TrackableEventData } from "@/types/search-box/Common";
+import { BadgeOptions } from "@/types/search-results/BadgeOptions";
+import {
+  ResultsLayout,
+  ResultsLayoutEnum,
+} from "@/types/search-results/ResultsLayout";
+import { SearchResultsOptionLabels } from "@/types/search-results/SearchResultsOptions";
+import { SearchResultsProductCardOptions } from "@/types/search-results/SearchResultsProductCardOptions";
+import { generateLink } from "@/utils/link.utils";
+import { Document, ReportableEventType } from "@getlupa/client-sdk/Types";
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Prop } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+import SearchResultsBadgeWrapper from "./badges/SearchResultsBadgeWrapper.vue";
+import SearchResultsProductCardElement from "./elements/SearchResultsProductCardElement.vue";
+
+const tracking = namespace("tracking");
+const params = namespace("params");
+const searchResult = namespace("searchResult");
+
+@Component({
+  name: "searchResultsProductCard",
+  components: {
+    SearchResultsBadgeWrapper,
+    SearchResultsProductCardElement,
+  },
+})
+export default class SearchResultsProductCard extends Vue {
+  @Prop({ default: {} }) product!: Document;
+  @Prop({ default: {} }) options!: SearchResultsProductCardOptions;
+  @Prop({ default: false }) isAdditionalPanel!: boolean;
+
+  @searchResult.State((state) => state.layout)
+  layout!: ResultsLayout;
+
+  @params.Getter("query") query!: string;
+
+  @tracking.Action("track") trackClick!: ({
+    queryKey,
+    data,
+  }: {
+    queryKey: string;
+    data: TrackableEventData;
+  }) => void;
+
+  get listLayoutClass(): string {
+    return this.layout === ResultsLayoutEnum.LIST && !this.isAdditionalPanel
+      ? "lupa-search-result-product-contents-list"
+      : "";
+  }
+
+  get badgesOptions(): BadgeOptions {
+    return { ...this.options.badges, product: this.product };
+  }
+
+  get imageElements(): DocumentElement[] {
+    return (
+      this.options.elements?.filter(
+        (e) => e.type === DocumentElementType.IMAGE
+      ) ?? []
+    );
+  }
+
+  get detailElements(): DocumentElement[] {
+    return (
+      this.options.elements?.filter(
+        (e) => e.type !== DocumentElementType.IMAGE
+      ) ?? []
+    );
+  }
+
+  get labels(): SearchResultsOptionLabels {
+    return this.options.labels;
+  }
+
+  get link(): string {
+    if (!this.options.links?.details) {
+      return "";
+    }
+    return generateLink(this.options.links?.details ?? "", this.product);
+  }
+
+  isInStock = false;
+
+  mounted(): void {
+    this.checkIfIsInStock();
+  }
+
+  async checkIfIsInStock(): Promise<void> {
+    this.isInStock = this.options.isInStock
+      ? await this.options.isInStock(this.product)
+      : true;
+  }
+
+  get id(): string {
+    if (this.options.idKey) {
+      return this.product[this.options.idKey] as string;
+    }
+    return "";
+  }
+
+  handleClick(): void {
+    this.trackClick({
+      queryKey: this.options.queryKey,
+      data: {
+        itemId: this.id,
+        searchQuery: this.query,
+        type: "itemClick",
+      },
+    });
+  }
+
+  handleProductEvent(item: { type: ReportableEventType }): void {
+    this.trackClick({
+      queryKey: this.options.queryKey,
+      data: {
+        itemId: this.id,
+        searchQuery: this.query,
+        type: item.type,
+        analytics:
+          item.type === "addToCart"
+            ? {
+                type: "add_to_cart",
+                label: this.link,
+              }
+            : undefined,
+      },
+    });
+  }
+}
+</script>
