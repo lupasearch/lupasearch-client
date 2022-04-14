@@ -1,0 +1,227 @@
+{
+  "input": "sho",
+  "fullInput": "shoes",
+  "similarQueriesInput": "shoes wolf",
+  "waitTimeMs": 2000,
+  "mobileResolution": [420, 600],
+  "suggestions": [
+    { "suggestion": "shoes" },
+    { "suggestion": "shock" },
+    { "suggestion": "shock shoes" }
+  ],
+  "facetSuggestions": [
+    {
+      "suggestion": "shoes",
+      "facets": {
+        "category": [{ "title": "Footwear", "count": 2500 }],
+        "brand": [
+          { "title": "CORE / NEO", "count": 1006 },
+          { "title": "ORIGINALS", "count": 891 }
+        ]
+      }
+    },
+    { "suggestion": "shock" },
+    { "suggestion": "shock shoe" }
+  ],
+  "document": {
+    "searchText": "shoes",
+    "total": 2340,
+    "items": [
+      {
+        "regular_price": 59.99,
+        "reviews": 0,
+        "main_image": "https://content.adidas.co.in/static/Product-EE8153/Men_CORE_RUNNING_SHOES_LOW_EE8153_1.jpg",
+        "discount_price": 35.99,
+        "product_id": "EE8153",
+        "rating": 0,
+        "description": "Water-repellent shoes for adding variety to your daily workout routine. These multisport training shoes have a ripstop and leather-like upper for cold-weather durability. A midfoot cage provides additional stability while lightweight cushioning keeps you comfortable across long distances.",
+        "last_visited": "2020-04-13T15:07:26",
+        "id": "EE8153",
+        "product_name": "Men's adidas RunFalcon Shoes",
+        "brand": "CORE / NEO"
+      },
+      {
+        "regular_price": 49.99,
+        "reviews": 0,
+        "main_image": "https://content.adidas.co.in/static/Product-CM4854/MEN_CORE-RUNNING_SHOES_CM4854_1.jpg",
+        "discount_price": 49.99,
+        "product_id": "CM4854",
+        "rating": 0,
+        "description": "A well cushioned shoe with a fresher look that will appeal to young runners. Features Textile-Mesh upper for maximum ventilation, Cloudfoam midsole cushions each step so you stay comfortable and motivated every day and durable Rubber outsole for long-lasting wear.",
+        "last_visited": "2020-04-13T15:07:31",
+        "id": "CM4854",
+        "product_name": "Men's Running Equil Shoes",
+        "brand": "CORE / NEO"
+      },
+      {
+        "regular_price": 59.99,
+        "reviews": 0,
+        "main_image": "https://content.adidas.co.in/static/Product-F36208/MEN_RUNNING_SHOES_MID_F36208_1.jpg",
+        "discount_price": 29.99,
+        "product_id": "F36208",
+        "rating": 0,
+        "description": "Water-repellent shoes for adding variety to your daily workout routine. These multisport training shoes have a ripstop and leather-like upper for cold-weather durability. A midfoot cage provides additional stability while lightweight cushioning keeps you comfortable across long distances.",
+        "last_visited": "2020-04-13T15:07:32",
+        "id": "F36208",
+        "product_name": "Men's adidas RunFalcon Shoes",
+        "brand": "CORE / NEO"
+      },
+      {
+        "regular_price": 79.99,
+        "reviews": 0,
+        "main_image": "https://content.adidas.co.in/static/Product-EF5642/WOMEN_ORIGINALS_SHOES_EF5642_1.jpg",
+        "discount_price": 79.99,
+        "product_id": "EF5642",
+        "rating": 0,
+        "description": "Delightfully fun. Irresistibly fashionable. Who can blame you for coveting adidas' Keillor shoes? A sleek nylon and patent leather upper rides on a chunky outsole for a standout look. All with the extra comfort of a wide, foot-loving fit. Give in, already!",
+        "last_visited": "2020-04-13T15:06:37",
+        "id": "EF5642",
+        "product_name": "Women's Originals Kiellor Shoes",
+        "brand": "ORIGINALS"
+      },
+      {
+        "regular_price": 75.99,
+        "reviews": 0,
+        "main_image": "https://content.adidas.co.in/static/Product-EF4935/WOMEN_ORIGINALS_SHOES_EF4935_1.jpg",
+        "discount_price": 75.99,
+        "product_id": "EF4935",
+        "rating": 0,
+        "description": "A modern take on adidas sport heritage, tailored just for women. Perforated 3-Stripes on the leather upper of these shoes offer a sleek look that mirrors iconic tennis styles.",
+        "last_visited": "2020-04-13T15:06:37",
+        "id": "EF4935",
+        "product_name": "Women's Originals Sleek Shoes",
+        "brand": "ORIGINALS"
+      }
+    ],
+    "facets": [
+      {
+        "key": "brand",
+        "label": "Brand",
+        "items": [
+          {
+            "title": "CORE / NEO",
+            "count": 1006
+          },
+          {
+            "title": "ORIGINALS",
+            "count": 891
+          },
+          {
+            "title": "SPORT PERFORMANCE",
+            "count": 443
+          },
+          {
+            "title": "SPORT PERFORMANCE X",
+            "count": 420
+          },
+          {
+            "title": "SPORT PERFORMANCE Y ",
+            "count": 12
+          },
+          {
+            "title": "SPORT PERFORMANCE ",
+            "count": 1
+          }
+        ],
+        "type": "terms"
+      },
+      {
+        "key": "discount_price",
+        "label": "Price",
+        "min": 13.489999771118164,
+        "max": 299.989990234375,
+        "type": "stats"
+      }
+    ],
+    "filters": {},
+    "limit": 5,
+    "metadata": {},
+    "suggestedSearchText": "shoes suggested",
+    "didYouMean": {
+      "options": [
+        {
+          "count": 1,
+          "text": "shoes meant"
+        }
+      ]
+    }
+  },
+  "similarQueriesDocument": {
+    "searchText": "shoes unsupported",
+    "total": 0,
+    "similarQueries": [
+      {
+        "count": 3,
+        "query": "shoes",
+        "items": [
+          {
+            "regular_price": 59.99,
+            "reviews": 0,
+            "main_image": "https://content.adidas.co.in/static/Product-EE8153/Men_CORE_RUNNING_SHOES_LOW_EE8153_1.jpg",
+            "discount_price": 35.99,
+            "product_id": "EE8153",
+            "rating": 0,
+            "description": "Water-repellent shoes for adding variety to your daily workout routine. These multisport training shoes have a ripstop and leather-like upper for cold-weather durability. A midfoot cage provides additional stability while lightweight cushioning keeps you comfortable across long distances.",
+            "last_visited": "2020-04-13T15:07:26",
+            "id": "EE8153",
+            "product_name": "Men's adidas RunFalcon Shoes",
+            "brand": "CORE / NEO"
+          },
+          {
+            "regular_price": 49.99,
+            "reviews": 0,
+            "main_image": "https://content.adidas.co.in/static/Product-CM4854/MEN_CORE-RUNNING_SHOES_CM4854_1.jpg",
+            "discount_price": 49.99,
+            "product_id": "CM4854",
+            "rating": 0,
+            "description": "A well cushioned shoe with a fresher look that will appeal to young runners. Features Textile-Mesh upper for maximum ventilation, Cloudfoam midsole cushions each step so you stay comfortable and motivated every day and durable Rubber outsole for long-lasting wear.",
+            "last_visited": "2020-04-13T15:07:31",
+            "id": "CM4854",
+            "product_name": "Men's Running Equil Shoes",
+            "brand": "CORE / NEO"
+          },
+          {
+            "regular_price": 59.99,
+            "reviews": 0,
+            "main_image": "https://content.adidas.co.in/static/Product-F36208/MEN_RUNNING_SHOES_MID_F36208_1.jpg",
+            "discount_price": 29.99,
+            "product_id": "F36208",
+            "rating": 0,
+            "description": "Water-repellent shoes for adding variety to your daily workout routine. These multisport training shoes have a ripstop and leather-like upper for cold-weather durability. A midfoot cage provides additional stability while lightweight cushioning keeps you comfortable across long distances.",
+            "last_visited": "2020-04-13T15:07:32",
+            "id": "F36208",
+            "product_name": "Men's adidas RunFalcon Shoes",
+            "brand": "CORE / NEO"
+          }
+        ],
+        "wordCount": 1
+      },
+      {
+        "count": 3,
+        "query": "unsupported",
+        "items": [
+          {
+            "regular_price": 59.99,
+            "reviews": 0,
+            "main_image": "https://content.adidas.co.in/static/Product-EE8153/Men_CORE_RUNNING_SHOES_LOW_EE8153_1.jpg",
+            "discount_price": 35.99,
+            "product_id": "EE8153",
+            "rating": 0,
+            "description": "Water-repellent shoes for adding variety to your daily workout routine. These multisport training shoes have a ripstop and leather-like upper for cold-weather durability. A midfoot cage provides additional stability while lightweight cushioning keeps you comfortable across long distances.",
+            "last_visited": "2020-04-13T15:07:26",
+            "id": "EE8153",
+            "product_name": "Men's adidas RunFalcon Shoes",
+            "brand": "CORE / NEO"
+          }
+        ],
+        "wordCount": 1
+      }
+    ],
+    "filters": {},
+    "limit": 5,
+    "metadata": {}
+  },
+  "eventResponse": {
+    "success": true
+  }
+}

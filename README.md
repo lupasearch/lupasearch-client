@@ -45,7 +45,7 @@ yarn lint
 ```
 yarn build
 yarn test:unit
-yarn test:ci
+yarn test:e2e
 ```
 
 ### Interactive Test with Cypress
