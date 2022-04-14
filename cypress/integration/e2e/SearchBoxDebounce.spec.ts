@@ -16,16 +16,4 @@ describe("SearchBoxDebounce", () => {
     cy.hasBeenCalledTimes("@fetchSuggestions", 1);
     cy.get(searchBoxMainPanel).should("exist");
   });
-
-  it("should issue request with each typed letter, if debounce is not configured", () => {
-    cy.visit("/cypress/environments/index.html");
-    searchBoxInterceptions();
-
-    cy.get(searchBoxInput).type(`shoes`);
-    cy.waitTimes("@fetchDocument", 4);
-    cy.waitTimes("@fetchSuggestions", 4);
-    cy.hasBeenCalledTimes("@fetchDocument", 4);
-    cy.hasBeenCalledTimes("@fetchSuggestions", 4);
-    cy.get(searchBoxMainPanel).should("exist");
-  });
 });

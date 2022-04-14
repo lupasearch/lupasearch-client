@@ -1,9 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test
+name: Lupa-Test
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -15,5 +18,6 @@ jobs:
       - uses: c-hive/gha-yarn-cache@v2
       - run: yarn install
       - run: yarn build
+      - run: yarn validate:es5
       - run: yarn test:unit
       - run: yarn test:e2e
