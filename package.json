@@ -1,5 +1,5 @@
 {
-  "name": "search-plugin",
+  "name": "@getlupa/client-sdk",
   "version": "0.4.1",
   "private": true,
   "main": "dist/cjs/index.min.js",
