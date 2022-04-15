@@ -54,4 +54,6 @@ const lupaSearch = {
   clearSearchResults,
 };
 
+export { TrackingOptions, SearchBoxOptions, SearchResultsOptions };
+
 export default lupaSearch;
