@@ -3,7 +3,7 @@
 Page configuration usage, including default value for each property:
 
 ```js
-import getlupa from "getlupa";
+import lupaSearch from "@getlupa/client";
 
 const options = {
   containerSelector: "#searchResultsContainer",
@@ -25,7 +25,7 @@ const options = {
   },
 };
 
-getlupa.searchResults(options);
+lupaSearch.searchResults(options);
 ```
 
 - `inputSelector` - css selector to find your search input element;

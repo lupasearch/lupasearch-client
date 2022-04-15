@@ -3,7 +3,7 @@
 Search Box configuration usage, including default value for each property:
 
 ```js
-import getlupa from "getlupa";
+import lupaSearch from "@getlupa/client";
 
 const options = {
   inputSelector: "#searchBox",
@@ -25,7 +25,7 @@ const options = {
   },
 };
 
-getlupa.searchBox(options);
+lupaSearch.searchBox(options);
 ```
 
 - `inputSelector` - css selector to find your search input element;

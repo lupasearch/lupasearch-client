@@ -9,9 +9,9 @@ For a list of all event types see Statistics section for Search Box and Search R
 To enable tracking, add this block of code, above all other `getLupa` configuration:
 
 ```js
-const getLupa = window.getLupa;
+import lupaSearch from "@getlupa/client";
 
-getLupa.tracking({
+lupaSearch.tracking({
   trackBase: true,
 });
 ```
@@ -21,7 +21,7 @@ getLupa.tracking({
 For each user or session, the plugin can generate a random unique string, that could be used to improve search experience or provide personalized results:
 
 ```js
-getLupa.tracking({
+lupaSearch.tracking({
   trackBase: true,
   trackSession: true,
   trackUser: true,
@@ -35,7 +35,7 @@ Plugin supports emitting various search-related events directly to your analytic
 To setup google analytics, add extra parameters to the tracking object:
 
 ```js
-getLupa.tracking({
+lupaSearch.tracking({
   trackBase: true,
   analytics: {
     type: "ua",
