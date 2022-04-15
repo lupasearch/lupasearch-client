@@ -27,4 +27,3 @@ build/
 cypress/
 .github
 cypress.json
-README.md

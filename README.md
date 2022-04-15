@@ -62,10 +62,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Documentation
 
-If you are integrating standalone version of the plugin (as a cdn link):
+If you are integrating **standalone** version of the plugin (as a **cdn** link):
 
 - See [Getting Started - Standalone](/docs/getting-started-standalone.md) for more information about plugin integration.
 
-For integration as an npm package:
+For integration as an **npm package**:
 
 - See [Getting Started - npm](/docs/getting-started-npm.md) for more information about plugin integration.
+
+For more information about individual components and all available options:
+
+- [Search Box](/docs/components/search-box.md)
+
+- [Search Results](/docs/components/search-results.md)
+
+- [Tracing and Analytics](/docs/components/tracking.md)
