@@ -20,7 +20,7 @@ describe("SearchBox", () => {
     cy.get(searchBoxInput).type(data.input);
 
     cy.waitTimes("@fetchSuggestions", 2);
-    cy.waitTimes("@fetchDocument", 1);
+    cy.waitTimes("@fetchDocument", 2);
   });
 
   it("close main panel when user clicks outside", () => {
