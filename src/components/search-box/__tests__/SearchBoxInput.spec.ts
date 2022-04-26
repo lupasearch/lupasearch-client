@@ -6,10 +6,12 @@ import { SuggestionsMockData } from "@/constants/mockData..const";
 import Vuex from "vuex";
 import SearchBoxModule from "@/store/modules/searchBox";
 import { mocked } from "ts-jest/utils";
+import ParamsModule from "@/store/modules/params";
 
 jest.mock("@/store/modules/searchBox");
 
 const SearchBoxModuleMock = mocked(SearchBoxModule, true);
+const ParamsModuleMock = mocked(ParamsModule, true);
 
 const localVue = createLocalVue();
 
@@ -24,6 +26,7 @@ describe("SearchBoxInput", () => {
     const store = new Vuex.Store({
       modules: {
         searchBox: SearchBoxModuleMock,
+        params: ParamsModuleMock,
       },
     });
     wrapper = shallowMount(SearchBoxInput, {

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DEFAULT_PAGE_SIZE } from "@/constants/global.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
+import OptionsModule from "@/store/modules/options";
 import ParamsModule from "@/store/modules/params";
 import SearchResultModule from "@/store/modules/searchResult";
 import { RootState } from "@/store/types/State";
@@ -15,9 +16,11 @@ const resizeSpy = jest.fn();
 
 jest.mock("@/store/modules/searchResult");
 jest.mock("@/store/modules/params");
+jest.mock("@/store/modules/options");
 
 const SearchResultModuleMock = mocked(SearchResultModule, true);
 const ParamsModuleMock = mocked(ParamsModule, true);
+const OptionsModuleMock = mocked(OptionsModule, true);
 
 const localVue = createLocalVue();
 
@@ -38,6 +41,7 @@ describe("SearchResult", () => {
       modules: {
         searchResult: SearchResultModuleMock,
         params: ParamsModuleMock,
+        options: OptionsModuleMock,
       },
     });
 

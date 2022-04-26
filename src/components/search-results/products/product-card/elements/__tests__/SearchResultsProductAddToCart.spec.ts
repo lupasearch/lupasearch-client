@@ -1,13 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { shallowMount, Wrapper } from "@vue/test-utils";
+import SearchResultModule from "@/store/modules/searchResult";
+import { RootState } from "@/store/types/State";
+import { createLocalVue, shallowMount, Wrapper } from "@vue/test-utils";
+import { mocked } from "ts-jest/utils";
 import Vue from "vue";
+import Vuex, { Store } from "vuex";
 import SearchResultsProductAddToCart from "../SearchResultsProductAddToCart.vue";
+
+jest.mock("@/store/modules/searchResult");
+
+const SearchResultModuleMock = mocked(SearchResultModule, true);
+
+const localVue = createLocalVue();
+
+localVue.use(Vuex);
 
 describe("SearchResultsProductAddToCart.vue", () => {
   let wrapper: Wrapper<SearchResultsProductAddToCart, Element>;
   let wrapperVm: any;
 
+  let store: Store<RootState>;
+
   beforeEach(() => {
+    store = new Vuex.Store({
+      modules: {
+        searchResult: SearchResultModuleMock,
+      },
+    });
+
     wrapper = shallowMount(SearchResultsProductAddToCart, {
       propsData: {
         options: {
@@ -26,6 +46,8 @@ describe("SearchResultsProductAddToCart.vue", () => {
         },
         item: { name: "test" },
       },
+      store,
+      localVue,
     });
     wrapperVm = wrapper.vm as any;
     jest.spyOn(wrapperVm, "handleClick");

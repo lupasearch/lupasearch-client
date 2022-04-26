@@ -18,14 +18,17 @@ import HistoryModule from "@/store/modules/history";
 import SearchBoxInput from "../SearchBoxInput.vue";
 import ParamsModule from "@/store/modules/params";
 import { SdkOptions } from "@/types/General";
+import OptionsModule from "@/store/modules/options";
 
 jest.mock("@/store/modules/searchBox");
 jest.mock("@/store/modules/history");
 jest.mock("@/store/modules/params");
+jest.mock("@/store/modules/options");
 
 const SearchBoxModuleMock = mocked(SearchBoxModule, true);
 const HistoryModuleMock = mocked(HistoryModule, true);
 const ParamsModuleMock = mocked(ParamsModule, true);
+const OptionsModuleMock = mocked(OptionsModule, true);
 
 const mountSearchBox = () => {
   const localVue = createLocalVue();
@@ -35,6 +38,7 @@ const mountSearchBox = () => {
       searchBox: SearchBoxModuleMock,
       history: HistoryModuleMock,
       params: ParamsModuleMock,
+      options: OptionsModuleMock,
     },
   });
 

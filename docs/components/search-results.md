@@ -116,7 +116,7 @@ The above configuration would be rendered like this: `Home / Search Query: Curre
 
 ## Class map
 
-Additional classes to add to specific. Can be used if custom css is not enough to describe the element appearance:
+Additional classes to add to specific elements. Can be used if custom css is not enough to describe the element appearance:
 
 ```js
 const options = {
@@ -148,7 +148,7 @@ const options = {
       {
         type: "image",
         key: "image_labels",
-        rootImageUrl: "https://getlupa.com/media/",
+        rootImageUrl: "https://lupasearch.com/media/",
         maxItems: 1,
       },
       {

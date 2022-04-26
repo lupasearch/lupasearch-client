@@ -4,9 +4,12 @@ import SearchBoxHistoryPanel from "../SearchBoxHistoryPanel.vue";
 import { mocked } from "ts-jest/utils";
 import HistoryModule from "@/store/modules/history";
 import { RootState } from "@/store/types/State";
+import SearchBoxModule from "@/store/modules/searchBox";
 
 jest.mock("@/store/modules/history");
+jest.mock("@/store/modules/searchBox");
 
+const SearchBoxModuleMock = mocked(SearchBoxModule, true);
 const HistoryModuleMock = mocked(HistoryModule, true);
 
 const localVue = createLocalVue();
@@ -20,6 +23,7 @@ describe("searchBoxHistoryPanel", () => {
     store = new Vuex.Store({
       modules: {
         history: HistoryModuleMock,
+        searchBox: SearchBoxModuleMock,
       },
     });
   });

@@ -16,6 +16,7 @@ const getComponent = (
   return shallowMount(AdditionalPanels, {
     propsData: {
       options: options || baseOptions,
+      sdkOptions: { environment: "testing" },
       location,
     },
   });

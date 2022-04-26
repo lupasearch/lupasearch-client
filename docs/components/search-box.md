@@ -120,7 +120,7 @@ const options = {
           type: "image",
           key: "image",
           placeholder: "placeholder.png",
-          baseUrl: "https://getlupa.com/images/",
+          baseUrl: "https://lupasearch.com/images/",
         },
         {
           type: "title",

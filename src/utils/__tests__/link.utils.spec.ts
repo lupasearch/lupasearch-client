@@ -34,9 +34,9 @@ describe("generateLink", () => {
   });
 
   it("should replace full urls", () => {
-    const document = { id: "123fwe9", url: "https://getlupa.com/product/1" };
+    const document = { id: "123fwe9", url: "https://lupasearch.com/product/1" };
     expect(generateLink("{url}", document)).toEqual(
-      "https://getlupa.com/product/1"
+      "https://lupasearch.com/product/1"
     );
   });
 });

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { QUERY_PARAMS } from "@/constants/queryParams.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
+import ParamsModule from "@/store/modules/params";
 import SearchResultModule from "@/store/modules/searchResult";
 import { RootState } from "@/store/types/State";
 import { createLocalVue, mount, Wrapper } from "@vue/test-utils";
@@ -11,6 +12,7 @@ import SearchResultsPageSize from "../SearchResultsPageSize.vue";
 jest.mock("@/store/modules/searchResult");
 
 const SearchResultModuleMock = mocked(SearchResultModule, true);
+const ParamsModuleMock = mocked(ParamsModule, true);
 
 const localVue = createLocalVue();
 
@@ -28,6 +30,7 @@ describe("SearchResultsPageSize", () => {
     store = new Vuex.Store({
       modules: {
         searchResult: SearchResultModuleMock,
+        params: ParamsModuleMock,
       },
     });
 

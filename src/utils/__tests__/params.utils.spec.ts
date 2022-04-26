@@ -24,18 +24,18 @@ describe("parseParams", () => {
 
 describe("getRemovableParams", () => {
   it("should return passed parameters if they are not set to all", () => {
-    const url = new URL("https://getlupa.com/search?q=a&p=1&l=2&s=key");
+    const url = new URL("https://lupasearch.com/search?q=a&p=1&l=2&s=key");
     expect(getRemovableParams(url, ["p", "q"])).toEqual(["p", "q"]);
   });
 
   it("should return all parameters if all is passed", () => {
-    const url = new URL("https://getlupa.com/search?q=a&p=1&l=2&s=key");
+    const url = new URL("https://lupasearch.com/search?q=a&p=1&l=2&s=key");
     expect(getRemovableParams(url, "all")).toEqual(["q", "p", "l", "s"]);
   });
 
   it("should include filter params if all is passed", () => {
     const url = new URL(
-      "https://getlupa.com/search?q=a&p=1&l=2&s=key&f.test=123&fr.range=12-34"
+      "https://lupasearch.com/search?q=a&p=1&l=2&s=key&f.test=123&fr.range=12-34"
     );
     expect(getRemovableParams(url, "all")).toEqual([
       "q",

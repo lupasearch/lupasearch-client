@@ -10,7 +10,7 @@ const generateLinkMock = mocked(generateLink);
 
 describe("SearchBoxProduct.vue", () => {
   beforeEach(() => {
-    generateLinkMock.mockReturnValue("https://getlupa.com/link");
+    generateLinkMock.mockReturnValue("https://lupasearch.com/link");
   });
 
   it("should be rendered", () => {
@@ -31,7 +31,7 @@ describe("SearchBoxProduct.vue", () => {
       },
     });
     const product = wrapper.find("a");
-    expect(product.attributes().href).toEqual("https://getlupa.com/link");
+    expect(product.attributes().href).toEqual("https://lupasearch.com/link");
     expect(wrapper.find("a").exists()).toBe(true);
   });
 

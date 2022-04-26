@@ -150,8 +150,6 @@ export default class SearchResults extends Vue {
     this.handleUrlChange(params);
     this.addParams(parseParams(params));
 
-    console.log(this.options.pagination.sizeSelection);
-
     this.setDefaultLimit(this.options.pagination.sizeSelection.sizes[0]);
   }
 

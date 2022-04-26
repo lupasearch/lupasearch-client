@@ -14,7 +14,7 @@ To
 
 - `src/constants/development/searchResultsDev.const.ts`.
 
-If files are copied, development build will not work.
+If files are not copied, development build will not work.
 
 ## Project setup
 

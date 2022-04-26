@@ -1,6 +1,12 @@
+import SearchResultModule from "@/store/modules/searchResult";
 import { createLocalVue, mount, Wrapper } from "@vue/test-utils";
+import { mocked } from "ts-jest/utils";
 import Vuex from "vuex";
 import SearchResultsBreadcrumbs from "../SearchResultsBreadcrumbs.vue";
+
+jest.mock("@/store/modules/searchResult");
+
+const SearchResultModuleMock = mocked(SearchResultModule, true);
 
 const localVue = createLocalVue();
 
@@ -10,7 +16,11 @@ describe("SearchResultsBreadcrumbs", () => {
   let wrapper: Wrapper<SearchResultsBreadcrumbs, Element>;
 
   beforeEach(() => {
-    const store = new Vuex.Store({});
+    const store = new Vuex.Store({
+      modules: {
+        searchResult: SearchResultModuleMock,
+      },
+    });
 
     wrapper = mount(SearchResultsBreadcrumbs, {
       propsData: {
