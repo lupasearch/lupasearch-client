@@ -85,7 +85,7 @@ export default class Facets extends Vue {
         toggleTermFilter(this.appendParams, facetAction, this.currentFilters);
         break;
       case "range":
-        toggleRangeFilter(this.appendParams, facetAction);
+        toggleRangeFilter(this.appendParams, facetAction, this.currentFilters);
         break;
       case "hierarchy":
         toggleHierarchyFilter(

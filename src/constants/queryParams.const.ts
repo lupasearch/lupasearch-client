@@ -28,3 +28,5 @@ export const FACET_KEY_SEPARATOR = ".";
 
 export const FACET_RANGE_SEPARATOR = ":";
 export const HIERARCHY_SEPARATOR = ">";
+
+export const FACET_TERM_RANGE_SEPARATOR = "-";

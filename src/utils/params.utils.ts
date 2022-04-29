@@ -41,7 +41,7 @@ const parseFacetKey = (key: string, searchParams: URLSearchParams) => {
     const [min, max] = range.split(FACET_RANGE_SEPARATOR);
     return {
       gte: min,
-      lte: max,
+      lt: max,
     };
   }
   if (key.startsWith(FACET_PARAMS_TYPE.HIERARCHY)) {

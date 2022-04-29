@@ -1,5 +1,8 @@
 import { CURRENCY_KEY_INDICATOR } from "@/constants/global.const";
-import { FACET_PARAMS_TYPE } from "@/constants/queryParams.const";
+import {
+  FACET_PARAMS_TYPE,
+  FACET_TERM_RANGE_SEPARATOR,
+} from "@/constants/queryParams.const";
 import { LabeledFilter, UnfoldedFilter } from "@/types/search-results/Filters";
 import {
   FacetResult,
@@ -51,19 +54,18 @@ const unfoldRangeFilter = (
   key: string,
   filter: FilterGroupItemTypeRange
 ): UnfoldedFilter[] => {
+  const gt = filter.gte || filter.gt;
+  const lt = filter.lte || filter.lt;
   if (key.includes(CURRENCY_KEY_INDICATOR)) {
     return [
       {
         key,
-        value: formatPriceSummary([
-          filter.gte || filter.gt,
-          filter.lte || filter.lt,
-        ]),
+        value: formatPriceSummary([gt, lt]),
         type: "range",
       },
     ];
   }
-  return [{ key, value: `${filter.gte} - ${filter.lte}`, type: "range" }];
+  return [{ key, value: `${gt} - ${lt}`, type: "range" }];
 };
 
 const unfoldFilter = (
@@ -154,4 +156,14 @@ export const recursiveFilterItem = (
         children,
       }
     : undefined;
+};
+
+export const rangeFilterToString = (
+  rangeFilter: FilterGroupItemTypeRange,
+  separator?: string
+): string => {
+  separator = separator || FACET_TERM_RANGE_SEPARATOR;
+  return rangeFilter && Object.keys(rangeFilter).length
+    ? rangeFilter.gte + separator + (rangeFilter.lte || rangeFilter.lt)
+    : "";
 };

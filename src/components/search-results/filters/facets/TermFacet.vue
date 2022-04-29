@@ -51,11 +51,14 @@ import { Prop } from "vue-property-decorator";
 import {
   FacetGroup,
   FacetGroupItem,
+  FilterGroupItemTypeRange,
   FilterGroupItemTypeTerms,
 } from "@getlupa/client-sdk/Types";
 import { ResultFacetOptions } from "@/types/search-results/SearchResultsOptions";
 import { MAX_FACET_VALUES } from "@/constants/global.const";
 import { getDisplayValue, getNormalizedString } from "@/utils/string.utils";
+import { FACET_TERM_RANGE_SEPARATOR } from "@/constants/queryParams.const";
+import { rangeFilterToString } from "@/utils/filter.utils";
 
 @Component({
   name: "termFacet",
@@ -63,7 +66,9 @@ import { getDisplayValue, getNormalizedString } from "@/utils/string.utils";
 export default class TermFacet extends Vue {
   @Prop() options!: ResultFacetOptions;
   @Prop({ default: () => ({}) }) facet!: FacetGroup;
-  @Prop({ default: () => [] }) currentFilters!: FilterGroupItemTypeTerms;
+  @Prop({ default: () => [] }) currentFilters!:
+    | FilterGroupItemTypeTerms
+    | FilterGroupItemTypeRange[];
 
   showAll = false;
   termFilter = "";
@@ -101,11 +106,18 @@ export default class TermFacet extends Vue {
     );
   }
 
+  get isRange(): boolean {
+    return this.facet.type === "range";
+  }
+
   handleFacetClick(item: FacetGroupItem): void {
+    const value = this.isRange
+      ? item.title.split(FACET_TERM_RANGE_SEPARATOR)
+      : item.title?.toString();
     this.$emit("select", {
       key: this.facet.key,
-      value: item.title?.toString(),
-      type: "terms",
+      value: value,
+      type: this.facet.type,
     });
   }
 
@@ -114,7 +126,11 @@ export default class TermFacet extends Vue {
   }
 
   isChecked(item: FacetGroupItem): boolean {
-    const selectedItems = this.currentFilters ?? [];
+    let selectedItems = this.currentFilters ?? [];
+    selectedItems =
+      this.isRange && selectedItems
+        ? [rangeFilterToString(selectedItems as FilterGroupItemTypeRange)]
+        : selectedItems;
     return selectedItems?.includes(item.title?.toString());
   }
 }

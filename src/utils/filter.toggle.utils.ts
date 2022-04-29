@@ -14,9 +14,13 @@ import { FilterType } from "@/types/search-results/Filters";
 import {
   FilterGroup,
   FilterGroupItemTypeHierarchy,
+  FilterGroupItemTypeRange,
   FilterGroupItemTypeTerms,
 } from "@getlupa/client-sdk/Types";
-import { getMostSpecificHierarchyTerms } from "./filter.utils";
+import {
+  getMostSpecificHierarchyTerms,
+  rangeFilterToString,
+} from "./filter.utils";
 
 type AppendParams = ({
   params,
@@ -82,9 +86,15 @@ export const toggleHierarchyFilter = (
 
 export const toggleRangeFilter = (
   appendParams: AppendParams,
-  facetAction: RangeFacetAction
+  facetAction: RangeFacetAction,
+  currentFilters?: FilterGroup
 ): void => {
-  const facetValue = facetAction.value.join(FACET_RANGE_SEPARATOR);
+  const currentFilter = rangeFilterToString(
+    currentFilters?.[facetAction.key] as FilterGroupItemTypeRange,
+    FACET_RANGE_SEPARATOR
+  );
+  let facetValue = facetAction.value.join(FACET_RANGE_SEPARATOR);
+  facetValue = currentFilter === facetValue ? "" : facetValue;
   appendParams({
     params: [
       getFacetParam(facetAction.key, facetValue, FACET_PARAMS_TYPE.RANGE),
