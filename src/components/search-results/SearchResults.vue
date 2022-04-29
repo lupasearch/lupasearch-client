@@ -173,7 +173,7 @@ export default class SearchResults extends Vue {
       parseParams(searchParams),
       this.options.sort
     );
-    if (!publicQuery.searchText) {
+    if (publicQuery.searchText === undefined) {
       return;
     }
     this.setLoading(true);
@@ -190,10 +190,15 @@ export default class SearchResults extends Vue {
         if (res.success) {
           this.trackResults({ queryKey: this.options.queryKey, results: res });
           this.addSearchResult({ ...res });
+        } else if (this.options?.options?.onError) {
+          this.options.options.onError(res);
         }
       })
       .catch((err) => {
         console.error(err);
+        if (this.options?.options?.onError) {
+          this.options.options.onError(err);
+        }
       })
       .finally(() => {
         this.setLoading(false);

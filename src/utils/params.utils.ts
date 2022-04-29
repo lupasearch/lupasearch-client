@@ -3,6 +3,7 @@ import {
   FACET_PARAMS_TYPE,
   FACET_RANGE_SEPARATOR,
   QUERY_PARAMS,
+  QUERY_PARAMS_PARSED,
 } from "@/constants/queryParams.const";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { isFacetKey } from "./filter.utils";
@@ -74,6 +75,7 @@ export const parseParams = (searchParams?: URLSearchParams): QueryParams => {
   const facetKeys = paramKeys.filter((k) => isFacetKey(k));
   const regularKeys = paramKeys.filter((k) => !isFacetKey(k));
   return {
+    [QUERY_PARAMS_PARSED.QUERY]: "",
     ...parseRegularKeys(regularKeys, searchParams),
     ...parseFacetKeys(facetKeys, searchParams),
   };

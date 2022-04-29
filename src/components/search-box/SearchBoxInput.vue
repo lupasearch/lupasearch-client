@@ -50,7 +50,7 @@ export default class SearchBoxInput extends Vue {
   @params.Getter("query") query!: string;
 
   get inputValue(): string {
-    return this.input;
+    return this.input ?? "";
   }
 
   set inputValue(value: string) {
@@ -60,6 +60,7 @@ export default class SearchBoxInput extends Vue {
 
   get showHint(): boolean {
     return (
+      Boolean(this.inputValue) &&
       this.inputValue.length > 0 &&
       this.suggestedValue.item?.suggestion?.startsWith(this.inputValue)
     );

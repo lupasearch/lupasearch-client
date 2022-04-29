@@ -1,7 +1,6 @@
 import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
 import {
-  Options,
   PublicQuery,
   SearchQueryResult,
   Suggestion,
@@ -19,6 +18,7 @@ import {
 import { generateLink } from "@/utils/link.utils";
 import { flattenSuggestions } from "@/utils/suggestion.utils";
 import { getLupaTrackingContext } from "@/utils/tracking.utils";
+import { SdkOptions } from "@/types/General";
 
 @Module({ namespaced: true })
 export default class SearchBoxModule extends VuexModule {
@@ -148,7 +148,7 @@ export default class SearchBoxModule extends VuexModule {
   }: {
     queryKey: string;
     publicQuery: PublicQuery;
-    options?: Options | undefined;
+    options?: SdkOptions;
   }): Promise<{
     queryKey: string;
     suggestions?: Suggestion[];
@@ -172,6 +172,9 @@ export default class SearchBoxModule extends VuexModule {
       };
     } catch (err) {
       console.error(err);
+      if (options?.onError) {
+        options.onError(err);
+      }
       return { queryKey };
     }
   }
@@ -184,7 +187,7 @@ export default class SearchBoxModule extends VuexModule {
   }: {
     queryKey: string;
     publicQuery: PublicQuery;
-    options?: Options | undefined;
+    options?: SdkOptions;
   }): Promise<{
     queryKey: string;
     result?: SearchQueryResult;
@@ -204,6 +207,9 @@ export default class SearchBoxModule extends VuexModule {
       return { queryKey, result };
     } catch (err) {
       console.error(err);
+      if (options?.onError) {
+        options.onError(err);
+      }
       return { queryKey };
     }
   }

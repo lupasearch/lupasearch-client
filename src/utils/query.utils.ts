@@ -12,12 +12,12 @@ export const createPublicQuery = (
 
   for (const param in queryParams) {
     const value = queryParams[param];
-    if (!value) {
+    if (!value && param !== QUERY_PARAMS_PARSED.QUERY) {
       continue;
     }
     switch (param) {
       case QUERY_PARAMS_PARSED.QUERY:
-        publicQuery.searchText = Array.isArray(value) ? value[0] : value;
+        publicQuery.searchText = Array.isArray(value) ? value[0] : value ?? "";
         break;
       case QUERY_PARAMS_PARSED.LIMIT:
         publicQuery.limit = Number(value);
