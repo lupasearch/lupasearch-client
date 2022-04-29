@@ -18,6 +18,7 @@ import {
 } from "@/types/search-box/SearchBoxPanel";
 import { generateLink } from "@/utils/link.utils";
 import { flattenSuggestions } from "@/utils/suggestion.utils";
+import { getLupaTrackingContext } from "@/utils/tracking.utils";
 
 @Module({ namespaced: true })
 export default class SearchBoxModule extends VuexModule {
@@ -154,9 +155,10 @@ export default class SearchBoxModule extends VuexModule {
     inputValue?: string;
   }> {
     try {
+      const context = getLupaTrackingContext();
       const result = await getLupaSdk.suggestions(
         queryKey,
-        publicQuery,
+        { ...publicQuery, ...context },
         options
       );
       if (!result.success) {
@@ -188,7 +190,12 @@ export default class SearchBoxModule extends VuexModule {
     result?: SearchQueryResult;
   }> {
     try {
-      const result = await getLupaSdk.query(queryKey, publicQuery, options);
+      const context = getLupaTrackingContext();
+      const result = await getLupaSdk.query(
+        queryKey,
+        { ...publicQuery, ...context },
+        options
+      );
       if (!result.success) {
         return { queryKey };
       }

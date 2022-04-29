@@ -39,6 +39,7 @@ import { SearchQueryResult } from "@getlupa/client-sdk/Types";
 import SearchResultsProductCard from "../products/product-card/SearchResultsProductCard.vue";
 import { Document } from "@getlupa/client-sdk/Types";
 import { addParamsToLabel } from "@/utils/string.utils";
+import { getLupaTrackingContext } from "@/utils/tracking.utils";
 
 const params = namespace("params");
 
@@ -94,12 +95,14 @@ export default class AdditionalPanels extends Vue {
 
   @Watch("query")
   handleQueryChange(): void {
+    const context = getLupaTrackingContext();
+    const query = {
+      ...context,
+      limit: this.panel.totalCountLimit,
+      searchText: this.query,
+    };
     getLupaSdk
-      .query(
-        this.panel.queryKey,
-        { limit: this.panel.totalCountLimit, searchText: this.query },
-        this.options
-      )
+      .query(this.panel.queryKey, query, this.options)
       .then((res) => {
         if (res.success) {
           this.result = res;

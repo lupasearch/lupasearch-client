@@ -45,6 +45,7 @@ import SearchResultsFilters from "./filters/SearchResultsFilters.vue";
 import SearchResultsDidYouMean from "./SearchResultsDidYouMean.vue";
 import SearchResultsProducts from "./products/SearchResultsProducts.vue";
 import SearchResultsBreadcrumbs from "./SearchResultsBreadcrumbs.vue";
+import { getLupaTrackingContext } from "@/utils/tracking.utils";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -181,8 +182,10 @@ export default class SearchResults extends Vue {
 
   query(publicQuery: PublicQuery): void {
     this.trackSearch({ queryKey: this.options.queryKey, query: publicQuery });
+    const context = getLupaTrackingContext();
+    const query = { ...publicQuery, ...context };
     getLupaSdk
-      .query(this.options.queryKey, publicQuery, this.options.options)
+      .query(this.options.queryKey, query, this.options.options)
       .then((res) => {
         if (res.success) {
           this.trackResults({ queryKey: this.options.queryKey, results: res });

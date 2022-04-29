@@ -32,7 +32,17 @@ const initBaseTracking = (enabled: boolean) => {
       window.sessionStorage.setItem(TRACKING_STORAGE_KEY_BASE, "1");
     } else {
       window.sessionStorage.removeItem(TRACKING_STORAGE_KEY_BASE);
+      clearSessionTracking();
+      clearUserTracking();
     }
+  } catch {
+    // Do nothing
+  }
+};
+
+const clearSessionTracking = () => {
+  try {
+    window.sessionStorage.removeItem(TRACKING_STORAGE_KEY);
   } catch {
     // Do nothing
   }
@@ -57,6 +67,14 @@ const initUserTracking = (userKey?: string) => {
     }
     const key = userKey || getRandomString(TRACKING_KEY_LENGTH);
     window.localStorage.setItem(TRACKING_STORAGE_KEY, key);
+  } catch {
+    // Do nothing
+  }
+};
+
+const clearUserTracking = () => {
+  try {
+    window.localStorage.removeItem(TRACKING_STORAGE_KEY);
   } catch {
     // Do nothing
   }
@@ -90,13 +108,30 @@ export const initTracking = (options: TrackingOptions): void => {
   initBaseTracking(Boolean(options.trackBase));
   if (options.trackSession) {
     initSessionTracking();
+  } else {
+    clearSessionTracking();
   }
   if (options.trackUser) {
     initUserTracking(options.userKey);
+  } else {
+    clearUserTracking();
   }
   if (options.analytics) {
     initAnalyticsTracking(options.analytics);
   }
+};
+
+export const getLupaTrackingContext = (): {
+  userId?: string;
+  sessionId?: string;
+} => {
+  if (!isTrackingEnabled()) {
+    return {};
+  }
+  return {
+    userId: getUserKey(),
+    sessionId: getSessionKey(),
+  };
 };
 
 const trackLupaEvent = (
