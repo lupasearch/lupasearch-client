@@ -25,6 +25,7 @@ export type SearchResultsOptionLabels = SearchResultsPaginationLabels &
   SearchResultsSimilarQueriesLabels & {
     sortBy: string;
     currency: string;
+    priceSeparator?: string;
     itemCount: string;
     emptyResults: string;
     mobileFilterButton: string;

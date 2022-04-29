@@ -12,6 +12,7 @@ export type SearchBoxOptionLabels = {
   noResults: string;
   moreResults: string;
   currency: string;
+  priceSeparator?: string;
   defaultFacetLabel?: string;
 };
 

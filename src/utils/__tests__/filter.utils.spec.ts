@@ -61,7 +61,7 @@ describe("unfoldFilters", () => {
     ).toEqual([
       { key: "tag", value: "books", type: "terms" },
       { key: "tag", value: "journals", type: "terms" },
-      { key: "price", value: "10.00 € - 25.00 €", type: "range" },
+      { key: "price", value: "10,00 € - 25,00 €", type: "range" },
       { key: "rating", value: "2 - 4", type: "range" },
     ]);
   });

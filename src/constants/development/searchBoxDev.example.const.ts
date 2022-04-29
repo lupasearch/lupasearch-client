@@ -17,6 +17,7 @@ export const SEARCH_BOX_CONFIGURATION = {
     noResults: "There are no results found.",
     moreResults: "Show more results",
     currency: "€",
+    priceSeparator: ",",
     defaultFacetLabel: "Brand:",
   },
   links: {

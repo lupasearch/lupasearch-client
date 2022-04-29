@@ -25,7 +25,8 @@ export default class SearchResultsProductPrice extends Vue {
   get price(): string {
     return formatPrice(
       this.item[this.options.key] as string,
-      this.labels?.currency
+      this.labels?.currency,
+      this.labels?.priceSeparator
     );
   }
 }

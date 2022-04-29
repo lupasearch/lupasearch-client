@@ -13,6 +13,7 @@ export const SEARCH_RESULTS_CONFIGURATION = {
     sortBy: "Sort by:",
     itemCount: "Items {1} of {2}",
     currency: "€",
+    priceSeparator: ",",
     showMore: "Show more",
     emptyResults: "There are no results for the query:",
     mobileFilterButton: "Filter",
@@ -144,8 +145,12 @@ export const SEARCH_RESULTS_CONFIGURATION = {
       display: (doc: Record<string, string>) =>
         doc.discount_price < doc.regular_price,
       html: (doc: Record<string, string>) => {
-        const discountPrice = parseFloat(doc.discount_price)?.toFixed(2);
-        const regularPrice = parseFloat(doc.regular_price)?.toFixed(2);
+        const discountPrice = parseFloat(doc.discount_price)
+          ?.toFixed(2)
+          ?.replace(".", ",");
+        const regularPrice = parseFloat(doc.regular_price)
+          ?.toFixed(2)
+          ?.replace(".", ",");
         const discount = `<span class="lupa-discount">${discountPrice} €</span>`;
         const regular = `<span class="lupa-regular">${regularPrice} €</span>`;
         return discount + regular;
@@ -156,7 +161,9 @@ export const SEARCH_RESULTS_CONFIGURATION = {
       display: (doc: Record<string, string>) =>
         doc.discount_price >= doc.regular_price,
       html: (doc: Record<string, string>) => {
-        const price = parseFloat(doc.regular_price)?.toFixed(2);
+        const price = parseFloat(doc.regular_price)
+          ?.toFixed(2)
+          ?.replace(".", ",");
         return `<span class="lupa-final">${price} €</span>`;
       },
     },
