@@ -116,6 +116,7 @@ export type ResultFacetOptions = {
   style?: {
     type: FacetStyle;
   };
+  exclude?: string[];
 };
 
 export type SearchResultsFilterOptions = {
