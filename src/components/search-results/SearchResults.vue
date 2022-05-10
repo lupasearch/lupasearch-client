@@ -128,6 +128,22 @@ export default class SearchResults extends Vue {
     params: QueryParams;
   };
 
+  @params.Action("removeParams") removeParams!: ({
+    paramsToRemove,
+    save,
+  }: {
+    paramsToRemove: string[];
+    save: boolean;
+  }) => void;
+
+  @params.Action("appendParams") appendParams!: ({
+    params,
+    save,
+  }: {
+    params: { name: string; value: string }[];
+    save: boolean;
+  }) => void;
+
   @options.Mutation("setSearchResultOptions") setSearchResultOptions!: ({
     options,
   }: {
@@ -188,7 +204,7 @@ export default class SearchResults extends Vue {
       .query(this.options.queryKey, query, this.options.options)
       .then((res) => {
         if (res.success) {
-          this.trackResults({ queryKey: this.options.queryKey, results: res });
+          this.handleResults({ queryKey: this.options.queryKey, results: res });
           this.addSearchResult({ ...res });
         } else if (this.options?.options?.onError) {
           this.options.options.onError(res);
@@ -203,6 +219,28 @@ export default class SearchResults extends Vue {
       .finally(() => {
         this.setLoading(false);
       });
+  }
+
+  handleResults({
+    queryKey,
+    results,
+  }: {
+    queryKey: string;
+    results: SearchQueryResult;
+  }): void {
+    this.trackResults({ queryKey, results });
+    const noResultsParam = this.options.noResultsQueryFlag;
+    if (!noResultsParam) {
+      return;
+    }
+    if (results.total < 1) {
+      this.appendParams({
+        params: [{ name: noResultsParam, value: "true" }],
+        save: false,
+      });
+    } else {
+      this.removeParams({ paramsToRemove: [noResultsParam], save: false });
+    }
   }
 
   @searchResult.Action("setColumnCount") setColumnCount!: ({

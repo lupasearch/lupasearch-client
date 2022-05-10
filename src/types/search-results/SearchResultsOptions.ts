@@ -8,6 +8,7 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     containerSelector: string;
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
+    noResultsQueryFlag?: string;
   };
 
 export type SearchResultsDidYouMeanLabels = {
