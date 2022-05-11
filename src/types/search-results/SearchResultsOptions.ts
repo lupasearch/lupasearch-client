@@ -8,7 +8,10 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     containerSelector: string;
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
+    searchTitlePosition?: string;
   };
+
+export type SearchTitlePosition = "page-top" | "search-results-top";
 
 export type SearchResultsDidYouMeanLabels = {
   noResultsSuggestion: string;
@@ -48,6 +51,7 @@ export type SearchResultsProductOptions = SearchResultsProductCardOptions &
       layoutSelector?: boolean;
       itemSummary?: boolean;
       clearFilters?: boolean;
+      totalCount?: boolean;
     };
   };
 

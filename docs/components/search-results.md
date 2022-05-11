@@ -484,6 +484,7 @@ const options = {
     layoutSelector: true,
     itemSummary: true,
     clearFilters: false,
+    totalCount: false,
   },
 };
 ```
@@ -493,6 +494,24 @@ const options = {
 - `itemSummary` - show a short text that displays the number of total items, controlled by label `labels.itemCount`;
 
 - `clearFilters` - show clear all filters button in the toolbar;
+
+- `totalCount` - display total result count value in the search title summary;
+
+## Search title position
+
+Control search title position:
+
+```js
+const options = {
+  searchTitlePosition: "page-top",
+};
+```
+
+Available options:
+
+- `search-results-top` - search results title (along with did you mean query) will be displayed at the top of the search results, side by side to the filters sidebar;
+
+- `page-top` - search results title will be displayed at the top of the page, above filters and just below the breadcrumbs. Default option.
 
 ## Additional panels
 

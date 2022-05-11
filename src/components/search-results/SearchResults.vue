@@ -5,21 +5,30 @@
       v-if="currentQueryText"
       :breadcrumbs="options.breadcrumbs"
     />
-    <SearchResultsDidYouMean :labels="didYouMeanLabels" />
-    <h1
-      class="lupa-result-page-title"
-      data-cy="lupa-result-page-title"
-      v-if="options.labels.searchResults && currentQueryText"
-    >
-      {{ options.labels.searchResults }}'{{ queryText }}'
-    </h1>
-    <div id="lupa-search-results">
-      <SearchResultsFilters
-        v-if="showFilterSidebar"
-        :options="options.filters"
-      />
-      <SearchResultsProducts :options="options" />
-    </div>
+    <template v-if="isTopTitlePosition">
+      <div class="top-layout-wrapper">
+        <SearchResultsFilters
+          v-if="showFilterSidebar"
+          :options="options.filters"
+        />
+        <div class="search-content">
+          <SearchResultsDidYouMean :labels="didYouMeanLabels" />
+          <SearchResultsTitle :options="options" />
+          <SearchResultsProducts :options="options" />
+        </div>
+      </div>
+    </template>
+    <template v-else>
+      <SearchResultsDidYouMean :labels="didYouMeanLabels" />
+      <SearchResultsTitle :options="options" />
+      <div id="lupa-search-results">
+        <SearchResultsFilters
+          v-if="showFilterSidebar"
+          :options="options.filters"
+        />
+        <SearchResultsProducts :options="options" />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -46,6 +55,7 @@ import SearchResultsDidYouMean from "./SearchResultsDidYouMean.vue";
 import SearchResultsProducts from "./products/SearchResultsProducts.vue";
 import SearchResultsBreadcrumbs from "./SearchResultsBreadcrumbs.vue";
 import { getLupaTrackingContext } from "@/utils/tracking.utils";
+import SearchResultsTitle from "./SearchResultsTitle.vue";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -60,6 +70,7 @@ const tracking = namespace("tracking");
     MobileFilterSidebar,
     SearchResultsBreadcrumbs,
     SearchResultsDidYouMean,
+    SearchResultsTitle,
   },
 })
 export default class SearchResults extends Vue {
@@ -87,12 +98,12 @@ export default class SearchResults extends Vue {
     return pick(this.options.labels, ["noResultsSuggestion", "didYouMean"]);
   }
 
-  get queryText(): string {
-    return this.suggestedSearchText || this.currentQueryText;
-  }
-
   get showFilterSidebar(): boolean {
     return this.options.filters?.facets?.style?.type === "sidebar";
+  }
+
+  get isTopTitlePosition(): boolean {
+    return this.options.searchTitlePosition === "page-top";
   }
 
   @tracking.Action("trackSearch") trackSearch!: ({
@@ -110,11 +121,6 @@ export default class SearchResults extends Vue {
     queryKey: string;
     results: SearchQueryResult;
   }) => void;
-
-  @searchResult.Getter("currentQueryText") currentQueryText!: string;
-
-  @searchResult.State((state) => state.searchResult.suggestedSearchText)
-  suggestedSearchText!: string;
 
   @params.State("searchString") searchString!: string;
 

@@ -23,6 +23,7 @@ export const SEARCH_BOX_CONFIGURATION = {
   links: {
     searchResults: "",
   },
+  searchTitlePosition: "search-results-top",
   panels: [
     {
       type: "suggestion",

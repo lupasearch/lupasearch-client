@@ -8,6 +8,7 @@ export const DEFAULT_OPTIONS_RESULTS = {
   },
   queryKey: "",
   containerSelector: "#searchResultsContainer",
+  searchTitlePosition: "search-results-top",
   labels: {
     pageSize: "Page size:",
     sortBy: "Sort by:",
