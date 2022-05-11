@@ -69,7 +69,8 @@ export default class ParamsModule extends VuexModule {
     this.params = params || this.params;
     this.defaultLimit = defaultLimit || this.defaultLimit;
     this.searchResultsLink = searchResultsLink || this.searchResultsLink;
-    this.searchString = searchString || this.searchString;
+    this.searchString =
+      searchString === undefined ? this.searchString : searchString;
   }
 
   @Action({ commit: "save" })

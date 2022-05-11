@@ -5,6 +5,7 @@
       :options="options.currentFilters"
       :expandable="expandable"
     />
+    <CategoryFilter v-if="options.categories" :options="options.categories" />
     <Facets v-if="options.facets" :options="options.facets" />
   </div>
 </template>
@@ -15,12 +16,14 @@ import { SearchResultsFilterOptions } from "@/types/search-results/SearchResults
 import { Prop } from "vue-property-decorator";
 import CurrentFilters from "./CurrentFilters.vue";
 import Facets from "./facets/Facets.vue";
+import CategoryFilter from "@/components/product-list/CategoryFilter.vue";
 
 @Component({
   name: "searchResultsFilters",
   components: {
     CurrentFilters,
     Facets,
+    CategoryFilter,
   },
 })
 export default class SearchResultsFilters extends Vue {

@@ -2,7 +2,7 @@ import { QUERY_PARAMS_PARSED } from "@/constants/queryParams.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { SearchResultsSortOptions } from "@/types/search-results/SearchResultsSort";
-import { PublicQuery } from "@getlupa/client-sdk/Types";
+import { FilterGroup, PublicQuery } from "@getlupa/client-sdk/Types";
 
 export const createPublicQuery = (
   queryParams: QueryParams,
@@ -49,4 +49,19 @@ export const createPublicQuery = (
 const getOffset = (page: number, limit = 10): number => {
   if (!page || page === 1 || page < 0) return 0;
   return (page - 1) * limit;
+};
+
+export const getPublicQuery = (
+  publicQuery: PublicQuery,
+  initialFilters: FilterGroup,
+  isProductList: boolean
+): PublicQuery => {
+  return {
+    ...publicQuery,
+    filters: {
+      ...initialFilters,
+      ...publicQuery.filters,
+    },
+    searchText: isProductList ? "" : publicQuery.searchText,
+  };
 };

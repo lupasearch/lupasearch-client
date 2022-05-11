@@ -33,9 +33,13 @@ import {
 } from "@/types/search-results/SearchResultsOptions";
 import { parseParams } from "@/utils/params.utils";
 import { pick } from "@/utils/picker.utils";
-import { createPublicQuery } from "@/utils/query.utils";
+import { createPublicQuery, getPublicQuery } from "@/utils/query.utils";
 import getLupaSdk from "@getlupa/client-sdk";
-import { PublicQuery, SearchQueryResult } from "@getlupa/client-sdk/Types";
+import {
+  FilterGroup,
+  PublicQuery,
+  SearchQueryResult,
+} from "@getlupa/client-sdk/Types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch } from "vue-property-decorator";
@@ -64,6 +68,8 @@ const tracking = namespace("tracking");
 })
 export default class SearchResults extends Vue {
   @Prop() options!: SearchResultsOptions;
+  @Prop({ default: () => ({}) }) initialFilters!: FilterGroup;
+  @Prop({ default: false }) isProductList!: boolean;
 
   get productsOptions(): SearchResultsProductOptions {
     return pick(this.options, [
@@ -134,10 +140,17 @@ export default class SearchResults extends Vue {
     options: SearchResultsOptions;
   }) => void;
 
+  @options.Mutation("setInitialFilters") setInitialFilters!: ({
+    initialFilters,
+  }: {
+    initialFilters: FilterGroup;
+  }) => void;
+
   mounted(): void {
     window.addEventListener("resize", this.handleResize);
     this.handleMounted();
     this.setSearchResultOptions({ options: this.options });
+    this.setInitialFilters({ initialFilters: this.initialFilters });
   }
 
   beforeDestroy(): void {
@@ -173,11 +186,10 @@ export default class SearchResults extends Vue {
       parseParams(searchParams),
       this.options.sort
     );
-    if (publicQuery.searchText === undefined) {
-      return;
-    }
     this.setLoading(true);
-    this.query(publicQuery);
+    this.query(
+      getPublicQuery(publicQuery, this.initialFilters, this.isProductList)
+    );
   }
 
   query(publicQuery: PublicQuery): void {

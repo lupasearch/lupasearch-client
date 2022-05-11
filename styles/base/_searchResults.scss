@@ -350,3 +350,24 @@ $similar-query-label-color: #4f4f4f !default;
 $similar-query-label-margin-bottom: 48px !default;
 
 $similar-query-value-font-size: 16px !default;
+
+// Category filter
+
+$category-filter-padding: 0 !default;
+$category-filter-font-family: $facets-font-family !default;
+$category-filter-margin: 0 0 25px !default;
+
+$category-filter-back-padding: 13px 0 !default;
+$category-filter-back-color: $facet-label-color !default;
+$category-filter-back-color-hover: $facet-label-color-hover !default;
+$category-filter-back-font-size: 16px !default;
+$category-filter-back-line-height: 20px !default;
+$category-filter-back-font-weight: 700 !default;
+
+$category-filter-item-padding: 10px 0 10px 25px !default;
+$category-filter-item-color: $facet-label-color !default;
+$category-filter-item-color-hover: $facet-label-color-hover !default;
+$category-filter-item-font-size: 16px !default;
+$category-filter-item-font-size-line-height: 20px !default;
+
+$category-filter-item-list-padding: 0 0 0 10px !default;

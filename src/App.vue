@@ -14,8 +14,11 @@
     <div class="box-wrapper">
       <SearchBox :options="fullSearchBoxOptions" />
     </div>
-    <div class="result-wrapper">
+    <!-- <div class="result-wrapper">
       <SearchResults :options="fullSearchResultsOptions" />
+    </div> -->
+    <div class="list-wrapper">
+      <ProductList :options="fullProductListOptions" />
     </div>
   </div>
 </template>
@@ -32,12 +35,16 @@ import { merge } from "./utils/merger.utils";
 import "../styles/clients/lupa/lupa";
 import { SEARCH_BOX_CONFIGURATION } from "./constants/development/searchBoxDev.const";
 import { SEARCH_RESULTS_CONFIGURATION } from "./constants/development/searchResultsDev.const";
+import { PRODUCT_LIST_CONFIGURATION } from "./constants/development/searchProductListDev.const";
+import { ProductListOptions } from "./types/product-list/ProductListOptions";
+import ProductList from "./components/product-list/ProductList.vue";
 
 @Component({
   name: "getLupa",
   components: {
     SearchBox,
     SearchResults,
+    ProductList,
   },
 })
 export default class App extends Vue {
@@ -53,6 +60,13 @@ export default class App extends Vue {
       DEFAULT_OPTIONS_RESULTS,
       SEARCH_RESULTS_CONFIGURATION as unknown as SearchBoxOptions
     );
+  }
+
+  get fullProductListOptions(): ProductListOptions {
+    return {
+      ...this.fullSearchResultsOptions,
+      ...PRODUCT_LIST_CONFIGURATION,
+    };
   }
 }
 </script>
@@ -77,7 +91,8 @@ export default class App extends Vue {
   }
 }
 
-.result-wrapper {
+.result-wrapper,
+.list-wrapper {
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
