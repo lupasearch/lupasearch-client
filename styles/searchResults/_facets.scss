@@ -169,3 +169,33 @@
     }
   }
 }
+
+// Range inputs
+
+.lupa-stats-range-label {
+  font-size: searchResults.$facet-range-input-label-font-size;
+  margin: searchResults.$facet-range-input-label-margin;
+}
+
+.lupa-stats-facet-summary-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    width: 100%;
+    padding: searchResults.$facet-range-input-padding;
+    box-sizing: border-box;
+    border: searchResults.$facet-term-filter-border;
+  }
+  .lupa-stats-from,
+  .lupa-stats-to {
+    display: flex;
+    align-items: center;
+  }
+  .lupa-stats-separator {
+    margin: searchResults.$facet-range-separator-margin;
+  }
+  span {
+    padding: searchResults.$facet-range-currency-padding;
+  }
+}

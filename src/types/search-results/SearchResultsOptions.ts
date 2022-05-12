@@ -111,6 +111,14 @@ export type ResultFacetOptions = {
     topLevelValueCountLimit?: number;
     filterable?: boolean;
   };
+  stats?: {
+    slider?: boolean;
+    inputs?: boolean;
+    labels?: {
+      from?: string;
+      to?: string;
+    };
+  };
   facetValueCountLimit?: number;
   showDocumentCount?: boolean;
   style?: {

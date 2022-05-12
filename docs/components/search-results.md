@@ -359,6 +359,14 @@ const options = {
         maxInitialLevel: 2,
         topLevelValueCountLimit: 5,
       },
+      stats: {
+        slider: true,
+        inputs: false,
+        labels: {
+          from: "From:",
+          to: "To:",
+        },
+      },
       filterable: {
         minValues: 5,
       },
@@ -393,6 +401,16 @@ const options = {
   - `topLevelValueCountLimit` - an initial limit of visible top-level facet values;
 
   - `filterable` - determines whether client side hierarchy facet value filtering should be shown;
+
+- `facets.stats` - range - stats facet specific settings;
+
+  - `slider` - display range slider;
+
+  - `inputs` - display numeric range slider inputs;
+
+  - `labels.from` - input "from" label;
+
+  - `labels.to` - input "to" label;
 
 - `facets.labels.title` - a title of the facet section;
 

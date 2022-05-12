@@ -142,6 +142,16 @@ $facet-range-dot-color-hover: general.$grey-100 !default;
 $facet-range-rail-color: general.$grey-100 !default;
 $facet-range-rail-color-active: $slider-color !default;
 
+// Range slider inputs
+
+$facet-range-input-label-font-size: 12px !default;
+$facet-range-input-label-margin: 0 0 5px !default;
+
+$facet-range-input-padding: 8px !default;
+$facet-range-separator-margin: 0 10px !default;
+
+$facet-range-currency-padding: 0 5px !default;
+
 // Filters dropdown
 
 $facet-dropdown-margin: 0 10px 0 0;
