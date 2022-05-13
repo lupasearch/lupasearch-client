@@ -348,11 +348,16 @@ const options = {
         title: "Current filters:",
         clearAll: "Clear all",
       },
+      mobileSidebar: {
+        showFilterCount: false,
+        activeFiltersExpanded: false,
+      },
     },
     facets: {
       labels: {
         title: "Filters:",
         showAll: "Show more",
+        showLess: "Show less",
         facetFilter: "Filter...",
       },
       hierarchy: {
@@ -384,6 +389,10 @@ const options = {
 
 - `currentFilters.visibility.mobileToolbar` - whether to display current filters on mobile resolution on page toolbar, at the top of the product list;
 
+- `currentFilters.mobileSidebar.showFilterCount` - show filter count at the top of the mobile sidebar;
+
+- `currentFilters.mobileSidebar.activeFiltersExpanded` - expand active filters section in the mobile sidebar by default;
+
 - `facets` - show a facet filter section;
 
 - `facets.hierarchy` - hierarchy-specific facet settings;
@@ -397,6 +406,8 @@ const options = {
 - `facets.labels.title` - a title of the facet section;
 
 - `facets.labels.showAll` - a label of a button at the bottom of facet list, if facet count is greater than `facetValueCountLimit`;
+
+- `facets.labels.showLess` - a label of a button at the bottom of facet list, to toggle the show more/show less state;
 
 - `facets.facetValueCountLimit` - client side only limit of number of facet values, before "Show more" label is shown;
 

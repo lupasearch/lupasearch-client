@@ -16,6 +16,7 @@
     <div
       v-if="displayShowMore"
       class="lupa-additional-panel-show-more"
+      :class="{ 'lupa-additional-panel-show-less': showAll }"
       data-cy="lupa-additional-panel-show-more"
       @click="toggleShowMore"
     >

@@ -91,6 +91,10 @@ export type ResultCurrentFilterOptions = {
     mobileSidebar: boolean;
     mobileToolbar: boolean;
   };
+  mobileSidebar?: {
+    showFilterCount?: boolean;
+    activeFiltersExpanded?: boolean;
+  };
 };
 
 export type FacetStyle = "sidebar" | "top-dropdown";
@@ -99,6 +103,7 @@ export type ResultFacetOptions = {
   labels: {
     title: string;
     showAll: string;
+    showLess?: string;
     facetFilter: string;
     facetClear?: string;
   };

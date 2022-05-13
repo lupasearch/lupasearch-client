@@ -90,11 +90,16 @@ export const SEARCH_RESULTS_CONFIGURATION = {
         title: "Current filters:",
         clearAll: "Clear all",
       },
+      mobileSidebar: {
+        showFilterCount: false,
+        activeFiltersExpanded: false,
+      },
     },
     facets: {
       labels: {
         title: "Filters:",
         showAll: "Show more",
+        showLess: "Show less",
         facetFilter: "Filter...",
       },
       hierarchy: {

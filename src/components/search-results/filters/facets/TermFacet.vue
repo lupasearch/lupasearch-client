@@ -35,12 +35,13 @@
       </div>
     </div>
     <div
-      v-if="itemLimit < filteredValues.length"
+      v-if="displayShowMore"
       class="lupa-facet-term lupa-show-more-facet-results"
       data-cy="lupa-facet-term"
-      @click="handleShowAll"
+      @click="toggleShowAll"
     >
-      {{ options.labels.showAll }}
+      <span v-if="showAll"> {{ options.labels.showLess }}</span>
+      <span v-else> {{ options.labels.showAll }}</span>
     </div>
   </div>
 </template>
@@ -110,6 +111,13 @@ export default class TermFacet extends Vue {
     return this.facet.type === "range";
   }
 
+  get displayShowMore(): boolean {
+    return Boolean(
+      (this.showAll && this.options.labels.showLess) ||
+        this.itemLimit < this.filteredValues.length
+    );
+  }
+
   handleFacetClick(item: FacetGroupItem): void {
     const value = this.isRange
       ? item.title.split(FACET_TERM_RANGE_SEPARATOR)
@@ -121,8 +129,8 @@ export default class TermFacet extends Vue {
     });
   }
 
-  handleShowAll(): void {
-    this.showAll = true;
+  toggleShowAll(): void {
+    this.showAll = !this.showAll;
   }
 
   isChecked(item: FacetGroupItem): boolean {
