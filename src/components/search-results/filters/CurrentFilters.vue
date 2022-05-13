@@ -77,7 +77,7 @@ export default class CurrentFilters extends Vue {
   @options.Getter("initialFilters") initialFilters!: FilterGroup;
 
   get displayFilters(): LabeledFilter[] {
-    return this.labeledFilters.filter((f) => !this.initialFilters[f.key]);
+    return this.labeledFilters.filter((f) => !this.initialFilters?.[f.key]);
   }
 
   get labeledFilters(): LabeledFilter[] {

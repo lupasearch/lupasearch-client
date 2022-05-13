@@ -1,7 +1,14 @@
 <template>
   <div class="lupa-category-filter" data-cy="lupa-category-filter">
     <div class="lupa-category-back">
-      <a v-if="hasBackButton" data-cy="lupa-category-back" :href="backUrl">
+      <a
+        v-if="hasBackButton"
+        data-cy="lupa-category-back"
+        :href="backUrl"
+        v-on="
+          hasDirectRouting ? {} : { click: () => handleNavigation(backUrlLink) }
+        "
+      >
         {{ backTitle }}
       </a>
     </div>
@@ -13,6 +20,11 @@
         data-cy="lupa-current-category"
         :href="parentUrl"
         :class="{ 'lupa-title-category': !hasBackButton }"
+        v-on="
+          hasDirectRouting
+            ? {}
+            : { click: () => handleNavigation(parentUrlLink) }
+        "
         >{{ parentTitle }}</a
       >
     </div>
@@ -32,15 +44,16 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import getLupaSdk from "@getlupa/client-sdk";
+import { Options } from "@getlupa/client-sdk/Types";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import { namespace } from "vuex-class";
-import { Options } from "@getlupa/client-sdk/Types";
 import CategoryFilterItem from "./CategoryFilterItem.vue";
+import { emitRoutingEvent } from "@/utils/routing.utils";
 
 const options = namespace("options");
 
 @Component({
-  name: "productList",
+  name: "categoryFilter",
   components: {
     CategoryFilterItem,
   },
@@ -55,11 +68,19 @@ export default class CategoryFilter extends Vue {
     return Boolean(this.options.back?.title);
   }
 
+  get hasDirectRouting(): boolean {
+    return this.options.routingBehavior === "direct-link";
+  }
+
   get backTitle(): string | undefined {
     return this.options.back?.title;
   }
 
   get backUrl(): string | undefined {
+    return this.hasDirectRouting ? this.backUrlLink : undefined;
+  }
+
+  get backUrlLink(): string | undefined {
     return this.options.back?.url;
   }
 
@@ -68,6 +89,10 @@ export default class CategoryFilter extends Vue {
   }
 
   get parentUrl(): string | undefined {
+    return this.hasDirectRouting ? this.options.parent?.url : undefined;
+  }
+
+  get parentUrlLink(): string | undefined {
     return this.options.parent?.url;
   }
 
@@ -76,7 +101,6 @@ export default class CategoryFilter extends Vue {
   }
 
   async mounted(): Promise<void> {
-    // Load categories by query key and filters
     const result = await getLupaSdk.query(
       this.options.queryKey,
       {
@@ -96,6 +120,10 @@ export default class CategoryFilter extends Vue {
       item?.[this.options.keys.titleKey ?? ""] +
       item?.[this.options.keys.urlKey ?? ""]
     );
+  }
+
+  handleNavigation(url: string): void {
+    emitRoutingEvent(url);
   }
 }
 </script>

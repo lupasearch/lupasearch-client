@@ -17,3 +17,5 @@ export const MAX_FACET_VALUES = 1000;
 export const CURRENCY_KEY_INDICATOR = "price";
 
 export const DEFAULT_PAGE_SIZE = 12;
+
+export const LUPA_ROUTING_EVENT = "lupaRedirect";

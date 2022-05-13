@@ -4,6 +4,7 @@ export const PRODUCT_LIST_CONFIGURATION = {
   },
   categories: {
     queryKey: "0zcly1frbyyi",
+    routingBehavior: "direct-link",
     keys: {
       titleKey: "name",
       urlKey: "url",
@@ -18,6 +19,10 @@ export const PRODUCT_LIST_CONFIGURATION = {
     parent: {
       title: "Parent page",
       url: "/title-page/parent-page",
+    },
+    current: {
+      title: "Current category",
+      description: "Lorem ipsum",
     },
   },
 };

@@ -16,7 +16,7 @@ import { SearchResultsFilterOptions } from "@/types/search-results/SearchResults
 import { Prop } from "vue-property-decorator";
 import CurrentFilters from "./CurrentFilters.vue";
 import Facets from "./facets/Facets.vue";
-import CategoryFilter from "@/components/product-list/CategoryFilter.vue";
+import CategoryFilter from "../../product-list/CategoryFilter.vue";
 
 @Component({
   name: "searchResultsFilters",

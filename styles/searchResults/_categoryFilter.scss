@@ -42,3 +42,13 @@
 .lupa-child-category-list {
   padding: searchResults.$category-filter-item-list-padding;
 }
+
+.lupa-category-overview {
+  margin: searchResults.$category-overview-margin;
+}
+
+.lupa-category-title {
+  font-weight: searchResults.$category-overview-title-font-weight;
+  font-size: searchResults.$category-overview-title-font-size;
+  margin: searchResults.$category-overview-title-margin;
+}

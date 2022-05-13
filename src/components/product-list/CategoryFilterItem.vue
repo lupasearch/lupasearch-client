@@ -3,7 +3,11 @@
     class="lupa-child-category-item"
     :class="{ 'lupa-child-category-item-active': isActive }"
   >
-    <a data-cy="lupa-child-category-item" :href="url">
+    <a
+      data-cy="lupa-child-category-item"
+      :href="url"
+      v-on="hasDirectRouting ? {} : { click: handleNavigation }"
+    >
       {{ title }}
     </a>
   </div>
@@ -12,11 +16,12 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
-import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import SearchResults from "../search-results/SearchResults.vue";
+import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
+import { emitRoutingEvent } from "@/utils/routing.utils";
 
 @Component({
-  name: "productList",
+  name: "categoryFilterItem",
   components: {
     SearchResults,
   },
@@ -31,14 +36,29 @@ export default class CategoryFilterItem extends Vue {
       : "";
   }
 
-  get url(): string {
+  get urlLink(): string {
     return this.options.keys.urlKey
       ? this.item?.[this.options.keys.urlKey] ?? ""
       : "";
   }
 
+  get url(): string | undefined {
+    if (!this.hasDirectRouting) {
+      return undefined;
+    }
+    return this.urlLink;
+  }
+
   get isActive(): boolean {
     return window.location.href === this.url;
+  }
+
+  get hasDirectRouting(): boolean {
+    return this.options.routingBehavior === "direct-link";
+  }
+
+  handleNavigation(): void {
+    emitRoutingEvent(this.urlLink);
   }
 }
 </script>

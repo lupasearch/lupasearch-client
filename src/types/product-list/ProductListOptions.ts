@@ -3,6 +3,7 @@ import { SearchResultsOptions } from "../search-results/SearchResultsOptions";
 
 export type CategoryFilterOptions = {
   queryKey: string;
+  routingBehavior?: RoutingBehavior;
   keys: {
     titleKey?: string;
     urlKey?: string;
@@ -16,7 +17,13 @@ export type CategoryFilterOptions = {
     url: string;
     title: string;
   };
+  current?: {
+    title: string;
+    description: string;
+  };
 };
+
+export type RoutingBehavior = "direct-link" | "event";
 
 export type ProductListOptions = SearchResultsOptions & {
   initialFilters?: FilterGroup;
