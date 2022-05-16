@@ -9,6 +9,7 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
     searchTitlePosition?: string;
+    noResultsQueryFlag?: string;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";
@@ -120,6 +121,7 @@ export type ResultFacetOptions = {
   style?: {
     type: FacetStyle;
   };
+  exclude?: string[];
 };
 
 export type SearchResultsFilterOptions = {

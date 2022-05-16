@@ -96,9 +96,15 @@ export default class ParamsModule extends VuexModule {
   }
 
   @Action({ commit: "save" })
-  removeParams({ paramsToRemove }: { paramsToRemove?: "all" | string[] }): {
-    params: QueryParams;
-    searchString: string;
+  removeParams({
+    paramsToRemove,
+    save = true,
+  }: {
+    paramsToRemove?: "all" | string[];
+    save: boolean;
+  }): {
+    params?: QueryParams;
+    searchString?: string;
   } {
     const url = new URL(
       window.location.origin +
@@ -108,7 +114,12 @@ export default class ParamsModule extends VuexModule {
     paramsToRemove = getRemovableParams(url, paramsToRemove);
     removeParams(url, paramsToRemove);
     window.history.pushState("", "Append params", url.pathname + url.search);
-    return { params: parseParams(url.searchParams), searchString: url.search };
+    return save
+      ? {
+          params: parseParams(url.searchParams),
+          searchString: url.search,
+        }
+      : {};
   }
 
   @Action({})
@@ -152,11 +163,13 @@ export default class ParamsModule extends VuexModule {
     params,
     paramsToRemove,
     encode = true,
+    save = true,
   }: {
     params: { name: string; value: string }[];
     paramsToRemove?: "all" | string[];
     encode?: boolean;
-  }): { params: QueryParams; searchString?: string } {
+    save?: boolean;
+  }): { params?: QueryParams; searchString?: string } {
     if (!params?.length) {
       return { params: this.params };
     }
@@ -170,7 +183,12 @@ export default class ParamsModule extends VuexModule {
     removeParams(url, paramsToRemove);
     params.forEach((p) => appendParam(url, p, encode));
     window.history.pushState("", "Append params", url.pathname + url.search);
-    return { params: parseParams(url.searchParams), searchString: url.search };
+    return save
+      ? {
+          params: parseParams(url.searchParams),
+          searchString: url.search,
+        }
+      : {};
   }
 
   @Action({ commit: "save" })

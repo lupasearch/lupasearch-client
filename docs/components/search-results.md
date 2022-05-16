@@ -367,6 +367,7 @@ const options = {
       style: {
         type: "top-dropdown",
       },
+      exclude: ["price", "category"],
     },
   },
 };
@@ -409,6 +410,8 @@ If user changes any filter value, current page is reset to the first one.
 - `facets.showDocumentCount` - defines whether to show a product count with each term or hierarchy facet value.
 
 - `facets.style.type` - style of the facets. Two available options: `sidebar` - facets displayed at the left sidebar; `top-dropdown` - facets are displayed at the top of the product list, in separate dropdown panels.
+
+- `facets.exclude` - exclude any returned facets from display by their key (field name).
 
 ## Sort
 
@@ -564,6 +567,22 @@ const options = {
 - `links.details` - `links.details` - a constructable link that user is redirected to after clicking on an item Use document fields like `id` in curly brackets (`{id}`) to build desired link url.
 
 - `elements` - a list of available elements. Available items and configuration is the same as in the main search result list.
+
+## No results query flag
+
+It is possible to configure a query parameter flag, which would be set by the LupaSearch plugin when search returns zero results:
+
+```js
+const options = {
+  noResultsQueryFlag: "noResults",
+};
+```
+
+The configuration above would result in the following query, if user search yields no items:
+
+```
+?q=no-results-query&noResults=true
+```
 
 # Statistics
 
