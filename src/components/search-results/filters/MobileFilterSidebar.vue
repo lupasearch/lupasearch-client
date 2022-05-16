@@ -4,7 +4,7 @@
       <div class="lupa-sidebar-title">
         {{ sidebarTitle }}
         <span v-if="isFilterCountVisible" class="lupa-sidebar-filter-count">{{
-          filterCount
+          currentFilterCount
         }}</span>
       </div>
       <div class="lupa-filter-toggle-mobile" @click="handleMobileToggle"></div>
@@ -19,7 +19,6 @@
 </template>
 <script lang="ts">
 import { SearchResultsFilterOptions } from "@/types/search-results/SearchResultsOptions";
-import { FilterGroup } from "@getlupa/client-sdk/Types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
@@ -46,14 +45,10 @@ export default class MobileFilterSidebar extends Vue {
   @searchResult.State((state) => state.isMobileSidebarVisible)
   isMobileSidebarVisible!: boolean;
 
-  @searchResult.Getter("filters") currentFilters?: FilterGroup;
+  @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
 
   get sidebarTitle(): string {
     return this.options.facets?.labels?.title ?? "";
-  }
-
-  get filterCount(): number {
-    return Object.keys(this.currentFilters ?? {}).length;
   }
 
   get isFilterCountVisible(): boolean {
