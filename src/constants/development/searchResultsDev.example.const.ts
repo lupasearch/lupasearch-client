@@ -23,6 +23,9 @@ export const SEARCH_RESULTS_CONFIGURATION = {
     similarQuery: "Search results for phrase {1}",
     similarQueries: "Similar queries:",
   },
+  toolbar: {
+    totalCount: true,
+  },
   grid: {
     columns: {
       xl: 3,

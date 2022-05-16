@@ -21,7 +21,7 @@ describe("SearchResultsProductRating.vue", () => {
   });
 
   it("should render correct ratings count", () => {
-    expect(wrapper.find(".lupa-total-ratings").text()).toBe("(Ratings: 10)");
+    expect(wrapper.find(".lupa-total-ratings").text()).toBe("(Ratings:10)");
   });
 
   it("should render base stars", () => {
