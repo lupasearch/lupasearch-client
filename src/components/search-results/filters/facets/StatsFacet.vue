@@ -12,6 +12,8 @@
           <input
             v-model.lazy="fromValue"
             type="number"
+            :max="facetMax"
+            :min="facetMin"
             :step="isPrice ? '0.01' : '1'"
           />
           <span v-if="isPrice">{{ currency }}</span>
@@ -26,6 +28,8 @@
           <input
             v-model.lazy="toValue"
             type="number"
+            :max="facetMax"
+            :min="facetMin"
             :step="isPrice ? '0.01' : '1'"
           />
           <span v-if="isPrice">{{ currency }}</span>
@@ -113,7 +117,10 @@ export default class TermFacet extends Vue {
   }
 
   set fromValue(stringValue: string) {
-    const value = +stringValue;
+    let value = +stringValue;
+    if (value < this.facetMin) {
+      value = this.facetMin;
+    }
     if (!value || value < this.facetMin || value > this.facetMax) {
       return;
     }
@@ -128,8 +135,11 @@ export default class TermFacet extends Vue {
   }
 
   set toValue(stringValue: string) {
-    const value = +stringValue;
-    if (!value || value < this.facetMin || value > this.facetMax) {
+    let value = +stringValue;
+    if (value > this.facetMax) {
+      value = this.facetMax;
+    }
+    if (!value || value < this.facetMin) {
       return;
     }
     this.innerSliderRange = [this.sliderRange[0], value];
