@@ -121,7 +121,7 @@ export default class TermFacet extends Vue {
     if (value < this.facetMin) {
       value = this.facetMin;
     }
-    if (!value || value < this.facetMin || value > this.facetMax) {
+    if (!value || value > this.facetMax) {
       return;
     }
     this.innerSliderRange = [value, this.sliderRange[1]];
@@ -219,6 +219,12 @@ export default class TermFacet extends Vue {
 
   handleInputChange(): void {
     if (this.innerSliderRange.length < 1) {
+      return;
+    }
+    if (
+      this.sliderRange[0] === this.currentGte &&
+      this.sliderRange[1] === this.currentLte
+    ) {
       return;
     }
     this.handleChange();
