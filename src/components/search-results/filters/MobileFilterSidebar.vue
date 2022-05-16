@@ -49,7 +49,7 @@ export default class MobileFilterSidebar extends Vue {
   @searchResult.Getter("filters") currentFilters?: FilterGroup;
 
   get sidebarTitle(): string {
-    return this.options.facets?.labels.title ?? "";
+    return this.options.facets?.labels?.title ?? "";
   }
 
   get filterCount(): number {
