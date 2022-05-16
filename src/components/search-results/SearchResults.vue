@@ -5,7 +5,7 @@
       v-if="currentQueryText"
       :breadcrumbs="options.breadcrumbs"
     />
-    <template v-if="isTopTitlePosition">
+    <template v-if="isTitleResultTopPosition">
       <div class="top-layout-wrapper">
         <SearchResultsFilters
           v-if="showFilterSidebar"
@@ -94,6 +94,8 @@ export default class SearchResults extends Vue {
     ]);
   }
 
+  @searchResult.Getter("currentQueryText") currentQueryText!: string;
+
   get didYouMeanLabels(): SearchResultsDidYouMeanLabels {
     return pick(this.options.labels, ["noResultsSuggestion", "didYouMean"]);
   }
@@ -102,8 +104,8 @@ export default class SearchResults extends Vue {
     return this.options.filters?.facets?.style?.type === "sidebar";
   }
 
-  get isTopTitlePosition(): boolean {
-    return this.options.searchTitlePosition === "page-top";
+  get isTitleResultTopPosition(): boolean {
+    return this.options.searchTitlePosition === "search-results-top";
   }
 
   @tracking.Action("trackSearch") trackSearch!: ({
