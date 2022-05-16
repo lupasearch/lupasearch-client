@@ -367,6 +367,7 @@ const options = {
       style: {
         type: "top-dropdown",
       },
+      exclude: ["price", "category"],
     },
   },
 };
@@ -409,6 +410,8 @@ If user changes any filter value, current page is reset to the first one.
 - `facets.showDocumentCount` - defines whether to show a product count with each term or hierarchy facet value.
 
 - `facets.style.type` - style of the facets. Two available options: `sidebar` - facets displayed at the left sidebar; `top-dropdown` - facets are displayed at the top of the product list, in separate dropdown panels.
+
+- `facets.exclude` - exclude any returned facets from display by their key (field name).
 
 ## Sort
 

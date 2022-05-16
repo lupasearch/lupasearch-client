@@ -5,7 +5,7 @@
     </div>
     <div class="lupa-search-result-facet-list" :class="'lupa-' + facetStyle">
       <FacetDisplay
-        v-for="facet of facets"
+        v-for="facet of displayFacets"
         :key="facet.key"
         :facet="facet"
         :currentFilters="currentFilters"
@@ -42,6 +42,12 @@ export default class FacetList extends Vue {
 
   @Prop({ default: "" }) facetStyle!: FacetStyle;
   @Prop({ default: false }) clearable!: boolean;
+
+  get displayFacets(): FacetResult[] {
+    return this.options.exclude
+      ? this.facets.filter((f) => !this.options.exclude?.includes(f.key))
+      : this.facets;
+  }
 
   handleFacetSelect(facetAction: FacetAction): void {
     this.$emit("select", facetAction);
