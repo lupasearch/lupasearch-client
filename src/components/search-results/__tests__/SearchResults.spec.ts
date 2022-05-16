@@ -4,6 +4,7 @@ import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import OptionsModule from "@/store/modules/options";
 import ParamsModule from "@/store/modules/params";
 import SearchResultModule from "@/store/modules/searchResult";
+import TrackingModule from "@/store/modules/tracking";
 import { RootState } from "@/store/types/State";
 import { SdkOptions } from "@/types/General";
 import { SearchResultsProductOptions } from "@/types/search-results/SearchResultsOptions";
@@ -17,10 +18,12 @@ const resizeSpy = jest.fn();
 jest.mock("@/store/modules/searchResult");
 jest.mock("@/store/modules/params");
 jest.mock("@/store/modules/options");
+jest.mock("@/store/modules/tracking");
 
 const SearchResultModuleMock = mocked(SearchResultModule, true);
 const ParamsModuleMock = mocked(ParamsModule, true);
 const OptionsModuleMock = mocked(OptionsModule, true);
+const TrackingModuleMock = mocked(TrackingModule, true);
 
 const localVue = createLocalVue();
 
@@ -42,6 +45,7 @@ describe("SearchResult", () => {
         searchResult: SearchResultModuleMock,
         params: ParamsModuleMock,
         options: OptionsModuleMock,
+        tracking: TrackingModuleMock,
       },
     });
 

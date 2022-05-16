@@ -105,6 +105,14 @@ export const SEARCH_RESULTS_CONFIGURATION = {
         topLevelValueCountLimit: 0,
         filterable: false,
       },
+      stats: {
+        slider: true,
+        inputs: true,
+        labels: {
+          from: "From:",
+          to: "To:",
+        },
+      },
       filterable: {
         minValues: 10,
       },

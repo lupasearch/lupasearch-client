@@ -1,7 +1,42 @@
 <template>
   <div class="lupa-search-result-facet-stats-values">
-    <div class="lupa-stats-facet-summary">{{ statsSummary }}</div>
-    <div class="lupa-stats-slider-wrapper">
+    <div class="lupa-stats-facet-summary" v-if="!isInputVisible">
+      {{ statsSummary }}
+    </div>
+    <div class="lupa-stats-facet-summary-input" v-else>
+      <div>
+        <div class="lupa-stats-range-label" v-if="rangeLabelFrom">
+          {{ rangeLabelFrom }}
+        </div>
+        <div class="lupa-stats-from">
+          <input
+            v-model.lazy="fromValue"
+            type="number"
+            :max="facetMax"
+            :min="facetMin"
+            :step="isPrice ? '0.01' : '1'"
+          />
+          <span v-if="isPrice">{{ currency }}</span>
+        </div>
+      </div>
+      <div class="lupa-stats-separator"></div>
+      <div>
+        <div class="lupa-stats-range-label" v-if="rangeLabelTo">
+          {{ rangeLabelTo }}
+        </div>
+        <div class="lupa-stats-to">
+          <input
+            v-model.lazy="toValue"
+            type="number"
+            :max="facetMax"
+            :min="facetMin"
+            :step="isPrice ? '0.01' : '1'"
+          />
+          <span v-if="isPrice">{{ currency }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="lupa-stats-slider-wrapper" v-if="isSliderVisible">
       <vue-slider
         class="slider"
         tooltip="none"
@@ -27,11 +62,17 @@ import {
   FacetGroupTypeStats,
   FilterGroupItemTypeRange,
 } from "@getlupa/client-sdk/Types";
-import { ResultFacetOptions } from "@/types/search-results/SearchResultsOptions";
+import {
+  ResultFacetOptions,
+  SearchResultsOptions,
+} from "@/types/search-results/SearchResultsOptions";
 import { formatPriceSummary } from "@/utils/price.utils";
 import VueSlider from "vue-slider-component";
 import { CURRENCY_KEY_INDICATOR } from "@/constants/global.const";
 import { formatRange } from "@/utils/filter.utils";
+import { namespace } from "vuex-class";
+
+const options = namespace("options");
 
 @Component({
   name: "statsFacet",
@@ -46,6 +87,65 @@ export default class TermFacet extends Vue {
 
   innerSliderRange: number[] = [];
 
+  @options.State((s) => s.searchResultOptions)
+  searchResultOptions!: SearchResultsOptions;
+
+  get rangeLabelFrom(): string {
+    return this.options.stats?.labels?.from ?? "";
+  }
+
+  get rangeLabelTo(): string {
+    return this.options.stats?.labels?.to ?? "";
+  }
+
+  get currency(): string {
+    return this.searchResultOptions?.labels.currency;
+  }
+
+  get isSliderVisible(): boolean {
+    return Boolean(this.options.stats?.slider ?? true);
+  }
+
+  get isInputVisible(): boolean {
+    return Boolean(this.options.stats?.inputs);
+  }
+
+  get fromValue(): string {
+    return this.isPrice
+      ? this.sliderRange[0].toFixed(2)
+      : `${this.sliderRange[0]}`;
+  }
+
+  set fromValue(stringValue: string) {
+    let value = +stringValue;
+    if (value < this.facetMin) {
+      value = this.facetMin;
+    }
+    if (!value || value > this.facetMax) {
+      return;
+    }
+    this.innerSliderRange = [value, this.sliderRange[1]];
+    this.handleInputChange();
+  }
+
+  get toValue(): string {
+    return this.isPrice
+      ? this.sliderRange[1].toFixed(2)
+      : `${this.sliderRange[1]}`;
+  }
+
+  set toValue(stringValue: string) {
+    let value = +stringValue;
+    if (value > this.facetMax) {
+      value = this.facetMax;
+    }
+    if (!value || value < this.facetMin) {
+      return;
+    }
+    this.innerSliderRange = [this.sliderRange[0], value];
+    this.handleInputChange();
+  }
+
   get currentGte(): number | undefined {
     return typeof this.currentFilters.gte === "string"
       ? parseFloat(this.currentFilters.gte)
@@ -53,9 +153,9 @@ export default class TermFacet extends Vue {
   }
 
   get currentLte(): number | undefined {
-    return typeof this.currentFilters.lte === "string"
-      ? parseFloat(this.currentFilters.lte)
-      : this.currentFilters.lte;
+    return typeof this.currentFilters.lt === "string"
+      ? parseFloat(this.currentFilters.lt)
+      : this.currentFilters.lt;
   }
 
   get currentMinValue(): number {
@@ -99,7 +199,11 @@ export default class TermFacet extends Vue {
   get statsSummary(): string {
     const [min, max] = this.sliderRange;
     return this.isPrice
-      ? formatPriceSummary([min, max])
+      ? formatPriceSummary(
+          [min, max],
+          this.currency,
+          this.searchResultOptions.labels.priceSeparator
+        )
       : formatRange({ gte: min, lte: max });
   }
 
@@ -111,6 +215,19 @@ export default class TermFacet extends Vue {
   @Watch("currentMaxValue")
   onMaxValueChange(): void {
     this.innerSliderRange = [];
+  }
+
+  handleInputChange(): void {
+    if (this.innerSliderRange.length < 1) {
+      return;
+    }
+    if (
+      this.sliderRange[0] === this.currentGte &&
+      this.sliderRange[1] === this.currentLte
+    ) {
+      return;
+    }
+    this.handleChange();
   }
 
   handleChange(): void {
