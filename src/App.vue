@@ -14,11 +14,8 @@
     <div class="box-wrapper">
       <SearchBox :options="fullSearchBoxOptions" />
     </div>
-    <!-- <div class="result-wrapper">
+    <div class="result-wrapper">
       <SearchResults :options="fullSearchResultsOptions" />
-    </div> -->
-    <div class="list-wrapper">
-      <ProductList :options="fullProductListOptions" />
     </div>
   </div>
 </template>
