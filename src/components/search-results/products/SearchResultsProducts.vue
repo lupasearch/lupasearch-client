@@ -58,7 +58,11 @@
         :sdkOptions="options.options"
       />
     </template>
-    <div class="lupa-empty-results" v-else-if="!loading && currentQueryText">
+    <div
+      class="lupa-empty-results"
+      data-cy="lupa-no-results"
+      v-else-if="!loading && currentQueryText"
+    >
       {{ options.labels.emptyResults }} <span>{{ currentQueryText }}</span>
     </div>
     <div v-if="searchResult.similarQueries">

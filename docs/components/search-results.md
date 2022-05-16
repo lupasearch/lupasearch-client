@@ -549,6 +549,22 @@ const options = {
 
 - `elements` - a list of available elements. Available items and configuration is the same as in the main search result list.
 
+## No results query flag
+
+It is possible to configure a query parameter flag, which would be set by the LupaSearch plugin when search returns zero results:
+
+```js
+const options = {
+  noResultsQueryFlag: "noResults",
+};
+```
+
+The configuration above would result in the following query, if user search yields no items:
+
+```
+?q=no-results-query&noResults=true
+```
+
 # Statistics
 
 By using tracking API, the plugin should be able to track these events in the search results page:
