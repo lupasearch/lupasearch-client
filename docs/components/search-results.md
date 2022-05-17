@@ -613,6 +613,26 @@ The configuration above would result in the following query, if user search yiel
 ?q=no-results-query&noResults=true
 ```
 
+## Routing behavior
+
+```js
+const options = {
+  routingBehavior: "event",
+};
+```
+
+Search results supports two ways of product card routing `routingBehavior` settings:
+
+- `direct-link` - elements are direct links to the urls, defined in the document object;
+
+- `event` - when user clicks on the product (title or image), a special event `lupaRedirect` is emitted on the window object. The event can then be handled by the plugin user:
+
+```js
+window.addEventListener("lupaRedirect", (data) => {
+  // data.detail - redirect url
+});
+```
+
 # Statistics
 
 By using tracking API, the plugin should be able to track these events in the search results page:

@@ -9,7 +9,8 @@
     <div :class="['lupa-search-result-product-contents', listLayoutClass]">
       <a
         class="lupa-search-result-product-image-section"
-        :href="link || undefined"
+        :href="url || undefined"
+        v-on="hasEventRouting ? { click: handleNavigation } : {}"
       >
         <SearchResultsProductCardElement
           class="lupa-search-results-product-element"
@@ -49,6 +50,7 @@ import {
 import { SearchResultsOptionLabels } from "@/types/search-results/SearchResultsOptions";
 import { SearchResultsProductCardOptions } from "@/types/search-results/SearchResultsProductCardOptions";
 import { generateLink } from "@/utils/link.utils";
+import { emitRoutingEvent } from "@/utils/routing.utils";
 import { Document, ReportableEventType } from "@getlupa/client-sdk/Types";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -123,6 +125,14 @@ export default class SearchResultsProductCard extends Vue {
     return generateLink(this.options.links?.details ?? "", this.product);
   }
 
+  get hasEventRouting(): boolean {
+    return this.options.routingBehavior === "event";
+  }
+
+  get url(): string | undefined {
+    return this.hasEventRouting ? undefined : this.link;
+  }
+
   isInStock = false;
 
   mounted(): void {
@@ -169,6 +179,10 @@ export default class SearchResultsProductCard extends Vue {
             : undefined,
       },
     });
+  }
+
+  handleNavigation(): void {
+    emitRoutingEvent(this.link);
   }
 }
 </script>

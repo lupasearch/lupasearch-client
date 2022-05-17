@@ -2,7 +2,7 @@
   <div class="lupa-search-result-wrapper">
     <MobileFilterSidebar v-if="options.filters" :options="options.filters" />
     <SearchResultsBreadcrumbs
-      v-if="currentQueryText"
+      v-if="currentQueryText || isProductList"
       :breadcrumbs="options.breadcrumbs"
     />
     <template v-if="isTitleResultTopPosition">
@@ -108,6 +108,7 @@ export default class SearchResults extends Vue {
       "additionalPanels",
       "idKey",
       "filters",
+      "routingBehavior",
     ]);
   }
 
