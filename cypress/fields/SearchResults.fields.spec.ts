@@ -27,3 +27,5 @@ export const searchResultsDidYouMeanTextLabel = "[data-cy=did-you-mean-label]";
 export const searchResultsDidYouMeanTextValue = "[data-cy=did-you-mean-value]";
 
 export const searchResultsPageTitle = "[data-cy=lupa-result-page-title]";
+
+export const searchResultsNoResults = "[data-cy=lupa-no-results]";

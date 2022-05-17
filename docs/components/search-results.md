@@ -348,16 +348,29 @@ const options = {
         title: "Current filters:",
         clearAll: "Clear all",
       },
+      mobileSidebar: {
+        showFilterCount: false,
+        activeFiltersExpanded: false,
+      },
     },
     facets: {
       labels: {
         title: "Filters:",
         showAll: "Show more",
+        showLess: "Show less",
         facetFilter: "Filter...",
       },
       hierarchy: {
         maxInitialLevel: 2,
         topLevelValueCountLimit: 5,
+      },
+      stats: {
+        slider: true,
+        inputs: false,
+        labels: {
+          from: "From:",
+          to: "To:",
+        },
       },
       filterable: {
         minValues: 5,
@@ -367,6 +380,7 @@ const options = {
       style: {
         type: "top-dropdown",
       },
+      exclude: ["price", "category"],
     },
   },
 };
@@ -384,6 +398,10 @@ const options = {
 
 - `currentFilters.visibility.mobileToolbar` - whether to display current filters on mobile resolution on page toolbar, at the top of the product list;
 
+- `currentFilters.mobileSidebar.showFilterCount` - show filter count at the top of the mobile sidebar;
+
+- `currentFilters.mobileSidebar.activeFiltersExpanded` - expand active filters section in the mobile sidebar by default;
+
 - `facets` - show a facet filter section;
 
 - `facets.hierarchy` - hierarchy-specific facet settings;
@@ -394,9 +412,21 @@ const options = {
 
   - `filterable` - determines whether client side hierarchy facet value filtering should be shown;
 
+- `facets.stats` - range - stats facet specific settings;
+
+  - `slider` - display range slider;
+
+  - `inputs` - display numeric range slider inputs;
+
+  - `labels.from` - input "from" label;
+
+  - `labels.to` - input "to" label;
+
 - `facets.labels.title` - a title of the facet section;
 
 - `facets.labels.showAll` - a label of a button at the bottom of facet list, if facet count is greater than `facetValueCountLimit`;
+
+- `facets.labels.showLess` - a label of a button at the bottom of facet list, to toggle the show more/show less state;
 
 - `facets.facetValueCountLimit` - client side only limit of number of facet values, before "Show more" label is shown;
 
@@ -409,6 +439,8 @@ If user changes any filter value, current page is reset to the first one.
 - `facets.showDocumentCount` - defines whether to show a product count with each term or hierarchy facet value.
 
 - `facets.style.type` - style of the facets. Two available options: `sidebar` - facets displayed at the left sidebar; `top-dropdown` - facets are displayed at the top of the product list, in separate dropdown panels.
+
+- `facets.exclude` - exclude any returned facets from display by their key (field name).
 
 ## Sort
 
@@ -484,6 +516,7 @@ const options = {
     layoutSelector: true,
     itemSummary: true,
     clearFilters: false,
+    totalCount: false,
   },
 };
 ```
@@ -493,6 +526,24 @@ const options = {
 - `itemSummary` - show a short text that displays the number of total items, controlled by label `labels.itemCount`;
 
 - `clearFilters` - show clear all filters button in the toolbar;
+
+- `totalCount` - display total result count value in the search title summary;
+
+## Search title position
+
+Control search title position:
+
+```js
+const options = {
+  searchTitlePosition: "page-top",
+};
+```
+
+Available options:
+
+- `search-results-top` - search results title (along with did you mean query) will be displayed at the top of the search results, side by side to the filters sidebar;
+
+- `page-top` - search results title will be displayed at the top of the page, above filters and just below the breadcrumbs. Default option.
 
 ## Additional panels
 
@@ -545,6 +596,22 @@ const options = {
 - `links.details` - `links.details` - a constructable link that user is redirected to after clicking on an item Use document fields like `id` in curly brackets (`{id}`) to build desired link url.
 
 - `elements` - a list of available elements. Available items and configuration is the same as in the main search result list.
+
+## No results query flag
+
+It is possible to configure a query parameter flag, which would be set by the LupaSearch plugin when search returns zero results:
+
+```js
+const options = {
+  noResultsQueryFlag: "noResults",
+};
+```
+
+The configuration above would result in the following query, if user search yields no items:
+
+```
+?q=no-results-query&noResults=true
+```
 
 # Statistics
 

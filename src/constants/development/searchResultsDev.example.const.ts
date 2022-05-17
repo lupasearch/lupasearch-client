@@ -23,6 +23,9 @@ export const SEARCH_RESULTS_CONFIGURATION = {
     similarQuery: "Search results for phrase {1}",
     similarQueries: "Similar queries:",
   },
+  toolbar: {
+    totalCount: true,
+  },
   grid: {
     columns: {
       xl: 3,
@@ -90,17 +93,30 @@ export const SEARCH_RESULTS_CONFIGURATION = {
         title: "Current filters:",
         clearAll: "Clear all",
       },
+      mobileSidebar: {
+        showFilterCount: false,
+        activeFiltersExpanded: false,
+      },
     },
     facets: {
       labels: {
         title: "Filters:",
         showAll: "Show more",
+        showLess: "Show less",
         facetFilter: "Filter...",
       },
       hierarchy: {
         maxInitialLevel: 2,
         topLevelValueCountLimit: 0,
         filterable: false,
+      },
+      stats: {
+        slider: true,
+        inputs: true,
+        labels: {
+          from: "From:",
+          to: "To:",
+        },
       },
       filterable: {
         minValues: 10,

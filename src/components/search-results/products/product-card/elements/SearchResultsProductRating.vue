@@ -43,7 +43,7 @@ export default class SearchResultsProductRating extends Vue {
   @Prop() options!: RatingElement;
 
   get totalRatings(): string {
-    return `(${this.options.labels.numberOfRatings} ${
+    return `(${this.options.labels.numberOfRatings}${
       this.item[this.options.totalKey] || 0
     })`;
   }

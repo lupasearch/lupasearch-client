@@ -5,21 +5,30 @@
       v-if="currentQueryText"
       :breadcrumbs="options.breadcrumbs"
     />
-    <SearchResultsDidYouMean :labels="didYouMeanLabels" />
-    <h1
-      class="lupa-result-page-title"
-      data-cy="lupa-result-page-title"
-      v-if="options.labels.searchResults && currentQueryText"
-    >
-      {{ options.labels.searchResults }}'{{ queryText }}'
-    </h1>
-    <div id="lupa-search-results">
-      <SearchResultsFilters
-        v-if="showFilterSidebar"
-        :options="options.filters"
-      />
-      <SearchResultsProducts :options="options" />
-    </div>
+    <template v-if="isTitleResultTopPosition">
+      <div class="top-layout-wrapper">
+        <SearchResultsFilters
+          v-if="showFilterSidebar"
+          :options="options.filters"
+        />
+        <div class="search-content">
+          <SearchResultsDidYouMean :labels="didYouMeanLabels" />
+          <SearchResultsTitle :options="options" />
+          <SearchResultsProducts :options="options" />
+        </div>
+      </div>
+    </template>
+    <template v-else>
+      <SearchResultsDidYouMean :labels="didYouMeanLabels" />
+      <SearchResultsTitle :options="options" />
+      <div id="lupa-search-results">
+        <SearchResultsFilters
+          v-if="showFilterSidebar"
+          :options="options.filters"
+        />
+        <SearchResultsProducts :options="options" />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -50,6 +59,7 @@ import SearchResultsDidYouMean from "./SearchResultsDidYouMean.vue";
 import SearchResultsProducts from "./products/SearchResultsProducts.vue";
 import SearchResultsBreadcrumbs from "./SearchResultsBreadcrumbs.vue";
 import { getLupaTrackingContext } from "@/utils/tracking.utils";
+import SearchResultsTitle from "./SearchResultsTitle.vue";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -64,6 +74,7 @@ const tracking = namespace("tracking");
     MobileFilterSidebar,
     SearchResultsBreadcrumbs,
     SearchResultsDidYouMean,
+    SearchResultsTitle,
   },
 })
 export default class SearchResults extends Vue {
@@ -89,16 +100,18 @@ export default class SearchResults extends Vue {
     ]);
   }
 
+  @searchResult.Getter("currentQueryText") currentQueryText!: string;
+
   get didYouMeanLabels(): SearchResultsDidYouMeanLabels {
     return pick(this.options.labels, ["noResultsSuggestion", "didYouMean"]);
   }
 
-  get queryText(): string {
-    return this.suggestedSearchText || this.currentQueryText;
-  }
-
   get showFilterSidebar(): boolean {
     return this.options.filters?.facets?.style?.type === "sidebar";
+  }
+
+  get isTitleResultTopPosition(): boolean {
+    return this.options.searchTitlePosition === "search-results-top";
   }
 
   @tracking.Action("trackSearch") trackSearch!: ({
@@ -117,11 +130,6 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }) => void;
 
-  @searchResult.Getter("currentQueryText") currentQueryText!: string;
-
-  @searchResult.State((state) => state.searchResult.suggestedSearchText)
-  suggestedSearchText!: string;
-
   @params.State("searchString") searchString!: string;
 
   @params.Action("setDefaultLimit") setDefaultLimit!: (
@@ -133,6 +141,22 @@ export default class SearchResults extends Vue {
   @params.Action("add") addParams!: (params: QueryParams) => {
     params: QueryParams;
   };
+
+  @params.Action("removeParams") removeParams!: ({
+    paramsToRemove,
+    save,
+  }: {
+    paramsToRemove: string[];
+    save: boolean;
+  }) => void;
+
+  @params.Action("appendParams") appendParams!: ({
+    params,
+    save,
+  }: {
+    params: { name: string; value: string }[];
+    save: boolean;
+  }) => void;
 
   @options.Mutation("setSearchResultOptions") setSearchResultOptions!: ({
     options,
@@ -200,7 +224,7 @@ export default class SearchResults extends Vue {
       .query(this.options.queryKey, query, this.options.options)
       .then((res) => {
         if (res.success) {
-          this.trackResults({ queryKey: this.options.queryKey, results: res });
+          this.handleResults({ queryKey: this.options.queryKey, results: res });
           this.addSearchResult({ ...res });
         } else if (this.options?.options?.onError) {
           this.options.options.onError(res);
@@ -215,6 +239,28 @@ export default class SearchResults extends Vue {
       .finally(() => {
         this.setLoading(false);
       });
+  }
+
+  handleResults({
+    queryKey,
+    results,
+  }: {
+    queryKey: string;
+    results: SearchQueryResult;
+  }): void {
+    this.trackResults({ queryKey, results });
+    const noResultsParam = this.options.noResultsQueryFlag;
+    if (!noResultsParam) {
+      return;
+    }
+    if (results.total < 1) {
+      this.appendParams({
+        params: [{ name: noResultsParam, value: "true" }],
+        save: false,
+      });
+    } else {
+      this.removeParams({ paramsToRemove: [noResultsParam], save: false });
+    }
   }
 
   @searchResult.Action("setColumnCount") setColumnCount!: ({

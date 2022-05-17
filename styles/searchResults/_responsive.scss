@@ -16,10 +16,24 @@
 .lupa-sidebar-top {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   height: searchResults.$mobile-sidebar-height;
   padding: searchResults.$mobile-sidebar-padding;
   border-bottom: searchResults.$mobile-sidebar-border;
+}
+
+.lupa-sidebar-title {
+  margin-left: 15px;
+  font-weight: 700;
+  font-size: 16px;
+  font-family: searchResults.$facets-font-family;
+  color: searchResults.$facet-text-color;
+}
+
+.lupa-sidebar-filter-options {
+  .lupa-facets-title {
+    display: none;
+  }
 }
 
 .lupa-filter-toggle-mobile {
@@ -140,7 +154,7 @@
   .lupa-clear-all-filters {
     margin: 0;
   }
-  #lupa-search-results-did-you-mean{
+  #lupa-search-results-did-you-mean {
     margin-bottom: 10px;
   }
 }

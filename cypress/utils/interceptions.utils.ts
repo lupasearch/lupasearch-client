@@ -22,7 +22,8 @@ export const searchBoxInterceptions = (): void => {
 export const searchResultsInterceptions = (
   sort?: boolean,
   more?: boolean,
-  limit?: number
+  limit?: number,
+  total?: number
 ): void => {
   fetchAdditionalPanelsInterception();
 
@@ -39,7 +40,7 @@ export const searchResultsInterceptions = (
         : -1
     );
   }
-  fetchResultsInterception(items, limit);
+  fetchResultsInterception(items, limit, total);
 };
 
 export const filtersInterceptions = (
@@ -73,14 +74,20 @@ const fetchAdditionalPanelsInterception = (): void => {
 };
 const fetchResultsInterception = (
   items: Document[] = data.document.items,
-  limit = 5
+  limit = 5,
+  total = 2000
 ): void => {
   cy.intercept(
     {
       method: "POST",
       url: "*/query/results",
     },
-    { ...data.document, items: items.slice(0, limit), limit: limit }
+    {
+      ...data.document,
+      items: items.slice(0, limit),
+      limit,
+      total,
+    }
   ).as("fetchResults");
 };
 const fetchResultsWithFilterInterception = (

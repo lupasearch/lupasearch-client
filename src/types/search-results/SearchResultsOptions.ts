@@ -9,7 +9,11 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     containerSelector: string;
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
+    searchTitlePosition?: string;
+    noResultsQueryFlag?: string;
   };
+
+export type SearchTitlePosition = "page-top" | "search-results-top";
 
 export type SearchResultsDidYouMeanLabels = {
   noResultsSuggestion: string;
@@ -49,6 +53,7 @@ export type SearchResultsProductOptions = SearchResultsProductCardOptions &
       layoutSelector?: boolean;
       itemSummary?: boolean;
       clearFilters?: boolean;
+      totalCount?: boolean;
     };
   };
 
@@ -92,6 +97,10 @@ export type ResultCurrentFilterOptions = {
     mobileSidebar: boolean;
     mobileToolbar: boolean;
   };
+  mobileSidebar?: {
+    showFilterCount?: boolean;
+    activeFiltersExpanded?: boolean;
+  };
 };
 
 export type FacetStyle = "sidebar" | "top-dropdown";
@@ -100,6 +109,7 @@ export type ResultFacetOptions = {
   labels: {
     title: string;
     showAll: string;
+    showLess?: string;
     facetFilter: string;
     facetClear?: string;
   };
@@ -112,11 +122,20 @@ export type ResultFacetOptions = {
     topLevelValueCountLimit?: number;
     filterable?: boolean;
   };
+  stats?: {
+    slider?: boolean;
+    inputs?: boolean;
+    labels?: {
+      from?: string;
+      to?: string;
+    };
+  };
   facetValueCountLimit?: number;
   showDocumentCount?: boolean;
   style?: {
     type: FacetStyle;
   };
+  exclude?: string[];
 };
 
 export type SearchResultsFilterOptions = {
