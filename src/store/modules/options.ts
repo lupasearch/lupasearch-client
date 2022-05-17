@@ -2,7 +2,7 @@ import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
 import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
-import { Options } from "@getlupa/client-sdk/Types";
+import { FilterGroup, Options } from "@getlupa/client-sdk/Types";
 import { config, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
 // Set rawError to true by default on all @Action decorators
@@ -12,6 +12,7 @@ config.rawError = true;
 export default class OptionsModule extends VuexModule {
   searchBoxOptions = DEFAULT_SEARCH_BOX_OPTIONS as SearchBoxOptions;
   searchResultOptions = DEFAULT_OPTIONS_RESULTS as SearchResultsOptions;
+  searchResultInitialFilters: FilterGroup = {};
 
   get envOptions(): Options {
     return this.searchBoxOptions.options ?? this.searchResultOptions.options;
@@ -19,6 +20,10 @@ export default class OptionsModule extends VuexModule {
 
   get classMap(): Record<string, string> {
     return this.searchResultOptions.classMap ?? {};
+  }
+
+  get initialFilters(): FilterGroup {
+    return this.searchResultInitialFilters;
   }
 
   @Mutation
@@ -29,5 +34,10 @@ export default class OptionsModule extends VuexModule {
   @Mutation
   setSearchResultOptions({ options }: { options: SearchResultsOptions }): void {
     this.searchResultOptions = options;
+  }
+
+  @Mutation
+  setInitialFilters({ initialFilters }: { initialFilters: FilterGroup }): void {
+    this.searchResultInitialFilters = initialFilters;
   }
 }

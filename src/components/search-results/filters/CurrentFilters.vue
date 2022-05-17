@@ -21,7 +21,7 @@
     <div class="filter-values" v-if="!expandable || isOpen">
       <div class="lupa-current-filter-list">
         <CurrentFilterDisplay
-          v-for="filter of labeledFilters"
+          v-for="filter of displayFilters"
           :key="filter.key + '_' + filter.value"
           :filter="filter"
           @remove="handleRemove"
@@ -55,6 +55,7 @@ import {
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
+const options = namespace("options");
 
 @Component({
   name: "currentFilters",
@@ -74,10 +75,20 @@ export default class CurrentFilters extends Vue {
 
   @searchResult.Getter("labeledFilters") labeledFilters!: LabeledFilter[];
 
-  @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
+  @options.Getter("initialFilters") initialFilters!: FilterGroup;
+
+  get displayFilters(): LabeledFilter[] {
+    return (
+      this.labeledFilters?.filter((f) => !this.initialFilters?.[f.key]) ?? []
+    );
+  }
 
   get hasFilters(): boolean {
-    return this.labeledFilters?.length > 0;
+    return this.displayFilters?.length > 0;
+  }
+
+  get currentFilterCount(): number {
+    return this.displayFilters?.length ?? 0;
   }
 
   @params.Action("removeParams") removeParams!: ({

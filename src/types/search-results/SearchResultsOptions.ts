@@ -1,4 +1,5 @@
 import { SdkOptions } from "../General";
+import { CategoryFilterOptions } from "../product-list/ProductListOptions";
 import { SearchResultsAdditionalPanelOptions } from "./SearchResultsAdditionalPanelOptions";
 import { SearchResultsProductCardOptions } from "./SearchResultsProductCardOptions";
 import { SearchResultsSortOptions } from "./SearchResultsSort";
@@ -140,6 +141,7 @@ export type ResultFacetOptions = {
 export type SearchResultsFilterOptions = {
   currentFilters?: ResultCurrentFilterOptions;
   facets?: ResultFacetOptions;
+  categories?: CategoryFilterOptions;
 };
 
 export type SearchResultsBreadcrumb = { label: string; link?: string };
