@@ -20,7 +20,10 @@
       <div v-else></div>
     </div>
     <div class="lupa-toolbar-right">
-      <SearchResultsMobileToggle :label="options.labels.mobileFilterButton" />
+      <SearchResultsMobileToggle
+        :label="options.labels.mobileFilterButton"
+        :show-filter-count="showMobileFilterCount"
+      />
       <SearchResultsPageSize
         :options="paginationOptions.pageSize"
         :label="paginationOptions.labels.pageSize"
@@ -91,6 +94,12 @@ export default class SearchResultsToolbar extends Vue {
     return !this.hasAnyFilter || !this.showFilterClear
       ? defaultLabel
       : this.paginationOptions?.labels?.filteredItemCount ?? defaultLabel;
+  }
+
+  get showMobileFilterCount(): boolean {
+    return Boolean(
+      this.options.filters?.currentFilters?.mobileSidebar?.showFilterCount
+    );
   }
 
   @params.Action("removeAllFilters") removeAllFilters!: () => {

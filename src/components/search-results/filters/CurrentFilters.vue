@@ -9,7 +9,7 @@
       <div class="lupa-filter-title-text">
         {{ options.labels.title }}
         <span class="lupa-filter-count" v-if="expandable">
-          ({{ filterCount }})
+          ({{ currentFilterCount }})
         </span>
       </div>
       <div
@@ -44,7 +44,6 @@ import { ResultCurrentFilterOptions } from "@/types/search-results/SearchResults
 import { Prop } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 import { FacetResult, FilterGroup } from "@getlupa/client-sdk/Types";
-import { getLabeledFilters, unfoldFilters } from "@/utils/filter.utils";
 import { LabeledFilter } from "@/types/search-results/Filters";
 import CurrentFilterDisplay from "./CurrentFilterDisplay.vue";
 import { QueryParams } from "@/types/search-results/QueryParams";
@@ -73,16 +72,12 @@ export default class CurrentFilters extends Vue {
 
   @searchResult.Getter("facets") facets: FacetResult[] | undefined;
 
-  get labeledFilters(): LabeledFilter[] {
-    return getLabeledFilters(unfoldFilters(this.currentFilters), this.facets);
-  }
+  @searchResult.Getter("labeledFilters") labeledFilters!: LabeledFilter[];
+
+  @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
 
   get hasFilters(): boolean {
     return this.labeledFilters?.length > 0;
-  }
-
-  get filterCount(): number {
-    return this.labeledFilters?.length ?? 0;
   }
 
   @params.Action("removeParams") removeParams!: ({

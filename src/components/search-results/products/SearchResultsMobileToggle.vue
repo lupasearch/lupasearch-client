@@ -1,5 +1,10 @@
 <template>
-  <div class="lupa-mobile-toggle" @click="handleMobileToggle">{{ label }}</div>
+  <div class="lupa-mobile-toggle" @click="handleMobileToggle">
+    {{ label }}
+    <span class="lupa-mobile-toggle-filter-count" v-if="showFilterCount">{{
+      currentFilterCount
+    }}</span>
+  </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -14,6 +19,9 @@ const searchResult = namespace("searchResult");
 })
 export default class SearchResultsMobileToggle extends Vue {
   @Prop() label!: string;
+  @Prop({ default: false }) showFilterCount!: boolean;
+
+  @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
 
   @searchResult.Mutation("setSidebarVisibility") setSidebarVisibility!: ({
     visible,

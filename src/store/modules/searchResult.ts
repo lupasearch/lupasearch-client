@@ -4,12 +4,14 @@ import {
   S_MIN_WIDTH,
   XL_MIN_WIDTH,
 } from "@/constants/global.const";
+import { LabeledFilter } from "@/types/search-results/Filters";
 import {
   ResultsLayout,
   ResultsLayoutEnum,
 } from "@/types/search-results/ResultsLayout";
 import { ProductGrid } from "@/types/search-results/SearchResultsOptions";
 import { setDocumentTitle } from "@/utils/document.utils";
+import { getLabeledFilters, unfoldFilters } from "@/utils/filter.utils";
 import {
   FacetResult,
   FilterGroup,
@@ -48,6 +50,14 @@ export default class SearchResultModule extends VuexModule {
 
   get hasResults(): boolean {
     return this.totalItems > 0;
+  }
+
+  get labeledFilters(): LabeledFilter[] {
+    return getLabeledFilters(unfoldFilters(this.currentFilters), this.facets);
+  }
+
+  get currentFilterCount(): number {
+    return this.labeledFilters?.length ?? 0;
   }
 
   get hasAnyFilter(): boolean {
