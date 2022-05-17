@@ -1,5 +1,5 @@
 <template>
-  <div class="lupa-facet-hierarchy">
+  <div class="lupa-facet-hierarchy" :class="{ 'lupa-term-active': isChecked }">
     <div
       class="lupa-facet-term"
       data-cy="lupa-facet-term"
