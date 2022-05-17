@@ -1,17 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import { pick } from "@/utils/picker.utils";
-import { mount, Wrapper } from "@vue/test-utils";
+import { createLocalVue, mount, Wrapper } from "@vue/test-utils";
 import SearchResultsToolbar from "@/components/search-results/products/SearchResultsToolbar.vue";
 import SearchResultsPageSelect from "../pagination/SearchResultsPageSelect.vue";
 import SearchResultsPageSize from "../pagination/SearchResultsPageSize.vue";
 import SearchResultsLayoutSelection from "@/components/search-results/products/SearchResultsLayoutSelection.vue";
 import Vue from "vue";
+import Vuex, { Store } from "vuex";
+import { mocked } from "ts-jest/utils";
+import SearchResultModule from "@/store/modules/searchResult";
+import ParamsModule from "@/store/modules/params";
+import { RootState } from "@/store/types/State";
+
+jest.mock("@/store/modules/searchResult");
+jest.mock("@/store/modules/params");
+
+const SearchResultModuleMock = mocked(SearchResultModule, true);
+const ParamsModuleMock = mocked(ParamsModule, true);
+
+const localVue = createLocalVue();
+
+localVue.use(Vuex);
 
 describe("SearchResultsToolbar", () => {
   let wrapper: Wrapper<SearchResultsToolbar, Element>;
+  let store: Store<RootState>;
 
   beforeEach(() => {
+    store = new Vuex.Store({
+      modules: {
+        searchResult: SearchResultModuleMock,
+        params: ParamsModuleMock,
+      },
+    });
     wrapper = mount(SearchResultsToolbar, {
       propsData: {
         paginationOptions: {
@@ -35,6 +57,8 @@ describe("SearchResultsToolbar", () => {
         },
         showLayoutSelection: true,
       },
+      store,
+      localVue,
       stubs: { SearchResultsLayoutSelection: { template: "<span/>" } },
     });
   });

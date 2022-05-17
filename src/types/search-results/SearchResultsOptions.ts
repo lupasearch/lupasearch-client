@@ -31,6 +31,7 @@ export type SearchResultsOptionLabels = SearchResultsPaginationLabels &
     sortBy: string;
     currency: string;
     priceSeparator?: string;
+    searchResults?: string;
     itemCount: string;
     emptyResults: string;
     mobileFilterButton: string;

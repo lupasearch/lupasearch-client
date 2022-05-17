@@ -72,6 +72,7 @@
         :productCardOptions="productCardOptions()"
       />
     </div>
+    <slot name="append" />
   </div>
 </template>
 <script lang="ts">

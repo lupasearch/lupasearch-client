@@ -50,7 +50,7 @@ export default class CategoryFilterItem extends Vue {
   }
 
   get isActive(): boolean {
-    return window.location.href === this.url;
+    return window.location.href === this.urlLink;
   }
 
   get hasDirectRouting(): boolean {

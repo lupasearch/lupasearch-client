@@ -6,27 +6,38 @@
       :breadcrumbs="options.breadcrumbs"
     />
     <template v-if="isTitleResultTopPosition">
-      <div class="top-layout-wrapper">
+      <div id="lupa-search-results" class="top-layout-wrapper">
         <SearchResultsFilters
           v-if="showFilterSidebar"
           :options="options.filters"
         />
         <div class="search-content">
           <SearchResultsDidYouMean :labels="didYouMeanLabels" />
-          <SearchResultsTitle :options="options" />
-          <SearchResultsProducts :options="options" />
+          <SearchResultsTitle
+            :options="options"
+            :isProductList="isProductList"
+          />
+          <SearchResultsProducts :options="options">
+            <template #append>
+              <slot />
+            </template>
+          </SearchResultsProducts>
         </div>
       </div>
     </template>
     <template v-else>
       <SearchResultsDidYouMean :labels="didYouMeanLabels" />
-      <SearchResultsTitle :options="options" />
+      <SearchResultsTitle :options="options" :isProductList="isProductList" />
       <div id="lupa-search-results">
         <SearchResultsFilters
           v-if="showFilterSidebar"
           :options="options.filters"
         />
-        <SearchResultsProducts :options="options" />
+        <SearchResultsProducts :options="options">
+          <template #append>
+            <slot />
+          </template>
+        </SearchResultsProducts>
       </div>
     </template>
   </div>

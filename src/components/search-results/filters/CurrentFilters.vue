@@ -73,22 +73,14 @@ export default class CurrentFilters extends Vue {
 
   @searchResult.Getter("facets") facets: FacetResult[] | undefined;
 
-  @searchResult.Getter("labeledFilters") labeledFilters!: LabeledFilter[];
+  @searchResult.Getter("displayFilters") displayFilters!: LabeledFilter[];
+
+  @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
 
   @options.Getter("initialFilters") initialFilters!: FilterGroup;
 
-  get displayFilters(): LabeledFilter[] {
-    return (
-      this.labeledFilters?.filter((f) => !this.initialFilters?.[f.key]) ?? []
-    );
-  }
-
   get hasFilters(): boolean {
     return this.displayFilters?.length > 0;
-  }
-
-  get currentFilterCount(): number {
-    return this.displayFilters?.length ?? 0;
   }
 
   @params.Action("removeParams") removeParams!: ({

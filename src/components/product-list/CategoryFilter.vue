@@ -97,7 +97,7 @@ export default class CategoryFilter extends Vue {
   }
 
   get isActive(): boolean {
-    return this.parentUrl === window.location.href;
+    return this.parentUrlLink === window.location.href;
   }
 
   async mounted(): Promise<void> {
