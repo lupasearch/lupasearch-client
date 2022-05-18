@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  getHint,
   getPageCount,
   pick,
   pickClosestNumber,
@@ -46,5 +48,43 @@ describe("picker.utils", () => {
       value2: "key2",
       value3: "key3",
     });
+  });
+});
+
+describe("getHint", () => {
+  it("should highlight phrase at the start", () => {
+    expect(getHint("milk", "mi")).toBe("<strong>mi</strong>lk");
+  });
+
+  it("should highlight phrase at the start of another word", () => {
+    expect(getHint("chocolate milk", "mil")).toBe(
+      "chocolate <strong>mil</strong>k"
+    );
+  });
+
+  it("should not highlight phrase if it does not appear in the string", () => {
+    expect(getHint("chocolate milk", "flour")).toBe("chocolate milk");
+  });
+
+  it("should not highlight phrase if string is empty", () => {
+    expect(getHint("", "flour")).toBe("");
+  });
+
+  it("should not highlight phrase if input is empty", () => {
+    expect(getHint("test", "")).toBe("test");
+  });
+
+  it("should not highlight if phrase is undefined", () => {
+    expect(getHint(undefined as unknown as any, "")).toBe("");
+  });
+
+  it("should not highlight if input value is undefined", () => {
+    expect(getHint("value", undefined as unknown as any)).toBe("value");
+  });
+
+  it("should only highlight the first occurrence of the phrase", () => {
+    expect(getHint("long long low", "lo")).toBe(
+      "<strong>lo</strong>ng long low"
+    );
   });
 });

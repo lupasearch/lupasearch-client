@@ -2,6 +2,7 @@
 import {
   addParamsToLabel,
   capitalize,
+  escapeHtml,
   getDisplayValue,
   getNormalizedString,
 } from "../string.utils";
@@ -93,5 +94,25 @@ describe("getDisplayValue", () => {
     expect(getDisplayValue(20.5)).toBe("20.5");
     expect(getDisplayValue(20.9988888)).toBe("21");
     expect(getDisplayValue(-0.333333)).toBe("-0.33");
+  });
+});
+
+describe("escapeHtml", () => {
+  it.each([
+    [undefined, ""],
+    [null, ""],
+    ["", ""],
+    [false, ""],
+    [NaN, ""],
+  ])(
+    "should return empty string if value is falsy",
+    (value: any, expected: string) => {
+      expect(escapeHtml(value)).toEqual(expected);
+    }
+  );
+
+  it("should return escaped characters", () => {
+    expect(escapeHtml("<script>")).toBe("&lt;script&gt;");
+    expect(escapeHtml("value='123'")).toBe("value=&#039;123&#039;");
   });
 });
