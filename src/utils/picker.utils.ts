@@ -1,3 +1,5 @@
+import { escapeHtml } from "./string.utils";
+
 export const pick = <T extends Record<string, unknown>, U extends keyof T>(
   obj: T,
   keys: Array<U>
@@ -10,11 +12,15 @@ export const pick = <T extends Record<string, unknown>, U extends keyof T>(
 };
 
 export const getHint = (suggestion: string, inputValue: string): string => {
-  const hint = suggestion.replace(inputValue, "");
-
-  if (!hint || suggestion !== hint) {
-    return `<strong>${inputValue}</strong>${hint}`;
-  } else return suggestion;
+  if (!inputValue) {
+    return escapeHtml(suggestion);
+  }
+  return (
+    suggestion?.replace(
+      inputValue,
+      `<strong>${escapeHtml(inputValue)}</strong>`
+    ) ?? ""
+  );
 };
 
 // https://stackoverflow.com/a/56781239
