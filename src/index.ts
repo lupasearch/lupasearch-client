@@ -7,7 +7,7 @@ import ProductListEntry from "./ProductListEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import { SearchResultsOptions } from "./types/search-results/SearchResultsOptions";
 import store from "./store";
-import { TrackingOptions } from "./types/General";
+import { SdkOptions, TrackingOptions } from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
 import { ProductListOptions } from "./types/product-list/ProductListOptions";
 
@@ -73,6 +73,12 @@ const lupaSearch = {
   clearProductList,
 };
 
-export { TrackingOptions, SearchBoxOptions, SearchResultsOptions };
+export {
+  TrackingOptions,
+  SearchBoxOptions,
+  SearchResultsOptions,
+  ProductListOptions,
+  SdkOptions,
+};
 
 export default lupaSearch;

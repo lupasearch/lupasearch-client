@@ -26,5 +26,5 @@ export type CategoryFilterOptions = {
 
 export type ProductListOptions = SearchResultsOptions & {
   initialFilters?: FilterGroup;
-  categories?: CategoryFilterOptions;
+  categories: CategoryFilterOptions;
 };
