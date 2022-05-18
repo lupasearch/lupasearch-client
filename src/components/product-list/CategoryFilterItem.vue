@@ -16,15 +16,11 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
-import SearchResults from "../search-results/SearchResults.vue";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import { emitRoutingEvent } from "@/utils/routing.utils";
 
 @Component({
   name: "categoryFilterItem",
-  components: {
-    SearchResults,
-  },
 })
 export default class CategoryFilterItem extends Vue {
   @Prop() options!: CategoryFilterOptions;
