@@ -4,10 +4,8 @@
       <a
         v-if="hasBackButton"
         data-cy="lupa-category-back"
-        :href="backUrl"
-        v-on="
-          hasDirectRouting ? {} : { click: () => handleNavigation(backUrlLink) }
-        "
+        :href="backUrlLink"
+        @click="handleNavigationBack"
       >
         {{ backTitle }}
       </a>
@@ -18,13 +16,9 @@
     >
       <a
         data-cy="lupa-current-category"
-        :href="parentUrl"
+        :href="parentUrlLink"
         :class="{ 'lupa-title-category': !hasBackButton }"
-        v-on="
-          hasDirectRouting
-            ? {}
-            : { click: () => handleNavigation(parentUrlLink) }
-        "
+        @click="handleNavigationParent"
         >{{ parentTitle }}</a
       >
     </div>
@@ -48,7 +42,7 @@ import { Options } from "@getlupa/client-sdk/Types";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import { namespace } from "vuex-class";
 import CategoryFilterItem from "./CategoryFilterItem.vue";
-import { emitRoutingEvent } from "@/utils/routing.utils";
+import { emitRoutingEvent, handleRoutingEvent } from "@/utils/routing.utils";
 
 const options = namespace("options");
 
@@ -68,32 +62,24 @@ export default class CategoryFilter extends Vue {
     return Boolean(this.options.back?.title);
   }
 
-  get hasDirectRouting(): boolean {
-    return this.options.routingBehavior === "direct-link";
+  get hasEventRouting(): boolean {
+    return this.options.routingBehavior === "event";
   }
 
   get backTitle(): string | undefined {
     return this.options.back?.title;
   }
 
-  get backUrl(): string | undefined {
-    return this.hasDirectRouting ? this.backUrlLink : undefined;
-  }
-
   get backUrlLink(): string | undefined {
-    return this.options.back?.url;
+    return this.options.back?.url ?? "";
   }
 
   get parentTitle(): string | undefined {
     return this.options.parent?.title;
   }
 
-  get parentUrl(): string | undefined {
-    return this.hasDirectRouting ? this.options.parent?.url : undefined;
-  }
-
   get parentUrlLink(): string | undefined {
-    return this.options.parent?.url;
+    return this.options.parent?.url ?? "";
   }
 
   get isActive(): boolean {
@@ -122,8 +108,18 @@ export default class CategoryFilter extends Vue {
     );
   }
 
-  handleNavigation(url: string): void {
-    emitRoutingEvent(url);
+  handleNavigationParent(event?: Event): void {
+    if (!this.parentUrlLink) {
+      return;
+    }
+    handleRoutingEvent(this.parentUrlLink, event, this.hasEventRouting);
+  }
+
+  handleNavigationBack(event?: Event): void {
+    if (!this.backUrlLink) {
+      return;
+    }
+    handleRoutingEvent(this.backUrlLink, event, this.hasEventRouting);
   }
 }
 </script>

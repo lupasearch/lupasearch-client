@@ -15,9 +15,9 @@
     }}</span>
     <a
       v-if="options.link"
-      :href="hasEventRouting ? undefined : link"
+      :href="link"
       class="lupa-search-results-product-title-text lupa-title-link"
-      v-on="hasEventRouting ? { click: handleNavigation } : {}"
+      @click="handleNavigation"
       >{{ title }}</a
     >
   </div>
@@ -29,7 +29,7 @@ import { Document } from "@getlupa/client-sdk/Types";
 import { TitleDocumentElement } from "@/types/DocumentElement";
 import { namespace } from "vuex-class";
 import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
-import { emitRoutingEvent } from "@/utils/routing.utils";
+import { handleRoutingEvent } from "@/utils/routing.utils";
 
 const options = namespace("options");
 
@@ -60,8 +60,8 @@ export default class SearchResultsProductTitle extends Vue {
     return this.searchResultOptions.routingBehavior === "event";
   }
 
-  handleNavigation(): void {
-    emitRoutingEvent(this.link);
+  handleNavigation(event?: Event): void {
+    handleRoutingEvent(this.link, event, this.hasEventRouting);
   }
 }
 </script>
