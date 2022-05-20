@@ -1,5 +1,6 @@
 <template>
   <div class="lupa-search-result-wrapper">
+    <CategoryTopFilters v-if="isTitleResultTopPosition" :options="options" />
     <MobileFilterSidebar v-if="options.filters" :options="options.filters" />
     <SearchResultsBreadcrumbs
       v-if="currentQueryText || isProductList"
@@ -15,7 +16,7 @@
           <SearchResultsDidYouMean :labels="didYouMeanLabels" />
           <SearchResultsTitle
             :options="options"
-            :isProductList="isProductList"
+            :is-product-list="isProductList"
           />
           <SearchResultsProducts :options="options">
             <template #append>
@@ -27,7 +28,7 @@
     </template>
     <template v-else>
       <SearchResultsDidYouMean :labels="didYouMeanLabels" />
-      <SearchResultsTitle :options="options" :isProductList="isProductList" />
+      <SearchResultsTitle :options="options" :is-product-list="isProductList" />
       <div id="lupa-search-results">
         <SearchResultsFilters
           v-if="showFilterSidebar"
@@ -71,6 +72,8 @@ import SearchResultsProducts from "./products/SearchResultsProducts.vue";
 import SearchResultsBreadcrumbs from "./SearchResultsBreadcrumbs.vue";
 import { getLupaTrackingContext } from "@/utils/tracking.utils";
 import SearchResultsTitle from "./SearchResultsTitle.vue";
+import SearchResultsToolbar from "./products/SearchResultsToolbar.vue";
+import CategoryTopFilters from "../product-list/CategoryTopFilters.vue";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -86,6 +89,8 @@ const tracking = namespace("tracking");
     SearchResultsBreadcrumbs,
     SearchResultsDidYouMean,
     SearchResultsTitle,
+    SearchResultsToolbar,
+    CategoryTopFilters,
   },
 })
 export default class SearchResults extends Vue {

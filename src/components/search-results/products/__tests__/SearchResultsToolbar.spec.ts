@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
-import { pick } from "@/utils/picker.utils";
 import { createLocalVue, mount, Wrapper } from "@vue/test-utils";
 import SearchResultsToolbar from "@/components/search-results/products/SearchResultsToolbar.vue";
 import SearchResultsPageSelect from "../pagination/SearchResultsPageSelect.vue";
@@ -12,22 +10,41 @@ import { mocked } from "ts-jest/utils";
 import SearchResultModule from "@/store/modules/searchResult";
 import ParamsModule from "@/store/modules/params";
 import { RootState } from "@/store/types/State";
+import { getPageCount } from "@/utils/picker.utils";
 
 jest.mock("@/store/modules/searchResult");
 jest.mock("@/store/modules/params");
+jest.mock("@/utils/picker.utils");
 
 const SearchResultModuleMock = mocked(SearchResultModule, true);
 const ParamsModuleMock = mocked(ParamsModule, true);
+const getPageCountMock = mocked(getPageCount);
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+
+const toolbarOptions = {
+  labels: { mobileFilterButton: "filter", pageSize: "pageSize" },
+  pagination: {
+    sizeSelection: { position: { top: true }, sizes: [10, 20, 25, 50] },
+    pageSelection: { position: { top: true }, display: 5 },
+  },
+  sort: [],
+  toolbar: {
+    layoutSelector: true,
+  },
+};
 
 describe("SearchResultsToolbar", () => {
   let wrapper: Wrapper<SearchResultsToolbar, Element>;
   let store: Store<RootState>;
 
   beforeEach(() => {
+    getPageCountMock.mockReturnValue(10);
+    ParamsModuleMock.getters?.["page"].mockReturnValue(2);
+    ParamsModuleMock.getters?.["limit"].mockReturnValue(20);
+
     store = new Vuex.Store({
       modules: {
         searchResult: SearchResultModuleMock,
@@ -36,26 +53,8 @@ describe("SearchResultsToolbar", () => {
     });
     wrapper = mount(SearchResultsToolbar, {
       propsData: {
-        paginationOptions: {
-          pageSize: {
-            sizes: DEFAULT_OPTIONS_RESULTS.pagination.sizeSelection.sizes,
-            selectedSize:
-              DEFAULT_OPTIONS_RESULTS.pagination.sizeSelection.sizes[0],
-          },
-          pageSelect: {
-            count: 5,
-            selectedPage: 1,
-          },
-          labels: pick(DEFAULT_OPTIONS_RESULTS.labels, [
-            "pageSize",
-            "showMore",
-          ]),
-        },
-        paginationDisplay: {
-          pageSize: true,
-          pageSelect: true,
-        },
-        showLayoutSelection: true,
+        options: toolbarOptions,
+        paginationLocation: "top",
       },
       store,
       localVue,
@@ -72,9 +71,12 @@ describe("SearchResultsToolbar", () => {
 
   it("should only display SearchResultsPageSelect", async () => {
     wrapper.setProps({
-      paginationDisplay: {
-        pageSize: false,
-        pageSelect: true,
+      options: {
+        ...toolbarOptions,
+        pagination: {
+          sizeSelection: { position: { top: false }, sizes: [10, 20, 25, 50] },
+          pageSelection: { position: { top: true }, display: 5 },
+        },
       },
     });
     await Vue.nextTick();
@@ -86,9 +88,12 @@ describe("SearchResultsToolbar", () => {
 
   it("should only display SearchResultsPageSize", async () => {
     wrapper.setProps({
-      paginationDisplay: {
-        pageSize: true,
-        pageSelect: false,
+      options: {
+        ...toolbarOptions,
+        pagination: {
+          sizeSelection: { position: { top: true }, sizes: [10, 20, 25, 50] },
+          pageSelection: { position: { top: false }, display: 5 },
+        },
       },
     });
     await Vue.nextTick();

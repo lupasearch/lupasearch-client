@@ -5,11 +5,20 @@ import SearchBoxEntry from "./SearchBoxEntry.vue";
 import SearchResultsEntry from "./SearchResultsEntry.vue";
 import ProductListEntry from "./ProductListEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
-import { SearchResultsOptions } from "./types/search-results/SearchResultsOptions";
+import {
+  FacetStyle,
+  SearchResultsOptions,
+} from "./types/search-results/SearchResultsOptions";
 import store from "./store";
 import { SdkOptions, TrackingOptions } from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
 import { ProductListOptions } from "./types/product-list/ProductListOptions";
+import { DocumentElementType } from "./types/DocumentElement";
+import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
+import { Environment, SortDirection } from "@getlupa/client-sdk/Types";
+import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
+import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
+import { BadgeType } from "./types/search-results/BadgeOptions";
 
 const app = {
   box: {},
@@ -79,6 +88,14 @@ export {
   SearchResultsOptions,
   ProductListOptions,
   SdkOptions,
+  DocumentElementType,
+  SearchBoxPanelType,
+  FacetStyle,
+  Environment,
+  RoutingBehavior,
+  AnchorPosition,
+  BadgeType,
+  SortDirection,
 };
 
 export default lupaSearch;

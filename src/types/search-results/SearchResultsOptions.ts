@@ -9,7 +9,6 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     containerSelector: string;
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
-    searchTitlePosition?: string;
     noResultsQueryFlag?: string;
   };
 
@@ -50,6 +49,7 @@ export type SearchResultsProductOptions = SearchResultsProductCardOptions &
     pagination: SearchResultsPagination;
     sort: SearchResultsSortOptions[];
     filters?: SearchResultsFilterOptions;
+    searchTitlePosition?: string;
     toolbar?: {
       layoutSelector?: boolean;
       itemSummary?: boolean;

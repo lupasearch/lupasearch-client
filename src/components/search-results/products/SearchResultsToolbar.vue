@@ -53,6 +53,8 @@ import SearchResultsSummary from "./SearchResultsSummary.vue";
 import SearchResultsMobileToggle from "./SearchResultsMobileToggle.vue";
 import { SearchResultsProductOptions } from "@/types/search-results/SearchResultsOptions";
 import { QueryParams } from "@/types/search-results/QueryParams";
+import { SearchQueryResult } from "@getlupa/client-sdk/Types";
+import { getPageCount } from "@/utils/picker.utils";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -71,14 +73,78 @@ const params = namespace("params");
 export default class SearchResultsToolbar extends Vue {
   @Prop({ default: () => ({ labels: {} }) })
   options!: SearchResultsProductOptions;
-  @Prop({ default: () => ({}) }) paginationOptions!: PaginationOptions;
-  @Prop({ default: () => ({}) }) paginationDisplay!: PaginationDisplay;
-  @Prop({ default: null }) sortOptions!: SortOptions;
-  @Prop({ default: false }) showLayoutSelection!: boolean;
-  @Prop({ default: false }) showItemSummary!: boolean;
-  @Prop({ default: false }) showFilterClear!: boolean;
+  @Prop({ default: "top" }) paginationLocation!: "top" | "bottom";
+
+  @params.Getter("limit") limit!: number;
+  @params.Getter("page") page!: number;
 
   @searchResult.Getter("hasAnyFilter") hasAnyFilter!: boolean;
+  @searchResult.State((state) => state.searchResult)
+  searchResult!: SearchQueryResult;
+
+  get isBottomLocation(): boolean {
+    return this.paginationLocation === "bottom";
+  }
+
+  get showFilterClear(): boolean {
+    return this.isBottomLocation
+      ? false
+      : Boolean(this.options.toolbar?.clearFilters);
+  }
+
+  get showItemSummary(): boolean {
+    return this.isBottomLocation
+      ? false
+      : Boolean(this.options.toolbar?.itemSummary);
+  }
+
+  get showLayoutSelection(): boolean {
+    return this.isBottomLocation
+      ? false
+      : Boolean(this.options.toolbar?.layoutSelector);
+  }
+
+  get sortOptions(): SortOptions | undefined {
+    if (this.isBottomLocation) {
+      return undefined;
+    }
+    return {
+      label: this.options.labels.sortBy,
+      options: this.options.sort,
+    };
+  }
+
+  get paginationDisplay(): PaginationDisplay {
+    if (this.paginationLocation === "top") {
+      return {
+        pageSize: this.options.pagination.sizeSelection.position.top,
+        pageSelect: this.options.pagination.pageSelection.position.top,
+      };
+    } else {
+      return {
+        pageSize: this.options.pagination.sizeSelection.position.bottom,
+        pageSelect: this.options.pagination.pageSelection.position.bottom,
+      };
+    }
+  }
+
+  get paginationOptions(): PaginationOptions {
+    const pageSize = this.options.pagination.sizeSelection;
+    const pageSelect = this.options.pagination.pageSelection;
+    const r = {
+      pageSize: {
+        sizes: pageSize.sizes,
+        selectedSize: this.limit,
+      },
+      pageSelect: {
+        count: getPageCount(this.searchResult.total, this.limit),
+        selectedPage: this.page,
+        display: pageSelect.display,
+      },
+      labels: this.options.labels,
+    };
+    return r;
+  }
 
   get displayPageSelect(): boolean {
     return (

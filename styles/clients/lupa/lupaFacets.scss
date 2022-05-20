@@ -144,3 +144,16 @@
   justify-content: center;
   align-items: center;
 }
+
+.lupa-category-top-mobile-filters {
+  .lupa-category-back {
+    border: lupaConfig.$border;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 0;
+    &::before {
+      content: "<";
+      display: inline-block;
+    }
+  }
+}

@@ -8,12 +8,9 @@
       <FiltersTopDropdown v-if="showTopFilters" :options="options.filters" />
       <SearchResultsToolbar
         class="lupa-toolbar-mobile"
-        :sortOptions="sortOptions"
-        :paginationOptions="paginationOptions"
-        :paginationDisplay="topPagination"
-        :showLayoutSelection="options.toolbar.layoutSelector"
-        :showItemSummary="options.toolbar.itemSummary"
+        v-if="showMobileFilters"
         :options="options"
+        pagination-location="top"
       />
       <CurrentFilters
         class="lupa-filters-mobile"
@@ -29,13 +26,8 @@
       />
       <SearchResultsToolbar
         class="lupa-toolbar-top"
-        :sortOptions="sortOptions"
-        :paginationOptions="paginationOptions"
-        :paginationDisplay="topPagination"
-        :showLayoutSelection="options.toolbar.layoutSelector"
-        :showItemSummary="options.toolbar.itemSummary"
-        :showFilterClear="options.toolbar.clearFilters"
         :options="options"
+        pagination-location="top"
       />
       <div class="lupa-products" data-cy="lupa-products">
         <SearchResultsProductCard
@@ -48,9 +40,8 @@
       </div>
       <SearchResultsToolbar
         class="lupa-toolbar-bottom"
-        :paginationOptions="paginationOptions"
-        :paginationDisplay="bottomPagination"
         :options="options"
+        pagination-location="bottom"
       />
       <AdditionalPanels
         :options="options"
@@ -77,10 +68,6 @@
 </template>
 <script lang="ts">
 import {
-  PaginationDisplay,
-  PaginationOptions,
-} from "@/types/search-results/PaginationOptions";
-import {
   ResultsLayout,
   ResultsLayoutEnum,
 } from "@/types/search-results/ResultsLayout";
@@ -90,8 +77,7 @@ import {
   SearchResultsSimilarQueriesLabels,
 } from "@/types/search-results/SearchResultsOptions";
 import { SearchResultsProductCardOptions } from "@/types/search-results/SearchResultsProductCardOptions";
-import { SortOptions } from "@/types/search-results/SearchResultsSort";
-import { getPageCount, pick } from "@/utils/picker.utils";
+import { pick } from "@/utils/picker.utils";
 import { Document, SearchQueryResult } from "@getlupa/client-sdk/Types";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -155,6 +141,10 @@ export default class SearchResultsProducts extends Vue {
     return this.options.filters?.facets?.style?.type === "top-dropdown";
   }
 
+  get showMobileFilters(): boolean {
+    return this.options.searchTitlePosition !== "search-results-top";
+  }
+
   get currentFilterOptions(): ResultCurrentFilterOptions | undefined {
     return this.options.filters?.currentFilters?.visibility?.mobileToolbar
       ? this.options.filters?.currentFilters
@@ -178,45 +168,6 @@ export default class SearchResultsProducts extends Vue {
       return "width: 100%";
     }
     return `width: ${100 / this.columnCount}%`;
-  }
-
-  get sortOptions(): SortOptions {
-    return {
-      label: this.options.labels.sortBy,
-      options: this.options.sort,
-    };
-  }
-
-  get paginationOptions(): PaginationOptions {
-    const pageSize = this.options.pagination.sizeSelection;
-    const pageSelect = this.options.pagination.pageSelection;
-
-    return {
-      pageSize: {
-        sizes: pageSize.sizes,
-        selectedSize: this.limit,
-      },
-      pageSelect: {
-        count: getPageCount(this.searchResult.total, this.limit),
-        selectedPage: this.page,
-        display: pageSelect.display,
-      },
-      labels: this.options.labels,
-    };
-  }
-
-  get topPagination(): PaginationDisplay {
-    return {
-      pageSize: this.options.pagination.sizeSelection.position.top,
-      pageSelect: this.options.pagination.pageSelection.position.top,
-    };
-  }
-
-  get bottomPagination(): PaginationDisplay {
-    return {
-      pageSize: this.options.pagination.sizeSelection.position.bottom,
-      pageSelect: this.options.pagination.pageSelection.position.bottom,
-    };
   }
 
   getProductKey(index: string, product: Document): string {
