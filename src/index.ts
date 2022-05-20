@@ -10,12 +10,16 @@ import {
   SearchResultsOptions,
 } from "./types/search-results/SearchResultsOptions";
 import store from "./store";
-import { SdkOptions, TrackingOptions } from "./types/General";
+import {
+  SdkOptions,
+  TrackingOptions,
+  Environment,
+  SortDirection,
+} from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
 import { ProductListOptions } from "./types/product-list/ProductListOptions";
 import { DocumentElementType } from "./types/DocumentElement";
 import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
-import { Environment, SortDirection } from "@getlupa/client-sdk/Types";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
 import { BadgeType } from "./types/search-results/BadgeOptions";
