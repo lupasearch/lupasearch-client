@@ -43,3 +43,21 @@ export const getPathName = (resultPageLink: string): string => {
   pathname += !location.pathname.includes(resultPageLink) ? resultPageLink : "";
   return pathname;
 };
+
+export const getRelativePath = (link: string): string => {
+  try {
+    const url = new URL(link);
+    return url.toString().substring(url.origin.length);
+  } catch {
+    // Invalid url, let's return original string
+    return link;
+  }
+};
+
+// Checks if url links match absolutely, or if their relative parts are equal
+export const linksMatch = (link1?: string, link2?: string): boolean => {
+  if (!link1 || !link2) {
+    return false;
+  }
+  return link1 === link2 || getRelativePath(link1) === getRelativePath(link2);
+};

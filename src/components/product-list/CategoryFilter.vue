@@ -42,7 +42,8 @@ import { Options } from "@getlupa/client-sdk/Types";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import { namespace } from "vuex-class";
 import CategoryFilterItem from "./CategoryFilterItem.vue";
-import { emitRoutingEvent, handleRoutingEvent } from "@/utils/routing.utils";
+import { handleRoutingEvent } from "@/utils/routing.utils";
+import { linksMatch } from "@/utils/link.utils";
 
 const options = namespace("options");
 
@@ -83,7 +84,10 @@ export default class CategoryFilter extends Vue {
   }
 
   get isActive(): boolean {
-    return this.parentUrlLink === window.location.href;
+    return linksMatch(
+      this.parentUrlLink,
+      window.location.origin + window.location.pathname
+    );
   }
 
   async mounted(): Promise<void> {

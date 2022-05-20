@@ -18,6 +18,7 @@ import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import { handleRoutingEvent } from "@/utils/routing.utils";
+import { linksMatch } from "@/utils/link.utils";
 
 @Component({
   name: "categoryFilterItem",
@@ -39,7 +40,10 @@ export default class CategoryFilterItem extends Vue {
   }
 
   get isActive(): boolean {
-    return window.location.href === this.urlLink;
+    return linksMatch(
+      this.urlLink,
+      window.location.origin + window.location.pathname
+    );
   }
 
   get hasEventRouting(): boolean {
