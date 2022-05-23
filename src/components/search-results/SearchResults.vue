@@ -119,12 +119,19 @@ export default class SearchResults extends Vue {
 
   @searchResult.Getter("currentQueryText") currentQueryText!: string;
 
+  @searchResult.Getter("hasResults") hasResults!: boolean;
+
+  @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
+
   get didYouMeanLabels(): SearchResultsDidYouMeanLabels {
     return pick(this.options.labels, ["noResultsSuggestion", "didYouMean"]);
   }
 
   get showFilterSidebar(): boolean {
-    return this.options.filters?.facets?.style?.type === "sidebar";
+    return (
+      this.options.filters?.facets?.style?.type === "sidebar" &&
+      (this.hasResults || this.currentFilterCount > 0)
+    );
   }
 
   get isTitleResultTopPosition(): boolean {
