@@ -189,8 +189,8 @@ export default class SearchResults extends Vue {
 
   mounted(): void {
     window.addEventListener("resize", this.handleResize);
-    this.handleMounted();
     this.setSearchResultOptions({ options: this.options });
+    this.handleMounted();
     this.setInitialFilters({ initialFilters: this.initialFilters });
   }
 
@@ -221,11 +221,15 @@ export default class SearchResults extends Vue {
     loading: boolean;
   };
 
+  @options.Getter("defaultSearchResultPageSize")
+  defaultSearchResultPageSize!: number;
+
   handleUrlChange(params?: URLSearchParams): void {
     const searchParams = params || new URLSearchParams(window.location.search);
     const publicQuery = createPublicQuery(
       parseParams(searchParams),
-      this.options.sort
+      this.options.sort,
+      this.defaultSearchResultPageSize
     );
     this.setLoading(true);
     this.query(
@@ -236,7 +240,8 @@ export default class SearchResults extends Vue {
   query(publicQuery: PublicQuery): void {
     this.trackSearch({ queryKey: this.options.queryKey, query: publicQuery });
     const context = getLupaTrackingContext();
-    const query = { ...publicQuery, ...context };
+    const limit = publicQuery.limit || this.defaultSearchResultPageSize;
+    const query = { ...publicQuery, ...context, limit };
     getLupaSdk
       .query(this.options.queryKey, query, this.options.options)
       .then((res) => {

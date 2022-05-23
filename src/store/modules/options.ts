@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_SIZE } from "@/constants/global.const";
 import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
@@ -24,6 +25,13 @@ export default class OptionsModule extends VuexModule {
 
   get initialFilters(): FilterGroup {
     return this.searchResultInitialFilters;
+  }
+
+  get defaultSearchResultPageSize(): number {
+    return (
+      this.searchResultOptions?.pagination?.sizeSelection?.sizes?.[0] ??
+      DEFAULT_PAGE_SIZE
+    );
   }
 
   @Mutation

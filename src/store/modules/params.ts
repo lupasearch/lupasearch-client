@@ -43,7 +43,11 @@ export default class ParamsModule extends VuexModule {
   }
 
   get limit(): number {
-    return Number(this.params[QUERY_PARAMS_PARSED.LIMIT]) || this.defaultLimit;
+    return (
+      Number(this.params[QUERY_PARAMS_PARSED.LIMIT]) ||
+      this.context.rootGetters["options/defaultSearchResultPageSize"] ||
+      this.defaultLimit
+    );
   }
 
   get sort(): string | string[] {
