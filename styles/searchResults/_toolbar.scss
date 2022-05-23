@@ -63,6 +63,10 @@
   font-family: searchResults.$pagination-font-family;
 }
 
+.lupa-page-number-separator {
+  margin: searchResults.$pagination-page-margin;
+}
+
 .lupa-page-number {
   cursor: pointer;
   color: searchResults.$pagination-page-color;

@@ -10,6 +10,17 @@
     >
       &#60;
     </div>
+    <template v-if="showFirstPage">
+      <div
+        class="lupa-page-number lupa-page-number-first"
+        @click="() => handlePageChange(1)"
+      >
+        1
+      </div>
+      <div v-if="showFirstPageSeparator" class="lupa-page-number-separator">
+        ...
+      </div>
+    </template>
     <div
       v-for="page in pages"
       :key="page"
@@ -22,6 +33,17 @@
     >
       {{ page }}
     </div>
+    <template v-if="showLastPage">
+      <div v-if="showLastPageSeparator" class="lupa-page-number-separator">
+        ...
+      </div>
+      <div
+        class="lupa-page-number lupa-page-number-last"
+        @click="() => handlePageChange(lastPage)"
+      >
+        {{ lastPage }}
+      </div>
+    </template>
     <div
       v-if="options.selectedPage < options.count"
       :class="label === '>' ? 'lupa-page-arrow' : 'lupa-show-more'"
@@ -59,6 +81,26 @@ export default class SearchResultsPageSelect extends Vue {
     return Array.from({ length: this.options.count }, (v, k) => k + 1).filter(
       (i) => i && i >= left && i < right
     );
+  }
+
+  get lastPage(): number | undefined {
+    return this.options.count ?? undefined;
+  }
+
+  get showLastPage(): boolean {
+    return Boolean(this.lastPage && !this.pages.includes(this.lastPage));
+  }
+
+  get showLastPageSeparator(): boolean {
+    return this.showLastPage && !this.pages.includes((this.lastPage ?? 0) - 1);
+  }
+
+  get showFirstPage(): boolean {
+    return !this.pages.includes(1);
+  }
+
+  get showFirstPageSeparator(): boolean {
+    return this.showFirstPage && !this.pages.includes(2);
   }
 
   @params.Action("appendParams") appendParams!: ({
