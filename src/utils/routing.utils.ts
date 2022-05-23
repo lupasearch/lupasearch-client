@@ -1,4 +1,7 @@
 import { LUPA_ROUTING_EVENT } from "@/constants/global.const";
+import { InputSuggestionFacet } from "@/types/search-box/Common";
+import { RoutingBehavior } from "..";
+import { generateResultLink } from "./link.utils";
 
 export const emitRoutingEvent = (url: string): void => {
   const event = new CustomEvent(LUPA_ROUTING_EVENT, { detail: url });
@@ -15,4 +18,18 @@ export const handleRoutingEvent = (
   }
   event?.preventDefault();
   emitRoutingEvent(link);
+};
+
+export const redirectToResultsPage = (
+  link: string,
+  searchText: string,
+  facet?: InputSuggestionFacet,
+  routingBehavior: RoutingBehavior = "direct-link"
+): void => {
+  const url = generateResultLink(link, searchText, facet);
+  if (routingBehavior === "event") {
+    emitRoutingEvent(url);
+  } else {
+    window.location.assign(url);
+  }
 };

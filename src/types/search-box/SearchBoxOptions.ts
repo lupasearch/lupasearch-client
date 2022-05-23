@@ -1,10 +1,12 @@
 import { SdkOptions } from "../General";
+import { RoutingBehavior } from "../search-results/RoutingBehavior";
 import { SearchBoxHistory } from "./SearchBoxHistory";
 import { SearchBoxPanel } from "./SearchBoxPanel";
 
 export type SearchBoxOptions = SearchBoxPanelOptions & {
   inputSelector: string;
   searchTriggers?: string[];
+  routingBehavior?: RoutingBehavior;
 };
 
 export type SearchBoxOptionLabels = {

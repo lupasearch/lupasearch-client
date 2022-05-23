@@ -6,13 +6,14 @@ import {
 import { InputSuggestionFacet } from "@/types/search-box/Common";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { getFacetParam } from "@/utils/filter.toggle.utils";
-import { generateResultLink, getPathName } from "@/utils/link.utils";
+import { getPathName } from "@/utils/link.utils";
 import {
   appendParam,
   getRemovableParams,
   parseParams,
   removeParams,
 } from "@/utils/params.utils";
+import { redirectToResultsPage } from "@/utils/routing.utils";
 import { FilterGroup } from "@getlupa/client-sdk/Types";
 import {
   Action,
@@ -148,9 +149,9 @@ export default class ParamsModule extends VuexModule {
         paramsToRemove: "all",
       });
     } else {
-      window.location.assign(
-        generateResultLink(this.searchResultsLink, searchText, facet)
-      );
+      const routing =
+        this.context.rootGetters["options/boxRoutingBehavior"] ?? "direct-link";
+      redirectToResultsPage(this.searchResultsLink, searchText, facet, routing);
     }
     this.context.dispatch(
       "tracking/track",
