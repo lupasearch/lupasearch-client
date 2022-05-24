@@ -129,6 +129,34 @@ export default class ParamsModule extends VuexModule {
   }
 
   @Action({})
+  handleNoResultsFlag({
+    resultCount,
+    noResultsParam,
+  }: {
+    resultCount: number;
+    noResultsParam?: string;
+  }): void {
+    if (
+      !noResultsParam ||
+      (this.searchResultsLink &&
+        this.searchResultsLink !== window.location.pathname)
+    ) {
+      return;
+    }
+    if (resultCount < 1) {
+      this.context.dispatch("appendParams", {
+        params: [{ name: noResultsParam, value: "true" }],
+        save: false,
+      });
+    } else {
+      this.context.dispatch("removeParams", {
+        paramsToRemove: [noResultsParam],
+        save: false,
+      });
+    }
+  }
+
+  @Action({})
   goToResults({
     searchText,
     facet,

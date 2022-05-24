@@ -162,6 +162,14 @@ export default class SearchResults extends Vue {
     defaultLimit: number;
   };
 
+  @params.Action("handleNoResultsFlag") handleNoResultsFlag!: ({
+    resultCount,
+    noResultsParam,
+  }: {
+    resultCount: number;
+    noResultsParam?: string;
+  }) => void;
+
   @params.Action("add") addParams!: (params: QueryParams) => {
     params: QueryParams;
   };
@@ -278,18 +286,10 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }): void {
     this.trackResults({ queryKey, results });
-    const noResultsParam = this.options.noResultsQueryFlag;
-    if (!noResultsParam) {
-      return;
-    }
-    if (results.total < 1) {
-      this.appendParams({
-        params: [{ name: noResultsParam, value: "true" }],
-        save: false,
-      });
-    } else {
-      this.removeParams({ paramsToRemove: [noResultsParam], save: false });
-    }
+    this.handleNoResultsFlag({
+      resultCount: results?.total ?? 0,
+      noResultsParam: this.options.noResultsQueryFlag,
+    });
   }
 
   @searchResult.Action("setColumnCount") setColumnCount!: ({
