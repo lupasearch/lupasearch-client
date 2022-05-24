@@ -55,7 +55,7 @@ const searchResults = (options: SearchResultsOptions): void => {
 };
 const productList = (options: ProductListOptions): void => {
   Vue.use(Vuex);
-  app.results = new Vue({
+  app.productList = new Vue({
     el: options.containerSelector,
     components: { ProductListEntry },
     render: (h) =>
