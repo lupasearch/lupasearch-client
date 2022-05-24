@@ -33,3 +33,8 @@ export const redirectToResultsPage = (
     window.location.assign(url);
   }
 };
+
+export const getPageUrl = (pathnameOverride?: string): URL => {
+  const pathname = pathnameOverride || window.location.pathname;
+  return new URL(window.location.origin + pathname + window.location.search);
+};

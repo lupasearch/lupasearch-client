@@ -6,14 +6,13 @@ import {
 import { InputSuggestionFacet } from "@/types/search-box/Common";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { getFacetParam } from "@/utils/filter.toggle.utils";
-import { getPathName } from "@/utils/link.utils";
 import {
   appendParam,
   getRemovableParams,
   parseParams,
   removeParams,
 } from "@/utils/params.utils";
-import { redirectToResultsPage } from "@/utils/routing.utils";
+import { getPageUrl, redirectToResultsPage } from "@/utils/routing.utils";
 import { FilterGroup } from "@getlupa/client-sdk/Types";
 import {
   Action,
@@ -88,11 +87,7 @@ export default class ParamsModule extends VuexModule {
 
   @Action({ commit: "save" })
   removeAllFilters(): { params: QueryParams; searchString: string } {
-    const url = new URL(
-      window.location.origin +
-        getPathName(this.searchResultsLink) +
-        window.location.search
-    );
+    const url = getPageUrl();
     const paramsToRemove = Array.from(url.searchParams.keys()).filter(
       isFacetKey
     );
@@ -112,11 +107,7 @@ export default class ParamsModule extends VuexModule {
     params?: QueryParams;
     searchString?: string;
   } {
-    const url = new URL(
-      window.location.origin +
-        getPathName(this.searchResultsLink) +
-        window.location.search
-    );
+    const url = getPageUrl();
     paramsToRemove = getRemovableParams(url, paramsToRemove);
     removeParams(url, paramsToRemove);
     window.history.pushState("", "Append params", url.pathname + url.search);
@@ -175,6 +166,7 @@ export default class ParamsModule extends VuexModule {
           ...facetParam,
         ],
         paramsToRemove: "all",
+        searchResultsLink: this.searchResultsLink,
       });
     } else {
       const routing =
@@ -198,21 +190,18 @@ export default class ParamsModule extends VuexModule {
     paramsToRemove,
     encode = true,
     save = true,
+    searchResultsLink,
   }: {
     params: { name: string; value: string }[];
     paramsToRemove?: "all" | string[];
     encode?: boolean;
     save?: boolean;
+    searchResultsLink?: string;
   }): { params?: QueryParams; searchString?: string } {
     if (!params?.length) {
       return { params: this.params };
     }
-    const url = new URL(
-      window.location.origin +
-        getPathName(this.searchResultsLink) +
-        window.location.search
-    );
-
+    const url = getPageUrl(searchResultsLink);
     paramsToRemove = getRemovableParams(url, paramsToRemove);
     removeParams(url, paramsToRemove);
     params.forEach((p) => appendParam(url, p, encode));
