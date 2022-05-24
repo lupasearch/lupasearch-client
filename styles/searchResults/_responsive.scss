@@ -135,11 +135,11 @@
       margin-top: 5px;
     }
   }
-  #lupa-search-result-filters {
+  .lupa-search-result-filters {
     display: none;
   }
   .lupa-mobile-filter-sidebar {
-    #lupa-search-result-filters {
+    .lupa-search-result-filters {
       display: flex;
       flex-direction: column;
     }
@@ -187,7 +187,7 @@
 // Search filter elements
 
 @media (max-width: searchResults.$size-s) {
-  #lupa-search-result-filters {
+  .lupa-search-result-filters {
     flex: 100%;
     padding: 0;
   }

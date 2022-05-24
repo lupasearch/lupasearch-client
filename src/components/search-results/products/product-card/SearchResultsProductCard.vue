@@ -2,6 +2,7 @@
   <div
     id="lupa-search-result-product-card"
     data-cy="lupa-search-result-product-card"
+    class="lupa-search-result-product-card"
     :class="!isInStock ? 'lupa-out-of-stock' : ''"
     @click="handleClick"
   >
