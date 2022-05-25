@@ -48,6 +48,7 @@ import {
   ResultsLayout,
   ResultsLayoutEnum,
 } from "@/types/search-results/ResultsLayout";
+import { RoutingBehavior } from "@/types/search-results/RoutingBehavior";
 import { SearchResultsOptionLabels } from "@/types/search-results/SearchResultsOptions";
 import { SearchResultsProductCardOptions } from "@/types/search-results/SearchResultsProductCardOptions";
 import { generateLink } from "@/utils/link.utils";
@@ -63,6 +64,7 @@ import SearchResultsProductCardElement from "./elements/SearchResultsProductCard
 const tracking = namespace("tracking");
 const params = namespace("params");
 const searchResult = namespace("searchResult");
+const options = namespace("options");
 
 @Component({
   name: "searchResultsProductCard",
@@ -78,6 +80,9 @@ export default class SearchResultsProductCard extends Vue {
 
   @searchResult.State((state) => state.layout)
   layout!: ResultsLayout;
+
+  @options.Getter("searchResultsRoutingBehavior")
+  searchResultsRoutingBehavior!: RoutingBehavior;
 
   @params.Getter("query") query!: string;
 
@@ -127,7 +132,7 @@ export default class SearchResultsProductCard extends Vue {
   }
 
   get hasEventRouting(): boolean {
-    return this.options.routingBehavior === "event";
+    return this.searchResultsRoutingBehavior === "event";
   }
 
   isInStock = false;

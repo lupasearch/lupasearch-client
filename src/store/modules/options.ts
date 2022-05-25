@@ -32,6 +32,10 @@ export default class OptionsModule extends VuexModule {
     return this.searchBoxOptions.routingBehavior ?? "direct-link";
   }
 
+  get searchResultsRoutingBehavior(): RoutingBehavior {
+    return this.searchResultOptions.routingBehavior ?? "direct-link";
+  }
+
   get defaultSearchResultPageSize(): number {
     return (
       this.searchResultOptions?.pagination?.sizeSelection?.sizes?.[0] ??
