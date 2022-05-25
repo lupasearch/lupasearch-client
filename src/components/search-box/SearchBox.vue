@@ -154,10 +154,11 @@ export default class SearchBox extends Vue {
   handleMouseClick(e: MouseEvent): void {
     const el = document.getElementById("lupa-search-box");
     const elementClass = (e.target as HTMLElement)?.className ?? "";
+    const hasLupaClass =
+      typeof elementClass.includes == "function" &&
+      elementClass.includes("lupa-search-box");
     const isOutsideElement =
-      el &&
-      !el.contains(e.target as Node) &&
-      !elementClass.includes("lupa-search-box");
+      el && !el.contains(e.target as Node) && !hasLupaClass;
     if (!isOutsideElement) {
       return;
     }

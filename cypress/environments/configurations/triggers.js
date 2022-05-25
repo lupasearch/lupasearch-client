@@ -12,4 +12,7 @@ getLupa.searchBox({
   searchTriggers: ["#trigger1", "#trigger2"],
   minInputLength: 3,
 });
-getLupa.searchResults(searchResultsOptions);
+getLupa.searchResults({
+  ...searchResultsOptions,
+  disallowEmptyQuery: true,
+});

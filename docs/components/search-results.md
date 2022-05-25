@@ -597,6 +597,16 @@ const options = {
 
 - `elements` - a list of available elements. Available items and configuration is the same as in the main search result list.
 
+## Disalow empty query
+
+By default, search result pages queries all documents if there is no query string defined. You can disable this functionality with the following option:
+
+```js
+const options = {
+  disallowEmptyQuery: true,
+};
+```
+
 ## No results query flag
 
 It is possible to configure a query parameter flag, which would be set by the LupaSearch plugin when search returns zero results:

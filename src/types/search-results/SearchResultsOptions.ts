@@ -10,6 +10,7 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
     noResultsQueryFlag?: string;
+    disallowEmptyQuery?: boolean;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";

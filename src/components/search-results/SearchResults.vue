@@ -257,6 +257,9 @@ export default class SearchResults extends Vue {
     const context = getLupaTrackingContext();
     const limit = publicQuery.limit || this.defaultSearchResultPageSize;
     const query = { ...publicQuery, ...context, limit };
+    if (!query.searchText && this.options.disallowEmptyQuery) {
+      return;
+    }
     getLupaSdk
       .query(this.options.queryKey, query, this.options.options)
       .then((res) => {
