@@ -4,12 +4,12 @@ import {
   searchResultsOptions,
 } from "./base.js";
 
-const getLupa = window.getLupa;
+const lupaSearch = window.lupaSearch;
 
-getLupa.tracking(trackingOptions);
-getLupa.searchBox({
+lupaSearch.tracking(trackingOptions);
+lupaSearch.searchBox({
   ...searchBoxOptions,
   searchTriggers: ["#trigger1", "#trigger2"],
   minInputLength: 3,
 });
-getLupa.searchResults(searchResultsOptions);
+lupaSearch.searchResults(searchResultsOptions);

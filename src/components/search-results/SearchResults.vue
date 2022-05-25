@@ -43,7 +43,7 @@ import {
 import { parseParams } from "@/utils/params.utils";
 import { pick } from "@/utils/picker.utils";
 import { createPublicQuery, getPublicQuery } from "@/utils/query.utils";
-import getLupaSdk from "@getlupa/client-sdk";
+import lupaSearchSdk from "@getlupa/client-sdk";
 import {
   FilterGroup,
   PublicQuery,
@@ -220,7 +220,7 @@ export default class SearchResults extends Vue {
     this.trackSearch({ queryKey: this.options.queryKey, query: publicQuery });
     const context = getLupaTrackingContext();
     const query = { ...publicQuery, ...context };
-    getLupaSdk
+    lupaSearchSdk
       .query(this.options.queryKey, query, this.options.options)
       .then((res) => {
         if (res.success) {
