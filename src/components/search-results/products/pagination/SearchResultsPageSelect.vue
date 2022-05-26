@@ -5,10 +5,10 @@
   >
     <div
       v-if="options.selectedPage > 1"
-      class="lupa-page-arrow"
+      :class="firstPageLabel === '<' ? 'lupa-page-arrow' : 'lupa-show-less'"
       @click="() => handlePageChange(options.selectedPage - 1)"
     >
-      &#60;
+      {{ firstPageLabel }}
     </div>
     <template v-if="showFirstPage">
       <div
@@ -46,11 +46,11 @@
     </template>
     <div
       v-if="options.selectedPage < options.count"
-      :class="label === '>' ? 'lupa-page-arrow' : 'lupa-show-more'"
+      :class="lastPageLabel === '>' ? 'lupa-page-arrow' : 'lupa-show-more'"
       data-cy="lupa-show-more"
       @click="() => handlePageChange(options.selectedPage + 1)"
     >
-      {{ label }}
+      {{ lastPageLabel }}
     </div>
   </div>
 </template>
@@ -70,7 +70,9 @@ const params = namespace("params");
   name: "searchResultsPageSelect",
 })
 export default class SearchResultsPageSelect extends Vue {
-  @Prop({ default: ">" }) label!: string;
+  @Prop({ default: ">" }) lastPageLabel!: string;
+  @Prop({ default: "<" }) firstPageLabel!: string;
+
   @Prop({ default: {} }) options!: PaginationPageSelect;
 
   get pages(): number[] {

@@ -14,7 +14,8 @@
 
       <SearchResultsPageSelect
         :options="paginationOptions.pageSelect"
-        :label="paginationOptions.labels.showMore"
+        :last-page-label="paginationOptions.labels.showMore"
+        :first-page-label="paginationOptions.labels.showLess"
         v-if="displayPageSelect"
       />
       <div v-else></div>

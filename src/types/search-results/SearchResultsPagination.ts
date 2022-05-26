@@ -1,6 +1,7 @@
 export type SearchResultsPaginationLabels = {
   pageSize: string;
-  showMore: string;
+  showMore?: string;
+  showLess?: string;
   itemCount: string;
   filteredItemCount?: string;
 };
