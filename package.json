@@ -1,6 +1,6 @@
 {
   "name": "@getlupa/client",
-  "version": "0.5.1-alpha-21",
+  "version": "0.5.1-alpha-22",
   "main": "dist/cjs/index.min.js",
   "module": "dist/es/index.min.js",
   "types": "dist/es/index.d.ts",
@@ -17,7 +17,7 @@
     "validate:es5": "npx es5-validator dist/iife/*.min.js"
   },
   "dependencies": {
-    "@getlupa/client-sdk": "^1.0.24",
+    "@getlupa/client-sdk": "^1.0.26",
     "lodash.clonedeep": "^4.5.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
