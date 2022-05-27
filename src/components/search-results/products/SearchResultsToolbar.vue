@@ -150,9 +150,7 @@ export default class SearchResultsToolbar extends Vue {
   get displayPageSelect(): boolean {
     return (
       this.paginationDisplay.pageSelect &&
-      this.paginationOptions.pageSelect.count > 0 &&
-      this.paginationOptions.pageSelect.count >=
-        this.paginationOptions.pageSelect.selectedPage
+      this.paginationOptions.pageSelect.count > 0
     );
   }
 

@@ -4,7 +4,7 @@
     data-cy="lupa-search-results-page-select"
   >
     <div
-      v-if="options.selectedPage > 1"
+      v-if="showBack"
       :class="firstPageLabel === '<' ? 'lupa-page-arrow' : 'lupa-show-less'"
       @click="() => handlePageChange(options.selectedPage - 1)"
     >
@@ -76,12 +76,20 @@ export default class SearchResultsPageSelect extends Vue {
   @Prop({ default: {} }) options!: PaginationPageSelect;
 
   get pages(): number[] {
+    const currentPage = Math.min(this.options.count, this.options.selectedPage);
     const delta = Math.floor(this.options.display / 2),
-      left = this.options.selectedPage - delta,
-      right = this.options.selectedPage + (this.options.display - delta);
+      left = currentPage - delta,
+      right = currentPage + (this.options.display - delta);
 
     return Array.from({ length: this.options.count }, (v, k) => k + 1).filter(
       (i) => i && i >= left && i < right
+    );
+  }
+
+  get showBack(): boolean {
+    return (
+      this.options.selectedPage > 1 &&
+      this.options.selectedPage <= this.options.count
     );
   }
 
