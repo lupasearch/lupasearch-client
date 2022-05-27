@@ -18,7 +18,19 @@ import {
 } from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
 import { ProductListOptions } from "./types/product-list/ProductListOptions";
-import { DocumentElementType } from "./types/DocumentElement";
+import {
+  AddToCartElement,
+  CustomDocumentElement,
+  CustomHtmlElement,
+  DescriptionDocumentElement,
+  DocumentElement,
+  DocumentElementType,
+  ImageDocumentElement,
+  PriceElement,
+  RatingElement,
+  RegularPriceDocumentElement,
+  TitleDocumentElement,
+} from "./types/DocumentElement";
 import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
@@ -100,6 +112,16 @@ export {
   AnchorPosition,
   BadgeType,
   SortDirection,
+  DocumentElement,
+  ImageDocumentElement,
+  TitleDocumentElement,
+  DescriptionDocumentElement,
+  CustomDocumentElement,
+  PriceElement,
+  RegularPriceDocumentElement,
+  RatingElement,
+  AddToCartElement,
+  CustomHtmlElement,
 };
 
 export default lupaSearch;
