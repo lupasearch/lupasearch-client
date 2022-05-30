@@ -49,7 +49,7 @@
   }
 }
 
-#lupa-search-results-sort {
+.lupa-search-results-sort {
   margin: searchResults.$sort-select-margin;
 }
 
@@ -61,6 +61,10 @@
 
 #lupa-search-results-page-select {
   font-family: searchResults.$pagination-font-family;
+}
+
+.lupa-page-number-separator {
+  margin: searchResults.$pagination-page-margin;
 }
 
 .lupa-page-number {

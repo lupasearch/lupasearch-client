@@ -1,6 +1,6 @@
 @use "../base/searchResults";
 
-#lupa-search-result-product-card {
+.lupa-search-result-product-card {
   height: auto;
   min-height: searchResults.$product-card-min-height;
   border: searchResults.$product-card-border;
@@ -135,7 +135,7 @@
 }
 
 .lupa-search-result-product-contents-list {
-  #lupa-search-result-product-card {
+  .lupa-search-result-product-card {
     min-height: searchResults.$product-card-list-layout-min-height;
   }
   .lupa-search-results-image {

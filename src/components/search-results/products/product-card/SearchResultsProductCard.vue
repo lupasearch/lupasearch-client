@@ -2,6 +2,7 @@
   <div
     id="lupa-search-result-product-card"
     data-cy="lupa-search-result-product-card"
+    class="lupa-search-result-product-card"
     :class="!isInStock ? 'lupa-out-of-stock' : ''"
     @click="handleClick"
   >
@@ -9,7 +10,8 @@
     <div :class="['lupa-search-result-product-contents', listLayoutClass]">
       <a
         class="lupa-search-result-product-image-section"
-        :href="link || undefined"
+        :href="link"
+        @click="handleNavigation"
       >
         <SearchResultsProductCardElement
           class="lupa-search-results-product-element"
@@ -46,9 +48,11 @@ import {
   ResultsLayout,
   ResultsLayoutEnum,
 } from "@/types/search-results/ResultsLayout";
+import { RoutingBehavior } from "@/types/search-results/RoutingBehavior";
 import { SearchResultsOptionLabels } from "@/types/search-results/SearchResultsOptions";
 import { SearchResultsProductCardOptions } from "@/types/search-results/SearchResultsProductCardOptions";
 import { generateLink } from "@/utils/link.utils";
+import { handleRoutingEvent } from "@/utils/routing.utils";
 import { Document, ReportableEventType } from "@getlupa/client-sdk/Types";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -60,6 +64,7 @@ import SearchResultsProductCardElement from "./elements/SearchResultsProductCard
 const tracking = namespace("tracking");
 const params = namespace("params");
 const searchResult = namespace("searchResult");
+const options = namespace("options");
 
 @Component({
   name: "searchResultsProductCard",
@@ -75,6 +80,9 @@ export default class SearchResultsProductCard extends Vue {
 
   @searchResult.State((state) => state.layout)
   layout!: ResultsLayout;
+
+  @options.Getter("searchResultsRoutingBehavior")
+  searchResultsRoutingBehavior!: RoutingBehavior;
 
   @params.Getter("query") query!: string;
 
@@ -123,6 +131,10 @@ export default class SearchResultsProductCard extends Vue {
     return generateLink(this.options.links?.details ?? "", this.product);
   }
 
+  get hasEventRouting(): boolean {
+    return this.searchResultsRoutingBehavior === "event";
+  }
+
   isInStock = false;
 
   mounted(): void {
@@ -169,6 +181,10 @@ export default class SearchResultsProductCard extends Vue {
             : undefined,
       },
     });
+  }
+
+  handleNavigation(event?: Event): void {
+    handleRoutingEvent(this.link, event, this.hasEventRouting);
   }
 }
 </script>

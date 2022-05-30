@@ -6,7 +6,7 @@
   font-family: searchResults.$search-results-font-family;
 }
 
-#lupa-search-result-filters {
+.lupa-search-result-filters {
   padding: searchResults.$filter-section-padding;
 }
 
@@ -24,7 +24,7 @@
   width: 100%;
 }
 
-#lupa-search-result-filters {
+.lupa-search-result-filters {
   flex: 25%;
   flex-grow: 1;
   flex-shrink: 0;
@@ -53,7 +53,7 @@
   z-index: 555;
 }
 
-#lupa-search-result-product-card {
+.lupa-search-result-product-card {
   box-sizing: border-box;
 }
 

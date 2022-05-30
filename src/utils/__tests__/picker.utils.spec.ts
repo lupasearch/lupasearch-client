@@ -26,6 +26,8 @@ describe("picker.utils", () => {
     expect(pickClosestNumber([10, 20, 25, 50], 2)).toBe(10);
 
     expect(pickClosestNumber([10, 20, 25, 50], 100)).toBe(50);
+
+    expect(pickClosestNumber([10, 20, 25, 50], 20)).toBe(20);
   });
 
   it("pick should pick correct properties", () => {

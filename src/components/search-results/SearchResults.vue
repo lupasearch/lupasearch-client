@@ -1,32 +1,44 @@
 <template>
   <div class="lupa-search-result-wrapper">
+    <CategoryTopFilters v-if="isTitleResultTopPosition" :options="options" />
     <MobileFilterSidebar v-if="options.filters" :options="options.filters" />
     <SearchResultsBreadcrumbs
-      v-if="currentQueryText"
+      v-if="currentQueryText || isProductList"
       :breadcrumbs="options.breadcrumbs"
     />
     <template v-if="isTitleResultTopPosition">
-      <div class="top-layout-wrapper">
+      <div id="lupa-search-results" class="top-layout-wrapper">
         <SearchResultsFilters
           v-if="showFilterSidebar"
           :options="options.filters"
         />
         <div class="search-content">
           <SearchResultsDidYouMean :labels="didYouMeanLabels" />
-          <SearchResultsTitle :options="options" />
-          <SearchResultsProducts :options="options" />
+          <SearchResultsTitle
+            :options="options"
+            :is-product-list="isProductList"
+          />
+          <SearchResultsProducts :options="options">
+            <template #append>
+              <slot />
+            </template>
+          </SearchResultsProducts>
         </div>
       </div>
     </template>
     <template v-else>
       <SearchResultsDidYouMean :labels="didYouMeanLabels" />
-      <SearchResultsTitle :options="options" />
+      <SearchResultsTitle :options="options" :is-product-list="isProductList" />
       <div id="lupa-search-results">
         <SearchResultsFilters
           v-if="showFilterSidebar"
           :options="options.filters"
         />
-        <SearchResultsProducts :options="options" />
+        <SearchResultsProducts :options="options">
+          <template #append>
+            <slot />
+          </template>
+        </SearchResultsProducts>
       </div>
     </template>
   </div>
@@ -60,6 +72,8 @@ import SearchResultsProducts from "./products/SearchResultsProducts.vue";
 import SearchResultsBreadcrumbs from "./SearchResultsBreadcrumbs.vue";
 import { getLupaTrackingContext } from "@/utils/tracking.utils";
 import SearchResultsTitle from "./SearchResultsTitle.vue";
+import SearchResultsToolbar from "./products/SearchResultsToolbar.vue";
+import CategoryTopFilters from "../product-list/CategoryTopFilters.vue";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -75,6 +89,8 @@ const tracking = namespace("tracking");
     SearchResultsBreadcrumbs,
     SearchResultsDidYouMean,
     SearchResultsTitle,
+    SearchResultsToolbar,
+    CategoryTopFilters,
   },
 })
 export default class SearchResults extends Vue {
@@ -97,17 +113,25 @@ export default class SearchResults extends Vue {
       "additionalPanels",
       "idKey",
       "filters",
+      "routingBehavior",
     ]);
   }
 
   @searchResult.Getter("currentQueryText") currentQueryText!: string;
+
+  @searchResult.Getter("hasResults") hasResults!: boolean;
+
+  @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
 
   get didYouMeanLabels(): SearchResultsDidYouMeanLabels {
     return pick(this.options.labels, ["noResultsSuggestion", "didYouMean"]);
   }
 
   get showFilterSidebar(): boolean {
-    return this.options.filters?.facets?.style?.type === "sidebar";
+    return (
+      this.options.filters?.facets?.style?.type === "sidebar" &&
+      (this.hasResults || this.currentFilterCount > 0)
+    );
   }
 
   get isTitleResultTopPosition(): boolean {
@@ -137,6 +161,14 @@ export default class SearchResults extends Vue {
   ) => {
     defaultLimit: number;
   };
+
+  @params.Action("handleNoResultsFlag") handleNoResultsFlag!: ({
+    resultCount,
+    noResultsParam,
+  }: {
+    resultCount: number;
+    noResultsParam?: string;
+  }) => void;
 
   @params.Action("add") addParams!: (params: QueryParams) => {
     params: QueryParams;
@@ -172,8 +204,8 @@ export default class SearchResults extends Vue {
 
   mounted(): void {
     window.addEventListener("resize", this.handleResize);
-    this.handleMounted();
     this.setSearchResultOptions({ options: this.options });
+    this.handleMounted();
     this.setInitialFilters({ initialFilters: this.initialFilters });
   }
 
@@ -188,7 +220,7 @@ export default class SearchResults extends Vue {
     this.handleUrlChange(params);
     this.addParams(parseParams(params));
 
-    this.setDefaultLimit(this.options.pagination.sizeSelection.sizes[0]);
+    this.setDefaultLimit(this.options.pagination?.sizeSelection?.sizes?.[0]);
   }
 
   @Watch("searchString")
@@ -204,11 +236,15 @@ export default class SearchResults extends Vue {
     loading: boolean;
   };
 
+  @options.Getter("defaultSearchResultPageSize")
+  defaultSearchResultPageSize!: number;
+
   handleUrlChange(params?: URLSearchParams): void {
     const searchParams = params || new URLSearchParams(window.location.search);
     const publicQuery = createPublicQuery(
       parseParams(searchParams),
-      this.options.sort
+      this.options.sort,
+      this.defaultSearchResultPageSize
     );
     this.setLoading(true);
     this.query(
@@ -219,7 +255,11 @@ export default class SearchResults extends Vue {
   query(publicQuery: PublicQuery): void {
     this.trackSearch({ queryKey: this.options.queryKey, query: publicQuery });
     const context = getLupaTrackingContext();
-    const query = { ...publicQuery, ...context };
+    const limit = publicQuery.limit || this.defaultSearchResultPageSize;
+    const query = { ...publicQuery, ...context, limit };
+    if (!query.searchText && this.options.disallowEmptyQuery) {
+      return;
+    }
     getLupaSdk
       .query(this.options.queryKey, query, this.options.options)
       .then((res) => {
@@ -249,18 +289,10 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }): void {
     this.trackResults({ queryKey, results });
-    const noResultsParam = this.options.noResultsQueryFlag;
-    if (!noResultsParam) {
-      return;
-    }
-    if (results.total < 1) {
-      this.appendParams({
-        params: [{ name: noResultsParam, value: "true" }],
-        save: false,
-      });
-    } else {
-      this.removeParams({ paramsToRemove: [noResultsParam], save: false });
-    }
+    this.handleNoResultsFlag({
+      resultCount: results?.total ?? 0,
+      noResultsParam: this.options.noResultsQueryFlag,
+    });
   }
 
   @searchResult.Action("setColumnCount") setColumnCount!: ({

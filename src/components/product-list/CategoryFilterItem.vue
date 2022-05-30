@@ -5,8 +5,8 @@
   >
     <a
       data-cy="lupa-child-category-item"
-      :href="url"
-      v-on="hasDirectRouting ? {} : { click: handleNavigation }"
+      :href="urlLink"
+      @click="handleNavigation"
     >
       {{ title }}
     </a>
@@ -16,15 +16,12 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
-import SearchResults from "../search-results/SearchResults.vue";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
-import { emitRoutingEvent } from "@/utils/routing.utils";
+import { handleRoutingEvent } from "@/utils/routing.utils";
+import { linksMatch } from "@/utils/link.utils";
 
 @Component({
   name: "categoryFilterItem",
-  components: {
-    SearchResults,
-  },
 })
 export default class CategoryFilterItem extends Vue {
   @Prop() options!: CategoryFilterOptions;
@@ -42,23 +39,19 @@ export default class CategoryFilterItem extends Vue {
       : "";
   }
 
-  get url(): string | undefined {
-    if (!this.hasDirectRouting) {
-      return undefined;
-    }
-    return this.urlLink;
-  }
-
   get isActive(): boolean {
-    return window.location.href === this.url;
+    return linksMatch(
+      this.urlLink,
+      window.location.origin + window.location.pathname
+    );
   }
 
-  get hasDirectRouting(): boolean {
-    return this.options.routingBehavior === "direct-link";
+  get hasEventRouting(): boolean {
+    return this.options.routingBehavior === "event";
   }
 
-  handleNavigation(): void {
-    emitRoutingEvent(this.urlLink);
+  handleNavigation(event?: Event): void {
+    handleRoutingEvent(this.urlLink, event, this.hasEventRouting);
   }
 }
 </script>

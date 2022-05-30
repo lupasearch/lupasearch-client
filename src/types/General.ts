@@ -1,8 +1,11 @@
-import { Environment } from "@getlupa/client-sdk/Types";
 import { AnalyticsOptions } from "./AnalyticsOptions";
+import {
+  Environment as SdkEnvironment,
+  SortDirection as SdkSortDirection,
+} from "@getlupa/client-sdk/Types";
 
 export type SdkOptions = {
-  environment: Environment;
+  environment: SdkEnvironment;
   customUrl?: string;
   customPayload?: Record<string, unknown>;
   customHeaders?: Record<string, string>;
@@ -16,3 +19,6 @@ export type TrackingOptions = {
   userKey?: string;
   analytics?: AnalyticsOptions;
 };
+
+export type SortDirection = SdkSortDirection;
+export type Environment = SdkEnvironment;

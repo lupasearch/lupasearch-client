@@ -42,9 +42,12 @@ import { SearchBoxOptionLabels } from "@/types/search-box/SearchBoxOptions";
 import { generateLink } from "@/utils/link.utils";
 import { DocumentElement, DocumentElementType } from "@/types/DocumentElement";
 import { TrackableEventData } from "@/types/search-box/Common";
+import { handleRoutingEvent } from "@/utils/routing.utils";
+import { RoutingBehavior } from "@/types/search-results/RoutingBehavior";
 
 const history = namespace("history");
 const tracking = namespace("tracking");
+const options = namespace("options");
 
 @Component({
   components: {
@@ -57,6 +60,8 @@ export default class SearchBoxProduct extends Vue {
   @Prop() panelOptions!: DocumentSearchBoxPanel;
   @Prop() labels?: SearchBoxOptionLabels;
   @Prop({ default: false }) highlighted?: boolean;
+
+  @options.Getter("boxRoutingBehavior") boxRoutingBehavior!: RoutingBehavior;
 
   @tracking.Action("track") trackClick!: ({
     queryKey,
@@ -95,7 +100,7 @@ export default class SearchBoxProduct extends Vue {
     return "";
   }
 
-  handleClick(): void {
+  handleClick(event?: Event): void {
     if (this.panelOptions.titleKey) {
       this.addHistory({
         item: (this.item[this.panelOptions.titleKey] as string) || "",
@@ -116,6 +121,10 @@ export default class SearchBoxProduct extends Vue {
         },
       },
     });
+    if (!this.link) {
+      return;
+    }
+    handleRoutingEvent(this.link, event, this.boxRoutingBehavior === "event");
   }
 }
 </script>

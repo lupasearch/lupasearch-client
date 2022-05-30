@@ -56,8 +56,14 @@ export default class SearchResultModule extends VuexModule {
     return getLabeledFilters(unfoldFilters(this.currentFilters), this.facets);
   }
 
+  get displayFilters(): LabeledFilter[] {
+    const initialFilters =
+      this.context.rootGetters["options/initialFilters"] ?? {};
+    return this.labeledFilters?.filter((f) => !initialFilters?.[f.key]) ?? [];
+  }
+
   get currentFilterCount(): number {
-    return this.labeledFilters?.length ?? 0;
+    return this.displayFilters?.length ?? 0;
   }
 
   get hasAnyFilter(): boolean {

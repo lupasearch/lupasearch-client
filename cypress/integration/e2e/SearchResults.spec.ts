@@ -31,8 +31,8 @@ describe("SearchResults", () => {
       .should("exist")
       .should("contain.text", "No results found for this query: shoes");
     cy.get(searchResultsPageTitle).should(
-      "contain.text",
-      "Search Query: 'shoes suggested'\n  "
+      "include.text",
+      "Search Query: 'shoes suggested'"
     );
   });
 

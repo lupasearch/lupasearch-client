@@ -6,13 +6,13 @@ import {
 import { InputSuggestionFacet } from "@/types/search-box/Common";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { getFacetParam } from "@/utils/filter.toggle.utils";
-import { generateResultLink, getPathName } from "@/utils/link.utils";
 import {
   appendParam,
   getRemovableParams,
   parseParams,
   removeParams,
 } from "@/utils/params.utils";
+import { getPageUrl, redirectToResultsPage } from "@/utils/routing.utils";
 import { FilterGroup } from "@getlupa/client-sdk/Types";
 import {
   Action,
@@ -43,7 +43,11 @@ export default class ParamsModule extends VuexModule {
   }
 
   get limit(): number {
-    return Number(this.params[QUERY_PARAMS_PARSED.LIMIT]) || this.defaultLimit;
+    return (
+      Number(this.params[QUERY_PARAMS_PARSED.LIMIT]) ||
+      this.context.rootGetters["options/defaultSearchResultPageSize"] ||
+      this.defaultLimit
+    );
   }
 
   get sort(): string | string[] {
@@ -83,11 +87,7 @@ export default class ParamsModule extends VuexModule {
 
   @Action({ commit: "save" })
   removeAllFilters(): { params: QueryParams; searchString: string } {
-    const url = new URL(
-      window.location.origin +
-        getPathName(this.searchResultsLink) +
-        window.location.search
-    );
+    const url = getPageUrl();
     const paramsToRemove = Array.from(url.searchParams.keys()).filter(
       isFacetKey
     );
@@ -107,11 +107,7 @@ export default class ParamsModule extends VuexModule {
     params?: QueryParams;
     searchString?: string;
   } {
-    const url = new URL(
-      window.location.origin +
-        getPathName(this.searchResultsLink) +
-        window.location.search
-    );
+    const url = getPageUrl();
     paramsToRemove = getRemovableParams(url, paramsToRemove);
     removeParams(url, paramsToRemove);
     window.history.pushState("", "Append params", url.pathname + url.search);
@@ -121,6 +117,34 @@ export default class ParamsModule extends VuexModule {
           searchString: url.search,
         }
       : {};
+  }
+
+  @Action({})
+  handleNoResultsFlag({
+    resultCount,
+    noResultsParam,
+  }: {
+    resultCount: number;
+    noResultsParam?: string;
+  }): void {
+    if (
+      !noResultsParam ||
+      (this.searchResultsLink &&
+        this.searchResultsLink !== window.location.pathname)
+    ) {
+      return;
+    }
+    if (resultCount < 1) {
+      this.context.dispatch("appendParams", {
+        params: [{ name: noResultsParam, value: "true" }],
+        save: false,
+      });
+    } else {
+      this.context.dispatch("removeParams", {
+        paramsToRemove: [noResultsParam],
+        save: false,
+      });
+    }
   }
 
   @Action({})
@@ -142,11 +166,12 @@ export default class ParamsModule extends VuexModule {
           ...facetParam,
         ],
         paramsToRemove: "all",
+        searchResultsLink: this.searchResultsLink,
       });
     } else {
-      window.location.assign(
-        generateResultLink(this.searchResultsLink, searchText, facet)
-      );
+      const routing =
+        this.context.rootGetters["options/boxRoutingBehavior"] ?? "direct-link";
+      redirectToResultsPage(this.searchResultsLink, searchText, facet, routing);
     }
     this.context.dispatch(
       "tracking/track",
@@ -165,21 +190,18 @@ export default class ParamsModule extends VuexModule {
     paramsToRemove,
     encode = true,
     save = true,
+    searchResultsLink,
   }: {
     params: { name: string; value: string }[];
     paramsToRemove?: "all" | string[];
     encode?: boolean;
     save?: boolean;
+    searchResultsLink?: string;
   }): { params?: QueryParams; searchString?: string } {
     if (!params?.length) {
       return { params: this.params };
     }
-    const url = new URL(
-      window.location.origin +
-        getPathName(this.searchResultsLink) +
-        window.location.search
-    );
-
+    const url = getPageUrl(searchResultsLink);
     paramsToRemove = getRemovableParams(url, paramsToRemove);
     removeParams(url, paramsToRemove);
     params.forEach((p) => appendParam(url, p, encode));

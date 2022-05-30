@@ -9,8 +9,8 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     containerSelector: string;
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
-    searchTitlePosition?: string;
     noResultsQueryFlag?: string;
+    disallowEmptyQuery?: boolean;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";
@@ -31,6 +31,7 @@ export type SearchResultsOptionLabels = SearchResultsPaginationLabels &
     sortBy: string;
     currency: string;
     priceSeparator?: string;
+    searchResults?: string;
     itemCount: string;
     emptyResults: string;
     mobileFilterButton: string;
@@ -49,6 +50,7 @@ export type SearchResultsProductOptions = SearchResultsProductCardOptions &
     pagination: SearchResultsPagination;
     sort: SearchResultsSortOptions[];
     filters?: SearchResultsFilterOptions;
+    searchTitlePosition?: string;
     toolbar?: {
       layoutSelector?: boolean;
       itemSummary?: boolean;

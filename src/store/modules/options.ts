@@ -1,6 +1,8 @@
+import { DEFAULT_PAGE_SIZE } from "@/constants/global.const";
 import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
+import { RoutingBehavior } from "@/types/search-results/RoutingBehavior";
 import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
 import { FilterGroup, Options } from "@getlupa/client-sdk/Types";
 import { config, Module, Mutation, VuexModule } from "vuex-module-decorators";
@@ -24,6 +26,21 @@ export default class OptionsModule extends VuexModule {
 
   get initialFilters(): FilterGroup {
     return this.searchResultInitialFilters;
+  }
+
+  get boxRoutingBehavior(): RoutingBehavior {
+    return this.searchBoxOptions.routingBehavior ?? "direct-link";
+  }
+
+  get searchResultsRoutingBehavior(): RoutingBehavior {
+    return this.searchResultOptions.routingBehavior ?? "direct-link";
+  }
+
+  get defaultSearchResultPageSize(): number {
+    return (
+      this.searchResultOptions?.pagination?.sizeSelection?.sizes?.[0] ??
+      DEFAULT_PAGE_SIZE
+    );
   }
 
   @Mutation

@@ -1,9 +1,15 @@
 <template>
-  <div class="lupa-mobile-toggle" @click="handleMobileToggle">
+  <div
+    class="lupa-mobile-toggle"
+    @click="handleMobileToggle"
+    :class="{ 'lupa-mobile-toggle-filters-empty': currentFilterCount < 1 }"
+  >
     {{ label }}
-    <span class="lupa-mobile-toggle-filter-count" v-if="showFilterCount">{{
-      currentFilterCount
-    }}</span>
+    <span
+      class="lupa-mobile-toggle-filter-count"
+      v-if="showFilterCount && currentFilterCount > 0"
+      >{{ currentFilterCount }}</span
+    >
   </div>
 </template>
 <script lang="ts">
