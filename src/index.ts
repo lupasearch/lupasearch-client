@@ -35,6 +35,10 @@ import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
 import { BadgeType } from "./types/search-results/BadgeOptions";
+import {
+  SearchResultsSortOptions,
+  SortOptions,
+} from "./types/search-results/SearchResultsSort";
 
 const app = {
   box: {},
@@ -122,6 +126,8 @@ export {
   RatingElement,
   AddToCartElement,
   CustomHtmlElement,
+  SortOptions,
+  SearchResultsSortOptions,
 };
 
 export default lupaSearch;
