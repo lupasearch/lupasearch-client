@@ -6,7 +6,8 @@ import { FilterGroup, PublicQuery } from "@getlupa/client-sdk/Types";
 
 export const createPublicQuery = (
   queryParams: QueryParams,
-  sortOptions?: SearchResultsSortOptions[] // will be removed when vuex is implemented
+  sortOptions?: SearchResultsSortOptions[], // will be removed when vuex is implemented
+  defaultPageSize?: number
 ): PublicQuery => {
   const publicQuery: PublicQuery = {} as PublicQuery;
 
@@ -20,12 +21,13 @@ export const createPublicQuery = (
         publicQuery.searchText = Array.isArray(value) ? value[0] : value ?? "";
         break;
       case QUERY_PARAMS_PARSED.LIMIT:
-        publicQuery.limit = Number(value);
+        publicQuery.limit = Number(value) || defaultPageSize;
         break;
       case QUERY_PARAMS_PARSED.PAGE:
         publicQuery.offset = getOffset(
           Number(value),
           Number(queryParams[QUERY_PARAMS_PARSED.LIMIT]) ||
+            defaultPageSize ||
             DEFAULT_OPTIONS_RESULTS.pagination.sizeSelection.sizes[0]
         );
         break;

@@ -42,10 +42,8 @@ export default class SearchResultsPageSize extends Vue {
   updated(): void {
     const select = this.$refs.select as HTMLSelectElement;
     if (select) {
-      select.value = pickClosestNumber(
-        this.options.sizes,
-        this.limit
-      ).toString();
+      const closest = pickClosestNumber(this.options.sizes, this.limit);
+      select.value = closest?.toString();
     }
   }
 

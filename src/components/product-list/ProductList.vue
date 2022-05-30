@@ -4,8 +4,9 @@
       :options="componentOptions"
       :initial-filters="options.initialFilters"
       :is-product-list="true"
-    />
-    <CategoryDescription :options="options" />
+    >
+      <CategoryDescription :options="options" />
+    </SearchResults>
   </div>
 </template>
 <script lang="ts">

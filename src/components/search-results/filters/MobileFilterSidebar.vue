@@ -52,7 +52,10 @@ export default class MobileFilterSidebar extends Vue {
   }
 
   get isFilterCountVisible(): boolean {
-    return Boolean(this.options.currentFilters?.mobileSidebar?.showFilterCount);
+    return (
+      Boolean(this.options.currentFilters?.mobileSidebar?.showFilterCount) &&
+      this.currentFilterCount > 0
+    );
   }
 
   get isActiveFiltersExpanded(): boolean {

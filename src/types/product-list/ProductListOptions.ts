@@ -1,4 +1,5 @@
 import { FilterGroup } from "@getlupa/client-sdk/Types";
+import { RoutingBehavior } from "../search-results/RoutingBehavior";
 import { SearchResultsOptions } from "../search-results/SearchResultsOptions";
 
 export type CategoryFilterOptions = {
@@ -23,9 +24,7 @@ export type CategoryFilterOptions = {
   };
 };
 
-export type RoutingBehavior = "direct-link" | "event";
-
 export type ProductListOptions = SearchResultsOptions & {
   initialFilters?: FilterGroup;
-  categories?: CategoryFilterOptions;
+  categories: CategoryFilterOptions;
 };

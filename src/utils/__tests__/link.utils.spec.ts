@@ -1,4 +1,5 @@
-import { generateLink, generateResultLink } from "../link.utils";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { generateLink, generateResultLink, linksMatch } from "../link.utils";
 
 describe("generateLink", () => {
   it("should return original link pattern if it has no replaceable properties", () => {
@@ -66,5 +67,68 @@ describe("generateResultLink", () => {
     expect(generateResultLink("/search", "bo?o&ks")).toBe(
       "/search?q=bo%3Fo%26ks"
     );
+  });
+});
+
+describe("linksMatch", () => {
+  it("should return true if links are identical", () => {
+    expect(
+      linksMatch(
+        "https://lupasearch.com/link-1",
+        "https://lupasearch.com/link-1"
+      )
+    ).toBe(true);
+  });
+
+  it.each([
+    [undefined, undefined],
+    ["", undefined],
+    ["link", null],
+    [null, null],
+    ["", ""],
+  ])(
+    "should return false if one or both links are falsy",
+    (link1: any, link2: any) => {
+      expect(linksMatch(link1, link2)).toBe(false);
+    }
+  );
+
+  it("should return false if links do not match", () => {
+    expect(
+      linksMatch(
+        "https://lupasearch.com/link-1",
+        "https://lupasearch.com/link-2"
+      )
+    ).toBe(false);
+  });
+
+  it("should return true if link relative parts match match", () => {
+    expect(
+      linksMatch(
+        "https://lupasearch.com/link-1/link-5",
+        "http://localhost:8080/link-1/link-5"
+      )
+    ).toBe(true);
+  });
+
+  it("should return false if link relative parts do not match match", () => {
+    expect(
+      linksMatch(
+        "https://lupasearch.com/links-1/link-5",
+        "http://localhost:8080/link-1/link-5"
+      )
+    ).toBe(false);
+  });
+
+  it("should return true for partial link match", () => {
+    expect(
+      linksMatch("https://lupasearch.com/link-1/link-5", "/link-1/link-5")
+    ).toBe(true);
+  });
+
+  it("should return false if partial link does not match", () => {
+    expect(
+      linksMatch("https://lupasearch.com/link-1/link-5", "/link-1/link-6")
+    ).toBe(false);
   });
 });

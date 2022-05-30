@@ -1,5 +1,5 @@
 <template>
-  <div id="lupa-search-results-sort">
+  <div id="lupa-search-results-sort" class="lupa-search-results-sort">
     <div id="lupa-select">
       <label class="lupa-select-label">{{ options.label }}</label>
       <select

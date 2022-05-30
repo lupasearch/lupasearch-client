@@ -52,7 +52,7 @@ describe("DropdownFacets", () => {
     cy.wait("@fetchResults");
     clickEmptySpace();
     filtersInterceptions();
-    cy.get(searchResultsFacetsSummaryClear).click();
+    cy.get(searchResultsFacetsSummaryClear).filter(":visible").click();
     cy.wait("@fetchResults");
     cy.get(searchResultsFacetsSummaryClear).should("not.exist");
   });

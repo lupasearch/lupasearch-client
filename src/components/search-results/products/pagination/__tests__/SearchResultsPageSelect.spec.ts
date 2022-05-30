@@ -16,7 +16,7 @@ describe("SearchResultsPageSelect", () => {
           selectedPage: 1,
           display: 5,
         },
-        label: DEFAULT_OPTIONS_RESULTS.labels.showMore,
+        lastPageLabel: DEFAULT_OPTIONS_RESULTS.labels.showMore,
       },
     });
     wrapperVm = wrapper.vm as any;

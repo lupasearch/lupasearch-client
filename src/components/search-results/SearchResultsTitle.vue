@@ -2,9 +2,10 @@
   <h1
     class="lupa-result-page-title"
     data-cy="lupa-result-page-title"
-    v-if="options.labels.searchResults && currentQueryText"
+    v-if="showSearchTitle"
   >
-    {{ options.labels.searchResults }}'{{ queryText }}'
+    {{ options.labels.searchResults
+    }}<span v-if="queryText">'{{ queryText }}'</span>
     <span v-if="showProductCount" class="lupa-results-total-count"
       >({{ totalItems }})</span
     >
@@ -25,6 +26,7 @@ const searchResult = namespace("searchResult");
 })
 export default class SearchResultsTitle extends Vue {
   @Prop() options!: SearchResultsOptions;
+  @Prop({ default: false }) isProductList!: boolean;
 
   @searchResult.Getter("currentQueryText") currentQueryText!: string;
   @searchResult.Getter("totalItems") totalItems!: number;
@@ -38,6 +40,13 @@ export default class SearchResultsTitle extends Vue {
 
   get showProductCount(): boolean {
     return Boolean(this.options.toolbar?.totalCount);
+  }
+
+  get showSearchTitle(): boolean {
+    return Boolean(
+      this.options.labels?.searchResults &&
+        (this.currentQueryText || this.isProductList)
+    );
   }
 
   getLabel(label: string): string {

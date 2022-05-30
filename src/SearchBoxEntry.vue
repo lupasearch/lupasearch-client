@@ -7,6 +7,7 @@ import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
+import cloneDeep from "lodash.clonedeep";
 import SearchBox from "./components/search-box/SearchBox.vue";
 import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { merge } from "@/utils/merger.utils";
@@ -21,7 +22,8 @@ export default class SearchBoxEntry extends Vue {
   @Prop() searchBoxOptions!: SearchBoxOptions;
 
   get fullSearchBoxOptions(): SearchBoxOptions {
-    return merge(DEFAULT_SEARCH_BOX_OPTIONS, this.searchBoxOptions);
+    const options = cloneDeep(this.searchBoxOptions);
+    return merge(DEFAULT_SEARCH_BOX_OPTIONS, options);
   }
 }
 </script>

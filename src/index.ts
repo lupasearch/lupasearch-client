@@ -5,11 +5,36 @@ import SearchBoxEntry from "./SearchBoxEntry.vue";
 import SearchResultsEntry from "./SearchResultsEntry.vue";
 import ProductListEntry from "./ProductListEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
-import { SearchResultsOptions } from "./types/search-results/SearchResultsOptions";
+import {
+  FacetStyle,
+  SearchResultsOptions,
+} from "./types/search-results/SearchResultsOptions";
 import store from "./store";
-import { TrackingOptions } from "./types/General";
+import {
+  SdkOptions,
+  TrackingOptions,
+  Environment,
+  SortDirection,
+} from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
 import { ProductListOptions } from "./types/product-list/ProductListOptions";
+import {
+  AddToCartElement,
+  CustomDocumentElement,
+  CustomHtmlElement,
+  DescriptionDocumentElement,
+  DocumentElement,
+  DocumentElementType,
+  ImageDocumentElement,
+  PriceElement,
+  RatingElement,
+  RegularPriceDocumentElement,
+  TitleDocumentElement,
+} from "./types/DocumentElement";
+import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
+import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
+import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
+import { BadgeType } from "./types/search-results/BadgeOptions";
 
 const app = {
   box: {},
@@ -42,7 +67,7 @@ const searchResults = (options: SearchResultsOptions): void => {
 };
 const productList = (options: ProductListOptions): void => {
   Vue.use(Vuex);
-  app.results = new Vue({
+  app.productList = new Vue({
     el: options.containerSelector,
     components: { ProductListEntry },
     render: (h) =>
@@ -73,6 +98,30 @@ const lupaSearch = {
   clearProductList,
 };
 
-export { TrackingOptions, SearchBoxOptions, SearchResultsOptions };
+export {
+  TrackingOptions,
+  SearchBoxOptions,
+  SearchResultsOptions,
+  ProductListOptions,
+  SdkOptions,
+  DocumentElementType,
+  SearchBoxPanelType,
+  FacetStyle,
+  Environment,
+  RoutingBehavior,
+  AnchorPosition,
+  BadgeType,
+  SortDirection,
+  DocumentElement,
+  ImageDocumentElement,
+  TitleDocumentElement,
+  DescriptionDocumentElement,
+  CustomDocumentElement,
+  PriceElement,
+  RegularPriceDocumentElement,
+  RatingElement,
+  AddToCartElement,
+  CustomHtmlElement,
+};
 
 export default lupaSearch;

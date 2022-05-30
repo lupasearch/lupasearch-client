@@ -1,6 +1,6 @@
 @use "./lupaConfig.scss";
 
-#lupa-search-result-filters {
+.lupa-search-result-filters {
   padding-right: 24px;
   flex: 40%;
 }
@@ -143,4 +143,17 @@
   height: 20px;
   justify-content: center;
   align-items: center;
+}
+
+.lupa-category-top-mobile-filters {
+  .lupa-category-back {
+    border: lupaConfig.$border;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 0;
+    &::before {
+      content: "<";
+      display: inline-block;
+    }
+  }
 }

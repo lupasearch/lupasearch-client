@@ -597,6 +597,16 @@ const options = {
 
 - `elements` - a list of available elements. Available items and configuration is the same as in the main search result list.
 
+## Disalow empty query
+
+By default, search result pages queries all documents if there is no query string defined. You can disable this functionality with the following option:
+
+```js
+const options = {
+  disallowEmptyQuery: true,
+};
+```
+
 ## No results query flag
 
 It is possible to configure a query parameter flag, which would be set by the LupaSearch plugin when search returns zero results:
@@ -611,6 +621,26 @@ The configuration above would result in the following query, if user search yiel
 
 ```
 ?q=no-results-query&noResults=true
+```
+
+## Routing behavior
+
+```js
+const options = {
+  routingBehavior: "event",
+};
+```
+
+Search results supports two ways of product card routing `routingBehavior` settings:
+
+- `direct-link` - elements are direct links to the urls, defined in the document object;
+
+- `event` - when user clicks on the product (title or image), a special event `lupaRedirect` is emitted on the window object. The event can then be handled by the plugin user:
+
+```js
+window.addEventListener("lupaRedirect", (data) => {
+  // data.detail - redirect url
+});
 ```
 
 # Statistics

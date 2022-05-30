@@ -1,10 +1,12 @@
 import { Document } from "@getlupa/client-sdk/Types";
 import { DocumentElement } from "../DocumentElement";
 import { BadgeElement } from "./BadgeOptions";
+import { RoutingBehavior } from "./RoutingBehavior";
 import { SearchResultsOptionLabels } from "./SearchResultsOptions";
 
 export type SearchResultsProductCardOptions = {
   labels: SearchResultsOptionLabels;
+  routingBehavior?: RoutingBehavior;
   isInStock: (doc: Document) => boolean;
   badges: SearchResultBadgeOptions;
   links: {
