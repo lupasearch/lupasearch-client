@@ -4,8 +4,8 @@ import {
   searchResultsOptions,
 } from "./base.js";
 
-const getLupa = window.getLupa;
+const lupaSearch = window.lupaSearch;
 
-getLupa.tracking(trackingOptions);
-getLupa.searchBox(searchBoxOptions);
-getLupa.searchResults(searchResultsOptions);
+lupaSearch.tracking(trackingOptions);
+lupaSearch.searchBox(searchBoxOptions);
+lupaSearch.searchResults(searchResultsOptions);

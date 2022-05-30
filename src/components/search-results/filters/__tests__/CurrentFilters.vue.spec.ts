@@ -7,12 +7,15 @@ import CurrentFilters from "../CurrentFilters.vue";
 import CurrentFilterDisplay from "../CurrentFilterDisplay.vue";
 import ParamsModule from "@/store/modules/params";
 import SearchResultModule from "@/store/modules/searchResult";
+import OptionsModule from "@/store/modules/options";
 
 jest.mock("@/utils/filter.utils");
 jest.mock("@/store/modules/params");
+jest.mock("@/store/modules/options");
 
 const ParamsModuleMock = mocked(ParamsModule, true);
 const SearchResultModuleMock = mocked(SearchResultModule, true);
+const OptionsModuleMock = mocked(OptionsModule, true);
 const getLabeledFiltersMock = mocked(getLabeledFilters);
 
 const localVue = createLocalVue();
@@ -35,6 +38,7 @@ const getComponent = () => {
     modules: {
       params: ParamsModuleMock,
       searchResult: SearchResultModuleMock,
+      options: OptionsModuleMock,
     },
   });
   return shallowMount(CurrentFilters, {

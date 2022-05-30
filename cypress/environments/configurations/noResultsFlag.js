@@ -4,12 +4,12 @@ import {
   searchResultsOptions,
 } from "./base.js";
 
-const getLupa = window.getLupa;
+const lupaSearch = window.lupaSearch;
 
-getLupa.tracking(trackingOptions);
-getLupa.searchBox(searchBoxOptions);
+lupaSearch.tracking(trackingOptions);
+lupaSearch.searchBox(searchBoxOptions);
 
-getLupa.searchResults({
+lupaSearch.searchResults({
   ...searchResultsOptions,
   noResultsQueryFlag: "noResults",
 });

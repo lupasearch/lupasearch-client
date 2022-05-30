@@ -7,7 +7,7 @@ import {
 import { AnalyticsOptions } from "@/types/AnalyticsOptions";
 import { TrackingOptions } from "@/types/General";
 import { TrackableEventData } from "@/types/search-box/Common";
-import getLupaSdk from "@getlupa/client-sdk";
+import lupaSearchSdk from "@getlupa/client-sdk";
 import { EventData, Options } from "@getlupa/client-sdk/Types";
 import { getRandomString } from "./string.utils";
 
@@ -149,7 +149,7 @@ const trackLupaEvent = (
     userId: getUserKey(),
     sessionId: getSessionKey(),
   };
-  getLupaSdk.track(queryKey, eventData, options);
+  lupaSearchSdk.track(queryKey, eventData, options);
 };
 
 const sendGa = (name: string, ...args: string[]) => {

@@ -1,12 +1,12 @@
 # Tracking
 
-GetLupa plugin can track significant user behavior events, like clicking on documents, suggestions or adding to cart.
+LupaSearch plugin can track significant user behavior events, like clicking on documents, suggestions or adding to cart.
 
 For a list of all event types see Statistics section for Search Box and Search Results documentation.
 
 ## Base configuration
 
-To enable tracking, add this block of code, above all other `getLupa` configuration:
+To enable tracking, add this block of code, above all other `lupaSaerch` configuration:
 
 ```js
 import lupaSearch from "@getlupa/client";

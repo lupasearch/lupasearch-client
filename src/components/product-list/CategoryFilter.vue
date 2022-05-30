@@ -37,7 +37,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
-import getLupaSdk from "@getlupa/client-sdk";
+import lupaSearchSdk from "@getlupa/client-sdk";
 import { Options } from "@getlupa/client-sdk/Types";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import { namespace } from "vuex-class";
@@ -91,7 +91,7 @@ export default class CategoryFilter extends Vue {
   }
 
   async mounted(): Promise<void> {
-    const result = await getLupaSdk.query(
+    const result = await lupaSearchSdk.query(
       this.options.queryKey,
       {
         searchText: "",

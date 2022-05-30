@@ -34,7 +34,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop, Watch } from "vue-property-decorator";
 import { namespace } from "vuex-class";
-import getLupaSdk from "@getlupa/client-sdk";
+import lupaSearchSdk from "@getlupa/client-sdk";
 import { SdkOptions } from "@/types/General";
 import { SearchQueryResult } from "@getlupa/client-sdk/Types";
 import SearchResultsProductCard from "../products/product-card/SearchResultsProductCard.vue";
@@ -102,7 +102,7 @@ export default class AdditionalPanels extends Vue {
       limit: this.panel.totalCountLimit,
       searchText: this.query,
     };
-    getLupaSdk
+    lupaSearchSdk
       .query(this.panel.queryKey, query, this.options)
       .then((res) => {
         if (res.success) {

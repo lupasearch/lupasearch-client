@@ -6,7 +6,7 @@ import {
   Suggestion,
 } from "@getlupa/client-sdk/Types";
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import getLupaSdk from "@getlupa/client-sdk";
+import lupaSearchSdk from "@getlupa/client-sdk";
 import {
   DisplaySuggestion,
   HighlightedDocInfo,
@@ -156,7 +156,7 @@ export default class SearchBoxModule extends VuexModule {
   }> {
     try {
       const context = getLupaTrackingContext();
-      const result = await getLupaSdk.suggestions(
+      const result = await lupaSearchSdk.suggestions(
         queryKey,
         { ...publicQuery, ...context },
         options
@@ -194,7 +194,7 @@ export default class SearchBoxModule extends VuexModule {
   }> {
     try {
       const context = getLupaTrackingContext();
-      const result = await getLupaSdk.query(
+      const result = await lupaSearchSdk.query(
         queryKey,
         { ...publicQuery, ...context },
         options
