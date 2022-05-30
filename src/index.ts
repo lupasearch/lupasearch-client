@@ -10,7 +10,12 @@ import {
   SearchResultsOptions,
 } from "./types/search-results/SearchResultsOptions";
 import store from "./store";
-import { SdkOptions, TrackingOptions, Environment } from "./types/General";
+import {
+  SdkOptions,
+  TrackingOptions,
+  Environment,
+  SortDirection,
+} from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
 import { ProductListOptions } from "./types/product-list/ProductListOptions";
 import {
@@ -30,7 +35,6 @@ import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
 import { BadgeType } from "./types/search-results/BadgeOptions";
-import { SortDirection } from "@getlupa/client-sdk/Types";
 
 const app = {
   box: {},

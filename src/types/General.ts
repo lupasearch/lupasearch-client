@@ -18,3 +18,4 @@ export type TrackingOptions = {
 };
 
 export type Environment = SdkEnvironment;
+export type SortDirection = "asc" | "desc";
