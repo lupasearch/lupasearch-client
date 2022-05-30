@@ -65,6 +65,7 @@ import { Prop } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 
 const params = namespace("params");
+const searchResult = namespace("searchResult");
 
 @Component({
   name: "searchResultsPageSelect",
@@ -75,11 +76,19 @@ export default class SearchResultsPageSelect extends Vue {
 
   @Prop({ default: {} }) options!: PaginationPageSelect;
 
+  @searchResult.Getter("isMobileWidth") isMobileWidth!: boolean;
+
+  get pageOptionsCount(): number {
+    return this.isMobileWidth
+      ? this.options.displayMobile
+      : this.options.display;
+  }
+
   get pages(): number[] {
     const currentPage = Math.min(this.options.count, this.options.selectedPage);
-    const delta = Math.floor(this.options.display / 2),
+    const delta = Math.floor(this.pageOptionsCount / 2),
       left = currentPage - delta,
-      right = currentPage + (this.options.display - delta);
+      right = currentPage + (this.pageOptionsCount - delta);
 
     return Array.from({ length: this.options.count }, (v, k) => k + 1).filter(
       (i) => i && i >= left && i < right

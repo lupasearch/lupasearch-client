@@ -19,6 +19,8 @@ import {
 } from "@getlupa/client-sdk/Types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
+const MOBILE_WIDTH = 767;
+
 @Module({ namespaced: true })
 export default class SearchResultModule extends VuexModule {
   searchResult: SearchQueryResult = {} as SearchQueryResult;
@@ -27,6 +29,7 @@ export default class SearchResultModule extends VuexModule {
   layout: ResultsLayout = ResultsLayoutEnum.GRID;
   loading = false;
   isMobileSidebarVisible = false;
+  screenWidth = 1000;
 
   get facets(): FacetResult[] | undefined {
     return this.searchResult.facets;
@@ -76,6 +79,10 @@ export default class SearchResultModule extends VuexModule {
     return [offset + 1, Math.min(offset + limit, this.totalItems)];
   }
 
+  get isMobileWidth(): boolean {
+    return this.screenWidth < MOBILE_WIDTH;
+  }
+
   @Mutation
   setSidebarVisibility({ visible }: { visible: boolean }): void {
     this.isMobileSidebarVisible = visible;
@@ -102,6 +109,11 @@ export default class SearchResultModule extends VuexModule {
   @Mutation
   load(loading: boolean): void {
     this.loading = loading || false;
+  }
+
+  @Mutation
+  setScreenWidth({ width }: { width: number }): void {
+    this.screenWidth = width;
   }
 
   @Action({ commit: "save" })

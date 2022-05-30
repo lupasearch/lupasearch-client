@@ -141,6 +141,7 @@ export default class SearchResultsToolbar extends Vue {
         count: getPageCount(this.searchResult.total, this.limit),
         selectedPage: this.page,
         display: pageSelect.display,
+        displayMobile: pageSelect.displayMobile,
       },
       labels: this.options.labels,
     };

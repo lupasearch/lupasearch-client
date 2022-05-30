@@ -295,6 +295,12 @@ export default class SearchResults extends Vue {
     });
   }
 
+  @searchResult.Mutation("setScreenWidth") setScreenWidth!: ({
+    width,
+  }: {
+    width: number;
+  }) => void;
+
   @searchResult.Action("setColumnCount") setColumnCount!: ({
     width,
     grid,
@@ -308,6 +314,7 @@ export default class SearchResults extends Vue {
     const doc = document.documentElement;
     doc.style.setProperty("--lupa-full-height", `${window.innerHeight}px`);
     this.setColumnCount({ width: window.innerWidth, grid: this.options.grid });
+    this.setScreenWidth({ width: window.innerWidth });
   }
 }
 </script>

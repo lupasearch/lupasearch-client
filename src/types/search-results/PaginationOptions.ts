@@ -15,6 +15,7 @@ export type PaginationPageSelect = {
   count: number;
   selectedPage: number;
   display: number;
+  displayMobile: number;
 };
 
 export type PaginationDisplay = {

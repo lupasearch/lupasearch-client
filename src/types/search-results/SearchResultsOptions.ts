@@ -82,6 +82,7 @@ export type SearchResultsPagination = {
   pageSelection: {
     position: SearchResultsPaginationPosition;
     display: number;
+    displayMobile: number;
   };
 };
 
