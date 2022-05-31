@@ -9,8 +9,8 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     containerSelector: string;
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
-    noResultsQueryFlag?: string;
     disallowEmptyQuery?: boolean;
+    callbacks?: SearchResultEventCallbacks;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";
@@ -23,6 +23,10 @@ export type SearchResultsDidYouMeanLabels = {
 export type SearchResultsSimilarQueriesLabels = {
   similarQuery: string;
   similarQueries: string;
+};
+
+export type SearchResultEventCallbacks = {
+  noResults: () => void;
 };
 
 export type SearchResultsOptionLabels = SearchResultsPaginationLabels &

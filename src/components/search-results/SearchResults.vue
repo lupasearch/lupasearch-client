@@ -162,14 +162,6 @@ export default class SearchResults extends Vue {
     defaultLimit: number;
   };
 
-  @params.Action("handleNoResultsFlag") handleNoResultsFlag!: ({
-    resultCount,
-    noResultsParam,
-  }: {
-    resultCount: number;
-    noResultsParam?: string;
-  }) => void;
-
   @params.Action("add") addParams!: (params: QueryParams) => {
     params: QueryParams;
   };
@@ -289,10 +281,19 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }): void {
     this.trackResults({ queryKey, results });
-    this.handleNoResultsFlag({
-      resultCount: results?.total ?? 0,
-      noResultsParam: this.options.noResultsQueryFlag,
-    });
+    this.handleNoResults(results);
+  }
+
+  handleNoResults(results: SearchQueryResult): void {
+    const hasResults = Boolean(
+      results.total > 0 ||
+        results.similarQueries?.length ||
+        results.didYouMean?.options
+    );
+    if (hasResults) {
+      return;
+    }
+    this.options.callbacks?.noResults();
   }
 
   @searchResult.Mutation("setScreenWidth") setScreenWidth!: ({
