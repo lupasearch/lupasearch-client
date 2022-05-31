@@ -617,7 +617,7 @@ const options = {
   callbacks: {
     onSearchResults: (context: CallbackContext) => {},
     onAdditionalPanelResults: (context: CallbackContext) => {},
-    onCategoryFilterResults: context: CallbackContext() => {},
+    onCategoryFilterResults: (context: CallbackContext) => {},
   },
 };
 ```
