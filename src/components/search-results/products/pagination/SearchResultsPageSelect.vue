@@ -2,6 +2,7 @@
   <div
     id="lupa-search-results-page-select"
     data-cy="lupa-search-results-page-select"
+    v-if="showPagination"
   >
     <div
       v-if="showBack"
@@ -120,6 +121,10 @@ export default class SearchResultsPageSelect extends Vue {
 
   get showFirstPageSeparator(): boolean {
     return this.showFirstPage && !this.pages.includes(2);
+  }
+
+  get showPagination(): boolean {
+    return this.pages.length > 1;
   }
 
   @params.Action("appendParams") appendParams!: ({

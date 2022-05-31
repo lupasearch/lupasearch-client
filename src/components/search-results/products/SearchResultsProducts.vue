@@ -19,11 +19,13 @@
         :options="currentFilterOptions"
         :expandable="true"
       />
-      <AdditionalPanels
-        :options="options"
-        location="top"
-        :sdkOptions="options.options"
-      />
+    </template>
+    <AdditionalPanels
+      :options="options"
+      location="top"
+      :sdkOptions="options.options"
+    />
+    <template v-if="hasResults">
       <SearchResultsToolbar
         class="lupa-toolbar-top"
         :options="options"

@@ -38,12 +38,17 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import lupaSearchSdk from "@getlupa/client-sdk";
-import { Options } from "@getlupa/client-sdk/Types";
+import {
+  Options,
+  SdkError,
+  SearchQueryResult,
+} from "@getlupa/client-sdk/Types";
 import { CategoryFilterOptions } from "@/types/product-list/ProductListOptions";
 import { namespace } from "vuex-class";
 import CategoryFilterItem from "./CategoryFilterItem.vue";
 import { handleRoutingEvent } from "@/utils/routing.utils";
 import { linksMatch } from "@/utils/link.utils";
+import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
 
 const options = namespace("options");
 
@@ -58,6 +63,8 @@ export default class CategoryFilter extends Vue {
   categoryChildren: Record<string, string>[] = [];
 
   @options.Getter("envOptions") envOptions!: Options;
+  @options.State((o) => o.searchResultOptions)
+  searchResultOptions!: SearchResultsOptions;
 
   get hasBackButton(): boolean {
     return Boolean(this.options.back?.title);
@@ -99,10 +106,18 @@ export default class CategoryFilter extends Vue {
       },
       this.envOptions
     );
+    this.handleResult(result);
+  }
+
+  handleResult(result: SearchQueryResult | SdkError): void {
     if (!result.success) {
       return;
     }
     this.categoryChildren = result.items as Record<string, string>[];
+    this.searchResultOptions.callbacks?.onCategoryFilterResults?.({
+      queryKey: this.options.queryKey,
+      hasResults: result.total > 0,
+    });
   }
 
   getCategoryKey(item: Record<string, string>): string {

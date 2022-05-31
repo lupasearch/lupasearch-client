@@ -281,19 +281,12 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }): void {
     this.trackResults({ queryKey, results });
-    this.handleNoResults(results);
-  }
-
-  handleNoResults(results: SearchQueryResult): void {
     const hasResults = Boolean(
       results.total > 0 ||
         results.similarQueries?.length ||
         results.didYouMean?.options
     );
-    if (hasResults) {
-      return;
-    }
-    this.options.callbacks?.noResults();
+    this.options.callbacks?.onSearchResults?.({ queryKey, hasResults });
   }
 
   @searchResult.Mutation("setScreenWidth") setScreenWidth!: ({

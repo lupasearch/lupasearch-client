@@ -611,15 +611,31 @@ const options = {
 
 Lupa can emit callbacks on certain events:
 
-```js
+```ts
 const options = {
+  // other configuration
   callbacks: {
-    noResults: () => {},
+    onSearchResults: (context: CallbackContext) => {},
+    onAdditionalPanelResults: (context: CallbackContext) => {},
+    onCategoryFilterResults: context: CallbackContext() => {},
   },
 };
 ```
 
-- `noResults` - Current search returned no results (including did you mean or similar query result).
+- `onSearchResults` - all products loaded;
+
+- `onAdditionalPanelResults` - additional panels loaded;
+
+- `onCategoryFilterResults` - category filter loaded;
+
+Where `CallbackContext` is:
+
+```ts
+type CallbackContext = {
+  queryKey: string;
+  hasResults: boolean;
+};
+```
 
 ## Routing behavior
 

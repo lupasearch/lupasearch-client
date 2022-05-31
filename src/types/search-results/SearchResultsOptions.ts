@@ -25,8 +25,15 @@ export type SearchResultsSimilarQueriesLabels = {
   similarQueries: string;
 };
 
+export type CallbackContext = {
+  queryKey: string;
+  hasResults: boolean;
+};
+
 export type SearchResultEventCallbacks = {
-  noResults: () => void;
+  onSearchResults?: (context: CallbackContext) => unknown;
+  onAdditionalPanelResults?: (context: CallbackContext) => unknown;
+  onCategoryFilterResults?: (context: CallbackContext) => unknown;
 };
 
 export type SearchResultsOptionLabels = SearchResultsPaginationLabels &
