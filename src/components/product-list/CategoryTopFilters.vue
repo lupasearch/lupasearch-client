@@ -1,5 +1,8 @@
 <template>
-  <div class="lupa-category-top-mobile-filters">
+  <div
+    class="lupa-category-top-mobile-filters"
+    :class="{ 'lupa-has-back-button': hasBackButton }"
+  >
     <div class="lupa-top-mobile-filter-wrapper">
       <div class="lupa-category-back" v-if="hasBackButton">
         <a
