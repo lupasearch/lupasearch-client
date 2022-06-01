@@ -92,6 +92,7 @@ export default class AdditionalPanels extends Vue {
   }
 
   mounted(): void {
+    console.log("m");
     if (!this.query) {
       return;
     }
@@ -100,6 +101,7 @@ export default class AdditionalPanels extends Vue {
 
   @Watch("query")
   handleQueryChange(): void {
+    console.log("q");
     const context = getLupaTrackingContext();
     const query = {
       ...context,
