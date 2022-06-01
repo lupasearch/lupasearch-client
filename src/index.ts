@@ -53,6 +53,11 @@ const tracking = (options: TrackingOptions): void => {
 };
 
 const searchBox = (options: SearchBoxOptions): void => {
+  try {
+    (app.box as unknown as any)?.$destroy();
+  } catch {
+    // Does not exist, do nothing
+  }
   Vue.use(Vuex);
   app.box = new Vue({
     el: options.inputSelector,
@@ -62,6 +67,11 @@ const searchBox = (options: SearchBoxOptions): void => {
   });
 };
 const searchResults = (options: SearchResultsOptions): void => {
+  try {
+    (app.results as unknown as any)?.$destroy();
+  } catch {
+    // Does not exist, do nothing
+  }
   Vue.use(Vuex);
   app.results = new Vue({
     el: options.containerSelector,
@@ -72,6 +82,11 @@ const searchResults = (options: SearchResultsOptions): void => {
   });
 };
 const productList = (options: ProductListOptions): void => {
+  try {
+    (app.productList as unknown as any)?.$destroy();
+  } catch {
+    // Does not exist, do nothing
+  }
   Vue.use(Vuex);
   app.productList = new Vue({
     el: options.containerSelector,
