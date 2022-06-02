@@ -47,6 +47,7 @@ export type SearchResultsOptionLabels = SearchResultsPaginationLabels &
     emptyResults: string;
     mobileFilterButton: string;
     htmlTitleTemplate: string;
+    outOfStock?: string;
   };
 
 export type SearchResultsAdditionalPanels = {

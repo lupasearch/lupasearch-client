@@ -22,6 +22,7 @@ const options = {
     similarQuery: "Search results for phrase {1}",
     similarQueries: "Similar queries:",
     filteredItemCount: "Filtered items {1} from {2}",
+    outOfStock: "Out of stock",
   },
 };
 
@@ -57,6 +58,8 @@ lupaSearch.searchResults(options);
 - `labels.similarQueries` - a label that is displayed before all the items yielded by the similar queries;
 
 - `labels.filteredItemCount` - special case for item count label, which is shown when at least one filter is active;
+
+- `labels.outOfStock` - product out of stock overlay label;
 
 # Query parameters
 
