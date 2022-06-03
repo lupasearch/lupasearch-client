@@ -86,9 +86,19 @@ export type SearchResultsPaginationLabels = {
   showMore: string;
 };
 
+export type ResponsiveSearchResultPageSizes = {
+  xs: number[];
+  sm: number[];
+  md: number[];
+  l: number[];
+  xl: number[];
+};
+
+export type SearchResultPageSizes = number[] | ResponsiveSearchResultPageSizes;
+
 export type SearchResultsPagination = {
   sizeSelection: {
-    sizes: number[];
+    sizes: SearchResultPageSizes;
     position: SearchResultsPaginationPosition;
   };
   pageSelection: {

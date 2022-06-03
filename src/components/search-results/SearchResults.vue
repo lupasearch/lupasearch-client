@@ -212,7 +212,7 @@ export default class SearchResults extends Vue {
     this.handleUrlChange(params);
     this.addParams(parseParams(params));
 
-    this.setDefaultLimit(this.options.pagination?.sizeSelection?.sizes?.[0]);
+    this.setDefaultLimit(this.defaultSearchResultPageSize);
   }
 
   @Watch("searchString")

@@ -509,6 +509,24 @@ const options = {
 
   - `display` - maximum number of pages to display in pagination;
 
+## Dynamic page sizes
+
+It is possible to configure different page size selection options for different resolutions (If you have a different number of grid columns for `xs`, `md` or `xl` sizes, or just want to have smaller pages for lower resolutions):
+
+```js
+const options = {
+  sizeSelection: {
+    sizes: {
+      xs: [12, 24, 36],
+      sm: [15, 30, 45, 60],
+      md: [15, 30, 45, 60],
+      l: [12, 24, 36, 60],
+      xl: [15, 30, 45, 60],
+    },
+  }
+};
+```
+
 ## Toolbar
 
 Control which elements are visible in the toolbar.

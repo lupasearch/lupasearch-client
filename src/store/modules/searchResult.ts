@@ -4,6 +4,7 @@ import {
   S_MIN_WIDTH,
   XL_MIN_WIDTH,
 } from "@/constants/global.const";
+import { ScreenSize } from "@/types/General";
 import { LabeledFilter } from "@/types/search-results/Filters";
 import {
   ResultsLayout,
@@ -18,8 +19,6 @@ import {
   SearchQueryResult,
 } from "@getlupa/client-sdk/Types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
-
-const MOBILE_WIDTH = 767;
 
 @Module({ namespaced: true })
 export default class SearchResultModule extends VuexModule {
@@ -80,7 +79,22 @@ export default class SearchResultModule extends VuexModule {
   }
 
   get isMobileWidth(): boolean {
-    return this.screenWidth < MOBILE_WIDTH;
+    return this.currentScreenWidth === "sm" || this.currentScreenWidth === "xs";
+  }
+
+  get currentScreenWidth(): ScreenSize {
+    const width = this.screenWidth;
+    if (width <= S_MIN_WIDTH) {
+      return "xs";
+    } else if (width > S_MIN_WIDTH && width <= MD_MIN_WIDTH) {
+      return "sm";
+    } else if (width > MD_MIN_WIDTH && width <= L_MIN_WIDTH) {
+      return "md";
+    } else if (width > L_MIN_WIDTH && width <= XL_MIN_WIDTH) {
+      return "l";
+    } else {
+      return "xl";
+    }
   }
 
   @Mutation

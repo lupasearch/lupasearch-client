@@ -59,6 +59,7 @@ import { getPageCount } from "@/utils/picker.utils";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
+const options = namespace("options");
 
 @Component({
   name: "searchResultsToolbar",
@@ -130,11 +131,10 @@ export default class SearchResultsToolbar extends Vue {
   }
 
   get paginationOptions(): PaginationOptions {
-    const pageSize = this.options.pagination.sizeSelection;
     const pageSelect = this.options.pagination.pageSelection;
-    const r = {
+    return {
       pageSize: {
-        sizes: pageSize.sizes,
+        sizes: this.currentResolutionPageSizes,
         selectedSize: this.limit,
       },
       pageSelect: {
@@ -145,7 +145,6 @@ export default class SearchResultsToolbar extends Vue {
       },
       labels: this.options.labels,
     };
-    return r;
   }
 
   get displayPageSelect(): boolean {
@@ -167,6 +166,9 @@ export default class SearchResultsToolbar extends Vue {
       this.options.filters?.currentFilters?.mobileSidebar?.showFilterCount
     );
   }
+
+  @options.Getter("currentResolutionPageSizes")
+  currentResolutionPageSizes!: number[];
 
   @params.Action("removeAllFilters") removeAllFilters!: () => {
     params: QueryParams;
