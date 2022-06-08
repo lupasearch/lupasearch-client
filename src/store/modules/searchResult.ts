@@ -14,11 +14,13 @@ import { ProductGrid } from "@/types/search-results/SearchResultsOptions";
 import { setDocumentTitle } from "@/utils/document.utils";
 import { getLabeledFilters, unfoldFilters } from "@/utils/filter.utils";
 import {
+  FacetGroup,
   FacetResult,
   FilterGroup,
   SearchQueryResult,
 } from "@getlupa/client-sdk/Types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
+import lupaSearchSdk from "@getlupa/client-sdk";
 
 @Module({ namespaced: true })
 export default class SearchResultModule extends VuexModule {
@@ -66,6 +68,10 @@ export default class SearchResultModule extends VuexModule {
 
   get currentFilterCount(): number {
     return this.displayFilters?.length ?? 0;
+  }
+
+  get currentFilterKeys(): string[] {
+    return Object.keys(this.currentFilters ?? {});
   }
 
   get hasAnyFilter(): boolean {
@@ -118,6 +124,33 @@ export default class SearchResultModule extends VuexModule {
     this.columnCount = columnCount || this.columnCount;
     this.addToCartAmount = addToCartAmount || this.addToCartAmount;
     this.layout = layout || this.layout;
+  }
+
+  @Action
+  async queryFacet({
+    queryKey,
+    facetKey,
+  }: {
+    queryKey: string;
+    facetKey: string;
+  }): Promise<void> {
+    const query = { searchText: "", filters: { ...this.currentFilters } };
+    const options = this.context.rootGetters["options/envOptions"] ?? {};
+    const result = await lupaSearchSdk.query(queryKey, query, options);
+    if (!result.success) {
+      return;
+    }
+    const facet = result.facets?.find((f) => f.key === facetKey);
+    const facetItems = (facet as FacetGroup)?.items ?? [];
+    const updatedResult = {
+      ...this.searchResult,
+      facets: this.facets?.map((f) =>
+        f.key === facetKey ? { ...f, items: facetItems } : f
+      ),
+    };
+    this.context.commit("save", {
+      searchResult: updatedResult,
+    });
   }
 
   @Mutation

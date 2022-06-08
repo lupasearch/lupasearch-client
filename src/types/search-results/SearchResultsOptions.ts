@@ -130,6 +130,10 @@ export type ResultCurrentFilterOptions = {
 
 export type FacetStyle = "sidebar" | "top-dropdown";
 
+export type FacetFilterQuery = {
+  queryKey: string;
+};
+
 export type ResultFacetOptions = {
   labels: {
     title: string;
@@ -161,6 +165,7 @@ export type ResultFacetOptions = {
     type: FacetStyle;
   };
   exclude?: string[];
+  facetFilterQueries?: Record<string, FacetFilterQuery>;
 };
 
 export type SearchResultsFilterOptions = {

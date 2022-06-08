@@ -7,6 +7,7 @@ import ProductListEntry from "./ProductListEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import {
   CallbackContext,
+  FacetFilterQuery,
   FacetStyle,
   SearchResultEventCallbacks,
   SearchResultsOptions,
@@ -132,6 +133,7 @@ export {
   SearchResultsSortOptions,
   SearchResultEventCallbacks,
   CallbackContext,
+  FacetFilterQuery,
 };
 
 export default lupaSearch;
