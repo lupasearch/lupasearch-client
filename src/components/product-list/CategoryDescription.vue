@@ -1,7 +1,7 @@
 <template>
   <div class="lupa-category-overview" v-if="overviewVisible">
     <div class="lupa-category-title">{{ title }}</div>
-    <div class="lupa-category-description">{{ description }}</div>
+    <div class="lupa-category-description" v-html="description"></div>
   </div>
 </template>
 <script lang="ts">

@@ -20,7 +20,10 @@ import {
   SortDirection,
 } from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
-import { ProductListOptions } from "./types/product-list/ProductListOptions";
+import {
+  CategoryFilterOptions,
+  ProductListOptions,
+} from "./types/product-list/ProductListOptions";
 import {
   AddToCartElement,
   CustomDocumentElement,
@@ -134,6 +137,7 @@ export {
   SearchResultEventCallbacks,
   CallbackContext,
   FacetFilterQuery,
+  CategoryFilterOptions,
 };
 
 export default lupaSearch;
