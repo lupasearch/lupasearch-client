@@ -98,6 +98,9 @@ export default class CategoryFilter extends Vue {
   }
 
   async mounted(): Promise<void> {
+    if (!this.options?.queryKey) {
+      return;
+    }
     const result = await lupaSearchSdk.query(
       this.options.queryKey,
       {
@@ -110,7 +113,7 @@ export default class CategoryFilter extends Vue {
   }
 
   handleResult(result: SearchQueryResult | SdkError): void {
-    if (!result.success) {
+    if (!result.success || !this.options?.queryKey) {
       return;
     }
     this.categoryChildren = result.items as Record<string, string>[];
