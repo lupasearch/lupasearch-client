@@ -385,7 +385,7 @@ const options = {
       },
       exclude: ["price", "category"],
       facetFilterQueries: {
-        tag: { key: "" },
+        tag: { queryKey: "" },
       },
     },
   },

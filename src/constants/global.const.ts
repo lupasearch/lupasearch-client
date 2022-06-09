@@ -12,7 +12,7 @@ export const MD_MIN_WIDTH = 767;
 export const L_MIN_WIDTH = 991;
 export const XL_MIN_WIDTH = 1199;
 
-export const MAX_FACET_VALUES = 1000;
+export const MAX_FACET_VALUES = 5000;
 
 export const CURRENCY_KEY_INDICATOR = "price";
 
