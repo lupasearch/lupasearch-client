@@ -34,6 +34,7 @@ export type SearchResultEventCallbacks = {
   onSearchResults?: (context: CallbackContext) => unknown;
   onAdditionalPanelResults?: (context: CallbackContext) => unknown;
   onCategoryFilterResults?: (context: CallbackContext) => unknown;
+  onMounted?: () => unknown;
 };
 
 export type SearchResultsOptionLabels = SearchResultsPaginationLabels &

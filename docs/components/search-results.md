@@ -641,6 +641,7 @@ Lupa can emit callbacks on certain events:
 const options = {
   // other configuration
   callbacks: {
+    onMounted: () => {},
     onSearchResults: (context: CallbackContext) => {},
     onAdditionalPanelResults: (context: CallbackContext) => {},
     onCategoryFilterResults: (context: CallbackContext) => {},

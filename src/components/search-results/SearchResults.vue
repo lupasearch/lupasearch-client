@@ -199,6 +199,7 @@ export default class SearchResults extends Vue {
     this.setSearchResultOptions({ options: this.options });
     this.handleMounted();
     this.setInitialFilters({ initialFilters: this.initialFilters });
+    this.options.callbacks?.onMounted?.();
   }
 
   beforeDestroy(): void {
