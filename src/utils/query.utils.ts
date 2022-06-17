@@ -48,8 +48,15 @@ export const createPublicQuery = (
         break;
     }
   }
+  publicQuery.sort =
+    publicQuery.sort ||
+    (getDefaultSort(sortOptions) as Record<string, SortDirection>[]);
   publicQuery.filters = queryParams.filters;
   return publicQuery;
+};
+
+const getDefaultSort = (sortOptions?: SearchResultsSortOptions[]) => {
+  return sortOptions?.find((s) => Boolean(s.default))?.config || undefined;
 };
 
 const getOffset = (page: number, limit = 10): number => {
