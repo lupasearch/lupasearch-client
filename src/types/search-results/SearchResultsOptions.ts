@@ -166,6 +166,7 @@ export type ResultFacetOptions = {
     type: FacetStyle;
   };
   exclude?: string[];
+  expand?: string[];
   facetFilterQueries?: Record<string, FacetFilterQuery>;
 };
 

@@ -384,6 +384,7 @@ const options = {
         type: "top-dropdown",
       },
       exclude: ["price", "category"],
+      expand: ["regular_price"],
       facetFilterQueries: {
         tag: { queryKey: "" },
       },
@@ -447,6 +448,8 @@ If user changes any filter value, current page is reset to the first one.
 - `facets.style.type` - style of the facets. Two available options: `sidebar` - facets displayed at the left sidebar; `top-dropdown` - facets are displayed at the top of the product list, in separate dropdown panels.
 
 - `facets.exclude` - exclude any returned facets from display by their key (field name).
+
+- `facets.expand` - given facet panels are expanded by default;
 
 - `facets.facetFilterQueries.[facetKey].key` - provide query key to load additional facet parameters. Query should contain the same query fields as the main query and should only contain aggregation for that facet key. Use case example: the main search query is configured to load up to 100 facet values. However, if user opens facet panel, this query key could be used to load remaining facet values.
 

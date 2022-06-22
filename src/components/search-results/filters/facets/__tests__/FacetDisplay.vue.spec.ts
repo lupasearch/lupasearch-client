@@ -30,7 +30,10 @@ const baseFacet: FacetResult = {
   items: [],
 };
 
-const getComponent = (facet: Partial<FacetResult> = {}) => {
+const getComponent = (
+  facet: Partial<FacetResult> = {},
+  options: Partial<ResultFacetOptions> = {}
+) => {
   SearchResultModuleMock.getters?.currentFilters.mockReturnValue({});
   const store = new Vuex.Store({
     modules: {
@@ -39,7 +42,7 @@ const getComponent = (facet: Partial<FacetResult> = {}) => {
   });
   return shallowMount(FacetDisplay, {
     propsData: {
-      options: baseOptions,
+      options: { ...baseOptions, ...options },
       facet: merge(baseFacet, facet),
     },
     store,
@@ -79,6 +82,17 @@ describe("FacetDisplay", () => {
     const wrapper = getComponent({ type: "stats" as any, label: "Price" });
     const label = wrapper.find(".lupa-search-result-facet-label");
     await label.trigger("click");
+    expect(wrapper.find(".lupa-facet-content").exists()).toBe(true);
+    expect(
+      wrapper.find(".lupa-facet-label-caret").classes().includes("open")
+    ).toBe(true);
+  });
+
+  it("should render facet opened by default", async () => {
+    const wrapper = getComponent(
+      { type: "stats" as any, label: "Price", key: "opened" },
+      { expand: ["opened"] }
+    );
     expect(wrapper.find(".lupa-facet-content").exists()).toBe(true);
     expect(
       wrapper.find(".lupa-facet-label-caret").classes().includes("open")

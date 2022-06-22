@@ -67,7 +67,7 @@ export default class FacetDisplay extends Vue {
 
   @searchResult.Getter("currentFilterKeys") currentFilterKeys!: string[];
 
-  isOpen = false;
+  isOpen = this.options.expand?.includes(this.facet.key) ?? false;
 
   get facetType(): string {
     switch (this.facet.type) {
