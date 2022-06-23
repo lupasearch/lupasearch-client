@@ -1,4 +1,7 @@
-import { DEFAULT_PAGE_SIZE } from "@/constants/global.const";
+import {
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_PAGE_SIZE_SELECTION,
+} from "@/constants/global.const";
 import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import { ScreenSize } from "@/types/General";
@@ -43,7 +46,8 @@ export default class OptionsModule extends VuexModule {
 
   get currentResolutionPageSizes(): number[] {
     const pageSizes =
-      this.searchResultOptions?.pagination?.sizeSelection?.sizes;
+      this.searchResultOptions?.pagination?.sizeSelection?.sizes ??
+      DEFAULT_PAGE_SIZE_SELECTION;
     if (Array.isArray(pageSizes)) {
       return pageSizes;
     }

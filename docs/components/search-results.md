@@ -15,6 +15,8 @@ const options = {
     showMore: "Show more",
     searchResults: "Search Query: ",
     emptyResults: "There are no results for the query:",
+    noItemsInPage: "There are no results in this page",
+    backToFirstPage: "Go back to the first page",
     mobileFilterButton: "Filter",
     htmlTitleTemplate: "Search Query: '{1}'",
     noResultsSuggestion: "No results found for this query: {1}",
@@ -44,6 +46,10 @@ lupaSearch.searchResults(options);
 - `labels.searchResults` - a label that is displayed at the top of search results, is appended with a current search query text;
 
 - `labels.emptyResults` - a label to show when search yields no items, is appended with a current search query text;
+
+- `labels.noItemsInPage` - a label to show when there are no items in the current page (this can happen if user manually navigates to the page, outside of the result range);
+
+- `labels.backToFirstPage` - when there are no items in current page, this label will guide user to the first page of the results.
 
 - `labels.mobileFilterButton` - a label of a button that is visible on mobile resolutions and toggles the mobile search result filter sidebar.
 

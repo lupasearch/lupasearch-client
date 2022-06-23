@@ -103,6 +103,12 @@ export default class SearchResultModule extends VuexModule {
     }
   }
 
+  get isPageEmpty(): boolean {
+    return (
+      this.hasResults && (this.searchResult.offset ?? 0) >= this.totalItems
+    );
+  }
+
   @Mutation
   setSidebarVisibility({ visible }: { visible: boolean }): void {
     this.isMobileSidebarVisible = visible;

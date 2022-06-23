@@ -40,6 +40,20 @@
           :options="productCardOptions()"
         />
       </div>
+      <div
+        class="lupa-empty-results"
+        data-cy="lupa-no-results-in-page"
+        v-if="isPageEmpty && options.labels.noItemsInPage"
+      >
+        {{ options.labels.noItemsInPage }}
+        <span
+          v-if="options.labels.backToFirstPage"
+          class="lupa-empty-page-action"
+          @click="goToFirstPage"
+        >
+          {{ options.labels.backToFirstPage }}</span
+        >
+      </div>
       <SearchResultsToolbar
         class="lupa-toolbar-bottom"
         :options="options"
@@ -58,6 +72,7 @@
     >
       {{ options.labels.emptyResults }} <span>{{ currentQueryText }}</span>
     </div>
+
     <div v-if="searchResult.similarQueries">
       <SearchResultsSimilarQueries
         :labels="similarQueriesLabels"
@@ -93,6 +108,7 @@ import CurrentFilters from "../filters/CurrentFilters.vue";
 import SearchResultsSimilarQueries from "./similar-queries/SearchResultsSimilarQueries.vue";
 import { getProductKey } from "@/utils/string.utils";
 import FiltersTopDropdown from "../filters/FiltersTopDropdown.vue";
+import { QUERY_PARAMS } from "@/constants/queryParams.const";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -118,6 +134,8 @@ export default class SearchResultsProducts extends Vue {
   @searchResult.Getter("hasResults") hasResults!: boolean;
 
   @searchResult.Getter("currentQueryText") currentQueryText!: string;
+
+  @searchResult.Getter("isPageEmpty") isPageEmpty!: boolean;
 
   @searchResult.State((state) => state.isMobileSidebarVisible)
   isMobileSidebarVisible!: boolean;
@@ -174,6 +192,17 @@ export default class SearchResultsProducts extends Vue {
 
   getProductKey(index: string, product: Document): string {
     return getProductKey(index, product, this.options.idKey);
+  }
+
+  @params.Action("appendParams") appendParams!: ({
+    params,
+  }: {
+    params: { name: string; value: string }[];
+  }) => void;
+  goToFirstPage(): void {
+    this.appendParams({
+      params: [{ name: QUERY_PARAMS.PAGE, value: "1" }],
+    });
   }
 }
 </script>
