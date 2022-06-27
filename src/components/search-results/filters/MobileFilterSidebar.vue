@@ -1,19 +1,25 @@
 <template>
   <div class="lupa-mobile-filter-sidebar" v-if="isMobileSidebarVisible">
-    <div class="lupa-sidebar-top">
-      <div class="lupa-sidebar-title">
-        {{ sidebarTitle }}
-        <span v-if="isFilterCountVisible" class="lupa-sidebar-filter-count">{{
-          currentFilterCount
-        }}</span>
+    <div class="lupa-sidebar-close" @click.stop="handleMobileToggle"></div>
+    <div class="lupa-mobile-sidebar-content">
+      <div class="lupa-sidebar-top">
+        <div class="lupa-sidebar-title">
+          {{ sidebarTitle }}
+          <span v-if="isFilterCountVisible" class="lupa-sidebar-filter-count">{{
+            currentFilterCount
+          }}</span>
+        </div>
+        <div
+          class="lupa-filter-toggle-mobile"
+          @click="handleMobileToggle"
+        ></div>
       </div>
-      <div class="lupa-filter-toggle-mobile" @click="handleMobileToggle"></div>
-    </div>
-    <div class="lupa-sidebar-filter-options">
-      <SearchResultsFilters
-        :options="options"
-        :expandable="isActiveFiltersExpanded"
-      />
+      <div class="lupa-sidebar-filter-options">
+        <SearchResultsFilters
+          :options="options"
+          :expandable="isActiveFiltersExpanded"
+        />
+      </div>
     </div>
   </div>
 </template>

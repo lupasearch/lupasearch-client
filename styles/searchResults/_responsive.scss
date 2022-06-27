@@ -9,8 +9,28 @@
   left: 0;
   top: 0;
   bottom: 0;
-  background: searchResults.$mobile-sidebar-background;
   z-index: searchResults.$mobile-sidebar-z-index;
+  background: transparent;
+  display: flex;
+  .lupa-mobile-sidebar-content {
+    height: var(--lupa-full-height);
+    width: 100%;
+    z-index: searchResults.$mobile-sidebar-z-index;
+    background: searchResults.$mobile-sidebar-background;
+  }
+  .lupa-sidebar-close {
+    background: searchResults.$mobile-sidebar-fade-background;
+    height: var(--lupa-full-height);
+    width: 30px;
+  }
+  // .lupa-sidebar-top {
+  //   margin-left: 30px;
+  //   background: searchResults.$mobile-sidebar-background;
+  // }
+  // .lupa-sidebar-filter-options {
+  //   margin-left: 30px;
+  //   background: searchResults.$mobile-sidebar-background;
+  // }
 }
 
 .lupa-sidebar-top {
