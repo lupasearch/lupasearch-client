@@ -18,3 +18,16 @@ export const scrollTo = (elementId: string): void => {
     behavior: "smooth",
   });
 };
+
+export const disableBodyScroll = (): void => {
+  const scrollY = window.scrollY;
+  document.body.style.position = "fixed";
+  document.body.style.top = `-${scrollY}px`;
+};
+
+export const enableBodyScroll = (): void => {
+  const scrollY = document.body.style.top;
+  document.body.style.position = "";
+  document.body.style.top = "";
+  window.scrollTo(0, parseInt(scrollY || "0") * -1);
+};

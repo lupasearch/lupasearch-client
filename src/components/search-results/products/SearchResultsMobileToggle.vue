@@ -29,14 +29,14 @@ export default class SearchResultsMobileToggle extends Vue {
 
   @searchResult.Getter("currentFilterCount") currentFilterCount!: number;
 
-  @searchResult.Mutation("setSidebarVisibility") setSidebarVisibility!: ({
+  @searchResult.Action("setSidebarState") setSidebarState!: ({
     visible,
   }: {
     visible: boolean;
   }) => void;
 
   handleMobileToggle(): void {
-    this.setSidebarVisibility({ visible: true });
+    this.setSidebarState({ visible: true });
   }
 }
 </script>

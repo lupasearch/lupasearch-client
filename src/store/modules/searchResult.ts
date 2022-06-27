@@ -21,6 +21,7 @@ import {
 } from "@getlupa/client-sdk/Types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import lupaSearchSdk from "@getlupa/client-sdk";
+import { disableBodyScroll, enableBodyScroll } from "@/utils/scroll.utils";
 
 @Module({ namespaced: true })
 export default class SearchResultModule extends VuexModule {
@@ -107,6 +108,17 @@ export default class SearchResultModule extends VuexModule {
     return (
       this.hasResults && (this.searchResult.offset ?? 0) >= this.totalItems
     );
+  }
+
+  @Action({ commit: "setSidebarVisibility" })
+  setSidebarState({ visible }: { visible: boolean }): { visible: boolean } {
+    // Disable body scroll when sidebar is open and preserve scroll position when scrolling is closed
+    if (visible) {
+      disableBodyScroll();
+    } else {
+      enableBodyScroll();
+    }
+    return { visible };
   }
 
   @Mutation

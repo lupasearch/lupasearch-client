@@ -36,7 +36,7 @@ const searchResult = namespace("searchResult");
 export default class MobileFilterSidebar extends Vue {
   @Prop() options!: SearchResultsFilterOptions;
 
-  @searchResult.Mutation("setSidebarVisibility") setSidebarVisibility!: ({
+  @searchResult.Action("setSidebarState") setSidebarState!: ({
     visible,
   }: {
     visible: boolean;
@@ -63,7 +63,7 @@ export default class MobileFilterSidebar extends Vue {
   }
 
   handleMobileToggle(): void {
-    this.setSidebarVisibility({ visible: false });
+    this.setSidebarState({ visible: false });
   }
 }
 </script>

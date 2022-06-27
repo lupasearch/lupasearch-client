@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="lupa-search-results-products"
-    :style="{ display: isMobileSidebarVisible ? 'none' : 'block' }"
-  >
+  <div id="lupa-search-results-products">
     <spinner class="lupa-loader" v-if="loading && !isMobileSidebarVisible" />
     <template v-if="hasResults">
       <FiltersTopDropdown v-if="showTopFilters" :options="options.filters" />
