@@ -1,5 +1,3 @@
-import { Document } from "@getlupa/client-sdk/Types";
-
 export enum DocumentElementType {
   IMAGE = "image",
   TITLE = "title",
@@ -12,10 +10,10 @@ export enum DocumentElementType {
   CUSTOM_HTML = "customHtml",
 }
 
-export type DocumentElementBase = {
+export type DocumentElementBase<T = Record<string, unknown>> = {
   type: DocumentElementType;
   key?: string;
-  display?: <T>(document: T) => boolean;
+  display?: (document: T) => boolean;
   isHtml?: boolean;
 };
 
@@ -56,14 +54,15 @@ export type RegularPriceDocumentElement = DocumentElementBase & {
   key: string;
 };
 
-export type RatingElement = DocumentElementBase & {
-  type: DocumentElementType.RATING;
-  labels: RatingLabels;
-  links: RatingLinks;
-  totalKey: string;
-  getRatingPercentage?: (doc: Document) => number;
-  key: string;
-};
+export type RatingElement<T = Record<string, unknown>> =
+  DocumentElementBase<T> & {
+    type: DocumentElementType.RATING;
+    labels: RatingLabels;
+    links: RatingLinks;
+    totalKey: string;
+    getRatingPercentage?: (doc: T) => number;
+    key: string;
+  };
 
 export type RatingLabels = {
   numberOfRatings: string;
@@ -73,19 +72,21 @@ export type RatingLinks = {
   ratingDetails?: string;
 };
 
-export type AddToCartElement = DocumentElementBase & {
-  type: DocumentElementType.ADDTOCART;
-  action: (document: Document, amount: number) => Promise<unknown> | undefined;
-  labels: {
-    addToCart: string;
+export type AddToCartElement<T = Record<string, unknown>> =
+  DocumentElementBase<T> & {
+    type: DocumentElementType.ADDTOCART;
+    action: (document: T, amount: number) => Promise<unknown> | undefined;
+    labels: {
+      addToCart: string;
+    };
   };
-};
 
-export type CustomHtmlElement = DocumentElementBase & {
-  type: DocumentElementType.CUSTOM_HTML;
-  html: (document: Document) => string;
-  className: string;
-};
+export type CustomHtmlElement<T = Record<string, unknown>> =
+  DocumentElementBase<T> & {
+    type: DocumentElementType.CUSTOM_HTML;
+    html: (document: T) => string;
+    className: string;
+  };
 
 export type DocumentElement =
   | ImageDocumentElement
