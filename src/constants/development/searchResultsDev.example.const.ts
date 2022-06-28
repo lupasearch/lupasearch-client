@@ -24,6 +24,7 @@ export const SEARCH_RESULTS_CONFIGURATION = {
     didYouMean: "Did you mean to search: {1}",
     similarQuery: "Search results for phrase {1}",
     similarQueries: "Similar queries:",
+    aiSuggestions: "Other suggestions:",
   },
   toolbar: {
     totalCount: true,

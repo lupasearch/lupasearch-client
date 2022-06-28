@@ -6,20 +6,29 @@
     <div class="lupa-similar-queries-label">{{ labels.similarQueries }}</div>
     <div v-for="(similarQuery, index) in similarQueries" :key="index">
       <div class="lupa-similar-query-label" data-cy="lupa-similar-query-label">
-        <span
-          v-for="(label, index) in labels.similarQuery.split(' ')"
-          :key="index"
-        >
+        <template v-if="!similarQuery.aiSuggestions">
           <span
-            v-if="label.includes('{1}')"
-            @click="goToResults({ searchText: similarQuery.query })"
-            class="lupa-similar-query-value lupa-similar-query-link"
-            data-cy="lupa-similar-query-value"
+            v-for="(label, index) in labels.similarQuery.split(' ')"
+            :key="index"
           >
-            <SimilarQueryText :label="label" :similarQuery="similarQuery" />
+            <span
+              v-if="label.includes('{1}')"
+              @click="goToResults({ searchText: similarQuery.query })"
+              class="lupa-similar-query-value lupa-similar-query-link"
+              data-cy="lupa-similar-query-value"
+            >
+              <SimilarQueryText :label="label" :similarQuery="similarQuery" />
+            </span>
+            <span v-else>{{ label }} </span>
           </span>
-          <span v-else>{{ label }} </span>
-        </span>
+        </template>
+        <template v-else>
+          <span
+            ><span class="lupa-similar-query-value"
+              >{{ labels.aiSuggestions }}
+            </span></span
+          >
+        </template>
       </div>
 
       <div class="lupa-products" data-cy="lupa-products">

@@ -151,7 +151,7 @@ export default class SearchResultsProducts extends Vue {
   }
 
   get similarQueriesLabels(): SearchResultsSimilarQueriesLabels {
-    return pick(this.options.labels, ["similarQuery", "similarQueries"]);
+    return this.options.labels;
   }
 
   get showTopFilters(): boolean {

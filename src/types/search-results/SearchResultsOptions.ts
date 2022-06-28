@@ -23,6 +23,7 @@ export type SearchResultsDidYouMeanLabels = {
 export type SearchResultsSimilarQueriesLabels = {
   similarQuery: string;
   similarQueries: string;
+  aiSuggestions?: string;
 };
 
 export type CallbackContext = {
