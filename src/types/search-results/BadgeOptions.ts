@@ -18,7 +18,7 @@ export type SearchResultBadgeElement<T = any> = {
   display?: (document: T) => boolean;
   rootImageUrl?: string;
   maxItems?: number;
-  html: (doc: T) => string;
+  html?: (doc: T) => string;
 };
 
 export type BaseBadgeElement<T = any> = SearchResultBadgeElement<T> & {

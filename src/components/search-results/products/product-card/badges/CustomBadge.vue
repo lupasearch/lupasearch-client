@@ -14,7 +14,7 @@ export default class CustomBadge extends Vue {
   @Prop({ default: {} }) badge!: CustomHtmlBadgeElement;
 
   get text(): string {
-    return this.badge.html(this.badge.product ?? {});
+    return this.badge.html?.(this.badge.product ?? {});
   }
 
   get className(): string {
