@@ -23,6 +23,9 @@
           :inStock="isInStock"
           :link="link"
         />
+        <div v-if="labels.outOfStock && !isInStock" class="lupa-out-of-stock">
+          {{ labels.outOfStock }}
+        </div>
       </a>
       <div class="lupa-search-result-product-details-section">
         <SearchResultsProductCardElement
@@ -121,7 +124,7 @@ export default class SearchResultsProductCard extends Vue {
   }
 
   get labels(): SearchResultsOptionLabels {
-    return this.options.labels;
+    return this.options.labels ?? {};
   }
 
   get link(): string {

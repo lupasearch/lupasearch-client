@@ -6,7 +6,10 @@ import SearchResultsEntry from "./SearchResultsEntry.vue";
 import ProductListEntry from "./ProductListEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import {
+  CallbackContext,
+  FacetFilterQuery,
   FacetStyle,
+  SearchResultEventCallbacks,
   SearchResultsOptions,
 } from "./types/search-results/SearchResultsOptions";
 import store from "./store";
@@ -17,7 +20,10 @@ import {
   SortDirection,
 } from "./types/General";
 import { initTracking } from "./utils/tracking.utils";
-import { ProductListOptions } from "./types/product-list/ProductListOptions";
+import {
+  CategoryFilterOptions,
+  ProductListOptions,
+} from "./types/product-list/ProductListOptions";
 import {
   AddToCartElement,
   CustomDocumentElement,
@@ -35,6 +41,10 @@ import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
 import { BadgeType } from "./types/search-results/BadgeOptions";
+import {
+  SearchResultsSortOptions,
+  SortOptions,
+} from "./types/search-results/SearchResultsSort";
 
 const app = {
   box: {},
@@ -122,6 +132,12 @@ export {
   RatingElement,
   AddToCartElement,
   CustomHtmlElement,
+  SortOptions,
+  SearchResultsSortOptions,
+  SearchResultEventCallbacks,
+  CallbackContext,
+  FacetFilterQuery,
+  CategoryFilterOptions,
 };
 
 export default lupaSearch;

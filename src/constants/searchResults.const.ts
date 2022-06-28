@@ -48,6 +48,7 @@ export const DEFAULT_OPTIONS_RESULTS = {
         bottom: true,
       },
       display: 5,
+      displayMobile: 3,
     },
   },
   sort: [],

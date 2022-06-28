@@ -11,6 +11,7 @@ import SearchResultModule from "@/store/modules/searchResult";
 import ParamsModule from "@/store/modules/params";
 import { RootState } from "@/store/types/State";
 import { getPageCount } from "@/utils/picker.utils";
+import OptionsModule from "@/store/modules/options";
 
 jest.mock("@/store/modules/searchResult");
 jest.mock("@/store/modules/params");
@@ -18,6 +19,8 @@ jest.mock("@/utils/picker.utils");
 
 const SearchResultModuleMock = mocked(SearchResultModule, true);
 const ParamsModuleMock = mocked(ParamsModule, true);
+const OptionsModuleMock = mocked(OptionsModule, true);
+
 const getPageCountMock = mocked(getPageCount);
 
 const localVue = createLocalVue();
@@ -49,6 +52,7 @@ describe("SearchResultsToolbar", () => {
       modules: {
         searchResult: SearchResultModuleMock,
         params: ParamsModuleMock,
+        options: OptionsModuleMock,
       },
     });
     wrapper = mount(SearchResultsToolbar, {

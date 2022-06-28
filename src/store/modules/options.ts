@@ -1,6 +1,10 @@
-import { DEFAULT_PAGE_SIZE } from "@/constants/global.const";
+import {
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_PAGE_SIZE_SELECTION,
+} from "@/constants/global.const";
 import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
+import { ScreenSize } from "@/types/General";
 import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
 import { RoutingBehavior } from "@/types/search-results/RoutingBehavior";
 import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
@@ -37,10 +41,30 @@ export default class OptionsModule extends VuexModule {
   }
 
   get defaultSearchResultPageSize(): number {
-    return (
-      this.searchResultOptions?.pagination?.sizeSelection?.sizes?.[0] ??
-      DEFAULT_PAGE_SIZE
-    );
+    return this.currentResolutionPageSizes?.[0] ?? DEFAULT_PAGE_SIZE;
+  }
+
+  get currentResolutionPageSizes(): number[] {
+    const pageSizes =
+      this.searchResultOptions?.pagination?.sizeSelection?.sizes ??
+      DEFAULT_PAGE_SIZE_SELECTION;
+    if (Array.isArray(pageSizes)) {
+      return pageSizes;
+    }
+    const screenSize: ScreenSize =
+      this.context.rootGetters["searchResult/currentScreenWidth"];
+    switch (screenSize) {
+      case "xs":
+        return pageSizes.xs;
+      case "sm":
+        return pageSizes.sm;
+      case "md":
+        return pageSizes.md;
+      case "l":
+        return pageSizes.l;
+      case "xl":
+        return pageSizes.xl;
+    }
   }
 
   @Mutation

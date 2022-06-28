@@ -1,8 +1,5 @@
 import { AnalyticsOptions } from "./AnalyticsOptions";
-import {
-  Environment as SdkEnvironment,
-  SortDirection as SdkSortDirection,
-} from "@getlupa/client-sdk/Types";
+import { Environment as SdkEnvironment } from "@getlupa/client-sdk/Types";
 
 export type SdkOptions = {
   environment: SdkEnvironment;
@@ -20,5 +17,6 @@ export type TrackingOptions = {
   analytics?: AnalyticsOptions;
 };
 
-export type SortDirection = SdkSortDirection;
 export type Environment = SdkEnvironment;
+export type SortDirection = "asc" | "desc";
+export type ScreenSize = "xs" | "sm" | "md" | "l" | "xl";

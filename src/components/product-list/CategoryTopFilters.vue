@@ -1,19 +1,24 @@
 <template>
-  <div class="lupa-category-top-mobile-filters">
-    <div class="lupa-category-back" v-if="hasBackButton">
-      <a
-        data-cy="lupa-category-back"
-        :href="backUrlLink"
-        @click="handleNavigationBack"
-      >
-        {{ backTitle }}
-      </a>
+  <div
+    class="lupa-category-top-mobile-filters"
+    :class="{ 'lupa-has-back-button': hasBackButton }"
+  >
+    <div class="lupa-top-mobile-filter-wrapper">
+      <div class="lupa-category-back" v-if="hasBackButton">
+        <a
+          data-cy="lupa-category-back"
+          :href="backUrlLink"
+          @click="handleNavigationBack"
+        >
+          {{ backTitle }}
+        </a>
+      </div>
+      <SearchResultsToolbar
+        class="lupa-toolbar-mobile"
+        pagination-location="top"
+        :options="options"
+      />
     </div>
-    <SearchResultsToolbar
-      class="lupa-toolbar-mobile"
-      pagination-location="top"
-      :options="options"
-    />
   </div>
 </template>
 

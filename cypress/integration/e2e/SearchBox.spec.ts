@@ -58,7 +58,7 @@ describe("SearchBox", () => {
       .first()
       .should("have.class", "lupa-suggestion-highlighted");
 
-    data.suggestions.forEach((_) => {
+    data.suggestions.forEach(() => {
       cy.get(searchBoxInput).trigger("keydown", {
         key: "ArrowDown",
       });
@@ -70,7 +70,7 @@ describe("SearchBox", () => {
       .first()
       .should("have.class", "lupa-search-box-product-highlighted");
 
-    data.document.items.forEach((_) => {
+    data.document.items.forEach(() => {
       cy.get(searchBoxInput).trigger("keydown", {
         key: "ArrowDown",
       });

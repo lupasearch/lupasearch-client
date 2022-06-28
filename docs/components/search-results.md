@@ -15,6 +15,8 @@ const options = {
     showMore: "Show more",
     searchResults: "Search Query: ",
     emptyResults: "There are no results for the query:",
+    noItemsInPage: "There are no results in this page",
+    backToFirstPage: "Go back to the first page",
     mobileFilterButton: "Filter",
     htmlTitleTemplate: "Search Query: '{1}'",
     noResultsSuggestion: "No results found for this query: {1}",
@@ -22,7 +24,8 @@ const options = {
     similarQuery: "Search results for phrase {1}",
     similarQueries: "Similar queries:",
     filteredItemCount: "Filtered items {1} from {2}",
-    aiSuggestions: "Other suggestions:",
+    outOfStock: "Out of stock",
+    aiSuggestions: "Other suggestions:"
   },
 };
 
@@ -45,6 +48,10 @@ lupaSearch.searchResults(options);
 
 - `labels.emptyResults` - a label to show when search yields no items, is appended with a current search query text;
 
+- `labels.noItemsInPage` - a label to show when there are no items in the current page (this can happen if user manually navigates to the page, outside of the result range);
+
+- `labels.backToFirstPage` - when there are no items in current page, this label will guide user to the first page of the results.
+
 - `labels.mobileFilterButton` - a label of a button that is visible on mobile resolutions and toggles the mobile search result filter sidebar.
 
 - `labels.htmlTitleTemplate` - dynamic web page tab title template. `{1}` is replaced by a current search query text;
@@ -59,7 +66,10 @@ lupaSearch.searchResults(options);
 
 - `labels.filteredItemCount` - special case for item count label, which is shown when at least one filter is active;
 
-“ `labels.aiSuggestions` - label for similar query with AI suggestions.
+- `labels.outOfStock` - product out of stock overlay label;
+
+- `labels.aiSuggestions` - label for similar query with AI suggestions.
+
 
 # Query parameters
 
@@ -384,6 +394,10 @@ const options = {
         type: "top-dropdown",
       },
       exclude: ["price", "category"],
+      expand: ["regular_price"],
+      facetFilterQueries: {
+        tag: { queryKey: "" },
+      },
     },
   },
 };
@@ -444,6 +458,10 @@ If user changes any filter value, current page is reset to the first one.
 - `facets.style.type` - style of the facets. Two available options: `sidebar` - facets displayed at the left sidebar; `top-dropdown` - facets are displayed at the top of the product list, in separate dropdown panels.
 
 - `facets.exclude` - exclude any returned facets from display by their key (field name).
+
+- `facets.expand` - given facet panels are expanded by default;
+
+- `facets.facetFilterQueries.[facetKey].key` - provide query key to load additional facet parameters. Query should contain the same query fields as the main query and should only contain aggregation for that facet key. Use case example: the main search query is configured to load up to 100 facet values. However, if user opens facet panel, this query key could be used to load remaining facet values.
 
 ## Sort
 
@@ -508,6 +526,24 @@ const options = {
   - `position` - where page selection should be displayed: `top`, `bottom` of the results, or both.
 
   - `display` - maximum number of pages to display in pagination;
+
+## Dynamic page sizes
+
+It is possible to configure different page size selection options for different resolutions (If you have a different number of grid columns for `xs`, `md` or `xl` sizes, or just want to have smaller pages for lower resolutions):
+
+```js
+const options = {
+  sizeSelection: {
+    sizes: {
+      xs: [12, 24, 36],
+      sm: [15, 30, 45, 60],
+      md: [15, 30, 45, 60],
+      l: [12, 24, 36, 60],
+      xl: [15, 30, 45, 60],
+    },
+  },
+};
+```
 
 ## Toolbar
 
@@ -600,7 +636,7 @@ const options = {
 
 - `elements` - a list of available elements. Available items and configuration is the same as in the main search result list.
 
-## Disalow empty query
+## Disallow empty query
 
 By default, search result pages queries all documents if there is no query string defined. You can disable this functionality with the following option:
 
@@ -610,20 +646,35 @@ const options = {
 };
 ```
 
-## No results query flag
+## Event callbacks
 
-It is possible to configure a query parameter flag, which would be set by the LupaSearch plugin when search returns zero results:
+Lupa can emit callbacks on certain events:
 
-```js
+```ts
 const options = {
-  noResultsQueryFlag: "noResults",
+  // other configuration
+  callbacks: {
+    onMounted: () => {},
+    onSearchResults: (context: CallbackContext) => {},
+    onAdditionalPanelResults: (context: CallbackContext) => {},
+    onCategoryFilterResults: (context: CallbackContext) => {},
+  },
 };
 ```
 
-The configuration above would result in the following query, if user search yields no items:
+- `onSearchResults` - all products loaded;
 
-```
-?q=no-results-query&noResults=true
+- `onAdditionalPanelResults` - additional panels loaded;
+
+- `onCategoryFilterResults` - category filter loaded;
+
+Where `CallbackContext` is:
+
+```ts
+type CallbackContext = {
+  queryKey: string;
+  hasResults: boolean;
+};
 ```
 
 ## Routing behavior

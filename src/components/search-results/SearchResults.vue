@@ -162,14 +162,6 @@ export default class SearchResults extends Vue {
     defaultLimit: number;
   };
 
-  @params.Action("handleNoResultsFlag") handleNoResultsFlag!: ({
-    resultCount,
-    noResultsParam,
-  }: {
-    resultCount: number;
-    noResultsParam?: string;
-  }) => void;
-
   @params.Action("add") addParams!: (params: QueryParams) => {
     params: QueryParams;
   };
@@ -207,6 +199,7 @@ export default class SearchResults extends Vue {
     this.setSearchResultOptions({ options: this.options });
     this.handleMounted();
     this.setInitialFilters({ initialFilters: this.initialFilters });
+    this.options.callbacks?.onMounted?.();
   }
 
   beforeDestroy(): void {
@@ -220,7 +213,7 @@ export default class SearchResults extends Vue {
     this.handleUrlChange(params);
     this.addParams(parseParams(params));
 
-    this.setDefaultLimit(this.options.pagination?.sizeSelection?.sizes?.[0]);
+    this.setDefaultLimit(this.defaultSearchResultPageSize);
   }
 
   @Watch("searchString")
@@ -289,11 +282,19 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }): void {
     this.trackResults({ queryKey, results });
-    this.handleNoResultsFlag({
-      resultCount: results?.total ?? 0,
-      noResultsParam: this.options.noResultsQueryFlag,
-    });
+    const hasResults = Boolean(
+      results.total > 0 ||
+        results.similarQueries?.length ||
+        results.didYouMean?.options
+    );
+    this.options.callbacks?.onSearchResults?.({ queryKey, hasResults });
   }
+
+  @searchResult.Mutation("setScreenWidth") setScreenWidth!: ({
+    width,
+  }: {
+    width: number;
+  }) => void;
 
   @searchResult.Action("setColumnCount") setColumnCount!: ({
     width,
@@ -308,6 +309,7 @@ export default class SearchResults extends Vue {
     const doc = document.documentElement;
     doc.style.setProperty("--lupa-full-height", `${window.innerHeight}px`);
     this.setColumnCount({ width: window.innerWidth, grid: this.options.grid });
+    this.setScreenWidth({ width: window.innerWidth });
   }
 }
 </script>

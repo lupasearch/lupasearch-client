@@ -9,8 +9,8 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     containerSelector: string;
     breadcrumbs: SearchResultsBreadcrumb[];
     classMap?: Record<string, string>;
-    noResultsQueryFlag?: string;
     disallowEmptyQuery?: boolean;
+    callbacks?: SearchResultEventCallbacks;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";
@@ -26,6 +26,18 @@ export type SearchResultsSimilarQueriesLabels = {
   aiSuggestions?: string;
 };
 
+export type CallbackContext = {
+  queryKey: string;
+  hasResults: boolean;
+};
+
+export type SearchResultEventCallbacks = {
+  onSearchResults?: (context: CallbackContext) => unknown;
+  onAdditionalPanelResults?: (context: CallbackContext) => unknown;
+  onCategoryFilterResults?: (context: CallbackContext) => unknown;
+  onMounted?: () => unknown;
+};
+
 export type SearchResultsOptionLabels = SearchResultsPaginationLabels &
   SearchResultsDidYouMeanLabels &
   SearchResultsSimilarQueriesLabels & {
@@ -37,6 +49,9 @@ export type SearchResultsOptionLabels = SearchResultsPaginationLabels &
     emptyResults: string;
     mobileFilterButton: string;
     htmlTitleTemplate: string;
+    outOfStock?: string;
+    noItemsInPage?: string;
+    backToFirstPage?: string;
   };
 
 export type SearchResultsAdditionalPanels = {
@@ -75,14 +90,25 @@ export type SearchResultsPaginationLabels = {
   showMore: string;
 };
 
+export type ResponsiveSearchResultPageSizes = {
+  xs: number[];
+  sm: number[];
+  md: number[];
+  l: number[];
+  xl: number[];
+};
+
+export type SearchResultPageSizes = number[] | ResponsiveSearchResultPageSizes;
+
 export type SearchResultsPagination = {
   sizeSelection: {
-    sizes: number[];
+    sizes: SearchResultPageSizes;
     position: SearchResultsPaginationPosition;
   };
   pageSelection: {
     position: SearchResultsPaginationPosition;
     display: number;
+    displayMobile: number;
   };
 };
 
@@ -107,6 +133,10 @@ export type ResultCurrentFilterOptions = {
 };
 
 export type FacetStyle = "sidebar" | "top-dropdown";
+
+export type FacetFilterQuery = {
+  queryKey: string;
+};
 
 export type ResultFacetOptions = {
   labels: {
@@ -139,6 +169,8 @@ export type ResultFacetOptions = {
     type: FacetStyle;
   };
   exclude?: string[];
+  expand?: string[];
+  facetFilterQueries?: Record<string, FacetFilterQuery>;
 };
 
 export type SearchResultsFilterOptions = {

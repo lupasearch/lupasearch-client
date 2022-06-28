@@ -16,6 +16,8 @@ export const SEARCH_RESULTS_CONFIGURATION = {
     priceSeparator: ",",
     showMore: "Show more",
     emptyResults: "There are no results for the query:",
+    noItemsInPage: "There are no results in this page",
+    backToFirstPage: "Go back to the first page",
     mobileFilterButton: "Filter",
     htmlTitleTemplate: "Search Query: '{1}'",
     noResultsSuggestion: "No results found for this query: {1}",

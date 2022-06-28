@@ -41,8 +41,10 @@ import SearchResultsProductCard from "../products/product-card/SearchResultsProd
 import { Document } from "@getlupa/client-sdk/Types";
 import { addParamsToLabel } from "@/utils/string.utils";
 import { getLupaTrackingContext } from "@/utils/tracking.utils";
+import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
 
 const params = namespace("params");
+const options = namespace("options");
 
 @Component({
   name: "additionalPanel",
@@ -60,6 +62,8 @@ export default class AdditionalPanels extends Vue {
   };
 
   @params.Getter("query") query!: string;
+  @options.State((o) => o.searchResultOptions)
+  searchResultOptions!: SearchResultsOptions;
 
   showAll = false;
 
@@ -106,12 +110,20 @@ export default class AdditionalPanels extends Vue {
       .query(this.panel.queryKey, query, this.options)
       .then((res) => {
         if (res.success) {
-          this.result = res;
+          this.handleResults(res);
         }
       })
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  handleResults(res: SearchQueryResult): void {
+    this.result = res;
+    this.searchResultOptions.callbacks?.onAdditionalPanelResults?.({
+      queryKey: this.panel.queryKey,
+      hasResults: res.total > 0,
+    });
   }
 
   toggleShowMore(): void {

@@ -1,15 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
-import { shallowMount, Wrapper } from "@vue/test-utils";
+import ParamsModule from "@/store/modules/params";
+import SearchResultModule from "@/store/modules/searchResult";
+import { createLocalVue, mount, Wrapper } from "@vue/test-utils";
+import { mocked } from "ts-jest/utils";
 import Vue from "vue";
+import Vuex from "vuex";
 import SearchResultsPageSelect from "../SearchResultsPageSelect.vue";
+
+jest.mock("@/store/modules/searchResult");
+jest.mock("@/store/modules/params");
+
+const SearchResultModuleMock = mocked(SearchResultModule, true);
+const ParamsModuleMock = mocked(ParamsModule, true);
+
+const localVue = createLocalVue();
+
+localVue.use(Vuex);
 
 describe("SearchResultsPageSelect", () => {
   let wrapper: Wrapper<SearchResultsPageSelect, Element>;
   let wrapperVm: any;
 
   beforeEach(() => {
-    wrapper = shallowMount(SearchResultsPageSelect, {
+    const store = new Vuex.Store({
+      modules: {
+        searchResult: SearchResultModuleMock,
+        params: ParamsModuleMock,
+      },
+    });
+    wrapper = mount(SearchResultsPageSelect, {
       propsData: {
         options: {
           count: 50,
@@ -18,6 +38,8 @@ describe("SearchResultsPageSelect", () => {
         },
         lastPageLabel: DEFAULT_OPTIONS_RESULTS.labels.showMore,
       },
+      store,
+      localVue,
     });
     wrapperVm = wrapper.vm as any;
   });

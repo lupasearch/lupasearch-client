@@ -3,7 +3,6 @@ import vue from "rollup-plugin-vue";
 import resolve from "rollup-plugin-node-resolve";
 import replace from "rollup-plugin-replace";
 import typescript from "rollup-plugin-typescript2";
-import babel from "@rollup/plugin-babel";
 import json from "@rollup/plugin-json";
 import filesize from "rollup-plugin-filesize";
 
@@ -32,11 +31,6 @@ export default {
       needMap: false,
       css: true,
       compileTemplate: true,
-    }),
-    babel({
-      babelHelpers: "runtime",
-      plugins: ["@babel/plugin-transform-runtime"],
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".es6", ".es", ".mjs", ".vue"],
     }),
     commonjs(),
     json(),

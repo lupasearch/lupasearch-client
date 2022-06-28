@@ -1,19 +1,25 @@
 <template>
   <div class="lupa-mobile-filter-sidebar" v-if="isMobileSidebarVisible">
-    <div class="lupa-sidebar-top">
-      <div class="lupa-sidebar-title">
-        {{ sidebarTitle }}
-        <span v-if="isFilterCountVisible" class="lupa-sidebar-filter-count">{{
-          currentFilterCount
-        }}</span>
+    <div class="lupa-sidebar-close" @click.stop="handleMobileToggle"></div>
+    <div class="lupa-mobile-sidebar-content">
+      <div class="lupa-sidebar-top">
+        <div class="lupa-sidebar-title">
+          {{ sidebarTitle }}
+          <span v-if="isFilterCountVisible" class="lupa-sidebar-filter-count">{{
+            currentFilterCount
+          }}</span>
+        </div>
+        <div
+          class="lupa-filter-toggle-mobile"
+          @click="handleMobileToggle"
+        ></div>
       </div>
-      <div class="lupa-filter-toggle-mobile" @click="handleMobileToggle"></div>
-    </div>
-    <div class="lupa-sidebar-filter-options">
-      <SearchResultsFilters
-        :options="options"
-        :expandable="isActiveFiltersExpanded"
-      />
+      <div class="lupa-sidebar-filter-options">
+        <SearchResultsFilters
+          :options="options"
+          :expandable="isActiveFiltersExpanded"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -36,7 +42,7 @@ const searchResult = namespace("searchResult");
 export default class MobileFilterSidebar extends Vue {
   @Prop() options!: SearchResultsFilterOptions;
 
-  @searchResult.Mutation("setSidebarVisibility") setSidebarVisibility!: ({
+  @searchResult.Action("setSidebarState") setSidebarState!: ({
     visible,
   }: {
     visible: boolean;
@@ -63,7 +69,7 @@ export default class MobileFilterSidebar extends Vue {
   }
 
   handleMobileToggle(): void {
-    this.setSidebarVisibility({ visible: false });
+    this.setSidebarState({ visible: false });
   }
 }
 </script>

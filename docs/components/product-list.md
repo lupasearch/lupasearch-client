@@ -73,7 +73,7 @@ lupaSearch.productList(options);
 
   - `title` - Title of the current section;
 
-  - `url` - Description of the current section. Only text supported, without html;
+  - `description` - Description of the current section. Description is rendered as html by default, so make sure to escape it or sanitize it before passing the parameter.
 
 ## Routing behavior
 

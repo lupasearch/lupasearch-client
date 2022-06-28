@@ -2,7 +2,11 @@ import { QUERY_PARAMS_PARSED } from "@/constants/queryParams.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { SearchResultsSortOptions } from "@/types/search-results/SearchResultsSort";
-import { FilterGroup, PublicQuery } from "@getlupa/client-sdk/Types";
+import {
+  FilterGroup,
+  PublicQuery,
+  SortDirection,
+} from "@getlupa/client-sdk/Types";
 
 export const createPublicQuery = (
   queryParams: QueryParams,
@@ -36,7 +40,7 @@ export const createPublicQuery = (
           (x) => x.key === queryParams[QUERY_PARAMS_PARSED.SORT]
         )?.config;
         if (config) {
-          publicQuery.sort = config;
+          publicQuery.sort = config as Record<string, SortDirection>[];
         }
         break;
       }
@@ -44,8 +48,15 @@ export const createPublicQuery = (
         break;
     }
   }
+  publicQuery.sort =
+    publicQuery.sort ||
+    (getDefaultSort(sortOptions) as Record<string, SortDirection>[]);
   publicQuery.filters = queryParams.filters;
   return publicQuery;
+};
+
+const getDefaultSort = (sortOptions?: SearchResultsSortOptions[]) => {
+  return sortOptions?.find((s) => Boolean(s.default))?.config || undefined;
 };
 
 const getOffset = (page: number, limit = 10): number => {

@@ -3,7 +3,7 @@ import { RoutingBehavior } from "../search-results/RoutingBehavior";
 import { SearchResultsOptions } from "../search-results/SearchResultsOptions";
 
 export type CategoryFilterOptions = {
-  queryKey: string;
+  queryKey?: string;
   routingBehavior?: RoutingBehavior;
   keys: {
     titleKey?: string;
@@ -26,5 +26,5 @@ export type CategoryFilterOptions = {
 
 export type ProductListOptions = SearchResultsOptions & {
   initialFilters?: FilterGroup;
-  categories: CategoryFilterOptions;
+  categories?: CategoryFilterOptions;
 };

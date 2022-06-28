@@ -36,7 +36,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
+import { Prop, Watch } from "vue-property-decorator";
 import {
   FacetGroup,
   FacetResult,
@@ -47,6 +47,9 @@ import StatsFacet from "./StatsFacet.vue";
 import HierarchyFacet from "./HierarchyFacet.vue";
 import { ResultFacetOptions } from "@/types/search-results/SearchResultsOptions";
 import { FacetAction } from "@/types/search-results/FacetAction";
+import { namespace } from "vuex-class";
+
+const searchResult = namespace("searchResult");
 
 @Component({
   name: "facetDisplay",
@@ -62,7 +65,9 @@ export default class FacetDisplay extends Vue {
   @Prop({ default: () => ({}) }) currentFilters!: FilterGroup;
   @Prop({ default: false }) clearable!: boolean;
 
-  isOpen = false;
+  @searchResult.Getter("currentFilterKeys") currentFilterKeys!: string[];
+
+  isOpen = this.options.expand?.includes(this.facet.key) ?? false;
 
   get facetType(): string {
     switch (this.facet.type) {
@@ -86,7 +91,15 @@ export default class FacetDisplay extends Vue {
   }
 
   get hasFilter(): boolean {
-    return Boolean(this.currentFilters[this.facet.key]);
+    return Boolean((this.currentFilters ?? {})[this.facet.key]);
+  }
+
+  get filterQueryKey(): string | undefined {
+    return this.options.facetFilterQueries?.[this.facet.key]?.queryKey;
+  }
+
+  get activeFilterKeys(): string {
+    return (this.currentFilterKeys ?? []).join(",");
   }
 
   mounted(): void {
@@ -112,8 +125,32 @@ export default class FacetDisplay extends Vue {
     }
   }
 
+  @Watch("activeFilterKeys")
+  handleParamsChange(): void {
+    this.handleFacetQueryFilter();
+  }
+
+  @searchResult.Action("queryFacet") queryFacet!: ({
+    queryKey,
+    facetKey,
+  }: {
+    queryKey: string;
+    facetKey: string;
+  }) => Promise<void>;
+
   toggleFacet(): void {
     this.isOpen = !this.isOpen;
+    this.handleFacetQueryFilter();
+  }
+
+  handleFacetQueryFilter(): void {
+    if (!this.filterQueryKey || !this.isOpen) {
+      return;
+    }
+    this.queryFacet({
+      queryKey: this.filterQueryKey,
+      facetKey: this.facet.key,
+    });
   }
 
   handleFacetSelect(item: FacetAction): void {

@@ -12,10 +12,12 @@ export const MD_MIN_WIDTH = 767;
 export const L_MIN_WIDTH = 991;
 export const XL_MIN_WIDTH = 1199;
 
-export const MAX_FACET_VALUES = 1000;
+export const MAX_FACET_VALUES = 5000;
 
 export const CURRENCY_KEY_INDICATOR = "price";
 
 export const DEFAULT_PAGE_SIZE = 12;
+
+export const DEFAULT_PAGE_SIZE_SELECTION = [12, 24, 36, 60];
 
 export const LUPA_ROUTING_EVENT = "lupaRedirect";

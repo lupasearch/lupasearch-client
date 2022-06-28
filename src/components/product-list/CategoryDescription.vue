@@ -1,7 +1,6 @@
 <template>
   <div class="lupa-category-overview" v-if="overviewVisible">
-    <div class="lupa-category-title">{{ title }}</div>
-    <div class="lupa-category-description">{{ description }}</div>
+    <div class="lupa-category-description" v-html="description"></div>
   </div>
 </template>
 <script lang="ts">
@@ -20,16 +19,12 @@ import SearchResults from "../search-results/SearchResults.vue";
 export default class CategoryDescription extends Vue {
   @Prop() options!: ProductListOptions;
 
-  get title(): string | undefined {
-    return this.options.categories?.current?.title;
-  }
-
   get description(): string | undefined {
     return this.options.categories?.current?.description;
   }
 
   get overviewVisible(): boolean {
-    return Boolean(this.options.categories?.current?.title);
+    return Boolean(this.options.categories?.current?.description);
   }
 }
 </script>

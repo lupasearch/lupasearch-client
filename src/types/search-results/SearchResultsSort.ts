@@ -1,4 +1,4 @@
-import { SortDirection } from "@getlupa/client-sdk/Types";
+import { SortDirection } from "../General";
 
 export type SearchResultsSortOptions = {
   key: string;
