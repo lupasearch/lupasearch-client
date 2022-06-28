@@ -15,7 +15,7 @@ export enum DocumentElementType {
 export type DocumentElementBase = {
   type: DocumentElementType;
   key?: string;
-  display?: (document: Record<string, unknown>) => boolean;
+  display?: <T>(document: T) => boolean;
   isHtml?: boolean;
 };
 
@@ -37,6 +37,7 @@ export type DescriptionDocumentElement = DocumentElementBase & {
   type: DocumentElementType.DESCRIPTION;
   maxLines: number;
   key: string;
+  className: string;
 };
 
 export type CustomDocumentElement = DocumentElementBase & {

@@ -10,6 +10,7 @@ import {
   FacetFilterQuery,
   FacetStyle,
   SearchResultEventCallbacks,
+  SearchResultsFilterOptions,
   SearchResultsOptions,
 } from "./types/search-results/SearchResultsOptions";
 import store from "./store";
@@ -40,7 +41,11 @@ import {
 import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
-import { BadgeType } from "./types/search-results/BadgeOptions";
+import {
+  BadgeType,
+  SearchResultBadgeElement,
+  SearchResultBadgeType,
+} from "./types/search-results/BadgeOptions";
 import {
   SearchResultsSortOptions,
   SortOptions,
@@ -138,6 +143,9 @@ export {
   CallbackContext,
   FacetFilterQuery,
   CategoryFilterOptions,
+  SearchResultsFilterOptions,
+  SearchResultBadgeType,
+  SearchResultBadgeElement,
 };
 
 export default lupaSearch;

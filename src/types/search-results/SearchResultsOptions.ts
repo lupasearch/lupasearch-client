@@ -88,6 +88,7 @@ export type ProductGrid = {
 export type SearchResultsPaginationLabels = {
   pageSize: string;
   showMore: string;
+  showLess?: string;
 };
 
 export type ResponsiveSearchResultPageSizes = {

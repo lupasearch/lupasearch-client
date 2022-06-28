@@ -15,12 +15,12 @@ export type CategoryFilterOptions = {
     title: string;
   };
   parent?: {
-    url: string;
-    title: string;
+    url?: string;
+    title?: string;
   };
   current?: {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
   };
 };
 
