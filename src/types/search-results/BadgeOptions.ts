@@ -14,6 +14,7 @@ export type SearchResultBadgeElement = {
   key: string;
   isHtml?: boolean;
   className?: boolean;
+  product?: Document;
   display?: (document: Record<string, unknown>) => boolean;
 };
 
@@ -35,7 +36,7 @@ export type ImageBadgeElement = BaseBadgeElement & {
 
 export type CustomHtmlBadgeElement = BaseBadgeElement & {
   type: "customHtml";
-  className: string;
+  className?: string;
   html: (doc: Document) => string;
 };
 

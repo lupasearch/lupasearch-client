@@ -44,11 +44,11 @@ export default class SearchResultsBadgeWrapper extends Vue {
       return [];
     }
     return this.options.elements
-      .filter((e) => !e.display || e.display(this.options.product))
+      .filter((e) => !e.display || e.display(this.options.product ?? {}))
       .map((x) => {
         return {
           ...x,
-          value: (this.options.product[x.key] as string) || "badge",
+          value: (this.options.product?.[x.key] as string) || "badge",
           product: this.options.product,
         };
       });
