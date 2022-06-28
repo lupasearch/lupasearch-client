@@ -9,6 +9,7 @@ import {
   CallbackContext,
   FacetFilterQuery,
   FacetStyle,
+  ResultFacetOptions,
   SearchResultEventCallbacks,
   SearchResultsFilterOptions,
   SearchResultsOptions,
@@ -146,6 +147,7 @@ export {
   SearchResultsFilterOptions,
   SearchResultBadgeType,
   SearchResultBadgeElement,
+  ResultFacetOptions,
 };
 
 export default lupaSearch;

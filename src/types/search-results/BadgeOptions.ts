@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Document } from "@getlupa/client-sdk/Types";
 import { AnchorPosition } from "./SearchResultsProductCardOptions";
 
@@ -6,10 +7,10 @@ export type SearchResultBadgeType = "text" | "image" | "customHtml";
 export type BadgeOptions = {
   anchor: AnchorPosition;
   elements: BadgeElement[];
-  product?: Document;
+  product?: any;
 };
 
-export type SearchResultBadgeElement<T = Record<string, unknown>> = {
+export type SearchResultBadgeElement<T = any> = {
   type: SearchResultBadgeType;
   key: string;
   isHtml?: boolean;
@@ -17,25 +18,26 @@ export type SearchResultBadgeElement<T = Record<string, unknown>> = {
   product?: T;
   display?: (document: T) => boolean;
   rootImageUrl?: string;
+  maxItems?: number;
 };
 
-export type BaseBadgeElement = SearchResultBadgeElement & {
+export type BaseBadgeElement<T = any> = SearchResultBadgeElement<T> & {
   value?: string;
 };
 
-export type TextBadgeElement = BaseBadgeElement & {
+export type TextBadgeElement<T = any> = BaseBadgeElement<T> & {
   type: "text";
   prefix?: string;
   maxItems?: number;
 };
 
-export type ImageBadgeElement = BaseBadgeElement & {
+export type ImageBadgeElement<T = any> = BaseBadgeElement<T> & {
   type: "image";
   rootImageUrl?: string;
   maxItems?: number;
 };
 
-export type CustomHtmlBadgeElement = BaseBadgeElement & {
+export type CustomHtmlBadgeElement<T = any> = BaseBadgeElement<T> & {
   type: "customHtml";
   className?: string;
   html: (doc: Document) => string;
