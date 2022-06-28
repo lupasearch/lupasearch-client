@@ -6,13 +6,14 @@ export type SearchResultBadgeType = "text" | "image" | "customHtml";
 export type BadgeOptions = {
   anchor: AnchorPosition;
   elements: BadgeElement[];
+  product?: Document;
 };
 
 export type SearchResultBadgeElement = {
   type: SearchResultBadgeType;
   key: string;
   isHtml?: boolean;
-  className?: string;
+  className?: boolean;
   display?: (document: Record<string, unknown>) => boolean;
 };
 
