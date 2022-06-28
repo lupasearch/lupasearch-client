@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Document } from "@getlupa/client-sdk/Types";
 import { AnchorPosition } from "./SearchResultsProductCardOptions";
 
 export type SearchResultBadgeType = "text" | "image" | "customHtml";
@@ -19,6 +18,7 @@ export type SearchResultBadgeElement<T = any> = {
   display?: (document: T) => boolean;
   rootImageUrl?: string;
   maxItems?: number;
+  html: (doc: T) => string;
 };
 
 export type BaseBadgeElement<T = any> = SearchResultBadgeElement<T> & {
