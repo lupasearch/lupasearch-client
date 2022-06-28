@@ -9,13 +9,14 @@ export type BadgeOptions = {
   product?: Document;
 };
 
-export type SearchResultBadgeElement = {
+export type SearchResultBadgeElement<T = Record<string, unknown>> = {
   type: SearchResultBadgeType;
   key: string;
   isHtml?: boolean;
-  className?: boolean;
-  product?: Document;
-  display?: (document: Record<string, unknown>) => boolean;
+  className?: string;
+  product?: T;
+  display?: (document: T) => boolean;
+  rootImageUrl?: string;
 };
 
 export type BaseBadgeElement = SearchResultBadgeElement & {
