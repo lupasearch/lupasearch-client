@@ -1,6 +1,6 @@
 {
   "name": "@getlupa/client",
-  "version": "0.7.0-alpha-3",
+  "version": "0.7.0-alpha-4",
   "main": "dist/cjs/index.min.js",
   "module": "dist/es/index.min.js",
   "types": "dist/es/index.d.ts",

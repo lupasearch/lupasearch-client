@@ -40,7 +40,7 @@ export type ImageBadgeElement<T = any> = BaseBadgeElement<T> & {
 export type CustomHtmlBadgeElement<T = any> = BaseBadgeElement<T> & {
   type: "customHtml";
   className?: string;
-  html: (doc: Document) => string;
+  html: (doc: T) => string;
 };
 
 export type BadgeElement = BaseBadgeElement | TextBadgeElement;
