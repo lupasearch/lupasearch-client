@@ -4,9 +4,12 @@
     :style="{ background: badge.backgroundColor, color: badge.color }"
   >
     <span class="lupa-badge-title">
-      <span v-if="badge.titleText"> {{ badge.titleText }}</span>
-      <img v-if="image" :src="image" /></span
-    ><span class="lupa-badge-full-text">{{ badge.additionalText }}</span>
+      <img v-if="image" :src="image" /><span v-if="badge.titleText">
+        {{ badge.titleText }}</span
+      ></span
+    ><span v-if="badge.additionalText" class="lupa-badge-full-text">{{
+      badge.additionalText
+    }}</span>
   </div>
 </template>
 <script lang="ts">
