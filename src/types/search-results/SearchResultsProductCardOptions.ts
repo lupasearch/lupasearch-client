@@ -1,6 +1,6 @@
 import { Document } from "@getlupa/client-sdk/Types";
 import { DocumentElement } from "../DocumentElement";
-import { BadgeElement } from "./BadgeOptions";
+import { BadgeElement, BadgeGenerateOptions } from "./BadgeOptions";
 import { RoutingBehavior } from "./RoutingBehavior";
 import { SearchResultsOptionLabels } from "./SearchResultsOptions";
 
@@ -20,6 +20,7 @@ export type SearchResultsProductCardOptions = {
 export type SearchResultBadgeOptions = {
   anchor: AnchorPosition;
   elements: BadgeElement[];
+  generate?: BadgeGenerateOptions;
 };
 
 export type AnchorPosition = "tr" | "tl";
