@@ -3,9 +3,24 @@ import { AnchorPosition } from "./SearchResultsProductCardOptions";
 
 export type SearchResultBadgeType = "text" | "image" | "customHtml";
 
+export type BadgeGenerateSeed = {
+  id?: string;
+  backgroundColor?: string;
+  color?: string;
+  titleText?: string;
+  additionalText?: string;
+};
+
+export type BadgeGenerateOptions<T = Record<string, any>> = {
+  key?: string;
+  keyMap?: Record<keyof BadgeGenerateSeed, keyof T>;
+  image?: (field: BadgeGenerateSeed) => string | undefined;
+};
+
 export type BadgeOptions = {
   anchor: AnchorPosition;
   elements: BadgeElement[];
+  generate?: BadgeGenerateOptions;
   product?: any;
 };
 

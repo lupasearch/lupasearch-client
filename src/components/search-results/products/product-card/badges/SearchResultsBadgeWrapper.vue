@@ -7,6 +7,7 @@
         :key="index"
         :badge="badge"
       />
+      <SearchResultGeneratedBadges :options="options" />
     </div>
   </div>
 </template>
@@ -23,6 +24,7 @@ import { Prop } from "vue-property-decorator";
 import CustomBadge from "./CustomBadge.vue";
 import TextBadge from "./TextBadge.vue";
 import ImageBadge from "./ImageBadge.vue";
+import SearchResultGeneratedBadges from "./SearchResultGeneratedBadges.vue";
 
 @Component({
   name: "searchResultsBadgeWrapper",
@@ -30,6 +32,7 @@ import ImageBadge from "./ImageBadge.vue";
     CustomBadge,
     TextBadge,
     ImageBadge,
+    SearchResultGeneratedBadges,
   },
 })
 export default class SearchResultsBadgeWrapper extends Vue {

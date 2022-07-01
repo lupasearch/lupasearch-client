@@ -43,6 +43,9 @@ import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
 import {
+  BadgeGenerateOptions,
+  BadgeGenerateSeed,
+  BadgeOptions,
   BadgeType,
   SearchResultBadgeElement,
   SearchResultBadgeType,
@@ -148,6 +151,9 @@ export {
   SearchResultBadgeType,
   SearchResultBadgeElement,
   ResultFacetOptions,
+  BadgeGenerateSeed,
+  BadgeGenerateOptions,
+  BadgeOptions,
 };
 
 export default lupaSearch;
