@@ -47,7 +47,10 @@ export const getPathName = (resultPageLink: string): string => {
 export const getRelativePath = (link: string): string => {
   try {
     const url = new URL(link);
-    return url.toString().substring(url.origin.length);
+    const partialUrl = url.toString().substring(url.origin.length);
+    return partialUrl.endsWith("/")
+      ? partialUrl.slice(0, partialUrl.length - 1)
+      : partialUrl;
   } catch {
     // Invalid url, let's return original string
     return link;
