@@ -90,7 +90,7 @@ export default class SearchResultsProductCard extends Vue {
   @options.Getter("searchResultsRoutingBehavior")
   searchResultsRoutingBehavior!: RoutingBehavior;
 
-  @options.Getter("searchResultOptions")
+  @options.State((o) => o.searchResultOptions)
   searchResultOptions!: SearchResultsOptions;
 
   @params.Getter("query") query!: string;
