@@ -52,17 +52,20 @@ export default class SearchResultGeneratedBadges extends Vue {
   }
 
   get badges(): BadgeGenerateSeed[] {
-    return this.badgeField.map((f) => ({
-      backgroundColor: this.keyMap.backgroundColor
-        ? f[this.keyMap.backgroundColor]
-        : undefined,
-      color: this.keyMap.color ? f[this.keyMap.color] : undefined,
-      titleText: this.keyMap.titleText ? f[this.keyMap.titleText] : undefined,
-      additionalText: this.keyMap.additionalText
-        ? f[this.keyMap.additionalText]
-        : undefined,
-      id: this.keyMap.id ? f[this.keyMap.id] : undefined,
-    }));
+    return this.badgeField
+      .filter((f) => Boolean(f))
+      .map((f) => ({
+        backgroundColor: this.keyMap.backgroundColor
+          ? f[this.keyMap.backgroundColor]
+          : undefined,
+        color: this.keyMap.color ? f[this.keyMap.color] : undefined,
+        titleText: this.keyMap.titleText ? f[this.keyMap.titleText] : undefined,
+        additionalText: this.keyMap.additionalText
+          ? f[this.keyMap.additionalText]
+          : undefined,
+        id: this.keyMap.id ? f[this.keyMap.id] : undefined,
+      }))
+      .filter((b) => Boolean(b.id));
   }
 }
 </script>

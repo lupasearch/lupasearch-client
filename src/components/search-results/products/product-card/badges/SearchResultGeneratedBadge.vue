@@ -29,7 +29,6 @@ export default class SearchResultGeneratedBadge extends Vue {
   @Prop({ default: () => ({}) }) badge!: BadgeGenerateSeed;
 
   get image(): string | undefined {
-    console.log(this.badge.titleText);
     return this.options.generate?.image?.(this.badge) ?? "";
   }
 }
