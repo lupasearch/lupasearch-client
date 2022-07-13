@@ -14,7 +14,12 @@ const parseParam = (key: string, params: URLSearchParams) => {
   if (!value) {
     return undefined;
   }
-  return decodeURIComponent(value);
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    // Invalid parameter, possibly out of LupaSearch plugin scope, return undefined
+    return undefined;
+  }
 };
 
 const parseRegularKeys = (
