@@ -4,10 +4,10 @@
     :style="{ background: badge.backgroundColor, color: badge.color }"
   >
     <span class="lupa-badge-title">
-      <img v-if="image" :src="image" /><span v-if="badge.titleText">
+      <img v-if="image" :src="image" /><span v-if="hasTitleText">
         {{ badge.titleText }}</span
       ></span
-    ><span v-if="badge.additionalText" class="lupa-badge-full-text">{{
+    ><span v-if="hasAdditionalText" class="lupa-badge-full-text">{{
       badge.additionalText
     }}</span>
   </div>
@@ -30,6 +30,20 @@ export default class SearchResultGeneratedBadge extends Vue {
 
   get image(): string | undefined {
     return this.options.generate?.image?.(this.badge) ?? "";
+  }
+
+  get hasAdditionalText(): boolean {
+    return (
+      Boolean(this.badge?.additionalText) &&
+      typeof this.badge?.additionalText === "string"
+    );
+  }
+
+  get hasTitleText(): boolean {
+    return (
+      Boolean(this.badge?.titleText) &&
+      typeof this.badge?.titleText === "string"
+    );
   }
 }
 </script>
