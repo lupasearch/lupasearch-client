@@ -21,6 +21,7 @@ export type CategoryFilterOptions = {
   current?: {
     title?: string;
     description?: string;
+    descriptionTop?: string;
   };
 };
 

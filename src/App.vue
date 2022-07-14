@@ -14,8 +14,11 @@
     <div class="box-wrapper">
       <SearchBox :options="fullSearchBoxOptions" />
     </div>
-    <div class="result-wrapper">
+    <!-- <div class="result-wrapper">
       <SearchResults :options="fullSearchResultsOptions" />
+    </div> -->
+    <div class="result-wrapper">
+      <ProductList :options="fullProductListOptions" />
     </div>
   </div>
 </template>
@@ -93,7 +96,7 @@ export default class App extends Vue {
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
-  max-width: 1050px;
+  // max-width: 1050px;
   padding-left: 24px;
   padding-right: 24px;
   width: 100%;

@@ -11,6 +11,7 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     classMap?: Record<string, string>;
     disallowEmptyQuery?: boolean;
     callbacks?: SearchResultEventCallbacks;
+    categories?: CategoryFilterOptions;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";

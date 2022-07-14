@@ -1,15 +1,22 @@
 <template>
-  <h1
-    class="lupa-result-page-title"
-    data-cy="lupa-result-page-title"
-    v-if="showSearchTitle"
-  >
-    {{ options.labels.searchResults
-    }}<span v-if="queryText">'{{ queryText }}'</span>
-    <span v-if="showProductCount" class="lupa-results-total-count"
-      >({{ totalItems }})</span
+  <div>
+    <h1
+      class="lupa-result-page-title"
+      data-cy="lupa-result-page-title"
+      v-if="showSearchTitle"
     >
-  </h1>
+      {{ options.labels.searchResults
+      }}<span v-if="queryText">'{{ queryText }}'</span>
+      <span v-if="showProductCount" class="lupa-results-total-count"
+        >({{ totalItems }})</span
+      >
+    </h1>
+    <div
+      class="lupa-result-page-description-top"
+      v-if="descriptionTop"
+      v-html="descriptionTop"
+    ></div>
+  </div>
 </template>
 <script lang="ts">
 import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
@@ -47,6 +54,10 @@ export default class SearchResultsTitle extends Vue {
       this.options.labels?.searchResults &&
         (this.currentQueryText || this.isProductList)
     );
+  }
+
+  get descriptionTop(): string | undefined {
+    return this.options.categories?.current?.descriptionTop;
   }
 
   getLabel(label: string): string {
