@@ -11,10 +11,10 @@
         <div class="lupa-stats-from">
           <input
             v-model.lazy="fromValue"
-            type="number"
+            type="text"
             :max="facetMax"
             :min="facetMin"
-            :step="isPrice ? '0.01' : '1'"
+            :pattern="sliderInputFormat"
           />
           <span v-if="isPrice">{{ currency }}</span>
         </div>
@@ -27,10 +27,10 @@
         <div class="lupa-stats-to">
           <input
             v-model.lazy="toValue"
-            type="number"
+            type="text"
             :max="facetMax"
             :min="facetMin"
-            :step="isPrice ? '0.01' : '1'"
+            :pattern="sliderInputFormat"
           />
           <span v-if="isPrice">{{ currency }}</span>
         </div>
@@ -112,7 +112,7 @@ export default class TermFacet extends Vue {
 
   get fromValue(): string {
     return this.isPrice
-      ? this.sliderRange[0].toFixed(2)
+      ? this.sliderRange[0].toFixed(2).replace(".", this.separator)
       : `${this.sliderRange[0]}`;
   }
 
@@ -130,7 +130,7 @@ export default class TermFacet extends Vue {
 
   get toValue(): string {
     return this.isPrice
-      ? this.sliderRange[1].toFixed(2)
+      ? this.sliderRange[1].toFixed(2).replace(".", this.separator)
       : `${this.sliderRange[1]}`;
   }
 
@@ -199,12 +199,16 @@ export default class TermFacet extends Vue {
   get statsSummary(): string {
     const [min, max] = this.sliderRange;
     return this.isPrice
-      ? formatPriceSummary(
-          [min, max],
-          this.currency,
-          this.searchResultOptions.labels.priceSeparator
-        )
+      ? formatPriceSummary([min, max], this.currency, this.separator)
       : formatRange({ gte: min, lte: max });
+  }
+
+  get separator(): string {
+    return this.searchResultOptions?.labels?.priceSeparator ?? ",";
+  }
+
+  get sliderInputFormat(): string | undefined {
+    return this.isPrice ? `[0-9]+([${this.separator}][0-9]{1,2})?` : undefined;
   }
 
   @Watch("currentMinValue")
