@@ -29,7 +29,8 @@ export type SearchResultsSimilarQueriesLabels = {
 
 export type CallbackContext = {
   queryKey: string;
-  hasResults: boolean;
+  hasResults?: boolean;
+  urlQueryString?: string;
 };
 
 export type SearchResultEventCallbacks = {
@@ -37,6 +38,7 @@ export type SearchResultEventCallbacks = {
   onAdditionalPanelResults?: (context: CallbackContext) => unknown;
   onCategoryFilterResults?: (context: CallbackContext) => unknown;
   onProductClick?: (context: CallbackContext) => unknown;
+  onUrlQueryChange?: (context: CallbackContext) => unknown;
   onMounted?: () => unknown;
 };
 
