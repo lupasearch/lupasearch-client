@@ -66,6 +66,7 @@ const tracking = (options: TrackingOptions): void => {
 };
 
 const searchBox = (options: SearchBoxOptions): void => {
+  clearSearchBox();
   Vue.use(Vuex);
   app.box = new Vue({
     el: options.inputSelector,
@@ -75,6 +76,7 @@ const searchBox = (options: SearchBoxOptions): void => {
   });
 };
 const searchResults = (options: SearchResultsOptions): void => {
+  clearSearchResults();
   Vue.use(Vuex);
   app.results = new Vue({
     el: options.containerSelector,
@@ -85,6 +87,7 @@ const searchResults = (options: SearchResultsOptions): void => {
   });
 };
 const productList = (options: ProductListOptions): void => {
+  clearProductList();
   Vue.use(Vuex);
   app.productList = new Vue({
     el: options.containerSelector,
@@ -96,15 +99,27 @@ const productList = (options: ProductListOptions): void => {
 };
 
 const clearSearchBox = (): void => {
-  (app.box as unknown as any)?.$destroy();
+  try {
+    (app.box as unknown as any)?.$destroy();
+  } catch {
+    // do nothing, already destroyed;
+  }
 };
 
 const clearSearchResults = (): void => {
-  (app.results as unknown as any)?.$destroy();
+  try {
+    (app.results as unknown as any)?.$destroy();
+  } catch {
+    // do nothing, already destroyed;
+  }
 };
 
 const clearProductList = (): void => {
-  (app.productList as unknown as any)?.$destroy();
+  try {
+    (app.productList as unknown as any)?.$destroy();
+  } catch {
+    // do nothing, already destroyed;
+  }
 };
 
 const lupaSearch = {
