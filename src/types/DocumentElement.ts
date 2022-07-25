@@ -41,6 +41,7 @@ export type DescriptionDocumentElement<T = any> = DocumentElementBase<T> & {
 
 export type CustomDocumentElement<T = any> = DocumentElementBase<T> & {
   type: DocumentElementType.CUSTOM;
+  maxLines?: number;
   className: string;
   key: string;
 };
