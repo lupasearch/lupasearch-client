@@ -75,7 +75,6 @@ const searchBox = (options: SearchBoxOptions): void => {
   });
 };
 const searchResults = (options: SearchResultsOptions): void => {
-  clearSearchResults();
   Vue.use(Vuex);
   app.results = new Vue({
     el: options.containerSelector,
@@ -86,7 +85,6 @@ const searchResults = (options: SearchResultsOptions): void => {
   });
 };
 const productList = (options: ProductListOptions): void => {
-  clearProductList();
   Vue.use(Vuex);
   app.productList = new Vue({
     el: options.containerSelector,
