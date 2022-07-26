@@ -44,3 +44,60 @@
   justify-content: center;
   text-align: center;
 }
+
+#lupa-badges {
+  flex-direction: column;
+  top: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.lupa-discount-badge {
+  background: #e0232f;
+  color: #ffffff;
+}
+
+.lupa-preorder-badge {
+  background: #4b81eb;
+  color: #ffffff;
+}
+
+.lupa-generated-badges {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.lupa-dynamic-badge {
+  cursor: pointer;
+  pointer-events: all;
+  display: flex;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 4px;
+  margin-bottom: 4px;
+  margin-right: auto;
+  white-space: nowrap;
+
+  .lupa-badge-title {
+    font-weight: 700;
+    letter-spacing: -0.6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    img {
+      max-height: 20px;
+    }
+  }
+  .lupa-badge-full-text {
+    display: none;
+    margin-left: 10px;
+  }
+  &:hover {
+    .lupa-badge-full-text {
+      display: inline-block;
+    }
+  }
+}

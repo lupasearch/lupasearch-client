@@ -2,12 +2,20 @@
   <div id="lupa-search-results-badges">
     <div id="lupa-badges" :class="anchorPosition">
       <search-results-badge
-        v-for="(badge, index) in badges"
+        v-for="(badge, index) in leftBadges"
         :is="getBadgeComponent(badge.type)"
         :key="index"
         :badge="badge"
       />
       <SearchResultGeneratedBadges :options="options" />
+    </div>
+    <div class="lupa-bottom-badges">
+      <search-results-badge
+        v-for="(badge, index) in bottomBadges"
+        :is="getBadgeComponent(badge.type)"
+        :key="index"
+        :badge="badge"
+      />
     </div>
   </div>
 </template>
@@ -55,6 +63,14 @@ export default class SearchResultsBadgeWrapper extends Vue {
           product: this.options.product,
         };
       });
+  }
+
+  get leftBadges(): BadgeElement[] {
+    return this.badges.filter((b) => !b.position || b.position === "left");
+  }
+
+  get bottomBadges(): BadgeElement[] {
+    return this.badges.filter((b) => b.position === "bottom");
   }
 
   getBadgeComponent(type: string): string {

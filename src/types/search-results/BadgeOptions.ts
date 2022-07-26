@@ -34,6 +34,7 @@ export type SearchResultBadgeElement<T = any> = {
   rootImageUrl?: string;
   maxItems?: number;
   html?: (doc: T) => string;
+  position?: "left" | "bottom";
 };
 
 export type BaseBadgeElement<T = any> = SearchResultBadgeElement<T> & {
