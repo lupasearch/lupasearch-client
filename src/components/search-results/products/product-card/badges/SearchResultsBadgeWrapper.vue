@@ -7,7 +7,10 @@
         :key="index"
         :badge="badge"
       />
-      <SearchResultGeneratedBadges :options="options" />
+      <SearchResultGeneratedBadges
+        v-if="position === 'card'"
+        :options="options"
+      />
     </div>
   </div>
 </template>
