@@ -66,7 +66,6 @@ const tracking = (options: TrackingOptions): void => {
 };
 
 const searchBox = (options: SearchBoxOptions): void => {
-  clearSearchBox();
   Vue.use(Vuex);
   app.box = new Vue({
     el: options.inputSelector,
