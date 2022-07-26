@@ -1,5 +1,5 @@
 <template>
-  <SearchResults :options="fullSearchResultsOptions" />
+  <SearchResults :options="fullSearchResultsOptions" ref="searchResults" />
 </template>
 
 <script lang="ts">
@@ -24,6 +24,11 @@ export default class SearchResultsEntry extends Vue {
   get fullSearchResultsOptions(): SearchResultsOptions {
     const options = cloneDeep(this.searchResultsOptions);
     return merge(DEFAULT_OPTIONS_RESULTS, options);
+  }
+
+  fetch(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this.$refs.searchResults as any)?.handleMounted();
   }
 }
 </script>

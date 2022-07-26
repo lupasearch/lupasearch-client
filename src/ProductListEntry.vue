@@ -1,5 +1,5 @@
 <template>
-  <ProductList :options="productListOptions" />
+  <ProductList :options="productListOptions" ref="productList" />
 </template>
 
 <script lang="ts">
@@ -21,6 +21,11 @@ export default class ProductListEntry extends Vue {
 
   get fullProductListOptions(): ProductListOptions {
     return cloneDeep(this.productListOptions);
+  }
+
+  fetch(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this.$refs.productList as any)?.fetch();
   }
 }
 </script>

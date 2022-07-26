@@ -54,8 +54,23 @@ import {
   SearchResultsSortOptions,
   SortOptions,
 } from "./types/search-results/SearchResultsSort";
+import { CombinedVueInstance } from "vue/types/vue";
 
-const app = {
+type AppInstance = Record<
+  string,
+  CombinedVueInstance<
+    Vue,
+    Record<string, any>,
+    Record<string, any>,
+    Record<string, any>,
+    Record<never, any>
+  >
+>;
+type AppInstances = Record<"box" | "results" | "productList", AppInstance>;
+
+type MountOptions = { fetch: boolean };
+
+const app: AppInstances = {
   box: {},
   results: {},
   productList: {},
@@ -65,55 +80,133 @@ const tracking = (options: TrackingOptions): void => {
   initTracking(options);
 };
 
-const searchBox = (options: SearchBoxOptions): void => {
+const searchBox = (
+  options: SearchBoxOptions,
+  mountOptions?: MountOptions
+): void => {
+  const existingInstance = app.box[options.inputSelector];
+  if (existingInstance) {
+    existingInstance.searchBoxOptions = options;
+    if (mountOptions?.fetch) {
+      setTimeout(() => {
+        existingInstance.fetch?.();
+      });
+    }
+    return;
+  }
   Vue.use(Vuex);
-  app.box = new Vue({
+  const SearchBoxEntryComponent = Vue.component(
+    "SearchBoxEntry",
+    SearchBoxEntry
+  );
+  const instance = new SearchBoxEntryComponent({
     el: options.inputSelector,
-    components: { SearchBoxEntry },
-    render: (h) => h(SearchBoxEntry, { props: { searchBoxOptions: options } }),
+    propsData: { searchBoxOptions: options },
     store,
   });
-};
-const searchResults = (options: SearchResultsOptions): void => {
-  Vue.use(Vuex);
-  app.results = new Vue({
-    el: options.containerSelector,
-    components: { SearchResultsEntry },
-    render: (h) =>
-      h(SearchResultsEntry, { props: { searchResultsOptions: options } }),
-    store,
-  });
-};
-const productList = (options: ProductListOptions): void => {
-  Vue.use(Vuex);
-  app.productList = new Vue({
-    el: options.containerSelector,
-    components: { ProductListEntry },
-    render: (h) =>
-      h(ProductListEntry, { props: { productListOptions: options } }),
-    store,
-  });
+  app.box[options.inputSelector] = instance;
 };
 
-const clearSearchBox = (): void => {
+const searchResults = (
+  options: SearchResultsOptions,
+  mountOptions?: MountOptions
+): void => {
+  const existingInstance = app.results[options.containerSelector];
+  if (existingInstance) {
+    existingInstance.searchResultsOptions = options;
+    if (mountOptions?.fetch) {
+      setTimeout(() => {
+        existingInstance.fetch?.();
+      });
+    }
+    return;
+  }
+  Vue.use(Vuex);
+  const SearchResultsEntryComponent = Vue.component(
+    "SearchResultsEntry",
+    SearchResultsEntry
+  );
+  const instance = new SearchResultsEntryComponent({
+    el: options.containerSelector,
+    propsData: { searchResultsOptions: options },
+    store,
+  });
+  app.results[options.containerSelector] = instance;
+};
+
+const productList = (
+  options: ProductListOptions,
+  mountOptions?: MountOptions
+): void => {
+  const existingInstance = app.productList[options.containerSelector];
+  if (existingInstance) {
+    existingInstance.productListOptions = options;
+    if (mountOptions?.fetch) {
+      setTimeout(() => {
+        existingInstance.fetch?.();
+      });
+    }
+    return;
+  }
+  Vue.use(Vuex);
+  const ProductListEntryComponent = Vue.component(
+    "ProductListEntry",
+    ProductListEntry
+  );
+  const instance = new ProductListEntryComponent({
+    el: options.containerSelector,
+    propsData: { productListOptions: options },
+    store,
+  });
+  app.productList[options.containerSelector] = instance;
+};
+
+const clearSearchBox = (selector?: string): void => {
   try {
-    (app.box as unknown as any)?.$destroy();
+    if (selector) {
+      const instance = app.box[selector];
+      instance?.$destroy();
+      return;
+    }
+    for (const key in app.box) {
+      const instance = app.box[key];
+      instance?.$destroy();
+    }
+    app.box = {};
   } catch {
     // do nothing, already destroyed;
   }
 };
 
-const clearSearchResults = (): void => {
+const clearSearchResults = (selector?: string): void => {
   try {
-    (app.results as unknown as any)?.$destroy();
+    if (selector) {
+      const instance = app.box[selector];
+      instance?.$destroy();
+      return;
+    }
+    for (const key in app.results) {
+      const instance = app.results[key];
+      instance?.$destroy();
+    }
+    app.results = {};
   } catch {
     // do nothing, already destroyed;
   }
 };
 
-const clearProductList = (): void => {
+const clearProductList = (selector?: string): void => {
   try {
-    (app.productList as unknown as any)?.$destroy();
+    if (selector) {
+      const instance = app.box[selector];
+      instance?.$destroy();
+      return;
+    }
+    for (const key in app.productList) {
+      const instance = app.productList[key];
+      instance?.$destroy();
+    }
+    app.productList = {};
   } catch {
     // do nothing, already destroyed;
   }
@@ -166,6 +259,7 @@ export {
   BadgeGenerateSeed,
   BadgeGenerateOptions,
   BadgeOptions,
+  MountOptions,
 };
 
 export default lupaSearch;
