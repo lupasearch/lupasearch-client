@@ -80,7 +80,7 @@ const tracking = (options: TrackingOptions): void => {
   initTracking(options);
 };
 
-const searchBox = (
+const applySearchBox = (
   options: SearchBoxOptions,
   mountOptions?: MountOptions
 ): void => {
@@ -105,6 +105,18 @@ const searchBox = (
     store,
   });
   app.box[options.inputSelector] = instance;
+};
+
+const searchBox = (
+  options: SearchBoxOptions,
+  mountOptions?: MountOptions
+): void => {
+  // Support for multiple search box selectors separated by a comma
+  // Quite often multiple search boxes are required, since mobile and desktop has different inputs in html layout
+  const inputs = options.inputSelector?.split(",");
+  for (const input of inputs) {
+    applySearchBox({ ...options, inputSelector: input.trim() }, mountOptions);
+  }
 };
 
 const searchResults = (
