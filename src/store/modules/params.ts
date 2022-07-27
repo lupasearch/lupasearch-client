@@ -6,6 +6,7 @@ import {
 import { InputSuggestionFacet } from "@/types/search-box/Common";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { getFacetParam } from "@/utils/filter.toggle.utils";
+import { linksMatch } from "@/utils/link.utils";
 import {
   appendParam,
   getRemovableParams,
@@ -157,7 +158,7 @@ export default class ParamsModule extends VuexModule {
   }): void {
     if (
       !this.searchResultsLink ||
-      this.searchResultsLink === window.location.pathname
+      linksMatch(this.searchResultsLink, window.location.pathname)
     ) {
       const facetParam = facet ? [getFacetParam(facet.key, [facet.title])] : [];
       this.context.dispatch("appendParams", {
