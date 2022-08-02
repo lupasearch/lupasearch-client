@@ -1,5 +1,5 @@
 <template>
-  <SearchBox :options="fullSearchBoxOptions" />
+  <SearchBox :options="fullSearchBoxOptions" ref="searchBox" />
 </template>
 
 <script lang="ts">
@@ -24,6 +24,11 @@ export default class SearchBoxEntry extends Vue {
   get fullSearchBoxOptions(): SearchBoxOptions {
     const options = cloneDeep(this.searchBoxOptions);
     return merge(DEFAULT_SEARCH_BOX_OPTIONS, options);
+  }
+
+  fetch(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this.$refs.searchBox as any)?.handleCurrentValueSearch();
   }
 }
 </script>

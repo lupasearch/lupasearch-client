@@ -4,6 +4,7 @@
       :options="componentOptions"
       :initial-filters="options.initialFilters"
       :is-product-list="true"
+      ref="searchResults"
     >
       <CategoryDescription :options="options" />
     </SearchResults>
@@ -35,6 +36,11 @@ export default class ProductList extends Vue {
         categories: this.options.categories,
       },
     };
+  }
+
+  fetch(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this.$refs.searchResults as any)?.handleMounted();
   }
 }
 </script>

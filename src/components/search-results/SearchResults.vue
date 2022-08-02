@@ -74,6 +74,7 @@ import { getLupaTrackingContext } from "@/utils/tracking.utils";
 import SearchResultsTitle from "./SearchResultsTitle.vue";
 import SearchResultsToolbar from "./products/SearchResultsToolbar.vue";
 import CategoryTopFilters from "../product-list/CategoryTopFilters.vue";
+import { setDocumentTitle } from "@/utils/document.utils";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -208,11 +209,12 @@ export default class SearchResults extends Vue {
 
   handleMounted(): void {
     this.handleResize();
-
+    if (this.isProductList) {
+      setDocumentTitle(this.options.labels.htmlTitleTemplate, "");
+    }
     const params = new URLSearchParams(window.location.search);
     this.handleUrlChange(params);
     this.addParams(parseParams(params));
-
     this.setDefaultLimit(this.defaultSearchResultPageSize);
   }
 
