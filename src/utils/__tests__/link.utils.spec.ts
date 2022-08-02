@@ -126,6 +126,15 @@ describe("linksMatch", () => {
     ).toBe(true);
   });
 
+  it("should return true for partial link match with trailing slash", () => {
+    expect(
+      linksMatch(
+        "https://lupasearch.com/link-1/link-5",
+        "https://lupasearch.com/link-1/link-5/"
+      )
+    ).toBe(true);
+  });
+
   it("should return false if partial link does not match", () => {
     expect(
       linksMatch("https://lupasearch.com/link-1/link-5", "/link-1/link-6")

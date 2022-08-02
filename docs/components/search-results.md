@@ -25,7 +25,7 @@ const options = {
     similarQueries: "Similar queries:",
     filteredItemCount: "Filtered items {1} from {2}",
     outOfStock: "Out of stock",
-    aiSuggestions: "Other suggestions:"
+    aiSuggestions: "Other suggestions:",
   },
 };
 
@@ -69,7 +69,6 @@ lupaSearch.searchResults(options);
 - `labels.outOfStock` - product out of stock overlay label;
 
 - `labels.aiSuggestions` - label for similar query with AI suggestions.
-
 
 # Query parameters
 
@@ -658,6 +657,7 @@ const options = {
     onSearchResults: (context: CallbackContext) => {},
     onAdditionalPanelResults: (context: CallbackContext) => {},
     onCategoryFilterResults: (context: CallbackContext) => {},
+    onUrlQueryChange: (context: CallbackContext) => {},
   },
 };
 ```
@@ -668,12 +668,15 @@ const options = {
 
 - `onCategoryFilterResults` - category filter loaded;
 
+- `onUrlQueryChange` - LupaSearch url query changes (page, sort, filter parameters are changed).
+
 Where `CallbackContext` is:
 
 ```ts
 type CallbackContext = {
   queryKey: string;
-  hasResults: boolean;
+  hasResults?: boolean;
+  urlQueryString?: string;
 };
 ```
 

@@ -1,43 +1,62 @@
-import { Document } from "@getlupa/client-sdk/Types";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AnchorPosition } from "./SearchResultsProductCardOptions";
 
 export type SearchResultBadgeType = "text" | "image" | "customHtml";
 
+export type BadgeGenerateSeed = {
+  id?: string;
+  backgroundColor?: string;
+  color?: string;
+  titleText?: string;
+  additionalText?: string;
+};
+
+export type BadgeGenerateOptions<T = Record<string, any>> = {
+  key?: string;
+  keyMap?: Record<keyof BadgeGenerateSeed, keyof T>;
+  image?: (field: BadgeGenerateSeed) => string | undefined;
+};
+
 export type BadgeOptions = {
   anchor: AnchorPosition;
   elements: BadgeElement[];
-  product?: Document;
+  generate?: BadgeGenerateOptions;
+  product?: any;
 };
 
-export type SearchResultBadgeElement = {
+export type SearchResultBadgeElement<T = any> = {
   type: SearchResultBadgeType;
   key: string;
   isHtml?: boolean;
-  className?: boolean;
-  product?: Document;
-  display?: (document: Record<string, unknown>) => boolean;
+  className?: string;
+  product?: T;
+  display?: (document: T) => boolean;
+  rootImageUrl?: string;
+  maxItems?: number;
+  html?: (doc: T) => string;
+  position?: "card" | "image";
 };
 
-export type BaseBadgeElement = SearchResultBadgeElement & {
+export type BaseBadgeElement<T = any> = SearchResultBadgeElement<T> & {
   value?: string;
 };
 
-export type TextBadgeElement = BaseBadgeElement & {
+export type TextBadgeElement<T = any> = BaseBadgeElement<T> & {
   type: "text";
   prefix?: string;
   maxItems?: number;
 };
 
-export type ImageBadgeElement = BaseBadgeElement & {
+export type ImageBadgeElement<T = any> = BaseBadgeElement<T> & {
   type: "image";
   rootImageUrl?: string;
   maxItems?: number;
 };
 
-export type CustomHtmlBadgeElement = BaseBadgeElement & {
+export type CustomHtmlBadgeElement<T = any> = BaseBadgeElement<T> & {
   type: "customHtml";
   className?: string;
-  html: (doc: Document) => string;
+  html: (doc: T) => string;
 };
 
 export type BadgeElement = BaseBadgeElement | TextBadgeElement;

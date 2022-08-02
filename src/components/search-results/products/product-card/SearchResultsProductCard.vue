@@ -23,6 +23,11 @@
           :inStock="isInStock"
           :link="link"
         />
+        <SearchResultsBadgeWrapper
+          :options="badgesOptions"
+          position="image"
+          class="lupa-image-badges"
+        />
         <div v-if="labels.outOfStock && !isInStock" class="lupa-out-of-stock">
           {{ labels.outOfStock }}
         </div>
@@ -52,7 +57,10 @@ import {
   ResultsLayoutEnum,
 } from "@/types/search-results/ResultsLayout";
 import { RoutingBehavior } from "@/types/search-results/RoutingBehavior";
-import { SearchResultsOptionLabels } from "@/types/search-results/SearchResultsOptions";
+import {
+  SearchResultsOptionLabels,
+  SearchResultsOptions,
+} from "@/types/search-results/SearchResultsOptions";
 import { SearchResultsProductCardOptions } from "@/types/search-results/SearchResultsProductCardOptions";
 import { generateLink } from "@/utils/link.utils";
 import { handleRoutingEvent } from "@/utils/routing.utils";
@@ -86,6 +94,9 @@ export default class SearchResultsProductCard extends Vue {
 
   @options.Getter("searchResultsRoutingBehavior")
   searchResultsRoutingBehavior!: RoutingBehavior;
+
+  @options.State((o) => o.searchResultOptions)
+  searchResultOptions!: SearchResultsOptions;
 
   @params.Getter("query") query!: string;
 
@@ -165,6 +176,10 @@ export default class SearchResultsProductCard extends Vue {
         searchQuery: this.query,
         type: "itemClick",
       },
+    });
+    this.searchResultOptions.callbacks?.onProductClick?.({
+      queryKey: this.query,
+      hasResults: true,
     });
   }
 

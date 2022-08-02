@@ -11,6 +11,7 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     classMap?: Record<string, string>;
     disallowEmptyQuery?: boolean;
     callbacks?: SearchResultEventCallbacks;
+    categories?: CategoryFilterOptions;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";
@@ -28,13 +29,16 @@ export type SearchResultsSimilarQueriesLabels = {
 
 export type CallbackContext = {
   queryKey: string;
-  hasResults: boolean;
+  hasResults?: boolean;
+  urlQueryString?: string;
 };
 
 export type SearchResultEventCallbacks = {
   onSearchResults?: (context: CallbackContext) => unknown;
   onAdditionalPanelResults?: (context: CallbackContext) => unknown;
   onCategoryFilterResults?: (context: CallbackContext) => unknown;
+  onProductClick?: (context: CallbackContext) => unknown;
+  onUrlQueryChange?: (context: CallbackContext) => unknown;
   onMounted?: () => unknown;
 };
 

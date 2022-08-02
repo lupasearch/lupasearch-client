@@ -219,6 +219,10 @@ export default class SearchResults extends Vue {
   @Watch("searchString")
   handleParamsChange(): void {
     this.handleUrlChange();
+    this.options.callbacks?.onUrlQueryChange?.({
+      queryKey: this.options.queryKey,
+      urlQueryString: this.searchString,
+    });
   }
 
   @searchResult.Action("add") addSearchResult!: (

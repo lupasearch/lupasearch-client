@@ -75,6 +75,8 @@ lupaSearch.productList(options);
 
   - `description` - Description of the current section. Description is rendered as html by default, so make sure to escape it or sanitize it before passing the parameter.
 
+  - `descriptionTop` - Description of the current section, displayed at the top of page, below page title. Description is rendered as html by default.
+
 ## Routing behavior
 
 Category filter, configured above, supports two ways of routing fot the categories with `routingBehavior` settings:

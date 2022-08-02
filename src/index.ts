@@ -9,6 +9,7 @@ import {
   CallbackContext,
   FacetFilterQuery,
   FacetStyle,
+  ResultFacetOptions,
   SearchResultEventCallbacks,
   SearchResultsFilterOptions,
   SearchResultsOptions,
@@ -42,6 +43,9 @@ import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
 import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
 import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
 import {
+  BadgeGenerateOptions,
+  BadgeGenerateSeed,
+  BadgeOptions,
   BadgeType,
   SearchResultBadgeElement,
   SearchResultBadgeType,
@@ -92,15 +96,27 @@ const productList = (options: ProductListOptions): void => {
 };
 
 const clearSearchBox = (): void => {
-  (app.box as unknown as any)?.$destroy();
+  try {
+    (app.box as unknown as any)?.$destroy();
+  } catch {
+    // do nothing, already destroyed;
+  }
 };
 
 const clearSearchResults = (): void => {
-  (app.results as unknown as any)?.$destroy();
+  try {
+    (app.results as unknown as any)?.$destroy();
+  } catch {
+    // do nothing, already destroyed;
+  }
 };
 
 const clearProductList = (): void => {
-  (app.productList as unknown as any)?.$destroy();
+  try {
+    (app.productList as unknown as any)?.$destroy();
+  } catch {
+    // do nothing, already destroyed;
+  }
 };
 
 const lupaSearch = {
@@ -146,6 +162,10 @@ export {
   SearchResultsFilterOptions,
   SearchResultBadgeType,
   SearchResultBadgeElement,
+  ResultFacetOptions,
+  BadgeGenerateSeed,
+  BadgeGenerateOptions,
+  BadgeOptions,
 };
 
 export default lupaSearch;
