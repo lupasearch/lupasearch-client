@@ -44,6 +44,7 @@ export type CustomDocumentElement<T = any> = DocumentElementBase<T> & {
   maxLines?: number;
   className: string;
   key: string;
+  label?: string;
 };
 
 export type PriceElement<T = any> = DocumentElementBase<T> & {

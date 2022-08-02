@@ -5,7 +5,13 @@
     v-html="text"
   ></div>
   <div :class="[className, 'lupa-search-box-product-custom']" v-else>
-    {{ text }}
+    <div v-if="!label">
+      {{ text }}
+    </div>
+    <div v-else>
+      <div class="lupa-search-box-custom-label">{{ label }}</div>
+      <div class="lupa-search-box-custom-text">{{ text }}</div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -25,6 +31,10 @@ export default class SearchBoxProductCustom extends Vue {
 
   get className(): string {
     return this.options.className;
+  }
+
+  get label(): string | undefined {
+    return this.options.label;
   }
 
   get isHtml(): boolean {
