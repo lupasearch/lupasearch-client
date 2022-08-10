@@ -3,6 +3,7 @@ import { Environment as SdkEnvironment } from "@getlupa/client-sdk/Types";
 
 export type SdkOptions = {
   environment: SdkEnvironment;
+  customBaseUrl?: string;
   customUrl?: string;
   customPayload?: Record<string, unknown>;
   customHeaders?: Record<string, string>;

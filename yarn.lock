@@ -1030,10 +1030,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
   integrity sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==
 
-"@getlupa/client-sdk@^1.0.26":
-  version "1.0.26"
-  resolved "https://registry.yarnpkg.com/@getlupa/client-sdk/-/client-sdk-1.0.26.tgz#5026315a8a85465e7dcdeafdee5b208c8994abbe"
-  integrity sha512-Lwp6IHrMK6PnIm/nQn69qw6AFmYZlblGaintPq6smS6q90ehxDrWTdCOcBpZT5hyKOr2xNhbqLX3LPb0A8PUKQ==
+"@getlupa/client-sdk@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@getlupa/client-sdk/-/client-sdk-1.2.2.tgz#5d5c248aed8a8489bc4a069d55364303cbdfdc02"
+  integrity sha512-tD7M6kIne4XAAaekyJJWwsdlV2WWFck3Z4BbvgoJoOhy/KIgQiIRRW9XgQtXYJiptLII4oX8kUx4NloTod0dng==
   dependencies:
     ts-loader "^9.2.6"
 
