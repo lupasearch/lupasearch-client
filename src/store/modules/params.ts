@@ -79,11 +79,13 @@ export default class ParamsModule extends VuexModule {
   }
 
   @Action({ commit: "save" })
-  add(params: QueryParams): { params: QueryParams } {
+  add(params: QueryParams): { params: QueryParams; searchString?: string } {
     if (!params) {
       return { params: this.params };
     }
-    return { params };
+    const url = getPageUrl();
+    const searchString = url.search;
+    return { params, searchString };
   }
 
   @Action({ commit: "save" })
