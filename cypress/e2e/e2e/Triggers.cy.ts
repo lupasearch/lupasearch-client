@@ -11,7 +11,7 @@ import { searchResultsPageTitle } from "../../fields/SearchResults.fields.spec";
 import { searchResultsInterceptions } from "../../utils/interceptions.utils";
 import data from "../../fixtures/data.json";
 
-describe("SearchBox", () => {
+describe("Triggers", () => {
   beforeEach(() => {
     cy.visit("/cypress/environments/triggers.html");
     searchResultsInterceptions();
