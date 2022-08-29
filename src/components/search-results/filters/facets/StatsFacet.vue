@@ -12,6 +12,7 @@
           <input
             v-model.lazy="fromValue"
             type="text"
+            maxlength="8"
             :max="facetMax"
             :min="facetMin"
             :pattern="sliderInputFormat"
@@ -28,6 +29,7 @@
           <input
             v-model.lazy="toValue"
             type="text"
+            maxlength="8"
             :max="facetMax"
             :min="facetMin"
             :pattern="sliderInputFormat"
@@ -117,7 +119,8 @@ export default class TermFacet extends Vue {
   }
 
   set fromValue(stringValue: string) {
-    let value = +stringValue;
+    const numberString = stringValue.replace(/[^0-9,.]/, "");
+    let value = +numberString;
     if (value < this.facetMin) {
       value = this.facetMin;
     }
@@ -135,7 +138,8 @@ export default class TermFacet extends Vue {
   }
 
   set toValue(stringValue: string) {
-    let value = +stringValue;
+    const numberString = stringValue.replace(/[^0-9,.]/, "");
+    let value = +numberString;
     if (value > this.facetMax) {
       value = this.facetMax;
     }
