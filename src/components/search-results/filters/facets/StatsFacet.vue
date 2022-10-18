@@ -73,6 +73,7 @@ import VueSlider from "vue-slider-component";
 import { CURRENCY_KEY_INDICATOR } from "@/constants/global.const";
 import { formatRange } from "@/utils/filter.utils";
 import { namespace } from "vuex-class";
+import { normalizeFloat } from "@/utils/string.utils";
 
 const options = namespace("options");
 
@@ -119,8 +120,7 @@ export default class TermFacet extends Vue {
   }
 
   set fromValue(stringValue: string) {
-    const numberString = stringValue.replace(/[^0-9,.]/, "");
-    let value = +numberString;
+    let value = normalizeFloat(stringValue);
     if (value < this.facetMin) {
       value = this.facetMin;
     }
@@ -138,8 +138,7 @@ export default class TermFacet extends Vue {
   }
 
   set toValue(stringValue: string) {
-    const numberString = stringValue.replace(/[^0-9,.]/, "");
-    let value = +numberString;
+    let value = normalizeFloat(stringValue);
     if (value > this.facetMax) {
       value = this.facetMax;
     }

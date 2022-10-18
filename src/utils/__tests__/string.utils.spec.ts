@@ -5,6 +5,7 @@ import {
   escapeHtml,
   getDisplayValue,
   getNormalizedString,
+  normalizeFloat,
 } from "../string.utils";
 
 describe("getNormalizedString", () => {
@@ -114,5 +115,23 @@ describe("escapeHtml", () => {
   it("should return escaped characters", () => {
     expect(escapeHtml("<script>")).toBe("&lt;script&gt;");
     expect(escapeHtml("value='123'")).toBe("value=&#039;123&#039;");
+  });
+});
+
+describe("normalizeFloat", () => {
+  it("should return 0 for undefined value", () => {
+    expect(normalizeFloat("")).toBe(0);
+    expect(normalizeFloat()).toBe(0);
+  });
+
+  it("should replace non numeric chars with empty space and convert", () => {
+    expect(normalizeFloat("8xxx9")).toBeCloseTo(89);
+    expect(normalizeFloat("9.9a@9")).toBeCloseTo(9.99);
+    expect(normalizeFloat("++++99,9a@9")).toBeCloseTo(99.99);
+    expect(normalizeFloat("vrgjerg3r490ee4")).toBeCloseTo(34904);
+  });
+
+  it("should return 0 if there are no number characters", () => {
+    expect(normalizeFloat("abc")).toBeCloseTo(0);
   });
 });
