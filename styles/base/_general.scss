@@ -3,6 +3,8 @@
 $white: #ffffff !default;
 $black: #000000 !default;
 
+$background: #fafafa !default;
+
 $grey-100: #eeeeee !default;
 $grey-200: #cccccc !default;
 $grey-300: #aaaaaa !default;
@@ -16,6 +18,8 @@ $link: #1979c3 !default;
 $link-hover: #135d96 !default;
 
 $grey-transparent: rgba(0, 0, 0, 0.05) !default;
+$grey-overlay: rgba(0, 0, 0, 0.5) !default;
+$box-shadow: 4px 4px 4px rgba(22, 22, 22, 0.14) !default;
 
 // Fonts
 $font-family-base: "Helvetica Neue", Helvetica, Arial, sans-serif !default;

@@ -11,15 +11,10 @@
       href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
       rel="stylesheet"
     />
-    <div class="box-wrapper">
-      <SearchBox :options="fullSearchBoxOptions" />
+    <div>
+      <input type="text" class="trigger" placeholder="Click me to search!" />
     </div>
-    <!-- <div class="result-wrapper">
-      <SearchResults :options="fullSearchResultsOptions" />
-    </div> -->
-    <div class="result-wrapper">
-      <ProductList :options="fullProductListOptions" />
-    </div>
+    <SearchContainerEntry :search-container-options="containerOptions" />
   </div>
 </template>
 
@@ -35,9 +30,10 @@ import { merge } from "./utils/merger.utils";
 import "../styles/clients/lupa/lupa";
 import { SEARCH_BOX_CONFIGURATION } from "./constants/development/searchBoxDev.const";
 import { SEARCH_RESULTS_CONFIGURATION } from "./constants/development/searchResultsDev.const";
-import { PRODUCT_LIST_CONFIGURATION } from "./constants/development/searchProductListDev.const";
-import { ProductListOptions } from "./types/product-list/ProductListOptions";
 import ProductList from "./components/product-list/ProductList.vue";
+import SearchContainer from "./components/search-container/SearchContainer.vue";
+import { SearchContainerOptions } from "./types/search-container/SearchContainerOptions";
+import SearchContainerEntry from "./SearchContainerEntry.vue";
 
 @Component({
   name: "getLupa",
@@ -45,6 +41,8 @@ import ProductList from "./components/product-list/ProductList.vue";
     SearchBox,
     SearchResults,
     ProductList,
+    SearchContainer,
+    SearchContainerEntry,
   },
 })
 export default class App extends Vue {
@@ -62,10 +60,11 @@ export default class App extends Vue {
     );
   }
 
-  get fullProductListOptions(): ProductListOptions {
+  get containerOptions(): SearchContainerOptions {
     return {
-      ...this.fullSearchResultsOptions,
-      ...PRODUCT_LIST_CONFIGURATION,
+      trigger: ".trigger",
+      searchBox: this.fullSearchBoxOptions,
+      searchResults: this.fullSearchResultsOptions,
     };
   }
 }

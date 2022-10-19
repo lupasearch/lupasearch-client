@@ -1,0 +1,21 @@
+.lupa-search-container {
+  .lupa-search-result-wrapper {
+    padding: 0 20px;
+  }
+  #lupa-search-results-products {
+    padding: 0;
+  }
+
+  #lupa-search-results-layout-selection {
+    display: none;
+  }
+
+  #lupa-search-results-did-you-mean,
+  .lupa-result-page-title {
+    margin-bottom: 0;
+  }
+
+  .lupa-mobile-filter-sidebar {
+    z-index: 10000;
+  }
+}

@@ -1,21 +1,30 @@
 <template>
-  <div id="lupa-search-box-input">
-    <input
-      class="lupa-hint"
-      :value="showHint ? suggestedValue.item.suggestion : ''"
-      disabled
-    />
-    <input
-      v-model="inputValue"
-      v-bind="inputAttributes"
-      autocomplete="off"
-      class="lupa-search-box-input-field"
-      data-cy="lupa-search-box-input-field"
-      type="text"
-      :placeholder="labels.placeholder"
-      @input="handleInput"
-      @focus="handleFocus"
-    />
+  <div id="lupa-search-box-input-container">
+    <div id="lupa-search-box-input">
+      <input
+        class="lupa-hint"
+        :value="showHint ? suggestedValue.item.suggestion : ''"
+        disabled
+      />
+      <input
+        v-model="inputValue"
+        v-bind="inputAttributes"
+        autocomplete="off"
+        class="lupa-search-box-input-field"
+        data-cy="lupa-search-box-input-field"
+        type="text"
+        :placeholder="labels.placeholder"
+        @input="handleInput"
+        @focus="handleFocus"
+      />
+    </div>
+    <div
+      v-if="canClose"
+      class="lupa-close-search-container"
+      @click="$emit('close')"
+    >
+      <span class="lupa-close-action">×</span>
+    </div>
   </div>
 </template>
 
@@ -35,6 +44,9 @@ const params = namespace("params");
 })
 export default class SearchBoxInput extends Vue {
   @Prop() options!: SearchBoxInputOptions;
+  @Prop({ default: false }) canClose!: boolean;
+  @Prop({ default: true }) emitInputOnFocus!: boolean;
+
   @Prop({ default: () => ({ value: "", override: false }) })
   suggestedValue!: InputSuggestion;
 
@@ -93,7 +105,9 @@ export default class SearchBoxInput extends Vue {
 
   handleFocus(): void {
     this.$emit("focus");
-    this.handleInput();
+    if (this.emitInputOnFocus) {
+      this.handleInput();
+    }
   }
 }
 </script>

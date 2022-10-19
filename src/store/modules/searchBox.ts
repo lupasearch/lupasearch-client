@@ -39,7 +39,7 @@ export default class SearchBoxModule extends VuexModule {
   }
 
   get resultsVisible(): boolean {
-    return this.inputValue.length >= this.options.minInputLength;
+    return this.inputValue?.length >= this.options.minInputLength;
   }
 
   get panelItemCounts(): {

@@ -1,0 +1,33 @@
+@use "../base/searchBox";
+
+.lupa-search-container {
+  @media (max-width: searchBox.$size-s) {
+    height: var(--lupa-full-height);
+
+    .lupa-search-container,
+    #lupa-search-box-panel {
+      min-height: 90px;
+    }
+
+    .lupa-suggestion,
+    .lupa-search-box-history-item-content {
+      padding: 2px 10px;
+      min-height: 28px;
+    }
+    .lupa-suggestion-value {
+      font-size: 12px;
+    }
+    .lupa-suggestion-facet {
+      font-size: 11px;
+    }
+
+    #lupa-search-box {
+      margin-bottom: 10px;
+    }
+
+    .lupa-suggestion-value,
+    .lupa-suggestion-facet {
+      line-height: 1;
+    }
+  }
+}

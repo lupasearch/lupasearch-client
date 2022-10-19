@@ -4,11 +4,14 @@
       <SearchBoxInput
         :options="inputOptions"
         :suggestedValue="suggestedValue"
+        :can-close="isSearchContainer"
+        :emit-input-on-focus="!isSearchContainer"
         @input="handleInput"
         @focus="opened = true"
+        @close="$emit('close')"
       />
       <SearchBoxMainPanel
-        v-if="opened"
+        v-if="opened || isSearchContainer"
         :options="panelOptions"
         :inputValue="inputValue"
         @fetched="handleItemsFetch"
@@ -44,6 +47,7 @@ import { namespace } from "vuex-class";
 import SearchBoxInput from "./SearchBoxInput.vue";
 import SearchBoxMainPanel from "./SearchBoxMainPanel.vue";
 import { bindSearchTriggers, unbindSearchTriggers } from "@/utils/event.utils";
+import { debounce } from "lodash";
 
 const defaultSuggestedValue = {
   item: { suggestion: "" },
@@ -65,11 +69,12 @@ const tracking = namespace("tracking");
 })
 export default class SearchBox extends Vue {
   @Prop() options!: SearchBoxOptions;
+  @Prop({ default: false }) isSearchContainer!: boolean;
 
   inputValue = "";
   suggestedValue: InputSuggestion = defaultSuggestedValue;
 
-  opened = false;
+  opened = this.isSearchContainer;
 
   @searchBox.Getter("highlightedDocument") highlightedDocument?: {
     doc?: Document;
@@ -189,6 +194,11 @@ export default class SearchBox extends Vue {
     this.opened = true;
     this.inputValue = value;
     this.suggestedValue = defaultSuggestedValue;
+    if (this.isSearchContainer) {
+      this.goToResultsDebounced({
+        searchText: this.searchValue,
+      });
+    }
   }
 
   handleItemsFetch(data: FetchedData): void {
@@ -198,7 +208,7 @@ export default class SearchBox extends Vue {
         let suggestion = item || { suggestion: "" };
         suggestion =
           !suggestion.suggestion.includes(this.inputValue) ||
-          suggestion.suggestion.length === this.inputValue.length
+          suggestion.suggestion.length === this.inputValue?.length
             ? { suggestion: "" }
             : suggestion;
         this.suggestedValue = {
@@ -270,6 +280,11 @@ export default class SearchBox extends Vue {
     facet?: InputSuggestionFacet;
   }) => { params: QueryParams };
 
+  goToResultsDebounced = debounce(
+    this.goToResults,
+    this.options.debounce ?? 300
+  );
+
   handleSearch({ query } = { query: "" }): void {
     const searchText = query || this.searchValue;
     if (searchText.length < this.options.minInputLength) {
@@ -308,7 +323,7 @@ export default class SearchBox extends Vue {
   trackSuggestionClick(suggestion?: string): void {
     if (
       suggestion ||
-      this.inputValue.length < this.options.minInputLength ||
+      this.inputValue?.length < this.options.minInputLength ||
       this.inputValue === this.searchValue
     ) {
       return;
