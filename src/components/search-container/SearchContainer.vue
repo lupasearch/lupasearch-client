@@ -3,7 +3,11 @@
     class="lupa-search-container-overlay"
     @click.stop.prevent="$emit('close')"
   >
-    <div class="lupa-search-container" @click.stop="innerClick">
+    <div
+      id="lupa-search-container"
+      class="lupa-search-container"
+      @click.stop="innerClick"
+    >
       <div class="lupa-search-box-container">
         <SearchBox
           :options="fullSearchBoxOptions"

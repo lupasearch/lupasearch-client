@@ -194,9 +194,10 @@ const searchContainer = (
     return;
   }
   Vue.use(Vuex);
-  const id = `lupa-search-container-manager-${options.trigger}`;
+  const id = `lupa-search-container-manager`;
   const managerElement = document.createElement("div");
   managerElement.setAttribute("id", id);
+  document.body.appendChild(managerElement);
   const SearchContainerEntryComponent = Vue.component(
     "SearchContainerEntry",
     SearchContainerEntry
