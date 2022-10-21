@@ -47,6 +47,7 @@
         :lazy="true"
         :silent="true"
         :duration="0.1"
+        :interval="interval"
         v-model="sliderRange"
         @change="handleChange"
         @drag-end="handleChange"
@@ -208,6 +209,17 @@ export default class TermFacet extends Vue {
 
   get separator(): string {
     return this.searchResultOptions?.labels?.priceSeparator ?? ",";
+  }
+
+  get isIntegerRange() {
+    return (
+      Number.isInteger(this.currentMinValue) &&
+      Number.isInteger(this.currentMaxValue)
+    );
+  }
+
+  get interval() {
+    return this.isIntegerRange ? 1 : 0.01;
   }
 
   get sliderInputFormat(): string | undefined {
