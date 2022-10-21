@@ -71,6 +71,13 @@ export const getProductKey = (
   return index;
 };
 
+export const normalizeFloat = (value?: string): number => {
+  if (!value) {
+    return 0;
+  }
+  return +value?.replace(/[^0-9,.]/g, "")?.replace(",", ".");
+};
+
 export const escapeHtml = (value?: string): string => {
   if (!value) {
     return "";
