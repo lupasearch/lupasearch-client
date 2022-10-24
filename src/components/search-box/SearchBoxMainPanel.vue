@@ -20,6 +20,7 @@
           :labels="labels"
           @fetched="(data) => $emit('fetched', data)"
           @itemSelect="(item) => $emit('itemSelect', item)"
+          @product-click="$emit('product-click')"
         ></search-box-panel>
       </div>
     </div>

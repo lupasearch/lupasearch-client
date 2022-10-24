@@ -8,6 +8,7 @@
       :labels="labels"
       :highlighted="index === highlightedIndex"
       :inputValue="inputValue"
+      @product-click="$emit('product-click')"
     />
   </div>
 </template>

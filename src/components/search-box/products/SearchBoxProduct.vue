@@ -124,6 +124,7 @@ export default class SearchBoxProduct extends Vue {
     if (!this.link) {
       return;
     }
+    this.$emit("product-click");
     handleRoutingEvent(this.link, event, this.boxRoutingBehavior === "event");
   }
 }
