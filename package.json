@@ -6,7 +6,7 @@
   "types": "dist/es/index.d.ts",
   "repository": "https://github.com/lupasearch/lupasearch-client",
   "scripts": {
-    "serve": "vue-cli-service serve",ssssssssssssssssssssssssssssssssssssssssssssssssss
+    "serve": "vue-cli-service serve",
     "build": "rollup --config build/rollup.config.js",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "cypress run",
