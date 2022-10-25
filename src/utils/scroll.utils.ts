@@ -1,4 +1,5 @@
 const RESULT_ROOT_ID = "lupa-search-results";
+const CONTAINER_ROOT_ID = "lupa-search-container";
 
 export const scrollToSearchResults = (timeout = 500): void => {
   if (timeout) {
@@ -13,7 +14,9 @@ export const scrollTo = (elementId: string): void => {
   if (!el) {
     return;
   }
-  window.scrollTo({
+  const serchContainer = document.getElementById(CONTAINER_ROOT_ID);
+  const container = serchContainer ?? window;
+  container.scrollTo({
     top: el.offsetTop,
     behavior: "smooth",
   });

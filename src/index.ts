@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import SearchBoxEntry from "./SearchBoxEntry.vue";
 import SearchResultsEntry from "./SearchResultsEntry.vue";
 import ProductListEntry from "./ProductListEntry.vue";
+import SearchContainerEntry from "./SearchContainerEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import {
   CallbackContext,
@@ -55,6 +56,7 @@ import {
   SortOptions,
 } from "./types/search-results/SearchResultsSort";
 import { CombinedVueInstance } from "vue/types/vue";
+import { SearchContainerOptions } from "./types/search-container/SearchContainerOptions";
 
 type AppInstance = Record<
   string,
@@ -66,7 +68,10 @@ type AppInstance = Record<
     Record<never, any>
   >
 >;
-type AppInstances = Record<"box" | "results" | "productList", AppInstance>;
+type AppInstances = Record<
+  "box" | "results" | "productList" | "searchContainer",
+  AppInstance
+>;
 
 type MountOptions = { fetch: boolean };
 
@@ -74,6 +79,7 @@ const app: AppInstances = {
   box: {},
   results: {},
   productList: {},
+  searchContainer: {},
 };
 
 const tracking = (options: TrackingOptions): void => {
@@ -173,6 +179,37 @@ const productList = (
   app.productList[options.containerSelector] = instance;
 };
 
+const searchContainer = (
+  options: SearchContainerOptions,
+  mountOptions?: MountOptions
+): void => {
+  const existingInstance = app.productList[options.trigger];
+  if (existingInstance) {
+    existingInstance.productListOptions = options;
+    if (mountOptions?.fetch) {
+      setTimeout(() => {
+        existingInstance.fetch?.();
+      });
+    }
+    return;
+  }
+  Vue.use(Vuex);
+  const id = `lupa-search-container-manager`;
+  const managerElement = document.createElement("div");
+  managerElement.setAttribute("id", id);
+  document.body.appendChild(managerElement);
+  const SearchContainerEntryComponent = Vue.component(
+    "SearchContainerEntry",
+    SearchContainerEntry
+  );
+  const instance = new SearchContainerEntryComponent({
+    el: `#${id}`,
+    propsData: { searchContainerOptions: options },
+    store,
+  });
+  app.searchContainer[options.trigger] = instance;
+};
+
 const clearSearchBox = (selector?: string): void => {
   try {
     if (selector) {
@@ -193,7 +230,7 @@ const clearSearchBox = (selector?: string): void => {
 const clearSearchResults = (selector?: string): void => {
   try {
     if (selector) {
-      const instance = app.box[selector];
+      const instance = app.results[selector];
       instance?.$destroy();
       return;
     }
@@ -210,7 +247,7 @@ const clearSearchResults = (selector?: string): void => {
 const clearProductList = (selector?: string): void => {
   try {
     if (selector) {
-      const instance = app.box[selector];
+      const instance = app.productList[selector];
       instance?.$destroy();
       return;
     }
@@ -224,14 +261,33 @@ const clearProductList = (selector?: string): void => {
   }
 };
 
+const clearSearchContainer = (selector?: string): void => {
+  try {
+    if (selector) {
+      const instance = app.searchContainer[selector];
+      instance?.$destroy();
+      return;
+    }
+    for (const key in app.productList) {
+      const instance = app.searchContainer[key];
+      instance?.$destroy();
+    }
+    app.searchContainer = {};
+  } catch {
+    // do nothing, already destroyed;
+  }
+};
+
 const lupaSearch = {
   searchBox,
   searchResults,
   tracking,
   productList,
+  searchContainer,
   clearSearchBox,
   clearSearchResults,
   clearProductList,
+  clearSearchContainer,
 };
 
 export {
@@ -272,6 +328,7 @@ export {
   BadgeGenerateOptions,
   BadgeOptions,
   MountOptions,
+  SearchContainerOptions,
 };
 
 export default lupaSearch;
