@@ -47,6 +47,7 @@
         :lazy="true"
         :silent="true"
         :duration="0.1"
+        :interval="interval"
         v-model="sliderRange"
         @change="handleChange"
         @drag-end="handleChange"
@@ -73,6 +74,7 @@ import VueSlider from "vue-slider-component";
 import { CURRENCY_KEY_INDICATOR } from "@/constants/global.const";
 import { formatRange } from "@/utils/filter.utils";
 import { namespace } from "vuex-class";
+import { normalizeFloat } from "@/utils/string.utils";
 
 const options = namespace("options");
 
@@ -119,8 +121,7 @@ export default class TermFacet extends Vue {
   }
 
   set fromValue(stringValue: string) {
-    const numberString = stringValue.replace(/[^0-9,.]/, "");
-    let value = +numberString;
+    let value = normalizeFloat(stringValue);
     if (value < this.facetMin) {
       value = this.facetMin;
     }
@@ -138,8 +139,7 @@ export default class TermFacet extends Vue {
   }
 
   set toValue(stringValue: string) {
-    const numberString = stringValue.replace(/[^0-9,.]/, "");
-    let value = +numberString;
+    let value = normalizeFloat(stringValue);
     if (value > this.facetMax) {
       value = this.facetMax;
     }
@@ -209,6 +209,17 @@ export default class TermFacet extends Vue {
 
   get separator(): string {
     return this.searchResultOptions?.labels?.priceSeparator ?? ",";
+  }
+
+  get isIntegerRange() {
+    return (
+      Number.isInteger(this.currentMinValue) &&
+      Number.isInteger(this.currentMaxValue)
+    );
+  }
+
+  get interval() {
+    return this.isIntegerRange ? 1 : 0.01;
   }
 
   get sliderInputFormat(): string | undefined {
