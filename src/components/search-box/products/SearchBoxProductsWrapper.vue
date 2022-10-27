@@ -4,6 +4,7 @@
     :panelOptions="panel"
     :labels="labels"
     :inputValue="inputValue"
+    @product-click="$emit('product-click')"
   />
 </template>
 <script lang="ts">

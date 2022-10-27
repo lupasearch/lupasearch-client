@@ -17,6 +17,7 @@
         @fetched="handleItemsFetch"
         @itemSelect="handleItemSelect"
         @go-to-results="handleSearch"
+        @product-click="handleProductClick"
       />
     </div>
   </div>
@@ -345,6 +346,10 @@ export default class SearchBox extends Vue {
   resetValues(): void {
     this.inputValue = "";
     this.suggestedValue = defaultSuggestedValue;
+  }
+
+  handleProductClick() {
+    this.opened = false;
   }
 }
 </script>
