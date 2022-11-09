@@ -28,7 +28,7 @@ export default class SearchResultsEntry extends Vue {
 
   fetch(): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.$refs.searchResults as any)?.handleMounted();
+    (this.$refs.searchResults as any)?.handleUrlChange?.();
   }
 }
 </script>
