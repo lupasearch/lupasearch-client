@@ -162,10 +162,15 @@ export default class SearchResultsProductCard extends Vue {
   }
 
   get id(): string {
-    if (this.options.idKey) {
-      return this.product[this.options.idKey] as string;
-    }
-    return "";
+    return this.options.idKey
+      ? (this.product[this.options.idKey] as string)
+      : "";
+  }
+
+  get title(): string {
+    return this.options.titleKey
+      ? (this.product[this.options.titleKey] as string)
+      : "";
   }
 
   handleClick(): void {
@@ -175,6 +180,10 @@ export default class SearchResultsProductCard extends Vue {
         itemId: this.id,
         searchQuery: this.query,
         type: "itemClick",
+        analytics: {
+          type: "search_product_click",
+          label: this.title || this.id || this.link,
+        },
       },
     });
     this.searchResultOptions.callbacks?.onProductClick?.({
@@ -193,8 +202,8 @@ export default class SearchResultsProductCard extends Vue {
         analytics:
           item.type === "addToCart"
             ? {
-                type: "add_to_cart",
-                label: this.link,
+                type: "search_add_to_cart",
+                label: this.title || this.id || this.link,
               }
             : undefined,
       },

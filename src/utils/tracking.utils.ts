@@ -13,7 +13,7 @@ import { getRandomString } from "./string.utils";
 
 const initAnalyticsTracking = (analyticsOptions?: AnalyticsOptions) => {
   try {
-    if (analyticsOptions?.enabled && analyticsOptions.type === "ua") {
+    if (analyticsOptions?.enabled) {
       window.sessionStorage.setItem(
         TRACKING_ANALYTICS_KEY,
         JSON.stringify(analyticsOptions)
@@ -139,6 +139,7 @@ const trackLupaEvent = (
   data: TrackableEventData = {},
   options?: Options
 ) => {
+  console.log("track lupa event");
   if (!queryKey || !data.type) {
     return;
   }
@@ -172,21 +173,69 @@ const trackAnalyticsEvent = (data: TrackableEventData) => {
     if (!data.analytics || !options.enabled) {
       return;
     }
-    const ga = window.ga;
-    if (!ga) {
-      console.error("Google Analytics object not found");
-      return;
+    switch (options.type) {
+      case "ua":
+        sendUaAnalyticsEvent(data, options);
+        break;
+      case "ga4":
+        sendGa4AnalyticsEvent(data, options);
+        break;
+      case "debug":
+        processDebugEvent(data);
+        break;
+      default:
+        sendUaAnalyticsEvent(data, options);
     }
-    sendGa(
-      "send",
-      "event",
-      options.parentEventName,
-      data.analytics.type,
-      data.analytics.label
-    );
   } catch {
     console.error("Unable to send an event to google analytics");
   }
+};
+
+const sendUaAnalyticsEvent = (
+  data: TrackableEventData,
+  options: AnalyticsOptions
+) => {
+  const ga = window.ga;
+  if (!ga) {
+    console.error("Google Analytics object not found");
+    return;
+  }
+  sendGa(
+    "send",
+    "event",
+    options.parentEventName,
+    data.analytics?.type ?? "",
+    data.analytics?.label ?? ""
+  );
+};
+
+const sendGa4AnalyticsEvent = (
+  data: TrackableEventData,
+  options: AnalyticsOptions
+) => {
+  if (!window || !window.dataLayer) {
+    console.error("dataLayer object not found.");
+    return;
+  }
+  const sendItemTitle = data.searchQuery !== data.analytics?.label;
+  const params = {
+    search_text: data.searchQuery,
+    item_title: sendItemTitle ? data.analytics?.label : undefined,
+  };
+  window.dataLayer.push({
+    event: data.analytics?.type ?? options.parentEventName,
+    ...params,
+  });
+};
+
+const processDebugEvent = (data: TrackableEventData) => {
+  const sendItemTitle = data.searchQuery !== data.analytics?.label;
+  const params = {
+    event: data.analytics?.type,
+    search_text: data.searchQuery,
+    item_title: sendItemTitle ? data.analytics?.label : undefined,
+  };
+  console.debug("Analytics debug event:", params);
 };
 
 export const track = (
@@ -194,7 +243,7 @@ export const track = (
   data: TrackableEventData = {},
   options?: Options
 ): void => {
-  if (!isTrackingEnabled()) {
+  if (!isTrackingEnabled() || !data.searchQuery) {
     return;
   }
   trackLupaEvent(queryKey, data, options);

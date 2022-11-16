@@ -15,6 +15,7 @@ export type SearchResultsProductCardOptions = {
   elements: DocumentElement[];
   queryKey: string;
   idKey?: string;
+  titleKey?: string;
 };
 
 export type SearchResultBadgeOptions = {

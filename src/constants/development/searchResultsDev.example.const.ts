@@ -136,6 +136,7 @@ export const SEARCH_RESULTS_CONFIGURATION = {
     details: "{url}",
   },
   idKey: "id",
+  titleKey: "name",
   elements: [
     {
       type: "image",

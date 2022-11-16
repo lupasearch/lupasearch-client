@@ -177,6 +177,7 @@ const options = {
     details: "/{id}",
   },
   idKey: "id",
+  titleKey: "name",
   elements: [
     {
       type: "image",
@@ -241,6 +242,8 @@ const options = {
 - `isInStock` - a function to determine whether given product is in stock. It receives a full original document from search results. If product is out of stock, it cannot be added to the cart;
 
 - `idKey` - a key that references a unique document identifier. Used in analytics to track document clicks.
+
+- `titleKey` - a key that references a document title (name). Used to report events to your tracker.
 
 Configure product card. Configuration consists of two main sections: `badges` and `card`. Badges are small items, describing the product, placed on the product card.
 

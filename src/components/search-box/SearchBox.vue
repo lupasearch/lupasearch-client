@@ -40,7 +40,7 @@ import {
 import { SearchBoxPanelType } from "@/types/search-box/SearchBoxPanel";
 import { QueryParams } from "@/types/search-results/QueryParams";
 import { pick } from "@/utils/picker.utils";
-import { Document, Suggestion } from "@getlupa/client-sdk/Types";
+import { Document, PublicQuery, Suggestion } from "@getlupa/client-sdk/Types";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
@@ -129,6 +129,14 @@ export default class SearchBox extends Vue {
     data: TrackableEventData;
   }) => void;
 
+  @tracking.Action("trackSearch") trackSearch!: ({
+    queryKey,
+    query,
+  }: {
+    queryKey: string;
+    query: PublicQuery;
+  }) => void;
+
   @params.Action("setSearchResultsLink") setSearchResultsLink!: (
     searchResultsLink: string
   ) => {
@@ -195,6 +203,7 @@ export default class SearchBox extends Vue {
     this.opened = true;
     this.inputValue = value;
     this.suggestedValue = defaultSuggestedValue;
+    this.trackSearchQuery(value);
     if (this.isSearchContainer) {
       this.goToResultsDebounced({
         searchText: this.searchValue,
@@ -315,8 +324,20 @@ export default class SearchBox extends Vue {
         type: "itemClick",
         analytics: {
           type: "autocomplete_product_click",
-          label: (doc.doc.url as string) || (doc.id as string),
+          label: doc.title || (doc.id as string),
         },
+      },
+    });
+  }
+
+  trackSearchQuery(query?: string): void {
+    if (!query) {
+      return;
+    }
+    this.trackSearch({
+      queryKey: this.suggestedValue.queryKey,
+      query: {
+        searchText: query,
       },
     });
   }
@@ -336,7 +357,7 @@ export default class SearchBox extends Vue {
         searchQuery: this.inputValue,
         type: "suggestionClick",
         analytics: {
-          type: "autocomplete_keyword_click",
+          type: "autocomplete_suggestion_click",
           label: suggestion || this.searchValue,
         },
       },

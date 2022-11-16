@@ -146,6 +146,7 @@ export default class SearchResultsProducts extends Vue {
       "labels",
       "queryKey",
       "idKey",
+      "titleKey",
       "routingBehavior",
     ]);
   }

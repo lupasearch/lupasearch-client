@@ -100,6 +100,15 @@ export default class SearchBoxProduct extends Vue {
     return "";
   }
 
+  get title(): string {
+    if (this.panelOptions.titleKey) {
+      this.addHistory({
+        item: (this.item[this.panelOptions.titleKey] as string) || "",
+      });
+    }
+    return "";
+  }
+
   handleClick(event?: Event): void {
     if (this.panelOptions.titleKey) {
       this.addHistory({
@@ -117,7 +126,7 @@ export default class SearchBoxProduct extends Vue {
         type: "itemClick",
         analytics: {
           type: "autocomplete_product_click",
-          label: this.link,
+          label: this.title ?? this.link,
         },
       },
     });

@@ -30,7 +30,7 @@ lupaSearch.tracking({
 
 ## Emit events directly to your Google Analytics
 
-Plugin supports emitting various search-related events directly to your analytics account, if it is available in the front-end, i.e. if `window.ga` function exists.
+Plugin supports emitting various search-related events directly to your analytics account, if it is available in the front-end, i.e. if `window.ga` or `window.dataLayer` function exists.
 
 To setup google analytics, add extra parameters to the tracking object:
 
@@ -45,7 +45,13 @@ lupaSearch.tracking({
 });
 ```
 
-- `analytics.type` - type of external analytics provider. At the moment only `ua` (Universal Analytics) is supported;
+- `analytics.type` - type of external analytics provider. Possible values:
+
+  - `ua` - Google Universal Analytics. Sends events to existing `window.ga` object;
+
+  - `ga4` - Google Analytics 4. Sends events to existing `window.dataLayer` object;
+
+  - `debug` - Perform no action, just log event details to the console using `console.debug`.
 
 - `analytics.enabled` - whether analytics tracking is enabled;
 

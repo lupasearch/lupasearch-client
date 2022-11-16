@@ -52,4 +52,5 @@ export type HighlightedDocInfo = {
   link?: string;
   queryKey?: string;
   id?: unknown;
+  title?: string;
 };
