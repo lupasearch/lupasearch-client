@@ -53,7 +53,7 @@ export const getRelativePath = (link: string): string => {
       : partialUrl;
   } catch {
     // Invalid url, let's return original string
-    return link;
+    return link?.endsWith("/") ? link.slice(0, link.length - 1) : link;
   }
 };
 
