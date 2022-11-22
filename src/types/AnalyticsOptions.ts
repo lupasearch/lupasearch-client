@@ -14,4 +14,5 @@ export type AnalyticsOptions = {
   type: "ua" | "ga4" | "debug";
   enabled: boolean;
   parentEventName: string;
+  ignoreEvents?: AnalyticsEventType[];
 };

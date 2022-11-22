@@ -139,7 +139,6 @@ const trackLupaEvent = (
   data: TrackableEventData = {},
   options?: Options
 ) => {
-  console.log("track lupa event");
   if (!queryKey || !data.type) {
     return;
   }
@@ -170,7 +169,11 @@ const trackAnalyticsEvent = (data: TrackableEventData) => {
     const options: AnalyticsOptions = JSON.parse(
       window.sessionStorage.getItem(TRACKING_ANALYTICS_KEY) ?? "{}"
     );
-    if (!data.analytics || !options.enabled) {
+    if (
+      !data.analytics ||
+      !options.enabled ||
+      options.ignoreEvents?.includes(data.analytics?.type)
+    ) {
       return;
     }
     switch (options.type) {

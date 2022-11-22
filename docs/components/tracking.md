@@ -41,6 +41,7 @@ lupaSearch.tracking({
     type: "ua",
     enabled: true,
     parentEventName: "GetLupa",
+    ignoreEvents: ["search_query"],
   },
 });
 ```
@@ -56,3 +57,5 @@ lupaSearch.tracking({
 - `analytics.enabled` - whether analytics tracking is enabled;
 
 - `analytics.parentEventName` - name of the event category, that will appear in your analytics dashboard.
+
+- `analytics.ignoreEvents` - array of ignored events (that will not be sent to google analytics) by name.

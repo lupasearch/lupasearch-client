@@ -101,12 +101,14 @@ export default class SearchBoxProduct extends Vue {
   }
 
   get title(): string {
-    if (this.panelOptions.titleKey) {
-      this.addHistory({
-        item: (this.item[this.panelOptions.titleKey] as string) || "",
-      });
+    if (!this.panelOptions.titleKey) {
+      return "";
     }
-    return "";
+    const title = (this.item[this.panelOptions.titleKey] as string) || "";
+    this.addHistory({
+      item: title,
+    });
+    return title;
   }
 
   handleClick(event?: Event): void {
