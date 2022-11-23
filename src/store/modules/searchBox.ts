@@ -99,6 +99,7 @@ export default class SearchBoxModule extends VuexModule {
       link: generateLink(panel.links?.details, doc),
       queryKey: panel.queryKey,
       id: panel.idKey ? doc[panel.idKey] : "",
+      title: panel.titleKey ? (doc[panel.titleKey] as string) : "",
     };
   }
 

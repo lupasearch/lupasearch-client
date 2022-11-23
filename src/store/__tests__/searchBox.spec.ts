@@ -152,6 +152,7 @@ describe("historyModule", () => {
         link: "generated-link",
         id: "",
         queryKey: "3",
+        title: "",
       });
     });
 

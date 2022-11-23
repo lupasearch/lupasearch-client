@@ -76,6 +76,7 @@ import SearchResultsToolbar from "./products/SearchResultsToolbar.vue";
 import CategoryTopFilters from "../product-list/CategoryTopFilters.vue";
 import { setDocumentTitle } from "@/utils/document.utils";
 import { QUERY_PARAMS } from "@/constants/queryParams.const";
+import { AnalyticsEventType } from "@/types/AnalyticsOptions";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -146,6 +147,7 @@ export default class SearchResults extends Vue {
   }: {
     queryKey: string;
     query: PublicQuery;
+    type?: AnalyticsEventType;
   }) => void;
 
   @tracking.Action("trackResults") trackResults!: ({
@@ -255,7 +257,11 @@ export default class SearchResults extends Vue {
   }
 
   query(publicQuery: PublicQuery): void {
-    this.trackSearch({ queryKey: this.options.queryKey, query: publicQuery });
+    this.trackSearch({
+      queryKey: this.options.queryKey,
+      query: publicQuery,
+      type: "search_form_submit",
+    });
     const context = getLupaTrackingContext();
     const limit = publicQuery.limit || this.defaultSearchResultPageSize;
     const query = { ...publicQuery, ...context, limit };

@@ -30,18 +30,21 @@ export default class TrackingModule extends VuexModule {
   trackSearch({
     queryKey,
     query,
+    type = "search_query",
   }: {
     queryKey: string;
     query: PublicQuery;
+    type?: AnalyticsEventType;
   }): void {
     const options: Options =
       this.context.rootGetters["options/envOptions"] ?? {};
     const hasFilters = Object.keys(query.filters ?? {}).length > 0;
     if (hasFilters) {
-      const data = getSearchTrackingData(query.searchText, "filters");
+      const data = getSearchTrackingData(query.searchText, "search_filters");
       track(queryKey, data, options);
+      return;
     }
-    const data = getSearchTrackingData(query.searchText, "search");
+    const data = getSearchTrackingData(query.searchText, type);
     track(queryKey, data, options);
   }
 
@@ -56,7 +59,10 @@ export default class TrackingModule extends VuexModule {
     const options: Options =
       this.context.rootGetters["options/envOptions"] ?? {};
     if (results.total < 1) {
-      const data = getSearchTrackingData(results.searchText, "zero_results");
+      const data = getSearchTrackingData(
+        results.searchText,
+        "search_zero_results"
+      );
       track(queryKey, data, options);
     }
   }

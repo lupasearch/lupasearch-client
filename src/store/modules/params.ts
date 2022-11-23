@@ -176,15 +176,6 @@ export default class ParamsModule extends VuexModule {
         this.context.rootGetters["options/boxRoutingBehavior"] ?? "direct-link";
       redirectToResultsPage(this.searchResultsLink, searchText, facet, routing);
     }
-    this.context.dispatch(
-      "tracking/track",
-      {
-        data: {
-          analytics: { type: "search_form_submit", label: searchText },
-        },
-      },
-      { root: true }
-    );
   }
 
   @Action({ commit: "save" })
