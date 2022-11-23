@@ -81,7 +81,10 @@ export default class SearchBoxMainPanel extends Vue {
   sdkOptions: SdkOptions = this.options.options as SdkOptions;
 
   get displayResults(): boolean {
-    return this.inputValue?.length >= this.options.minInputLength;
+    return (
+      this.inputValue?.length > 0 &&
+      this.inputValue?.length >= this.options.minInputLength
+    );
   }
 
   get displayHistory(): boolean {
