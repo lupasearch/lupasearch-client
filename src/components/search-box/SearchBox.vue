@@ -159,7 +159,7 @@ export default class SearchBox extends Vue {
     this.setSearchBoxOptions({ options: this.options });
     bindSearchTriggers(this.searchTriggers, this.handleCurrentValueSearch);
     if (this.isSearchContainer) {
-      (this.$refs?.searchBoxInput as SearchBoxInput)?.focus();
+      (this.$refs?.searchBoxInput as any)?.focus();
     }
   }
 
