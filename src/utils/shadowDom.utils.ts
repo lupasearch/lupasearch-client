@@ -1,3 +1,18 @@
+export const createShadowDom = (shadowId: string, managerId: string) => {
+  let host = document.getElementById(shadowId);
+  let manager = document.getElementById(managerId);
+  if (!host) {
+    host = document.createElement("div");
+    manager = document.createElement("div");
+  }
+  if (!manager) {
+    manager = document.createElement("div");
+  }
+  host.setAttribute("id", shadowId);
+  manager?.setAttribute("id", managerId);
+  return { host, manager };
+};
+
 export const attatchShadowDom = ({
   host,
   manager,

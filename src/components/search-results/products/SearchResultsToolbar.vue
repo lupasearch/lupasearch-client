@@ -110,7 +110,7 @@ export default class SearchResultsToolbar extends Vue {
   }
 
   get sortOptions(): SortOptions | undefined {
-    if (this.isBottomLocation) {
+    if (this.isBottomLocation || !this.options.sort?.length) {
       return undefined;
     }
     return {

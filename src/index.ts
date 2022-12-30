@@ -57,7 +57,7 @@ import {
 } from "./types/search-results/SearchResultsSort";
 import { CombinedVueInstance } from "vue/types/vue";
 import { SearchContainerOptions } from "./types/search-container/SearchContainerOptions";
-import { attatchShadowDom } from "./utils/shadowDom.utils";
+import { attatchShadowDom, createShadowDom } from "./utils/shadowDom.utils";
 import { DEFAULT_CONTAINER_STYLE } from "./constants/global.const";
 
 type AppInstance = Record<
@@ -198,10 +198,7 @@ const searchContainer = (
   Vue.use(Vuex);
   const id = "lupa-search-container-manager";
   const shadowId = "lupa-shadow-id";
-  const host = document.createElement("div");
-  const manager = document.createElement("div");
-  host.setAttribute("id", shadowId);
-  manager.setAttribute("id", id);
+  const { host, manager } = createShadowDom(shadowId, id);
   attatchShadowDom({
     host,
     manager,
