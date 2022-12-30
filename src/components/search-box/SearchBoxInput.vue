@@ -1,5 +1,12 @@
 <template>
   <div id="lupa-search-box-input-container">
+    <div class="lupa-input-clear">
+      <div
+        class="lupa-input-clear-content"
+        :class="{ 'lupa-input-clear-filled': inputValue }"
+        @click="clear"
+      ></div>
+    </div>
     <div id="lupa-search-box-input">
       <input
         class="lupa-hint"
@@ -9,6 +16,7 @@
       <input
         v-model="inputValue"
         v-bind="inputAttributes"
+        ref="mainInput"
         autocomplete="off"
         class="lupa-search-box-input-field"
         data-cy="lupa-search-box-input-field"
@@ -23,7 +31,9 @@
       class="lupa-close-search-container"
       @click="$emit('close')"
     >
-      <span class="lupa-close-action">×</span>
+      <span v-if="labels.close" class="lupa-close-label">{{
+        labels.close
+      }}</span>
     </div>
   </div>
 </template>
@@ -100,7 +110,7 @@ export default class SearchBoxInput extends Vue {
     if (target) {
       this.inputValue = target.value;
     }
-    this.$emit("input", this.inputValue.replace(/\s+$/, ""));
+    this.$emit("input", this.inputValue);
   }
 
   handleFocus(): void {
@@ -108,6 +118,14 @@ export default class SearchBoxInput extends Vue {
     if (this.emitInputOnFocus) {
       this.handleInput();
     }
+  }
+
+  clear(): void {
+    this.$emit("input", "");
+  }
+
+  focus() {
+    (this.$refs?.mainInput as HTMLInputElement)?.focus();
   }
 }
 </script>
@@ -125,5 +143,8 @@ export default class SearchBoxInput extends Vue {
   opacity: 0.5;
   position: absolute !important;
   pointer-events: none;
+}
+.lupa-input-clear {
+  display: none;
 }
 </style>

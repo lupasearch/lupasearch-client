@@ -16,6 +16,7 @@ export type SearchBoxOptionLabels = {
   currency: string;
   priceSeparator?: string;
   defaultFacetLabel?: string;
+  close?: string;
 };
 
 export type SearchBoxOptionLinks = {

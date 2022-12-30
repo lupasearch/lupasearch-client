@@ -2,4 +2,8 @@
 @use "./searchBox";
 @use "./searchBoxItem";
 @use "./containerResults";
+@use "./containerFilters";
+@use "./scrollbar";
+@use "./containerResultToolbar";
+@use "./containerResultCard";
 @use "./searchContainerResponsive";

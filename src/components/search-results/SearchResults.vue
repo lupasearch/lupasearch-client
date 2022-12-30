@@ -1,5 +1,15 @@
 <template>
   <div class="lupa-search-result-wrapper">
+    <template v-if="isContainer">
+      <div class="lupa-container-title-summary-mobile">
+        <SearchResultsDidYouMean :labels="didYouMeanLabels" />
+        <SearchResultsTitle
+          :show-summary="true"
+          :options="options"
+          :is-product-list="isProductList"
+        />
+      </div>
+    </template>
     <CategoryTopFilters v-if="isTitleResultTopPosition" :options="options" />
     <MobileFilterSidebar v-if="options.filters" :options="options.filters" />
     <SearchResultsBreadcrumbs
@@ -18,6 +28,7 @@
             :options="options"
             :is-product-list="isProductList"
           />
+
           <SearchResultsProducts :options="options">
             <template #append>
               <slot />
@@ -29,6 +40,7 @@
     <template v-else>
       <SearchResultsDidYouMean :labels="didYouMeanLabels" />
       <SearchResultsTitle :options="options" :is-product-list="isProductList" />
+
       <div id="lupa-search-results">
         <SearchResultsFilters
           v-if="showFilterSidebar"
@@ -100,6 +112,7 @@ export default class SearchResults extends Vue {
   @Prop() options!: SearchResultsOptions;
   @Prop({ default: () => ({}) }) initialFilters!: FilterGroup;
   @Prop({ default: false }) isProductList!: boolean;
+  @Prop({ default: false }) isContainer!: boolean;
 
   get productsOptions(): SearchResultsProductOptions {
     return pick(this.options, [

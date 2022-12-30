@@ -57,6 +57,8 @@ import {
 } from "./types/search-results/SearchResultsSort";
 import { CombinedVueInstance } from "vue/types/vue";
 import { SearchContainerOptions } from "./types/search-container/SearchContainerOptions";
+import { attatchShadowDom } from "./utils/shadowDom.utils";
+import { DEFAULT_CONTAINER_STYLE } from "./constants/global.const";
 
 type AppInstance = Record<
   string,
@@ -194,16 +196,24 @@ const searchContainer = (
     return;
   }
   Vue.use(Vuex);
-  const id = `lupa-search-container-manager`;
-  const managerElement = document.createElement("div");
-  managerElement.setAttribute("id", id);
-  document.body.appendChild(managerElement);
+  const id = "lupa-search-container-manager";
+  const shadowId = "lupa-shadow-id";
+  const host = document.createElement("div");
+  const manager = document.createElement("div");
+  host.setAttribute("id", shadowId);
+  manager.setAttribute("id", id);
+  attatchShadowDom({
+    host,
+    manager,
+    styleUrl: options.styleLink ?? DEFAULT_CONTAINER_STYLE,
+  });
+  document.body.appendChild(host);
   const SearchContainerEntryComponent = Vue.component(
     "SearchContainerEntry",
     SearchContainerEntry
   );
   const instance = new SearchContainerEntryComponent({
-    el: `#${id}`,
+    el: manager,
     propsData: { searchContainerOptions: options },
     store,
   });

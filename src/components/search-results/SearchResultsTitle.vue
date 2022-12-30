@@ -11,6 +11,7 @@
         >({{ totalItems }})</span
       >
     </h1>
+    <SearchResultsSummary v-if="showSummary" :label="summaryLabel" />
     <div
       class="lupa-result-page-description-top"
       v-if="descriptionTop"
@@ -25,15 +26,20 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import { namespace } from "vuex-class";
+import SearchResultsSummary from "./products/SearchResultsSummary.vue";
 
 const searchResult = namespace("searchResult");
 
 @Component({
   name: "SearchResultsTitle",
+  components: {
+    SearchResultsSummary,
+  },
 })
 export default class SearchResultsTitle extends Vue {
   @Prop() options!: SearchResultsOptions;
   @Prop({ default: false }) isProductList!: boolean;
+  @Prop({ default: false }) showSummary!: boolean;
 
   @searchResult.Getter("currentQueryText") currentQueryText!: string;
   @searchResult.Getter("totalItems") totalItems!: number;
@@ -58,6 +64,10 @@ export default class SearchResultsTitle extends Vue {
 
   get descriptionTop(): string | undefined {
     return this.options.categories?.current?.descriptionTop;
+  }
+
+  get summaryLabel() {
+    return this.options.labels?.itemCount ?? "";
   }
 
   getLabel(label: string): string {

@@ -1,20 +1,8 @@
 <template>
   <div id="app" class="wrapper">
-    <!-- Following icon fonts are available during the plugin development only -->
-    <!-- Include your own fonts and icons with your custom theme when deploying your plugin -->
-    <link
-      href="//db.onlinewebfonts.com/c/68590d1f06ad625cb73b5c34f85b4a1b?family=Luma-Icons"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
-      rel="stylesheet"
-    />
     <div>
       <input type="text" class="trigger" placeholder="Click me to search!" />
     </div>
-    <SearchContainerEntry :search-container-options="containerOptions" />
   </div>
 </template>
 
@@ -27,13 +15,13 @@ import { DEFAULT_OPTIONS_RESULTS } from "./constants/searchResults.const";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import { SearchResultsOptions } from "./types/search-results/SearchResultsOptions";
 import { merge } from "./utils/merger.utils";
-import "../styles/clients/lupa/lupa";
 import { SEARCH_BOX_CONFIGURATION } from "./constants/development/searchBoxDev.const";
 import { SEARCH_RESULTS_CONFIGURATION } from "./constants/development/searchResultsDev.const";
 import ProductList from "./components/product-list/ProductList.vue";
 import SearchContainer from "./components/search-container/SearchContainer.vue";
 import { SearchContainerOptions } from "./types/search-container/SearchContainerOptions";
 import SearchContainerEntry from "./SearchContainerEntry.vue";
+import lupaSearch from ".";
 
 @Component({
   name: "getLupa",
@@ -67,6 +55,10 @@ export default class App extends Vue {
       searchResults: this.fullSearchResultsOptions,
     };
   }
+
+  mounted() {
+    lupaSearch.searchContainer(this.containerOptions);
+  }
 }
 </script>
 
@@ -75,6 +67,10 @@ export default class App extends Vue {
   height: auto;
   display: flex;
   flex-direction: column;
+}
+
+* {
+  color: red !important;
 }
 
 .wrapper {

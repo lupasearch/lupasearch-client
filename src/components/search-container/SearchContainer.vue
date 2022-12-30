@@ -17,7 +17,11 @@
         />
       </div>
 
-      <SearchResults :options="fullSearchResultsOptions" ref="searchResults" />
+      <SearchResults
+        :options="fullSearchResultsOptions"
+        :is-container="true"
+        ref="searchResults"
+      />
     </div>
   </div>
 </template>

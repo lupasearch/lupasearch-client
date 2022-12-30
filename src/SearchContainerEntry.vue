@@ -1,11 +1,13 @@
 <template>
-  <SearchContainer
-    v-if="isOpen"
-    :options="containerOptions"
-    ref="productList"
-    @hook:mounted="focus"
-    @close="close"
-  />
+  <div>
+    <SearchContainer
+      v-if="isOpen"
+      :options="containerOptions"
+      ref="productList"
+      @hook:mounted="focus"
+      @close="close"
+    />
+  </div>
 </template>
 
 <script lang="ts">

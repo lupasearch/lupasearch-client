@@ -1,5 +1,8 @@
 <template>
-  <div id="lupa-search-results-toolbar">
+  <div
+    id="lupa-search-results-toolbar"
+    :class="{ 'lupa-filter-no-results': !hasResults }"
+  >
     <div class="lupa-toolbar-left">
       <SearchResultsLayoutSelection v-if="showLayoutSelection" />
       <div v-else></div>
@@ -165,6 +168,10 @@ export default class SearchResultsToolbar extends Vue {
     return Boolean(
       this.options.filters?.currentFilters?.mobileSidebar?.showFilterCount
     );
+  }
+
+  get hasResults(): boolean {
+    return this.searchResult.total > 0;
   }
 
   @options.Getter("currentResolutionPageSizes")
