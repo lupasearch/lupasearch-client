@@ -22,6 +22,10 @@ export const attatchShadowDom = ({
   manager: HTMLElement;
   styleUrl: string;
 }) => {
+  if (host.shadowRoot) {
+    return;
+  }
+
   const link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
@@ -29,21 +33,21 @@ export const attatchShadowDom = ({
 
   // Fonts only work when added in host document head
 
-  const linkNode = document.createElement("link");
-  linkNode.type = "text/css";
-  linkNode.rel = "stylesheet";
-  linkNode.href =
+  const fontLink = document.createElement("link");
+  fontLink.type = "text/css";
+  fontLink.rel = "stylesheet";
+  fontLink.href =
     "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap";
-  document.head.appendChild(linkNode);
+  document.head.appendChild(fontLink);
 
   // Add font for material icons
 
-  const linkNode2 = document.createElement("link");
-  linkNode2.type = "text/css";
-  linkNode2.rel = "stylesheet";
-  linkNode2.href =
+  const materialIconLink = document.createElement("link");
+  materialIconLink.type = "text/css";
+  materialIconLink.rel = "stylesheet";
+  materialIconLink.href =
     "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,1,-50..200";
-  document.head.appendChild(linkNode2);
+  document.head.appendChild(materialIconLink);
 
   const shadow = host.attachShadow({ mode: "open" });
   shadow.appendChild(manager);
