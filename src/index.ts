@@ -275,7 +275,7 @@ const clearSearchContainer = (selector?: string): void => {
       instance?.$destroy();
       return;
     }
-    for (const key in app.productList) {
+    for (const key in app.searchContainer) {
       const instance = app.searchContainer[key];
       instance?.$destroy();
     }
