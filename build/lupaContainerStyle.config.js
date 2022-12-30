@@ -8,7 +8,7 @@ export default {
   },
   plugins: [
     scss({
-      output: `public/containerStyle.css`,
+      output: `dist/lupaContainerStyle.css`,
       outputStyle: "compressed",
     }),
   ],
