@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { InputSuggestionFacet } from "@/types/search-box/Common";
 import { generateLink, generateResultLink, linksMatch } from "../link.utils";
 
 describe("generateLink", () => {
@@ -66,6 +67,26 @@ describe("generateResultLink", () => {
   it("should encode search parameter", () => {
     expect(generateResultLink("/search", "bo?o&ks")).toBe(
       "/search?q=bo%3Fo%26ks"
+    );
+  });
+
+  it("should include facet in link", () => {
+    const facet: InputSuggestionFacet = {
+      key: "category",
+      title: "Shoes",
+    };
+    expect(generateResultLink("/search", "boots", facet)).toBe(
+      "/search?q=boots&f.category=Shoes"
+    );
+  });
+
+  it("should include encoded facet in link", () => {
+    const facet: InputSuggestionFacet = {
+      key: "cate_gory",
+      title: "Shoe?s",
+    };
+    expect(generateResultLink("/search", "boots", facet)).toBe(
+      "/search?q=boots&f.cate_gory=Shoe%3Fs"
     );
   });
 });

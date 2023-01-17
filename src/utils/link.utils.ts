@@ -29,7 +29,11 @@ export const generateResultLink = (
   if (!searchText) {
     return link;
   }
-  const facetParam = facet ? `&${FACET_PARAMS_TYPE.TERMS}=${facet.title}` : "";
+  const facetParam = facet
+    ? `&${FACET_PARAMS_TYPE.TERMS}${encodeParam(facet.key)}=${encodeParam(
+        facet.title
+      )}`
+    : "";
   const queryParam = `?${QUERY_PARAMS.QUERY}=${encodeParam(searchText)}`;
   return `${link}${queryParam}${facetParam}`;
 };
