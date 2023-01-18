@@ -2,8 +2,8 @@
   <ProductImage
     :item="item"
     :options="options"
-    wrapperClass="lupa-search-box-image-wrapper"
-    imageClass="lupa-search-box-image"
+    wrapper-class="lupa-search-box-image-wrapper"
+    image-class="lupa-search-box-image"
   />
 </template>
 <script lang="ts">
@@ -11,7 +11,7 @@ import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import { Document } from "@getlupa/client-sdk/Types";
 import { ImageDocumentElement } from "@/types/DocumentElement";
-import ProductImage from "@/components/common/ProductImage.vue";
+import ProductImage from "../../../common/ProductImage.vue";
 
 @Component({
   components: {

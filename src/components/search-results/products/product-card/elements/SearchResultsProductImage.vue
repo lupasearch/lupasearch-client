@@ -11,7 +11,7 @@ import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import { Document } from "@getlupa/client-sdk/Types";
 import { ImageDocumentElement } from "@/types/DocumentElement";
-import ProductImage from "@/components/common/ProductImage.vue";
+import ProductImage from "../../../../common/ProductImage.vue";
 
 @Component({
   name: "searchResultsProductImage",
