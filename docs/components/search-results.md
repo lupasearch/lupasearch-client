@@ -184,7 +184,7 @@ const options = {
       key: "image",
       placeholder: "placeholder.png",
       customUrl: (document) => {
-        return `${baseUrl}/${document.image}&quality=150`;
+        return `${baseUrl}/${document.image}?quality=150`;
       },
     },
     {

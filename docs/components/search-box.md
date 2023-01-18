@@ -122,7 +122,7 @@ const options = {
           placeholder: "placeholder.png",
           baseUrl: "https://lupasearch.com/images/",
           customUrl: (document) => {
-            return `${baseUrl}/${document.image}&quality=150`;
+            return `${baseUrl}/${document.image}?quality=150`;
           },
         },
         {

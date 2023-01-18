@@ -1,9 +1,9 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import SearchResultsProductImage from "../SearchResultsProductImage.vue";
 
 describe("SearchResultsProductImage.vue", () => {
   it("should render placeholder if product has no image", () => {
-    const wrapper = shallowMount(SearchResultsProductImage, {
+    const wrapper = mount(SearchResultsProductImage, {
       propsData: {
         options: { key: "image", placeholder: "placeholder.jpg" },
         item: { image: "" },
@@ -14,7 +14,7 @@ describe("SearchResultsProductImage.vue", () => {
   });
 
   it("should render image if it is defined", () => {
-    const wrapper = shallowMount(SearchResultsProductImage, {
+    const wrapper = mount(SearchResultsProductImage, {
       propsData: {
         options: { key: "imageUrl", placeholder: "placeholder.jpg" },
         item: { imageUrl: "https://google.com/image/123" },
@@ -25,7 +25,7 @@ describe("SearchResultsProductImage.vue", () => {
   });
 
   it("should render image with base url", () => {
-    const wrapper = shallowMount(SearchResultsProductImage, {
+    const wrapper = mount(SearchResultsProductImage, {
       propsData: {
         options: {
           key: "imageUrl",
@@ -42,7 +42,7 @@ describe("SearchResultsProductImage.vue", () => {
   });
 
   it("should render image if it has no base url", () => {
-    const wrapper = shallowMount(SearchResultsProductImage, {
+    const wrapper = mount(SearchResultsProductImage, {
       propsData: {
         options: {
           key: "imageUrl",
@@ -53,5 +53,21 @@ describe("SearchResultsProductImage.vue", () => {
     });
     const element = wrapper.find(".lupa-search-results-image");
     expect(element.attributes().src).toEqual("/123.png");
+  });
+
+  it("should render image with custom url", () => {
+    const wrapper = mount(SearchResultsProductImage, {
+      propsData: {
+        options: {
+          key: "imageUrl",
+          placeholder: "placeholder.jpg",
+          customUrl: (doc: { imageUrl: string }) =>
+            `google.com/${doc.imageUrl}?quality=15`,
+        },
+        item: { imageUrl: "124.png" },
+      },
+    });
+    const element = wrapper.find(".lupa-search-results-image");
+    expect(element.attributes().src).toEqual("google.com/124.png?quality=15");
   });
 });
