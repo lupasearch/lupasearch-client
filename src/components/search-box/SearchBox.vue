@@ -159,7 +159,7 @@ export default class SearchBox extends Vue {
     this.setSearchBoxOptions({ options: this.options });
     bindSearchTriggers(this.searchTriggers, this.handleCurrentValueSearch);
     if (this.isSearchContainer) {
-      (this.$refs?.searchBoxInput as any)?.focus();
+      (this.$refs?.searchBoxInput as HTMLInputElement)?.focus();
     }
   }
 
@@ -373,7 +373,7 @@ export default class SearchBox extends Vue {
     this.suggestedValue = defaultSuggestedValue;
   }
 
-  handleProductClick() {
+  handleProductClick(): void {
     this.opened = false;
   }
 }

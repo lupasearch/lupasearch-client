@@ -1,4 +1,7 @@
-export const createShadowDom = (shadowId: string, managerId: string) => {
+export const createShadowDom = (
+  shadowId: string,
+  managerId: string
+): { host: HTMLElement; manager: HTMLElement } => {
   let host = document.getElementById(shadowId);
   if (host) {
     host.remove();
@@ -18,7 +21,7 @@ export const attatchShadowDom = ({
   host: HTMLElement;
   manager: HTMLElement;
   styleUrl: string;
-}) => {
+}): void => {
   if (host.shadowRoot) {
     return;
   }

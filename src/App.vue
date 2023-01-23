@@ -56,7 +56,7 @@ export default class App extends Vue {
     };
   }
 
-  mounted() {
+  mounted(): void {
     lupaSearch.searchContainer(this.containerOptions);
   }
 }

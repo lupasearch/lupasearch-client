@@ -66,7 +66,7 @@ export default class SearchResultsTitle extends Vue {
     return this.options.categories?.current?.descriptionTop;
   }
 
-  get summaryLabel() {
+  get summaryLabel(): string {
     return this.options.labels?.itemCount ?? "";
   }
 

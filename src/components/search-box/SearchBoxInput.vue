@@ -124,7 +124,7 @@ export default class SearchBoxInput extends Vue {
     this.$emit("input", "");
   }
 
-  focus() {
+  focus(): void {
     (this.$refs?.mainInput as HTMLInputElement)?.focus();
   }
 }
