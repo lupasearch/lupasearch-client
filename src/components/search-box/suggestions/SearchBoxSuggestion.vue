@@ -1,7 +1,5 @@
 <template>
-  <div
-    @click="handleSelect({ suggestion: suggestion.suggestion, override: true })"
-  >
+  <div @click="handleSelect()">
     <div
       class="lupa-suggestion-value"
       data-cy="lupa-suggestion-value"
@@ -19,7 +17,7 @@
       <span
         class="lupa-suggestion-facet-label"
         data-cy="lupa-suggestion-facet-label"
-        >{{ labels.defaultFacetLabel || suggestion.facet.key }}</span
+        >{{ facetLabel }}</span
       >
       <span
         class="lupa-suggestion-facet-value"
@@ -47,6 +45,18 @@ export default class SearchBoxSuggestion extends Vue {
     return this.highlight
       ? this.suggestion.displayHighlight
       : this.suggestion.display;
+  }
+
+  get facetKey(): string {
+    return this.suggestion.facet?.key || "";
+  }
+
+  get facetLabel(): string {
+    return (
+      this.suggestion.suggestion?.facetLabels?.[this.facetKey] ||
+      this.labels.defaultFacetLabel ||
+      this.facetKey
+    );
   }
 
   handleSelect(): void {

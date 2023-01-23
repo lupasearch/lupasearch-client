@@ -18,7 +18,7 @@
     "validate:es5": "npx es5-validator dist/iife/*.min.js"
   },
   "dependencies": {
-    "@getlupa/client-sdk": "^1.2.2",
+    "@getlupa/client-sdk": "^1.2.5",
     "lodash.clonedeep": "^4.5.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
