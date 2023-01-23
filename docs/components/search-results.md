@@ -183,6 +183,9 @@ const options = {
       type: "image",
       key: "image",
       placeholder: "placeholder.png",
+      customUrl: (document) => {
+        return `${baseUrl}/${document.image}?quality=150`;
+      },
     },
     {
       type: "title",
@@ -296,6 +299,8 @@ Available card element types:
   - `key` - a key of field in a document;
 
   - `placeholder` - placeholder image to show if item does not have an image;
+
+  - `customUrl` - Provide a function that returns image url from document. Overrides all other image options.
 
 - `title` - title of the product.
 

@@ -1,9 +1,9 @@
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import SearchBoxProductImage from "../SearchBoxProductImage.vue";
 
 describe("SearchBoxProductImage.vue", () => {
   it("should render placeholder if product has no image", () => {
-    const wrapper = shallowMount(SearchBoxProductImage, {
+    const wrapper = mount(SearchBoxProductImage, {
       propsData: {
         options: { key: "image", placeholder: "placeholder.jpg" },
         item: { image: "" },
@@ -14,7 +14,7 @@ describe("SearchBoxProductImage.vue", () => {
   });
 
   it("should render image if it is defined", () => {
-    const wrapper = shallowMount(SearchBoxProductImage, {
+    const wrapper = mount(SearchBoxProductImage, {
       propsData: {
         options: { key: "imageUrl", placeholder: "placeholder.jpg" },
         item: { imageUrl: "https://google.com/image/123" },
@@ -25,7 +25,7 @@ describe("SearchBoxProductImage.vue", () => {
   });
 
   it("should render image with base url", () => {
-    const wrapper = shallowMount(SearchBoxProductImage, {
+    const wrapper = mount(SearchBoxProductImage, {
       propsData: {
         options: {
           key: "imageUrl",
@@ -42,7 +42,7 @@ describe("SearchBoxProductImage.vue", () => {
   });
 
   it("should render image if it has no base url", () => {
-    const wrapper = shallowMount(SearchBoxProductImage, {
+    const wrapper = mount(SearchBoxProductImage, {
       propsData: {
         options: {
           key: "imageUrl",

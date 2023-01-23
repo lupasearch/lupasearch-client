@@ -121,6 +121,9 @@ const options = {
           key: "image",
           placeholder: "placeholder.png",
           baseUrl: "https://lupasearch.com/images/",
+          customUrl: (document) => {
+            return `${baseUrl}/${document.image}?quality=150`;
+          },
         },
         {
           type: "title",
@@ -187,6 +190,8 @@ This is the list of available search box document fields. By convention, image e
   - `placeholder` - placeholder image to show if item does not have an image;
 
   - `baseUrl` - if defined, it will be prepended to image path for each each product.
+
+  - `customUrl` - Provide a function that returns image url from document. Overrides all other image options.
 
 - `title` - title of the product.
 

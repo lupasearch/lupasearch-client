@@ -23,6 +23,7 @@ export type ImageDocumentElement<T = any> = DocumentElementBase<T> & {
   placeholder: string;
   baseUrl?: string;
   key: string;
+  customUrl?: (document: T) => string;
 };
 
 export type TitleDocumentElement<T = any> = DocumentElementBase<T> & {
