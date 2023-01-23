@@ -1,3 +1,10 @@
+@use "../_spinner.scss";
+
+.lupa-spinner-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
 .lupa-search-container {
   .lupa-search-result-wrapper {
     padding: 0 20px;
@@ -10,12 +17,11 @@
     display: none;
   }
 
-  #lupa-search-results-did-you-mean,
-  .lupa-result-page-title {
-    margin-bottom: 0;
-  }
-
   .lupa-mobile-filter-sidebar {
     z-index: 10000;
+  }
+
+  .lupa-container-title-summary-mobile {
+    display: none;
   }
 }

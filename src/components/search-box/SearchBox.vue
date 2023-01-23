@@ -6,6 +6,7 @@
         :suggestedValue="suggestedValue"
         :can-close="isSearchContainer"
         :emit-input-on-focus="!isSearchContainer"
+        ref="searchBoxInput"
         @input="handleInput"
         @focus="opened = true"
         @close="$emit('close')"
@@ -157,6 +158,9 @@ export default class SearchBox extends Vue {
     this.saveOptions({ options: this.options });
     this.setSearchBoxOptions({ options: this.options });
     bindSearchTriggers(this.searchTriggers, this.handleCurrentValueSearch);
+    if (this.isSearchContainer) {
+      (this.$refs?.searchBoxInput as HTMLInputElement)?.focus();
+    }
   }
 
   beforeDestroy(): void {
@@ -201,12 +205,12 @@ export default class SearchBox extends Vue {
 
   handleInput(value: string): void {
     this.opened = true;
-    this.inputValue = value;
+    this.inputValue = value.replace(/\s+$/, "");
     this.suggestedValue = defaultSuggestedValue;
     this.trackSearchQuery(value);
     if (this.isSearchContainer) {
       this.goToResultsDebounced({
-        searchText: this.searchValue,
+        searchText: value,
       });
     }
   }
@@ -369,7 +373,7 @@ export default class SearchBox extends Vue {
     this.suggestedValue = defaultSuggestedValue;
   }
 
-  handleProductClick() {
+  handleProductClick(): void {
     this.opened = false;
   }
 }

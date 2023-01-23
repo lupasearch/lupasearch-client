@@ -1,4 +1,6 @@
 const RESULT_ROOT_ID = "lupa-search-results";
+const SHADOW_ROOT_ID = "lupa-shadow-id";
+
 const CONTAINER_ROOT_ID = "lupa-search-container";
 
 export const scrollToSearchResults = (timeout = 500): void => {
@@ -10,12 +12,18 @@ export const scrollToSearchResults = (timeout = 500): void => {
 };
 
 export const scrollTo = (elementId: string): void => {
-  const el = document.getElementById(elementId);
+  let el = document.getElementById(elementId);
+  const shadowRoot = document.getElementById(SHADOW_ROOT_ID)?.shadowRoot;
+  if (!el) {
+    el = shadowRoot?.getElementById(elementId) ?? null;
+  }
   if (!el) {
     return;
   }
-  const serchContainer = document.getElementById(CONTAINER_ROOT_ID);
-  const container = serchContainer ?? window;
+  const searchContainer = shadowRoot
+    ? shadowRoot.getElementById(CONTAINER_ROOT_ID)
+    : undefined;
+  const container = searchContainer ?? window;
   container.scrollTo({
     top: el.offsetTop,
     behavior: "smooth",

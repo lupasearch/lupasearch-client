@@ -21,3 +21,5 @@ export const DEFAULT_PAGE_SIZE = 12;
 export const DEFAULT_PAGE_SIZE_SELECTION = [12, 24, 36, 60];
 
 export const LUPA_ROUTING_EVENT = "lupaRedirect";
+
+export const DEFAULT_CONTAINER_STYLE = "containerStyle.css";

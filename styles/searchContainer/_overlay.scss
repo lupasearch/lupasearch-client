@@ -1,6 +1,7 @@
 @use "../base/general";
 
 .lupa-search-container-overlay {
+  all: initial;
   height: var(--lupa-full-height);
   width: 100%;
   position: fixed;

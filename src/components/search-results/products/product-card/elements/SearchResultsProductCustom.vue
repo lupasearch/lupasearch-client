@@ -23,8 +23,18 @@ export default class SearchResultsProductCustom extends Vue {
   @Prop() item!: Document;
   @Prop() options!: CustomDocumentElement;
 
+  get value(): unknown {
+    return this.item[this.options.key];
+  }
+
   get text(): string {
-    return this.item[this.options.key] as string;
+    return this.isArray
+      ? (this.item[this.options.key] as string[]).join(", ")
+      : (this.item[this.options.key] as string);
+  }
+
+  get isArray(): boolean {
+    return Array.isArray(this.value);
   }
 
   get className(): string {

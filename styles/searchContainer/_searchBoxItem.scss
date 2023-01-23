@@ -3,17 +3,17 @@
 .lupa-search-container {
   .lupa-suggestion,
   .lupa-search-box-history-item-content {
-    align-self: stretch;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     flex-shrink: 0;
-    padding: 5px 15px;
-    margin: 0 10px;
+    margin: 0 8px;
+    padding: 6px 12px;
     background-color: general.$background;
     border-radius: 24px;
     margin-bottom: 8px;
-    min-height: 48px;
+    font-size: 13px;
+    height: 30px;
     &:hover {
       text-decoration: none;
     }
@@ -45,11 +45,43 @@
     }
   }
 
+  .lupa-search-box-history-item-text {
+    font-size: 13px;
+  }
+
   .lupa-suggestion-value {
     margin-right: 0;
+    line-height: 1;
+    strong {
+      font-weight: 400;
+    }
   }
 
   .lupa-suggestion-facet {
     font-size: 10px;
+    line-height: 1;
+    margin-top: 4px;
+  }
+
+  .lupa-suggestion {
+    &:hover {
+      color: general.$primary;
+      .lupa-suggestion-facet-label,
+      .lupa-suggestion-facet-value {
+        color: general.$primary;
+      }
+    }
+  }
+
+  .lupa-suggestion-facet-label {
+    line-height: 1;
+    color: #7d7d7d;
+    font-weight: 400;
+    margin-right: 4px;
+  }
+
+  .lupa-suggestion-facet-value {
+    color: #464646;
+    font-weight: 600;
   }
 }

@@ -19,6 +19,7 @@ export const SEARCH_BOX_CONFIGURATION = {
     currency: "€",
     priceSeparator: ",",
     defaultFacetLabel: "Brand:",
+    close: "Close",
   },
   links: {
     searchResults: "",

@@ -211,14 +211,14 @@ export default class TermFacet extends Vue {
     return this.searchResultOptions?.labels?.priceSeparator ?? ",";
   }
 
-  get isIntegerRange() {
+  get isIntegerRange(): boolean {
     return (
       Number.isInteger(this.currentMinValue) &&
       Number.isInteger(this.currentMaxValue)
     );
   }
 
-  get interval() {
+  get interval(): number {
     return this.isIntegerRange ? 1 : 0.01;
   }
 

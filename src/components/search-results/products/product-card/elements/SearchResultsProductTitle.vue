@@ -9,6 +9,7 @@
     v-else
     class="lupa-search-results-product-title"
     :style="`-webkit-line-clamp: ${maxLines}`"
+    :title="title"
   >
     <span v-if="!options.link" class="lupa-search-results-product-title-text">{{
       title

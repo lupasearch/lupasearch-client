@@ -14,5 +14,6 @@ export default class Spinner extends Vue {}
 
 .lupa-spinner-wrapper {
   width: 100%;
+  overflow: hidden;
 }
 </style>
