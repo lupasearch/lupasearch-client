@@ -169,15 +169,17 @@ export default class SearchResultsProductCard extends Vue {
   }
 
   get elementGroups(): string[] {
-    return this.options.elements
-      ?.map((e) => e.group)
-      .filter((g): g is string => Boolean(g));
+    return [
+      ...new Set(
+        this.options.elements
+          ?.map((e) => e.group)
+          .filter((g): g is string => Boolean(g))
+      ),
+    ];
   }
 
   getGroupElements(group: string): DocumentElement[] {
-    return [
-      ...new Set(this.options.elements?.filter((e) => e.group === group) ?? []),
-    ];
+    return this.options.elements?.filter((e) => e.group === group) ?? [];
   }
 
   mounted(): void {
