@@ -175,7 +175,9 @@ export default class SearchResultsProductCard extends Vue {
   }
 
   getGroupElements(group: string): DocumentElement[] {
-    return this.options.elements?.filter((e) => e.group === group) ?? [];
+    return [
+      ...new Set(this.options.elements?.filter((e) => e.group === group) ?? []),
+    ];
   }
 
   mounted(): void {
