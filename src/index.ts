@@ -38,6 +38,7 @@ import {
   PriceElement,
   RatingElement,
   RegularPriceDocumentElement,
+  SingleStarRatingElement,
   TitleDocumentElement,
 } from "./types/DocumentElement";
 import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
@@ -336,6 +337,7 @@ export {
   BadgeOptions,
   MountOptions,
   SearchContainerOptions,
+  SingleStarRatingElement,
 };
 
 export default lupaSearch;

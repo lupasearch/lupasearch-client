@@ -7,6 +7,7 @@ export enum DocumentElementType {
   PRICE = "price",
   REGULARPRICE = "regularPrice",
   RATING = "rating",
+  SINGLE_STAR_RATING = "singleStarRating",
   ADDTOCART = "addToCart",
   CUSTOM_HTML = "customHtml",
 }
@@ -16,6 +17,7 @@ export type DocumentElementBase<T = any> = {
   key?: string;
   display?: (document: T) => boolean;
   isHtml?: boolean;
+  group?: string;
 };
 
 export type ImageDocumentElement<T = any> = DocumentElementBase<T> & {
@@ -67,6 +69,15 @@ export type RatingElement<T = any> = DocumentElementBase<T> & {
   key: string;
 };
 
+export type SingleStarRatingElement<T = any> = DocumentElementBase<T> & {
+  type: DocumentElementType.SINGLE_STAR_RATING;
+  labels: RatingLabels;
+  links: RatingLinks;
+  key: string;
+  totalKey: string;
+  displayRating: (doc: T) => string;
+};
+
 export type RatingLabels = {
   numberOfRatings: string;
 };
@@ -97,5 +108,6 @@ export type DocumentElement =
   | PriceElement
   | RegularPriceDocumentElement
   | RatingElement
+  | SingleStarRatingElement
   | AddToCartElement
   | CustomHtmlElement;
