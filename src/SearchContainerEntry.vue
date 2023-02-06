@@ -78,6 +78,7 @@ export default class SearchContainerEntry extends Vue {
   mounted(): void {
     this.mountOpenListeners();
     this.checkExistingQuery();
+    this.isOpen = Boolean(this.containerOptions.options?.isOpenInitially);
   }
 
   beforeDestroy(): void {
