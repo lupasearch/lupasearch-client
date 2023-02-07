@@ -188,9 +188,9 @@ const searchContainer = (
   options: SearchContainerOptions,
   mountOptions?: MountOptions
 ): void => {
-  const existingInstance = app.productList[options.trigger];
+  const existingInstance = app.searchContainer[options.trigger];
   if (existingInstance) {
-    existingInstance.productListOptions = options;
+    existingInstance.searchContainerOptions = options;
     if (mountOptions?.fetch) {
       setTimeout(() => {
         existingInstance.fetch?.();
