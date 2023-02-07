@@ -70,7 +70,7 @@ export default class SearchContainer extends Vue {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this.$refs.searchResults as any)?.handleMounted();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.$refs.searchBox as any)?.handleMounted();
+    (this.$refs.searchBox as any)?.handleSearch();
   }
 
   innerClick(): void {
