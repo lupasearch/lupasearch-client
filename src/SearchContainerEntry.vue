@@ -85,6 +85,10 @@ export default class SearchContainerEntry extends Vue {
     (this.$refs.productList as any)?.fetch();
   }
 
+  reloadOptions() {
+    (this.$refs.productList as any)?.reloadOptions();
+  }
+
   beforeDestroy(): void {
     this.triggerElement?.removeEventListener("focus", this.openSearchContainer);
     window.removeEventListener("keydown", this.checkCloseOnEscape);

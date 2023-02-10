@@ -40,6 +40,7 @@ import SearchBox from "../search-box/SearchBox.vue";
 import { namespace } from "vuex-class";
 
 const params = namespace("params");
+const options = namespace("options");
 
 @Component({
   name: "productList",
@@ -54,6 +55,12 @@ export default class SearchContainer extends Vue {
     paramsToRemove,
   }: {
     paramsToRemove: string;
+  }) => void;
+
+  @options.Mutation("setSearchResultOptions") setSearchResultOptions!: ({
+    options,
+  }: {
+    options: SearchResultsOptions;
   }) => void;
 
   get fullSearchResultsOptions(): SearchResultsOptions {
@@ -75,6 +82,12 @@ export default class SearchContainer extends Vue {
 
   innerClick(): void {
     // do nothing
+  }
+
+  reloadOptions() {
+    setTimeout(() => {
+      this.setSearchResultOptions({ options: this.fullSearchResultsOptions });
+    });
   }
 
   beforeDestroy(): void {

@@ -191,6 +191,7 @@ const searchContainer = (
   const existingInstance = app.searchContainer[options.trigger];
   if (existingInstance) {
     existingInstance.searchContainerOptions = options;
+    existingInstance.reloadOptions();
     if (mountOptions?.fetch) {
       setTimeout(() => {
         existingInstance.fetch?.();
