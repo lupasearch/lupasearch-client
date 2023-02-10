@@ -65,12 +65,12 @@ export default class SearchContainer extends Vue {
 
   get fullSearchResultsOptions(): SearchResultsOptions {
     const options = cloneDeep(this.options.searchResults);
-    return merge(DEFAULT_OPTIONS_RESULTS, options);
+    return merge({}, DEFAULT_OPTIONS_RESULTS, options);
   }
 
   get fullSearchBoxOptions(): SearchBoxOptions {
     const options = cloneDeep(this.options.searchBox);
-    return merge(DEFAULT_SEARCH_BOX_OPTIONS, options);
+    return merge({}, DEFAULT_SEARCH_BOX_OPTIONS, options);
   }
 
   fetch(): void {
