@@ -12,6 +12,7 @@ export type SearchResultsOptions = SearchResultsProductOptions &
     disallowEmptyQuery?: boolean;
     callbacks?: SearchResultEventCallbacks;
     categories?: CategoryFilterOptions;
+    dynamicData?: DynamicData;
   };
 
 export type SearchTitlePosition = "page-top" | "search-results-top";
@@ -185,3 +186,8 @@ export type SearchResultsFilterOptions = {
 };
 
 export type SearchResultsBreadcrumb = { label: string; link?: string };
+
+export type DynamicData = {
+  cache: boolean;
+  handler: (documentIds: string[]) => Promise<Record<"id" | string, unknown>[]>;
+};

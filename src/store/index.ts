@@ -7,6 +7,7 @@ import searchResult from "./modules/searchResult";
 import params from "./modules/params";
 import options from "./modules/options";
 import tracking from "./modules/tracking";
+import dynamicData from "./modules/dynamicData";
 
 Vue.use(Vuex);
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
     searchBox,
     options,
     tracking,
+    dynamicData,
   },
 });

@@ -84,7 +84,7 @@ export default class SearchContainer extends Vue {
     // do nothing
   }
 
-  reloadOptions() {
+  reloadOptions(): void {
     setTimeout(() => {
       this.setSearchResultOptions({ options: this.fullSearchResultsOptions });
     });

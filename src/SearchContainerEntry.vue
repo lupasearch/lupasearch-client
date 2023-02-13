@@ -81,12 +81,12 @@ export default class SearchContainerEntry extends Vue {
     this.isOpen = Boolean(this.containerOptions.options?.isOpenInitially);
   }
 
-  fetch() {
-    (this.$refs.productList as any)?.fetch();
+  fetch(): void {
+    (this.$refs.productList as SearchContainer)?.fetch();
   }
 
-  reloadOptions() {
-    (this.$refs.productList as any)?.reloadOptions();
+  reloadOptions(): void {
+    (this.$refs.productList as SearchContainer)?.reloadOptions();
   }
 
   beforeDestroy(): void {

@@ -8,6 +8,7 @@ import SearchContainerEntry from "./SearchContainerEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import {
   CallbackContext,
+  DynamicData,
   FacetFilterQuery,
   FacetStyle,
   ResultFacetOptions,
@@ -344,6 +345,7 @@ export {
   SearchContainerOptions,
   SearchContainerConfigOptions,
   SingleStarRatingElement,
+  DynamicData,
 };
 
 export default lupaSearch;
