@@ -11,6 +11,8 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Prop } from "vue-property-decorator";
@@ -82,11 +84,11 @@ export default class SearchContainerEntry extends Vue {
   }
 
   fetch(): void {
-    (this.$refs.productList as SearchContainer)?.fetch();
+    (this.$refs.productList as any)?.fetch();
   }
 
   reloadOptions(): void {
-    (this.$refs.productList as SearchContainer)?.reloadOptions();
+    (this.$refs.productList as any)?.reloadOptions();
   }
 
   beforeDestroy(): void {
