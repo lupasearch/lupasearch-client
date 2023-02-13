@@ -32,6 +32,7 @@ import { Component, Prop } from "vue-property-decorator";
 import { Document } from "@getlupa/client-sdk/Types";
 import { RatingElement } from "@/types/DocumentElement";
 import { generateLink } from "@/utils/link.utils";
+import { RATING_STAR_HTML } from "@/constants/global.const";
 
 const STAR_COUNT = 5;
 
@@ -53,11 +54,11 @@ export default class SearchResultsProductRating extends Vue {
   }
 
   get baseStars(): string[] {
-    return new Array(STAR_COUNT).fill("&#x2606;");
+    return new Array(STAR_COUNT).fill(RATING_STAR_HTML);
   }
 
   get highlightedStars(): string[] {
-    return new Array(STAR_COUNT).fill(" &#x2605;");
+    return new Array(STAR_COUNT).fill(RATING_STAR_HTML);
   }
 
   get ratingPercentage(): number {

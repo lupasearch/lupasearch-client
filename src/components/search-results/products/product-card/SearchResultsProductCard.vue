@@ -45,6 +45,23 @@
           @productEvent="handleProductEvent"
         />
       </div>
+      <div
+        v-for="group of elementGroups"
+        :key="group"
+        :class="'lupa-element-group-' + group"
+      >
+        <SearchResultsProductCardElement
+          class="lupa-search-results-product-element"
+          v-for="element in getGroupElements(group)"
+          :item="product"
+          :element="element"
+          :key="element.key"
+          :labels="labels"
+          :inStock="isInStock"
+          :link="link"
+          @productEvent="handleProductEvent"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -89,6 +106,8 @@ export default class SearchResultsProductCard extends Vue {
   @Prop({ default: {} }) options!: SearchResultsProductCardOptions;
   @Prop({ default: false }) isAdditionalPanel!: boolean;
 
+  isInStock = false;
+
   @searchResult.State((state) => state.layout)
   layout!: ResultsLayout;
 
@@ -121,7 +140,7 @@ export default class SearchResultsProductCard extends Vue {
   get imageElements(): DocumentElement[] {
     return (
       this.options.elements?.filter(
-        (e) => e.type === DocumentElementType.IMAGE
+        (e) => e.type === DocumentElementType.IMAGE && !e.group
       ) ?? []
     );
   }
@@ -129,7 +148,7 @@ export default class SearchResultsProductCard extends Vue {
   get detailElements(): DocumentElement[] {
     return (
       this.options.elements?.filter(
-        (e) => e.type !== DocumentElementType.IMAGE
+        (e) => e.type !== DocumentElementType.IMAGE && !e.group
       ) ?? []
     );
   }
@@ -149,7 +168,19 @@ export default class SearchResultsProductCard extends Vue {
     return this.searchResultsRoutingBehavior === "event";
   }
 
-  isInStock = false;
+  get elementGroups(): string[] {
+    return [
+      ...new Set(
+        this.options.elements
+          ?.map((e) => e.group)
+          .filter((g): g is string => Boolean(g))
+      ),
+    ];
+  }
+
+  getGroupElements(group: string): DocumentElement[] {
+    return this.options.elements?.filter((e) => e.group === group) ?? [];
+  }
 
   mounted(): void {
     this.checkIfIsInStock();

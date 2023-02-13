@@ -229,6 +229,7 @@ const options = {
         addToCart: "Add to Cart",
       },
       action: (document, amount) => {},
+      group: "cart",
     },
     {
       type: "customHtml",
@@ -292,6 +293,8 @@ Common element keys:
 
 - `display` - optional function to determine wether document element should be displayed. Receives a document entry and should return `true` or `false`.
 
+- `group` - optional key to group certain elements. Elements with group defined will be placed at the bottom of the card, with the same wrapper element for each unique group.
+
 Available card element types:
 
 - `image` - image of the product.
@@ -323,6 +326,14 @@ Available card element types:
   - `getRatingPercentage` - a function that receives a document item and should return a percentage (0 - 100) of a rating value. Should not be used together with `key`.
 
   - `totalKey` - a document key that determines a total number of ratings for that product.
+
+  - `labels.numberOfRatings` - label for number of ratings;
+
+  - `links.ratingDetails` - where should `numberOfRatings` label link to. Constructed using the same rules, as other product links.
+
+- `singleStarRating` - similar to rating, but instead of rendering 5 stars, just shows 1 start with an ability to display wanted rating text. Retains ability to show total number of ratings with a custom link.
+
+  - `displayRating` - a function to return a custom rating text which will be rendered as a string.
 
   - `labels.numberOfRatings` - label for number of ratings;
 

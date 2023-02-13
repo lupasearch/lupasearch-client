@@ -26,6 +26,7 @@ import SearchResultsProductAddToCart from "./SearchResultsProductAddToCart.vue";
 import SearchResultsProductCustom from "./SearchResultsProductCustom.vue";
 import SearchResultsProductCustomHtmlElement from "./custom/SearchResultsProductCustomHtmlElement.vue";
 import { DocumentElement, DocumentElementType } from "@/types/DocumentElement";
+import SearchResultsProductSingleStarRating from "./SearchResultsProductSingleStarRating.vue";
 
 @Component({
   name: "searchResultsProductCardElement",
@@ -34,6 +35,7 @@ import { DocumentElement, DocumentElementType } from "@/types/DocumentElement";
     SearchResultsProductTitle,
     SearchResultsProductDescription,
     SearchResultsProductRating,
+    SearchResultsProductSingleStarRating,
     SearchResultsProductRegularPrice,
     SearchResultsProductPrice,
     SearchResultsProductAddToCart,
@@ -58,6 +60,8 @@ export default class SearchResultsProductCardElement extends Vue {
         return "searchResultsProductDescription";
       case DocumentElementType.RATING:
         return "searchResultsProductRating";
+      case DocumentElementType.SINGLE_STAR_RATING:
+        return "SearchResultsProductSingleStarRating";
       case DocumentElementType.PRICE:
         return "searchResultsProductPrice";
       case DocumentElementType.REGULARPRICE:
