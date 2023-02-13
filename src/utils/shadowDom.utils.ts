@@ -1,3 +1,5 @@
+import { SearchContainerConfigOptions } from "@/types/search-container/SearchContainerOptions";
+
 export const createShadowDom = (
   shadowId: string,
   managerId: string
@@ -17,10 +19,12 @@ export const attatchShadowDom = ({
   host,
   manager,
   styleUrl,
+  options,
 }: {
   host: HTMLElement;
   manager: HTMLElement;
   styleUrl: string;
+  options?: SearchContainerConfigOptions;
 }): void => {
   if (host.shadowRoot) {
     return;
@@ -52,4 +56,12 @@ export const attatchShadowDom = ({
   const shadow = host.attachShadow({ mode: "open" });
   shadow.appendChild(manager);
   shadow.appendChild(link);
+
+  // Configure main display options
+
+  if (options?.layout?.marginLeft) {
+    const style = document.createElement("style");
+    style.innerHTML = `.lupa-search-container-overlay { width: calc(100% - ${options.layout.marginLeft}px); margin-left: ${options.layout.marginLeft}px; }`;
+    shadow.appendChild(style);
+  }
 };

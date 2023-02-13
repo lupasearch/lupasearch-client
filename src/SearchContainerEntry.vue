@@ -78,6 +78,15 @@ export default class SearchContainerEntry extends Vue {
   mounted(): void {
     this.mountOpenListeners();
     this.checkExistingQuery();
+    this.isOpen = Boolean(this.containerOptions.options?.isOpenInitially);
+  }
+
+  fetch() {
+    (this.$refs.productList as any)?.fetch();
+  }
+
+  reloadOptions() {
+    (this.$refs.productList as any)?.reloadOptions();
   }
 
   beforeDestroy(): void {

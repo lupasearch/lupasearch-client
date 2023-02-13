@@ -40,6 +40,7 @@ import SearchBox from "../search-box/SearchBox.vue";
 import { namespace } from "vuex-class";
 
 const params = namespace("params");
+const options = namespace("options");
 
 @Component({
   name: "productList",
@@ -56,25 +57,37 @@ export default class SearchContainer extends Vue {
     paramsToRemove: string;
   }) => void;
 
+  @options.Mutation("setSearchResultOptions") setSearchResultOptions!: ({
+    options,
+  }: {
+    options: SearchResultsOptions;
+  }) => void;
+
   get fullSearchResultsOptions(): SearchResultsOptions {
     const options = cloneDeep(this.options.searchResults);
-    return merge(DEFAULT_OPTIONS_RESULTS, options);
+    return merge({}, DEFAULT_OPTIONS_RESULTS, options);
   }
 
   get fullSearchBoxOptions(): SearchBoxOptions {
     const options = cloneDeep(this.options.searchBox);
-    return merge(DEFAULT_SEARCH_BOX_OPTIONS, options);
+    return merge({}, DEFAULT_SEARCH_BOX_OPTIONS, options);
   }
 
   fetch(): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.$refs.searchResults as any)?.handleMounted();
+    (this.$refs.searchResults as any)?.handleUrlChange();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.$refs.searchBox as any)?.handleMounted();
+    (this.$refs.searchBox as any)?.handleSearch();
   }
 
   innerClick(): void {
     // do nothing
+  }
+
+  reloadOptions() {
+    setTimeout(() => {
+      this.setSearchResultOptions({ options: this.fullSearchResultsOptions });
+    });
   }
 
   beforeDestroy(): void {

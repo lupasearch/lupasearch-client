@@ -57,7 +57,10 @@ import {
   SortOptions,
 } from "./types/search-results/SearchResultsSort";
 import { CombinedVueInstance } from "vue/types/vue";
-import { SearchContainerOptions } from "./types/search-container/SearchContainerOptions";
+import {
+  SearchContainerConfigOptions,
+  SearchContainerOptions,
+} from "./types/search-container/SearchContainerOptions";
 import { attatchShadowDom, createShadowDom } from "./utils/shadowDom.utils";
 import { DEFAULT_CONTAINER_STYLE } from "./constants/global.const";
 
@@ -186,9 +189,10 @@ const searchContainer = (
   options: SearchContainerOptions,
   mountOptions?: MountOptions
 ): void => {
-  const existingInstance = app.productList[options.trigger];
+  const existingInstance = app.searchContainer[options.trigger];
   if (existingInstance) {
-    existingInstance.productListOptions = options;
+    existingInstance.searchContainerOptions = options;
+    existingInstance.reloadOptions();
     if (mountOptions?.fetch) {
       setTimeout(() => {
         existingInstance.fetch?.();
@@ -203,7 +207,8 @@ const searchContainer = (
   attatchShadowDom({
     host,
     manager,
-    styleUrl: options.styleLink ?? DEFAULT_CONTAINER_STYLE,
+    styleUrl: options.options?.styleLink ?? DEFAULT_CONTAINER_STYLE,
+    options: options.options,
   });
   document.body.appendChild(host);
   const SearchContainerEntryComponent = Vue.component(
@@ -337,6 +342,7 @@ export {
   BadgeOptions,
   MountOptions,
   SearchContainerOptions,
+  SearchContainerConfigOptions,
   SingleStarRatingElement,
 };
 
