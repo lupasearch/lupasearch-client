@@ -1,10 +1,21 @@
 @use "../base/searchBox";
+@use "../base/searchResults";
 @use "../clients/lupa/lupaConfig";
 @use "../base/general";
 
 .lupa-search-container {
+  @media (max-width: searchResults.$size-md) {
+    #lupa-search-results-badges > #lupa-badges {
+      top: 16px;
+    }
+  }
+
   @media (max-width: searchBox.$size-s) {
     max-height: var(--lupa-full-height);
+
+    #lupa-search-results-badges > #lupa-badges {
+      top: 0;
+    }
 
     .lupa-search-result-wrapper {
       padding: 0 0 0 16px;
