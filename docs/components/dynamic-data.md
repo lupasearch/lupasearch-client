@@ -4,11 +4,11 @@ You can use dynamic data to extend product data with fields from your API or any
 
 This is useful when:
 
-- You have a very large amount of additional data, and it is ineficient to store it in LupaSearch indices;
+- You have a very large amount of additional data, and it is inefficient to store it in LupaSearch indices;
 
-- You have dynamic data that changes based on conditions, outside of LupaSearch control, like dynamic individual prices, or rapidly chaning product stock.
+- You have dynamic data that changes based on conditions, outside of LupaSearch control, like dynamic individual prices, or rapidly changing product stock.
 
-Dynamic data works only works with search results/search container components.
+Dynamic data works only with search results/search container components.
 
 ## Dynamic data handler
 
@@ -18,6 +18,7 @@ To enable dynamic data, add the following configuration to search result options
 const options = {
   // ... Other search results options
   dynamicData: {
+    enabled: true,
     handler: async (ids: string[]) => {},
   },
 };
@@ -31,6 +32,7 @@ An example of handler function can look like this:
 const options = {
   // ... Other search results options
   dynamicData: {
+    enabled: true,
     handler: async (ids: string[]) => {
       // Retrieve document data from your API for all of the provided ids
       const result = await fetch(
@@ -48,6 +50,7 @@ Expected result format should include a list of documents with extended data. Fo
 const options = {
   // ... Other search results options
   dynamicData: {
+    enabled: true,
     handler: async (ids: string[]) => {
       // Simulating returned data
       return [
@@ -126,6 +129,7 @@ You can also use promises to retrieve and pass data, if your development pipelin
 const options = {
   // ... Other search results options
   dynamicData: {
+    enabled: true,
     hanlder: (ids: string[]) => {
       return new Promise((resolve) => {
         // Simulating data fetch with settimeout
@@ -146,9 +150,29 @@ const options = {
   // ... Other search results options
   dynamicData: {
     cache: true,
+    enabled: true,
     handler: async (ids: string[]) => {
       // Retrieve additional document data for provided ids
     },
   },
 };
 ```
+
+## Usage with Search box
+
+It is possible to use dynamic data in search box too.
+
+If you already have dynamic data handler defined in search results component, you don't have to redefine it again in the search box, you just need to pass the following object, and the search results dynamic data handler will be reused.
+
+```ts
+const options = {
+  // ... Other search box options
+  dynamicData: {
+    enabled: true,
+  },
+};
+```
+
+Dynamic search result data handler will always have preference over search box dynamic data handler.
+
+Dynamic data in search box will use additional debounce (as configured in search box) after results are retrieved before calling the dynamic data handler function.

@@ -172,7 +172,7 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }) => void;
 
-  @dynamicData.Action("enhanceSearchResultsWithDyanmicData") enhanceData!: ({
+  @dynamicData.Action("enhanceSearchResultsWithDynamicData") enhanceData!: ({
     result,
   }: {
     result: SearchQueryResult;

@@ -11,25 +11,47 @@ export default class DynamicDataModule extends VuexModule {
     return Object.keys(this.dynamicDataIdMap);
   }
 
-  get dynamicData(): DynamicData | undefined {
-    return this.context.rootState["options"]?.searchResultOptions?.dynamicData;
+  get searchResultOptions() {
+    return this.context.rootState["options"]?.searchResultOptions;
   }
 
-  get isDynamicDataEnabled(): boolean {
-    return Boolean(this.dynamicData);
+  get searchBoxOptions() {
+    return this.context.rootState["options"]?.searchBoxOptions;
+  }
+
+  get dynamicSearchResultData(): DynamicData | undefined {
+    return this.searchResultOptions?.dynamicData;
+  }
+
+  get dynamicSearchBoxData(): DynamicData | undefined {
+    return this.searchBoxOptions?.dynamicData;
+  }
+
+  get isDynamicDataEnabledForSearchResults(): boolean {
+    return this.searchResultOptions?.dynamicData?.enabled;
+  }
+
+  get isDynamicDataEnabledForSearchBox(): boolean {
+    return this.searchBoxOptions?.dynamicData?.enabled;
   }
 
   get isCacheEnabled(): boolean {
-    return Boolean(this.dynamicData?.cache);
+    return Boolean(this.dynamicSearchResultData?.cache);
   }
 
   @Action({ commit: "save" })
-  async enhanceSearchResultsWithDyanmicData({
+  async enhanceSearchResultsWithDynamicData({
     result,
+    mode,
   }: {
     result?: SearchQueryResult;
+    mode?: "searchBox" | "searchResults";
   }): Promise<Record<string, Document>> {
-    if (!result || !this.isDynamicDataEnabled) {
+    const enabledForMode =
+      mode === "searchBox"
+        ? this.isDynamicDataEnabledForSearchBox
+        : this.isDynamicDataEnabledForSearchResults;
+    if (!result || !enabledForMode) {
       return {};
     }
     let requestedIds = (result?.items?.map((i) => i.id) as string[]) ?? [];
@@ -41,8 +63,13 @@ export default class DynamicDataModule extends VuexModule {
     }
     this.context.commit("setLoading", true);
     try {
+      const dynamicData =
+        this.dynamicSearchResultData || this.dynamicSearchBoxData;
+      if (!dynamicData?.handler) {
+        return {};
+      }
       const dynamicDataResult =
-        (await this.dynamicData?.handler(requestedIds)) ?? [];
+        (await dynamicData?.handler(requestedIds)) ?? [];
       const seed: Record<string, Document> = {};
       const dynamicDataIdMap = dynamicDataResult.reduce(
         (a, c) => ({ ...a, [c.id as string]: c }),

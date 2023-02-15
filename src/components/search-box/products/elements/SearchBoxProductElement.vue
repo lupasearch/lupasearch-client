@@ -2,14 +2,16 @@
   <search-box-element
     v-if="displayElement"
     :is="elementComponent"
-    :item="item"
+    :item="enhancedItem"
     :options="element"
     :labels="labels"
+    :class="{ 'lupa-loading-dynamic-data': isLoadingDynamicData }"
   >
   </search-box-element>
 </template>
 <script lang="ts">
 import Vue from "vue";
+import { namespace } from "vuex-class";
 import SearchBoxProductImage from "./SearchBoxProductImage.vue";
 import SearchBoxProductTitle from "./SearchBoxProductTitle.vue";
 import SearchBoxProductDescription from "./SearchBoxProductDescription.vue";
@@ -21,6 +23,8 @@ import { Component, Prop } from "vue-property-decorator";
 import { Document } from "@getlupa/client-sdk/Types";
 import { DocumentElementType, DocumentElement } from "@/types/DocumentElement";
 import { SearchBoxOptionLabels } from "@/types/search-box/SearchBoxOptions";
+
+const dynamicData = namespace("dynamicData");
 
 @Component({
   components: {
@@ -37,6 +41,13 @@ export default class SearchBoxProductElement extends Vue {
   @Prop() item!: Document;
   @Prop() element!: DocumentElement;
   @Prop() labels?: SearchBoxOptionLabels;
+
+  @dynamicData.State("loading") loading!: boolean;
+
+  @dynamicData.State("dynamicDataIdMap") dynamicDataIdMap!: Record<
+    string,
+    Document
+  >;
 
   get elementComponent(): string {
     switch (this.element.type) {
@@ -60,6 +71,22 @@ export default class SearchBoxProductElement extends Vue {
 
   get displayElement(): boolean {
     return this.element.display ? this.element.display(this.item) : true;
+  }
+
+  get isLoadingDynamicData(): boolean {
+    return Boolean(this.element.dynamic && this.loading);
+  }
+
+  get enhancedItem(): Document {
+    if (!this.item?.id) {
+      return this.item;
+    }
+    const enhancementData =
+      this.dynamicDataIdMap?.[this.item?.id as string] ?? {};
+    return {
+      ...this.item,
+      ...enhancementData,
+    };
   }
 }
 </script>

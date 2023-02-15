@@ -188,6 +188,9 @@ export type SearchResultsFilterOptions = {
 export type SearchResultsBreadcrumb = { label: string; link?: string };
 
 export type DynamicData = {
-  cache: boolean;
-  handler: (documentIds: string[]) => Promise<Record<"id" | string, unknown>[]>;
+  enabled?: boolean;
+  cache?: boolean;
+  handler?: (
+    documentIds: string[]
+  ) => Promise<Record<"id" | string, unknown>[]>;
 };

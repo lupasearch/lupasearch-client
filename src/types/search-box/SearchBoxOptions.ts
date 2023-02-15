@@ -1,5 +1,6 @@
 import { SdkOptions } from "../General";
 import { RoutingBehavior } from "../search-results/RoutingBehavior";
+import { DynamicData } from "../search-results/SearchResultsOptions";
 import { SearchBoxHistory } from "./SearchBoxHistory";
 import { SearchBoxPanel } from "./SearchBoxPanel";
 
@@ -7,6 +8,7 @@ export type SearchBoxOptions = SearchBoxPanelOptions & {
   inputSelector: string;
   searchTriggers?: string[];
   routingBehavior?: RoutingBehavior;
+  dynamicData?: DynamicData;
 };
 
 export type SearchBoxOptionLabels = {
