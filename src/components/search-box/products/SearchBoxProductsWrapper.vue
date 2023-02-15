@@ -24,6 +24,7 @@ import { namespace } from "vuex-class";
 import SearchBoxProducts from "./SearchBoxProducts.vue";
 
 const searchBox = namespace("searchBox");
+const dynamicData = namespace("dynamicData");
 
 @Component({
   name: "searchBoxProductsWrapper",
@@ -60,6 +61,14 @@ export default class SearchBoxProductsWrapper extends Vue {
     result?: SearchQueryResult;
   }>;
 
+  @dynamicData.Action("enhanceSearchResultsWithDynamicData") enhanceData!: ({
+    result,
+    mode,
+  }: {
+    result: SearchQueryResult;
+    mode: "searchBox";
+  }) => Promise<void>;
+
   created(): void {
     this.getItemsDebounced();
   }
@@ -70,6 +79,12 @@ export default class SearchBoxProductsWrapper extends Vue {
   }
 
   getItemsDebounced = debounce(this.getItems, this.debounce);
+
+  enhanceDataDebounced = debounce(this.enhancePanelData, this.debounce);
+
+  async enhancePanelData(): Promise<void> {
+    await this.enhanceData({ result: this.searchResult, mode: "searchBox" });
+  }
 
   getItems(): void {
     this.queryDocuments({
@@ -84,6 +99,7 @@ export default class SearchBoxProductsWrapper extends Vue {
         items: result.items,
         type: this.panel.type,
       });
+      this.enhanceDataDebounced();
     });
   }
 }

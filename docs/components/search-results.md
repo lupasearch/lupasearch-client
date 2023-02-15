@@ -664,6 +664,14 @@ const options = {
 };
 ```
 
+## Dynamic data
+
+Sometimes it is not possible to store all of the required data in LupaSearch indices. You can use Dynamic Data functionality to load additional product data from your own API or other sources.
+
+More details can be found here:
+
+- [Dynamic data Box](./dynamic-data.md)
+
 ## Event callbacks
 
 Lupa can emit callbacks on certain events:

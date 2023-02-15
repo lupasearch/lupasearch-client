@@ -18,6 +18,7 @@ export type DocumentElementBase<T = any> = {
   display?: (document: T) => boolean;
   isHtml?: boolean;
   group?: string;
+  dynamic?: boolean;
 };
 
 export type ImageDocumentElement<T = any> = DocumentElementBase<T> & {

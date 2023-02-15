@@ -94,6 +94,7 @@ const searchResult = namespace("searchResult");
 const params = namespace("params");
 const options = namespace("options");
 const tracking = namespace("tracking");
+const dynamicData = namespace("dynamicData");
 
 @Component({
   name: "searchResults",
@@ -170,6 +171,12 @@ export default class SearchResults extends Vue {
     queryKey: string;
     results: SearchQueryResult;
   }) => void;
+
+  @dynamicData.Action("enhanceSearchResultsWithDynamicData") enhanceData!: ({
+    result,
+  }: {
+    result: SearchQueryResult;
+  }) => Promise<void>;
 
   @params.State("searchString") searchString!: string;
 
@@ -302,13 +309,13 @@ export default class SearchResults extends Vue {
       });
   }
 
-  handleResults({
+  async handleResults({
     queryKey,
     results,
   }: {
     queryKey: string;
     results: SearchQueryResult;
-  }): void {
+  }): Promise<void> {
     this.trackResults({ queryKey, results });
     const hasResults = Boolean(
       results.total > 0 ||
@@ -316,6 +323,10 @@ export default class SearchResults extends Vue {
         results.didYouMean?.options
     );
     this.options.callbacks?.onSearchResults?.({ queryKey, hasResults });
+    if (!hasResults) {
+      return;
+    }
+    await this.enhanceData({ result: results });
   }
 
   @searchResult.Mutation("setScreenWidth") setScreenWidth!: ({
