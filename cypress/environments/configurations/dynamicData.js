@@ -48,6 +48,7 @@ lupaSearch.searchResults({
     },
   ],
   dynamicData: {
+    enabled: true,
     cache: true,
     handler: async (ids) => {
       return new Promise((resolve) =>
