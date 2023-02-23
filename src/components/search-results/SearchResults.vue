@@ -21,6 +21,7 @@
         <SearchResultsFilters
           v-if="showFilterSidebar"
           :options="options.filters"
+          ref="searchResultsFilters"
         />
         <div class="search-content">
           <SearchResultsDidYouMean :labels="didYouMeanLabels" />
@@ -45,6 +46,7 @@
         <SearchResultsFilters
           v-if="showFilterSidebar"
           :options="options.filters"
+          ref="searchResultsFilters"
         />
         <SearchResultsProducts :options="options">
           <template #append>
@@ -234,6 +236,8 @@ export default class SearchResults extends Vue {
     this.handleResize();
     if (this.isProductList) {
       setDocumentTitle(this.options.labels.htmlTitleTemplate, "");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (this.$refs.searchResultsFilters as any)?.fetch();
     }
     const params = new URLSearchParams(window.location.search);
     if (!params.has(QUERY_PARAMS.QUERY)) {

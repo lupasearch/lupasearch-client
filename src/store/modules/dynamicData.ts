@@ -1,4 +1,8 @@
-import { DynamicData } from "@/types/search-results/SearchResultsOptions";
+import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
+import {
+  DynamicData,
+  SearchResultsOptions,
+} from "@/types/search-results/SearchResultsOptions";
 import { Document, SearchQueryResult } from "@getlupa/client-sdk/Types";
 import { Action, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
@@ -11,11 +15,11 @@ export default class DynamicDataModule extends VuexModule {
     return Object.keys(this.dynamicDataIdMap);
   }
 
-  get searchResultOptions() {
+  get searchResultOptions(): SearchResultsOptions {
     return this.context.rootState["options"]?.searchResultOptions;
   }
 
-  get searchBoxOptions() {
+  get searchBoxOptions(): SearchBoxOptions {
     return this.context.rootState["options"]?.searchBoxOptions;
   }
 
@@ -28,11 +32,11 @@ export default class DynamicDataModule extends VuexModule {
   }
 
   get isDynamicDataEnabledForSearchResults(): boolean {
-    return this.searchResultOptions?.dynamicData?.enabled;
+    return this.searchResultOptions?.dynamicData?.enabled ?? false;
   }
 
   get isDynamicDataEnabledForSearchBox(): boolean {
-    return this.searchBoxOptions?.dynamicData?.enabled;
+    return this.searchBoxOptions?.dynamicData?.enabled ?? false;
   }
 
   get isCacheEnabled(): boolean {
