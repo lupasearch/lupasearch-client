@@ -98,6 +98,10 @@ export default class CategoryFilter extends Vue {
   }
 
   async mounted(): Promise<void> {
+    await this.fetch();
+  }
+
+  async fetch(): Promise<void> {
     if (!this.options?.queryKey) {
       return;
     }

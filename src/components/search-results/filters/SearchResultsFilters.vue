@@ -5,7 +5,11 @@
       :options="options.currentFilters"
       :expandable="expandable"
     />
-    <CategoryFilter v-if="options.categories" :options="options.categories" />
+    <CategoryFilter
+      v-if="options.categories"
+      :options="options.categories"
+      ref="categoryFilters"
+    />
     <Facets v-if="options.facets" :options="options.facets" />
   </div>
 </template>
@@ -34,6 +38,11 @@ export default class SearchResultsFilters extends Vue {
     return this.options.currentFilters?.visibility?.mobileSidebar
       ? Boolean(this.options.facets)
       : false;
+  }
+
+  fetch(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this.$refs.categoryFilters as any)?.fetch();
   }
 }
 </script>
