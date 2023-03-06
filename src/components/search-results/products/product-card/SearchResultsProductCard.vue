@@ -212,9 +212,10 @@ export default class SearchResultsProductCard extends Vue {
         searchQuery: this.query,
         type: "itemClick",
         analytics: {
-          type: "search_product_click",
+          type: this.query ? "search_product_click" : "select_item",
           label: this.title || this.id || this.link,
         },
+        options: { allowEmptySearchQuery: true },
       },
     });
     this.searchResultOptions.callbacks?.onProductClick?.({

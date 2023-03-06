@@ -91,6 +91,7 @@ import CategoryTopFilters from "../product-list/CategoryTopFilters.vue";
 import { setDocumentTitle } from "@/utils/document.utils";
 import { QUERY_PARAMS } from "@/constants/queryParams.const";
 import { AnalyticsEventType } from "@/types/AnalyticsOptions";
+import { TrackableEventData } from "@/types/search-box/Common";
 
 const searchResult = namespace("searchResult");
 const params = namespace("params");
@@ -174,6 +175,14 @@ export default class SearchResults extends Vue {
     results: SearchQueryResult;
   }) => void;
 
+  @tracking.Action("track") trackEvent!: ({
+    queryKey,
+    data,
+  }: {
+    queryKey: string;
+    data: TrackableEventData;
+  }) => void;
+
   @dynamicData.Action("enhanceSearchResultsWithDynamicData") enhanceData!: ({
     result,
   }: {
@@ -232,12 +241,27 @@ export default class SearchResults extends Vue {
     window.removeEventListener("resize", this.handleResize);
   }
 
+  trackItemListView(title: string): void {
+    this.trackEvent({
+      queryKey: this.options.queryKey,
+      data: {
+        analytics: {
+          type: "view_item_list",
+          label: title,
+        },
+        options: { allowEmptySearchQuery: true },
+      },
+    });
+  }
+
   handleMounted(): void {
     this.handleResize();
     if (this.isProductList) {
-      setDocumentTitle(this.options.labels.htmlTitleTemplate, "");
+      const pageTitle = this.options.labels.htmlTitleTemplate;
+      setDocumentTitle(pageTitle, "");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this.$refs.searchResultsFilters as any)?.fetch();
+      this.trackItemListView(pageTitle);
     }
     const params = new URLSearchParams(window.location.search);
     if (!params.has(QUERY_PARAMS.QUERY)) {

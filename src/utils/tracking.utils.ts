@@ -246,9 +246,17 @@ export const track = (
   data: TrackableEventData = {},
   options?: Options
 ): void => {
-  if (!isTrackingEnabled() || !data.searchQuery) {
+  if (!isTrackingEnabled()) {
+    return;
+  }
+  const hasSearchQuery = data.searchQuery;
+  if (!hasSearchQuery && !data.options?.allowEmptySearchQuery) {
+    return;
+  }
+  trackAnalyticsEvent(data);
+  // Lupa events are only tracked if search query is set
+  if (!hasSearchQuery) {
     return;
   }
   trackLupaEvent(queryKey, data, options);
-  trackAnalyticsEvent(data);
 };

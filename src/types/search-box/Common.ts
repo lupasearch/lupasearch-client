@@ -45,6 +45,9 @@ export type TrackableEventData = {
     type: AnalyticsEventType;
     label: string;
   };
+  options?: {
+    allowEmptySearchQuery: boolean;
+  };
 };
 
 export type HighlightedDocInfo = {
