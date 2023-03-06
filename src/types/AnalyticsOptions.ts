@@ -8,7 +8,9 @@ export type AnalyticsEventType =
   | "search_product_click"
   | "search_zero_results"
   | "search_filters"
-  | "search_add_to_cart";
+  | "search_add_to_cart"
+  | "view_item_list"
+  | "select_item";
 
 export type AnalyticsOptions = {
   type: "ua" | "ga4" | "debug";
