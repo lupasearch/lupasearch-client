@@ -194,6 +194,15 @@ const trackAnalyticsEvent = (data: TrackableEventData) => {
   }
 };
 
+const parseEcommerceData = (data: TrackableEventData, title?: string) => {
+  return data.analytics?.items
+    ? {
+        item_list_name: title,
+        items: data.analytics?.items,
+      }
+    : undefined;
+};
+
 const sendUaAnalyticsEvent = (
   data: TrackableEventData,
   options: AnalyticsOptions
@@ -221,9 +230,11 @@ const sendGa4AnalyticsEvent = (
     return;
   }
   const sendItemTitle = data.searchQuery !== data.analytics?.label;
+  const title = sendItemTitle ? data.analytics?.label : undefined;
   const params = {
     search_text: data.searchQuery,
     item_title: sendItemTitle ? data.analytics?.label : undefined,
+    ecommerce: parseEcommerceData(data, title),
   };
   window.dataLayer.push({
     event: data.analytics?.type ?? options.parentEventName,
@@ -233,10 +244,12 @@ const sendGa4AnalyticsEvent = (
 
 const processDebugEvent = (data: TrackableEventData) => {
   const sendItemTitle = data.searchQuery !== data.analytics?.label;
+  const title = sendItemTitle ? data.analytics?.label : undefined;
   const params = {
     event: data.analytics?.type,
     search_text: data.searchQuery,
-    item_title: sendItemTitle ? data.analytics?.label : undefined,
+    item_title: title,
+    ecommerce: parseEcommerceData(data, title),
   };
   console.debug("Analytics debug event:", params);
 };

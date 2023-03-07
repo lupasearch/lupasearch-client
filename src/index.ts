@@ -91,6 +91,7 @@ const app: AppInstances = {
 
 const tracking = (options: TrackingOptions): void => {
   initTracking(options);
+  store.commit("options/setTrackingOptions", { options });
 };
 
 const applySearchBox = (

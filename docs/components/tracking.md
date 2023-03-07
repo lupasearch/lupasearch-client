@@ -42,6 +42,13 @@ lupaSearch.tracking({
     enabled: true,
     parentEventName: "GetLupa",
     ignoreEvents: ["search_query"],
+    itemMap: (item: Record<string, unknown>) => {
+      return {
+        id: item.id
+        name: item.name,
+        price: item.price,
+      };
+    },
   },
 });
 ```
@@ -59,3 +66,5 @@ lupaSearch.tracking({
 - `analytics.parentEventName` - name of the event category, that will appear in your analytics dashboard.
 
 - `analytics.ignoreEvents` - array of ignored events (that will not be sent to google analytics) by name.
+
+- `itemMap` - define a function that transforms your document item before sending it to external analytics service, as ecommerce object.

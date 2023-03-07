@@ -1,4 +1,5 @@
 import { AnalyticsEventType } from "@/types/AnalyticsOptions";
+import { TrackingOptions } from "@/types/General";
 import { TrackableEventData } from "@/types/search-box/Common";
 import { track } from "@/utils/tracking.utils";
 import {
@@ -77,6 +78,21 @@ export default class TrackingModule extends VuexModule {
   }): void {
     const options: Options =
       this.context.rootGetters["options/envOptions"] ?? {};
-    track(queryKey, data, options);
+    const trackingOptions: TrackingOptions =
+      this.context.rootState["options"].trackingOptions ?? {};
+    const items = data.analytics?.items ?? [];
+    const mappedItems = trackingOptions.analytics?.itemMap
+      ? items.map(trackingOptions.analytics.itemMap)
+      : items;
+    track(
+      queryKey,
+      {
+        ...data,
+        analytics: data.analytics
+          ? { ...data.analytics, items: mappedItems }
+          : undefined,
+      },
+      options
+    );
   }
 }
