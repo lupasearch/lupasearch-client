@@ -67,6 +67,7 @@
 </template>
 <script lang="ts">
 import { DocumentElement, DocumentElementType } from "@/types/DocumentElement";
+import { TrackingOptions } from "@/types/General";
 import { TrackableEventData } from "@/types/search-box/Common";
 import { BadgeOptions } from "@/types/search-results/BadgeOptions";
 import {
@@ -116,6 +117,8 @@ export default class SearchResultsProductCard extends Vue {
 
   @options.State((o) => o.searchResultOptions)
   searchResultOptions!: SearchResultsOptions;
+
+  @options.State((o) => o.trackingOptions) trackingOptions!: TrackingOptions;
 
   @params.Getter("query") query!: string;
 
@@ -214,6 +217,7 @@ export default class SearchResultsProductCard extends Vue {
         analytics: {
           type: this.query ? "search_product_click" : "select_item",
           label: this.title || this.id || this.link,
+          items: [this.product],
         },
         options: { allowEmptySearchQuery: true },
       },

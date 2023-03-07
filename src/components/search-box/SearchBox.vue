@@ -329,6 +329,7 @@ export default class SearchBox extends Vue {
         analytics: {
           type: "autocomplete_product_click",
           label: doc.title || (doc.id as string),
+          items: [doc],
         },
       },
     });

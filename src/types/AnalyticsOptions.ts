@@ -17,4 +17,5 @@ export type AnalyticsOptions = {
   enabled: boolean;
   parentEventName: string;
   ignoreEvents?: AnalyticsEventType[];
+  itemMap?: (item: Record<string, unknown>) => Record<string, unknown>;
 };

@@ -241,13 +241,17 @@ export default class SearchResults extends Vue {
     window.removeEventListener("resize", this.handleResize);
   }
 
-  trackItemListView(title: string): void {
+  trackItemListView(
+    title: string,
+    items: Record<string, unknown>[] = []
+  ): void {
     this.trackEvent({
       queryKey: this.options.queryKey,
       data: {
         analytics: {
           type: "view_item_list",
           label: title,
+          items,
         },
         options: { allowEmptySearchQuery: true },
       },
@@ -261,7 +265,6 @@ export default class SearchResults extends Vue {
       setDocumentTitle(pageTitle, "");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (this.$refs.searchResultsFilters as any)?.fetch();
-      this.trackItemListView(pageTitle);
     }
     const params = new URLSearchParams(window.location.search);
     if (!params.has(QUERY_PARAMS.QUERY)) {
@@ -354,6 +357,10 @@ export default class SearchResults extends Vue {
     if (!hasResults) {
       return;
     }
+    this.trackItemListView(
+      this.options.labels.htmlTitleTemplate,
+      results.items
+    );
     await this.enhanceData({ result: results });
   }
 

@@ -4,7 +4,7 @@ import {
 } from "@/constants/global.const";
 import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
 import { DEFAULT_OPTIONS_RESULTS } from "@/constants/searchResults.const";
-import { ScreenSize } from "@/types/General";
+import { ScreenSize, TrackingOptions } from "@/types/General";
 import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
 import { RoutingBehavior } from "@/types/search-results/RoutingBehavior";
 import { SearchResultsOptions } from "@/types/search-results/SearchResultsOptions";
@@ -18,6 +18,7 @@ config.rawError = true;
 export default class OptionsModule extends VuexModule {
   searchBoxOptions = DEFAULT_SEARCH_BOX_OPTIONS as SearchBoxOptions;
   searchResultOptions = DEFAULT_OPTIONS_RESULTS as SearchResultsOptions;
+  trackingOptions = {} as TrackingOptions;
   searchResultInitialFilters: FilterGroup = {};
 
   get envOptions(): Options {
@@ -70,6 +71,11 @@ export default class OptionsModule extends VuexModule {
   @Mutation
   setSearchBoxOptions({ options }: { options: SearchBoxOptions }): void {
     this.searchBoxOptions = options;
+  }
+
+  @Mutation
+  setTrackingOptions({ options }: { options: TrackingOptions }): void {
+    this.trackingOptions = options ?? {};
   }
 
   @Mutation
