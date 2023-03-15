@@ -251,6 +251,7 @@ export default class SearchResults extends Vue {
         analytics: {
           type: "view_item_list",
           label: title,
+          listLabel: title,
           items,
         },
         options: { allowEmptySearchQuery: true },

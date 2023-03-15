@@ -217,6 +217,7 @@ export default class SearchResultsProductCard extends Vue {
         analytics: {
           type: this.query ? "search_product_click" : "select_item",
           label: this.title || this.id || this.link,
+          listLabel: this.options?.labels?.htmlTitleTemplate,
           items: [this.product],
         },
         options: { allowEmptySearchQuery: true },
