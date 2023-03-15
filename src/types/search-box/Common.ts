@@ -44,6 +44,7 @@ export type TrackableEventData = {
   analytics?: {
     type: AnalyticsEventType;
     label: string;
+    listLabel?: string;
     items?: Record<string, unknown>[];
   };
   options?: {

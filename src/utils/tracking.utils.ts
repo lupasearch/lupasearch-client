@@ -233,8 +233,8 @@ const sendGa4AnalyticsEvent = (
   const title = sendItemTitle ? data.analytics?.label : undefined;
   const params = {
     search_text: data.searchQuery,
-    item_title: sendItemTitle ? data.analytics?.label : undefined,
-    ecommerce: parseEcommerceData(data, title),
+    item_title: title,
+    ecommerce: parseEcommerceData(data, data.analytics?.listLabel),
   };
   window.dataLayer.push({
     event: data.analytics?.type ?? options.parentEventName,
@@ -249,7 +249,7 @@ const processDebugEvent = (data: TrackableEventData) => {
     event: data.analytics?.type,
     search_text: data.searchQuery,
     item_title: title,
-    ecommerce: parseEcommerceData(data, title),
+    ecommerce: parseEcommerceData(data, data.analytics?.listLabel),
   };
   console.debug("Analytics debug event:", params);
 };
