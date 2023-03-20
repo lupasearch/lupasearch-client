@@ -685,6 +685,7 @@ const options = {
     onAdditionalPanelResults: (context: CallbackContext) => {},
     onCategoryFilterResults: (context: CallbackContext) => {},
     onUrlQueryChange: (context: CallbackContext) => {},
+    onProductClick: (context: CallbackContext) => {},
   },
 };
 ```
@@ -704,6 +705,7 @@ type CallbackContext = {
   queryKey: string;
   hasResults?: boolean;
   urlQueryString?: string;
+  productId?: string;
 };
 ```
 

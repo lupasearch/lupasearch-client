@@ -226,6 +226,7 @@ export default class SearchResultsProductCard extends Vue {
     this.searchResultOptions.callbacks?.onProductClick?.({
       queryKey: this.query,
       hasResults: true,
+      productId: this.id,
     });
   }
 

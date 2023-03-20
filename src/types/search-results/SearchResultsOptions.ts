@@ -32,6 +32,7 @@ export type CallbackContext = {
   queryKey: string;
   hasResults?: boolean;
   urlQueryString?: string;
+  productId?: string;
 };
 
 export type SearchResultEventCallbacks = {
