@@ -62,6 +62,9 @@ export default class AdditionalPanels extends Vue {
   };
 
   @params.Getter("query") query!: string;
+
+  @params.Getter("searchString") searchString!: string;
+
   @options.State((o) => o.searchResultOptions)
   searchResultOptions!: SearchResultsOptions;
 
@@ -98,7 +101,7 @@ export default class AdditionalPanels extends Vue {
     this.handleQueryChange();
   }
 
-  @Watch("query")
+  @Watch("searchString")
   handleQueryChange(): void {
     const context = getLupaTrackingContext();
     const query = {
