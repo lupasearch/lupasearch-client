@@ -58,7 +58,12 @@ export default class DynamicDataModule extends VuexModule {
     if (!result || !enabledForMode) {
       return {};
     }
-    let requestedIds = (result?.items?.map((i) => i.id) as string[]) ?? [];
+    const resultIds = (result?.items?.map((i) => i.id) as string[]) ?? [];
+    const similarQueryResultIds =
+      result.similarQueries
+        ?.map((q) => q.items.map((i) => i.id) as string[])
+        ?.flat() ?? [];
+    let requestedIds = [...resultIds, ...similarQueryResultIds];
     if (this.isCacheEnabled) {
       requestedIds = requestedIds.filter((i) => !this.loadedIds.includes(i));
     }
