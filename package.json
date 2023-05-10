@@ -1,6 +1,6 @@
 {
   "name": "@getlupa/client",
-  "version": "0.15.3",
+  "version": "0.16.0-alpha-1",
   "main": "dist/cjs/index.min.js",
   "module": "dist/es/index.min.js",
   "types": "dist/es/index.d.ts",
@@ -18,9 +18,10 @@
     "validate:es5": "npx es5-validator dist/iife/*.min.js"
   },
   "dependencies": {
-    "@getlupa/client-sdk": "^1.2.5",
+    "@getlupa/client-sdk": "^1.3.1",
     "lodash.clonedeep": "^4.5.0",
     "vue": "^2.6.11",
+    "vue-carousel": "^0.18.0",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.1.2",
     "vue-slider-component": "^3.2.15",

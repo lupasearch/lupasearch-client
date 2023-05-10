@@ -46,6 +46,7 @@ export type TrackableEventData = {
     label: string;
     listLabel?: string;
     items?: Record<string, unknown>[];
+    itemId?: string;
   };
   options?: {
     allowEmptySearchQuery: boolean;

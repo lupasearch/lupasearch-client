@@ -1,7 +1,18 @@
 <template>
   <div id="app" class="wrapper">
-    <div>
-      <input type="text" class="trigger" placeholder="Click me to search!" />
+    <!-- Following icon fonts are available during the plugin development only -->
+    <!-- Include your own fonts and icons with your custom theme when deploying your plugin -->
+    <link
+      href="//db.onlinewebfonts.com/c/68590d1f06ad625cb73b5c34f85b4a1b?family=Luma-Icons"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <div class="recommendations-wrapper">
+      <Recommendations :options="recommendationsOptions" />
     </div>
   </div>
 </template>
@@ -15,13 +26,15 @@ import { DEFAULT_OPTIONS_RESULTS } from "./constants/searchResults.const";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import { SearchResultsOptions } from "./types/search-results/SearchResultsOptions";
 import { merge } from "./utils/merger.utils";
+import "../styles/clients/lupa/lupa";
 import { SEARCH_BOX_CONFIGURATION } from "./constants/development/searchBoxDev.const";
 import { SEARCH_RESULTS_CONFIGURATION } from "./constants/development/searchResultsDev.const";
+import { PRODUCT_LIST_CONFIGURATION } from "./constants/development/searchProductListDev.const";
+import { ProductListOptions } from "./types/product-list/ProductListOptions";
 import ProductList from "./components/product-list/ProductList.vue";
-import SearchContainer from "./components/search-container/SearchContainer.vue";
-import { SearchContainerOptions } from "./types/search-container/SearchContainerOptions";
-import SearchContainerEntry from "./SearchContainerEntry.vue";
-import lupaSearch from ".";
+import { ProductRecommendationOptions } from "./types/recommendations/RecommendationsOptions";
+import { RECOMMENDATIONS_OPTIONS } from "./constants/development/recommendationsDev.const";
+import Recommendations from "./components/recommendations/Recommendations.vue";
 
 @Component({
   name: "getLupa",
@@ -29,8 +42,7 @@ import lupaSearch from ".";
     SearchBox,
     SearchResults,
     ProductList,
-    SearchContainer,
-    SearchContainerEntry,
+    Recommendations,
   },
 })
 export default class App extends Vue {
@@ -48,16 +60,16 @@ export default class App extends Vue {
     );
   }
 
-  get containerOptions(): SearchContainerOptions {
+  get fullProductListOptions(): ProductListOptions {
     return {
-      trigger: ".trigger",
-      searchBox: this.fullSearchBoxOptions,
-      searchResults: this.fullSearchResultsOptions,
+      ...this.fullSearchResultsOptions,
+      ...PRODUCT_LIST_CONFIGURATION,
     };
   }
 
-  mounted(): void {
-    lupaSearch.searchContainer(this.containerOptions);
+  get recommendationsOptions(): ProductRecommendationOptions {
+    console.log(RECOMMENDATIONS_OPTIONS.options);
+    return RECOMMENDATIONS_OPTIONS;
   }
 }
 </script>
@@ -67,10 +79,6 @@ export default class App extends Vue {
   height: auto;
   display: flex;
   flex-direction: column;
-}
-
-* {
-  color: red !important;
 }
 
 .wrapper {
@@ -95,5 +103,9 @@ export default class App extends Vue {
   padding-left: 24px;
   padding-right: 24px;
   width: 100%;
+}
+
+.recommendations-wrapper {
+  display: flex;
 }
 </style>
