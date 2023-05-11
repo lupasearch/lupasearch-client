@@ -5,6 +5,7 @@ import SearchBoxEntry from "./SearchBoxEntry.vue";
 import SearchResultsEntry from "./SearchResultsEntry.vue";
 import ProductListEntry from "./ProductListEntry.vue";
 import SearchContainerEntry from "./SearchContainerEntry.vue";
+import RecommendationsEntry from "./RecommendationsEntry.vue";
 import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
 import {
   CallbackContext,
@@ -64,6 +65,10 @@ import {
 } from "./types/search-container/SearchContainerOptions";
 import { attatchShadowDom, createShadowDom } from "./utils/shadowDom.utils";
 import { DEFAULT_CONTAINER_STYLE } from "./constants/global.const";
+import {
+  ProductRecommendationOptions,
+  RecommendationABTestingOptions,
+} from "./types/recommendations/RecommendationsOptions";
 
 type AppInstance = Record<
   string,
@@ -76,7 +81,7 @@ type AppInstance = Record<
   >
 >;
 type AppInstances = Record<
-  "box" | "results" | "productList" | "searchContainer",
+  "box" | "results" | "productList" | "searchContainer" | "recommendations",
   AppInstance
 >;
 
@@ -87,6 +92,7 @@ const app: AppInstances = {
   results: {},
   productList: {},
   searchContainer: {},
+  recommendations: {},
 };
 
 const tracking = (options: TrackingOptions): void => {
@@ -225,6 +231,33 @@ const searchContainer = (
   app.searchContainer[options.trigger] = instance;
 };
 
+const recommendations = (
+  options: ProductRecommendationOptions,
+  mountOptions?: MountOptions
+) => {
+  const existingInstance = app.recommendations[options.containerSelector];
+  if (existingInstance) {
+    existingInstance.recommendationOptions = options;
+    if (mountOptions?.fetch) {
+      setTimeout(() => {
+        existingInstance.fetch?.();
+      });
+    }
+    return;
+  }
+  Vue.use(Vuex);
+  const RecommendationsEntryComponent = Vue.component(
+    "SearchResultsEntry",
+    RecommendationsEntry
+  );
+  const instance = new RecommendationsEntryComponent({
+    el: options.containerSelector,
+    propsData: { recommendationOptions: options },
+    store,
+  });
+  app.recommendations[options.containerSelector] = instance;
+};
+
 const clearSearchBox = (selector?: string): void => {
   try {
     if (selector) {
@@ -293,16 +326,35 @@ const clearSearchContainer = (selector?: string): void => {
   }
 };
 
+const clearRecommendations = (selector?: string) => {
+  try {
+    if (selector) {
+      const instance = app.recommendations[selector];
+      instance?.$destroy();
+      return;
+    }
+    for (const key in app.recommendations) {
+      const instance = app.recommendations[key];
+      instance?.$destroy();
+    }
+    app.recommendations = {};
+  } catch {
+    // do nothing, already destroyed;
+  }
+};
+
 const lupaSearch = {
   searchBox,
   searchResults,
   tracking,
   productList,
   searchContainer,
+  recommendations,
   clearSearchBox,
   clearSearchResults,
   clearProductList,
   clearSearchContainer,
+  clearRecommendations,
 };
 
 export {
@@ -347,6 +399,8 @@ export {
   SearchContainerConfigOptions,
   SingleStarRatingElement,
   DynamicData,
+  ProductRecommendationOptions,
+  RecommendationABTestingOptions,
 };
 
 export default lupaSearch;

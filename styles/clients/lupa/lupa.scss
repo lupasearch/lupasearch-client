@@ -52,6 +52,7 @@
 @use "./lupaToolbar.scss";
 @use "./lupaProductCard.scss";
 @use "./lupaFacets.scss";
+@use "./lupaRecommendations.scss";
 
 .lupa-panel-suggestion-index {
   grid-area: suggestions;

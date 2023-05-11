@@ -89,6 +89,10 @@ import { Prop } from "vue-property-decorator";
 import { namespace } from "vuex-class";
 import SearchResultsBadgeWrapper from "./badges/SearchResultsBadgeWrapper.vue";
 import SearchResultsProductCardElement from "./elements/SearchResultsProductCardElement.vue";
+import {
+  ProductClickTrackingSettings,
+  AnalyticsEventType,
+} from "@/types/AnalyticsOptions";
 
 const tracking = namespace("tracking");
 const params = namespace("params");
@@ -106,6 +110,8 @@ export default class SearchResultsProductCard extends Vue {
   @Prop({ default: {} }) product!: Document;
   @Prop({ default: {} }) options!: SearchResultsProductCardOptions;
   @Prop({ default: false }) isAdditionalPanel!: boolean;
+  @Prop({ default: () => ({}) })
+  clickTrackingSettings!: ProductClickTrackingSettings;
 
   isInStock = false;
 
@@ -207,6 +213,27 @@ export default class SearchResultsProductCard extends Vue {
       : "";
   }
 
+  get clickTrackingType(): AnalyticsEventType {
+    if (this.clickTrackingSettings.eventType) {
+      return this.clickTrackingSettings.eventType;
+    }
+    return this.query ? "search_product_click" : "select_item";
+  }
+
+  get trackingLabel(): string | undefined {
+    if (this.clickTrackingSettings.eventLabel) {
+      return this.clickTrackingSettings.eventLabel;
+    }
+    return this.title || this.id || this.link;
+  }
+
+  get trackingListLabel(): string | undefined {
+    if (this.clickTrackingSettings.listLabel) {
+      return this.clickTrackingSettings.listLabel;
+    }
+    return this.options?.labels?.htmlTitleTemplate;
+  }
+
   handleClick(): void {
     this.trackClick({
       queryKey: this.options.queryKey,
@@ -215,10 +242,11 @@ export default class SearchResultsProductCard extends Vue {
         searchQuery: this.query,
         type: "itemClick",
         analytics: {
-          type: this.query ? "search_product_click" : "select_item",
-          label: this.title || this.id || this.link,
-          listLabel: this.options?.labels?.htmlTitleTemplate,
+          type: this.clickTrackingType,
+          label: this.trackingLabel ?? "",
+          listLabel: this.trackingListLabel,
           items: [this.product],
+          itemId: this.id,
         },
         options: { allowEmptySearchQuery: true },
       },

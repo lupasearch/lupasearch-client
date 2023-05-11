@@ -31,6 +31,7 @@ pnpm-debug.log*
 src/constants/development/searchBoxDev.const.ts
 src/constants/development/searchResultsDev.const.ts
 src/constants/development/searchProductListDev.const.ts
+src/constants/development/recommendationsDev.const.ts
 
 # Dynamic container css
 

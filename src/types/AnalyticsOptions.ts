@@ -10,7 +10,8 @@ export type AnalyticsEventType =
   | "search_filters"
   | "search_add_to_cart"
   | "view_item_list"
-  | "select_item";
+  | "select_item"
+  | "product_recommendation_click";
 
 export type AnalyticsOptions = {
   type: "ua" | "ga4" | "debug";
@@ -18,4 +19,10 @@ export type AnalyticsOptions = {
   parentEventName: string;
   ignoreEvents?: AnalyticsEventType[];
   itemMap?: (item: Record<string, unknown>) => Record<string, unknown>;
+};
+
+export type ProductClickTrackingSettings = {
+  eventType?: AnalyticsEventType;
+  eventLabel?: string;
+  listLabel?: string;
 };
