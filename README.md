@@ -76,4 +76,6 @@ For more information about individual components and all available options:
 
 - [Search Results](/docs/components/search-results.md)
 
+- [Recommendations](/docs/components/recommendations.md)
+
 - [Tracing and Analytics](/docs/components/tracking.md)
