@@ -9,6 +9,7 @@
         :navigation-next-label="nextLabel"
         :navigation-prev-label="prevLabel"
         :scroll-per-page="scrollPerPage"
+        :mouse-drag="false"
       >
         <slide
           v-for="(product, index) in recommendations"
