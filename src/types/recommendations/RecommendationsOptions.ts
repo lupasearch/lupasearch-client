@@ -10,6 +10,9 @@ export type ProductRecommendationOptions = SearchResultsProductCardOptions & {
   abTesting?: RecommendationABTestingOptions;
   carousel?: {
     pageSizes: number[][];
+    nextLabel?: string;
+    prevLabel?: string;
+    scrollPerPage?: boolean;
   };
 };
 

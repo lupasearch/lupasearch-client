@@ -6,6 +6,9 @@
         :navigation-enabled="true"
         :pagination-enabled="false"
         :per-page-custom="pages"
+        :navigation-next-label="nextLabel"
+        :navigation-prev-label="prevLabel"
+        :scroll-per-page="scrollPerPage"
       >
         <slide
           v-for="(product, index) in recommendations"
@@ -62,6 +65,18 @@ export default class Recommendations extends Vue {
 
   get pages(): number[][] {
     return this.options.carousel?.pageSizes ?? [];
+  }
+
+  get nextLabel() {
+    return this.options.carousel?.nextLabel;
+  }
+
+  get prevLabel() {
+    return this.options.carousel?.prevLabel;
+  }
+
+  get scrollPerPage() {
+    return this.options.carousel?.scrollPerPage ?? false;
   }
 
   mounted(): void {
