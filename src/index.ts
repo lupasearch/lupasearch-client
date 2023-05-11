@@ -252,7 +252,7 @@ const recommendations = (
   );
   const instance = new RecommendationsEntryComponent({
     el: options.containerSelector,
-    propsData: { searchResultsOptions: options },
+    propsData: { recommendationOptions: options },
     store,
   });
   app.recommendations[options.containerSelector] = instance;
