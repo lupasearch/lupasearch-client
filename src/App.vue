@@ -68,7 +68,6 @@ export default class App extends Vue {
   }
 
   get recommendationsOptions(): ProductRecommendationOptions {
-    console.log(RECOMMENDATIONS_OPTIONS.options);
     return RECOMMENDATIONS_OPTIONS;
   }
 }

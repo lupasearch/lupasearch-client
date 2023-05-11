@@ -39,7 +39,7 @@ lupaSearch.recommendations(options);
 
 **Carousel options**
 
-Product recommendation requires all options from the search result conmponent (to display correct product card elements in recommendations).
+Product recommendation requires all options from the search result component (to display correct product card elements in recommendations).
 
 ```js
 import lupaSearch from "@getlupa/client";
