@@ -3,8 +3,13 @@
     :class="[className, 'lupa-search-box-product-custom']"
     v-if="isHtml"
     v-html="text"
+    v-on="options.action ? { click: handleClick } : {}"
   ></div>
-  <div :class="[className, 'lupa-search-box-product-custom']" v-else>
+  <div
+    v-else
+    :class="[className, 'lupa-search-box-product-custom']"
+    v-on="options.action ? { click: handleClick } : {}"
+  >
     <div v-if="!label">
       {{ text }}
     </div>
@@ -39,6 +44,13 @@ export default class SearchBoxProductCustom extends Vue {
 
   get isHtml(): boolean {
     return this.options.isHtml ?? false;
+  }
+
+  async handleClick(): Promise<void> {
+    if (!this.options.action) {
+      return;
+    }
+    await this.options.action(this.item);
   }
 }
 </script>

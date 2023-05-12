@@ -1,5 +1,9 @@
 <template>
-  <div :class="className" v-html="text"></div>
+  <div
+    :class="className"
+    v-html="text"
+    v-on="options.action ? { click: handleClick } : {}"
+  ></div>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -20,6 +24,13 @@ export default class SearchBoxProductCustomHtml extends Vue {
 
   get className(): string {
     return this.options.className;
+  }
+
+  async handleClick(): Promise<void> {
+    if (!this.options.action) {
+      return;
+    }
+    await this.options.action(this.item);
   }
 }
 </script>

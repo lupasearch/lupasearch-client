@@ -49,6 +49,7 @@ export type CustomDocumentElement<T = any> = DocumentElementBase<T> & {
   className: string;
   key: string;
   label?: string;
+  action?: (document: T) => Promise<unknown> | undefined;
 };
 
 export type PriceElement<T = any> = DocumentElementBase<T> & {
@@ -99,6 +100,7 @@ export type CustomHtmlElement<T = any> = DocumentElementBase<T> & {
   type: DocumentElementType.CUSTOM_HTML;
   html: (document: T) => string;
   className: string;
+  action?: (document: T) => Promise<unknown> | undefined;
 };
 
 export type DocumentElement =
