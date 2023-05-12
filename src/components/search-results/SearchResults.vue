@@ -1,5 +1,8 @@
 <template>
-  <div class="lupa-search-result-wrapper">
+  <div
+    class="lupa-search-result-wrapper"
+    :class="{ 'lupa-search-wrapper-no-results': !hasResults }"
+  >
     <template v-if="isContainer">
       <div class="lupa-container-title-summary-mobile">
         <SearchResultsDidYouMean :labels="didYouMeanLabels" />
