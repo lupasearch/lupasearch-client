@@ -384,6 +384,8 @@ const options = {
       visibility: {
         mobileSidebar: true,
         mobileToolbar: true,
+        desktopToolbar: false,
+        desktopSidebar: true,
       },
       labels: {
         title: "Current filters:",
@@ -391,6 +393,9 @@ const options = {
       },
       mobileSidebar: {
         showFilterCount: false,
+        activeFiltersExpanded: false,
+      },
+      desktopToolbar: {
         activeFiltersExpanded: false,
       },
     },
@@ -443,9 +448,15 @@ const options = {
 
 - `currentFilters.visibility.mobileToolbar` - whether to display current filters on mobile resolution on page toolbar, at the top of the product list;
 
+- `currentFilters.visibility.desktopToolbar` - whether to display current filters on desktop toolbar;
+
+- `currentFilters.visibility.desktopSidebar` - whether to display current filters on desktop sidebar, defaults to `true`;
+
 - `currentFilters.mobileSidebar.showFilterCount` - show filter count at the top of the mobile sidebar;
 
 - `currentFilters.mobileSidebar.activeFiltersExpanded` - expand active filters section in the mobile sidebar by default;
+
+- `currentFilters.desktopToolbar.activeFiltersExpanded` - expand active filters section in the desktop toolbar by default.
 
 - `facets` - show a facet filter section;
 

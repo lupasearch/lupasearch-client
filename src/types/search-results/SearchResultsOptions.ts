@@ -130,11 +130,16 @@ export type ResultCurrentFilterOptions = {
     clearAll: string;
   };
   visibility?: {
-    mobileSidebar: boolean;
-    mobileToolbar: boolean;
+    mobileSidebar?: boolean;
+    mobileToolbar?: boolean;
+    desktopSidebar?: boolean;
+    desktopToolbar?: boolean;
   };
   mobileSidebar?: {
     showFilterCount?: boolean;
+    activeFiltersExpanded?: boolean;
+  };
+  desktopToolbar?: {
     activeFiltersExpanded?: boolean;
   };
 };

@@ -10,11 +10,11 @@
         pagination-location="top"
       />
       <CurrentFilters
-        class="lupa-filters-mobile"
+        :class="currentFiltersClass"
         data-cy="lupa-search-result-filters-mobile-toolbar"
         v-if="currentFilterOptions"
         :options="currentFilterOptions"
-        :expandable="true"
+        :expandable="!desktopFiltersExpanded"
       />
     </template>
     <AdditionalPanels
@@ -163,10 +163,40 @@ export default class SearchResultsProducts extends Vue {
     return this.options.searchTitlePosition !== "search-results-top";
   }
 
+  get currentFilterToolbarVisible(): boolean {
+    return Boolean(
+      this.options.filters?.currentFilters?.visibility?.mobileToolbar ||
+        this.options.filters?.currentFilters?.visibility?.desktopToolbar
+    );
+  }
+
   get currentFilterOptions(): ResultCurrentFilterOptions | undefined {
-    return this.options.filters?.currentFilters?.visibility?.mobileToolbar
+    return this.currentFilterToolbarVisible
       ? this.options.filters?.currentFilters
       : undefined;
+  }
+
+  get currentFiltersClass(): string {
+    if (!this.currentFilterToolbarVisible) {
+      return "";
+    }
+    if (
+      this.options.filters?.currentFilters?.visibility?.mobileToolbar &&
+      this.options.filters?.currentFilters?.visibility?.desktopToolbar
+    ) {
+      return "lupa-toolbar-filters";
+    }
+
+    return this.options.filters?.currentFilters?.visibility?.mobileToolbar
+      ? "lupa-filters-mobile"
+      : "lupa-toolbar-filters-desktop";
+  }
+
+  get desktopFiltersExpanded(): boolean {
+    return (
+      this.options?.filters?.currentFilters?.desktopToolbar
+        ?.activeFiltersExpanded ?? false
+    );
   }
 
   @searchResult.State((state) => state.columnCount)

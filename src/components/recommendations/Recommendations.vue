@@ -68,15 +68,15 @@ export default class Recommendations extends Vue {
     return this.options.carousel?.pageSizes ?? [];
   }
 
-  get nextLabel() {
+  get nextLabel(): string | undefined {
     return this.options.carousel?.nextLabel;
   }
 
-  get prevLabel() {
+  get prevLabel(): string | undefined {
     return this.options.carousel?.prevLabel;
   }
 
-  get scrollPerPage() {
+  get scrollPerPage(): boolean {
     return this.options.carousel?.scrollPerPage ?? false;
   }
 
@@ -108,7 +108,7 @@ export default class Recommendations extends Vue {
     }
   }
 
-  fetch() {
+  fetch(): void {
     this.loadRecommendations();
   }
 

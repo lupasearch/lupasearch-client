@@ -234,7 +234,7 @@ const searchContainer = (
 const recommendations = (
   options: ProductRecommendationOptions,
   mountOptions?: MountOptions
-) => {
+): void => {
   const existingInstance = app.recommendations[options.containerSelector];
   if (existingInstance) {
     existingInstance.recommendationOptions = options;
@@ -326,7 +326,7 @@ const clearSearchContainer = (selector?: string): void => {
   }
 };
 
-const clearRecommendations = (selector?: string) => {
+const clearRecommendations = (selector?: string): void => {
   try {
     if (selector) {
       const instance = app.recommendations[selector];
