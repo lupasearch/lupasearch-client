@@ -164,9 +164,9 @@ export default class SearchResultsProducts extends Vue {
   }
 
   get currentFilterToolbarVisible(): boolean {
-    return (
+    return Boolean(
       this.options.filters?.currentFilters?.visibility?.mobileToolbar ||
-      this.options.filters?.currentFilters?.visibility?.desktopToolbar
+        this.options.filters?.currentFilters?.visibility?.desktopToolbar
     );
   }
 
