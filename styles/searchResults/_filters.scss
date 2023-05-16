@@ -86,3 +86,12 @@
   font-size: searchResults.$filter-count-font-size;
   color: searchResults.$filter-count-color;
 }
+
+.lupa-toolbar-filters,
+.lupa-toolbar-filters-desktop {
+  margin-right: 12px;
+
+  .filter-values {
+    display: flex;
+  }
+}

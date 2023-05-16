@@ -34,10 +34,20 @@ export default class SearchResultsFilters extends Vue {
   @Prop() options!: SearchResultsFilterOptions;
   @Prop({ default: false }) expandable!: boolean;
 
+  get desktopFiltersVisible(): boolean {
+    // Default is true
+    return this.options.currentFilters?.visibility?.desktopSidebar ?? true;
+  }
+
+  get currentFiltersVisible(): boolean {
+    return (
+      this.options.currentFilters?.visibility?.mobileSidebar ||
+      this.desktopFiltersVisible
+    );
+  }
+
   get showCurrentFilters(): boolean {
-    return this.options.currentFilters?.visibility?.mobileSidebar
-      ? Boolean(this.options.facets)
-      : false;
+    return this.currentFiltersVisible ? Boolean(this.options.facets) : false;
   }
 
   fetch(): void {

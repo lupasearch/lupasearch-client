@@ -91,6 +91,8 @@ export const SEARCH_RESULTS_CONFIGURATION = {
       visibility: {
         mobileSidebar: true,
         mobileToolbar: true,
+        desktopToolbar: false,
+        desktopSidebar: true,
       },
       labels: {
         title: "Current filters:",
@@ -98,6 +100,9 @@ export const SEARCH_RESULTS_CONFIGURATION = {
       },
       mobileSidebar: {
         showFilterCount: false,
+        activeFiltersExpanded: false,
+      },
+      desktopToolbar: {
         activeFiltersExpanded: false,
       },
     },
