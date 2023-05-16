@@ -141,6 +141,9 @@ const options = {
           key: "author",
           className: "customClassName",
           isHtml: false,
+          action: (document) => {
+            console.log("author was clicked", document);
+          },
         },
         {
           type: "description",
@@ -158,6 +161,9 @@ const options = {
           type: "customHtml",
           className: "lupa-card-discount",
           html: (doc) => `<div>${doc.id} ${doc.name}</div>`,
+          action: (document) => {
+            console.log("custom element was clicked", document);
+          },
         },
       ],
     },
@@ -215,13 +221,17 @@ This is the list of available search box document fields. By convention, image e
 
   - `className` - custom class name that will be applied to the element;
 
-  - `isHtml` - if `true`, object property is rendered as html.
+  - `isHtml` - if `true`, object property is rendered as html;
+
+  - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
 
 - `customHtml` a custom field, rendered as html.
 
   - `className` custom class name that will be applied to the element;
 
-  - `html` a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated.
+  - `html` a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated;
+
+  - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
 
 ## Search History
 

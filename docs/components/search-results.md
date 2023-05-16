@@ -202,6 +202,9 @@ const options = {
       type: "custom",
       className: "customClassName",
       key: "author",
+      action: (document) => {
+        console.log("author was clicked", document);
+      },
     },
     {
       type: "rating",
@@ -238,6 +241,9 @@ const options = {
         return `<div>This is the best offer: ${doc.price}!</div>`;
       },
       display: (doc) => Boolean(doc.isBestOffer),
+      action: (document) => {
+        console.log("custom element was clicked", document);
+      },
     },
   ],
 };
@@ -359,11 +365,15 @@ Available card element types:
 
   - `className` - custom class name that will be applied to the element;
 
+  - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
+
 - `customHtml` - an element, that is render as a custom html;
 
   - `className` - custom class name to add to the element;
 
-  - `html` - a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated.
+  - `html` - a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated;
+
+  - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
 
 ## Filters
 

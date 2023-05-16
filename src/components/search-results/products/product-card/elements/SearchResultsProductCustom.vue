@@ -1,6 +1,15 @@
 <template>
-  <div :class="className" v-if="isHtml" v-html="text"></div>
-  <div :class="className" v-else>
+  <div
+    :class="className"
+    v-if="isHtml"
+    v-html="text"
+    v-on="options.action ? { click: handleClick } : {}"
+  ></div>
+  <div
+    v-else
+    :class="className"
+    v-on="options.action ? { click: handleClick } : {}"
+  >
     <div v-if="!label">
       {{ text }}
     </div>
@@ -47,6 +56,13 @@ export default class SearchResultsProductCustom extends Vue {
 
   get isHtml(): boolean {
     return this.options.isHtml ?? false;
+  }
+
+  async handleClick(): Promise<void> {
+    if (!this.options.action) {
+      return;
+    }
+    await this.options.action(this.item);
   }
 }
 </script>
