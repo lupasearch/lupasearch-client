@@ -11,10 +11,7 @@
         :scroll-per-page="scrollPerPage"
         :mouse-drag="false"
       >
-        <slide
-          v-for="(product, index) in recommendations"
-          :key="getProductKey(index, product)"
-        >
+        <slide v-for="product in recommendations" :key="getProductKey(product)">
           <SearchResultsProductCard
             :product="product"
             :options="options"
@@ -87,8 +84,8 @@ export default class Recommendations extends Vue {
     });
   }
 
-  getProductKey(index: number, product: Document): string {
-    return getProductKey(index.toString(), product, this.options.idKey);
+  getProductKey(product: Document): string {
+    return getProductKey(product, this.options.idKey);
   }
 
   loadRecommendations(): void {

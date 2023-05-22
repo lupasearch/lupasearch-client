@@ -30,9 +30,9 @@
       />
       <div class="lupa-products" data-cy="lupa-products">
         <SearchResultsProductCard
-          v-for="(product, index) in searchResult.items"
+          v-for="product in searchResult.items"
           :style="columnSize"
-          :key="getProductKey(index, product)"
+          :key="getProductKey(product)"
           :product="product"
           :options="productCardOptions()"
         />
@@ -218,8 +218,8 @@ export default class SearchResultsProducts extends Vue {
     return `width: ${100 / this.columnCount}%`;
   }
 
-  getProductKey(index: string, product: Document): string {
-    return getProductKey(index, product, this.options.idKey);
+  getProductKey(product: Document): string {
+    return getProductKey(product, this.options.idKey);
   }
 
   @params.Action("appendParams") appendParams!: ({

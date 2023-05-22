@@ -58,17 +58,13 @@ export const getDisplayValue = (value?: string | number): string => {
 };
 
 export const getProductKey = (
-  index: string,
   product: Document,
   idKey: string | undefined
 ): string => {
   if (!idKey) {
-    return index;
+    return "id";
   }
-  if (product[idKey]) {
-    return product[idKey] as string;
-  }
-  return index;
+  return product[idKey] ? (product[idKey] as string) : "id";
 };
 
 export const normalizeFloat = (value?: string): number => {

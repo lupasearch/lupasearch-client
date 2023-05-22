@@ -33,9 +33,9 @@
 
       <div class="lupa-products" data-cy="lupa-products">
         <SearchResultsProductCard
-          v-for="(product, index) in similarQuery.items"
+          v-for="product in similarQuery.items"
           :style="columnSize"
-          :key="getProductKey(index, product)"
+          :key="getProductKey(product)"
           :product="product"
           :options="productCardOptions"
         />
@@ -72,8 +72,8 @@ export default class SearchResultsSimilarQueries extends Vue {
   @searchResult.State((state) => state.searchResult.similarQueries)
   similarQueries!: SimilarQueryResult[];
 
-  getProductKey(index: string, product: Document): string {
-    return getProductKey(index, product, this.productCardOptions.idKey);
+  getProductKey(product: Document): string {
+    return getProductKey(product, this.productCardOptions.idKey);
   }
 
   @params.Action("goToResults") goToResults!: ({

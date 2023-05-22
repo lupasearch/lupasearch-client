@@ -11,12 +11,17 @@
       href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
       rel="stylesheet"
     />
-    <div class="recommendations-wrapper">
-      <Recommendations :options="recommendationsOptions" />
+    <div class="box-wrapper">
+      <SearchBox :options="fullSearchBoxOptions" />
     </div>
+    <div class="result-wrapper">
+      <SearchResults :options="fullSearchResultsOptions" />
+    </div>
+    <!-- <div class="result-wrapper">
+      <ProductList :options="fullProductListOptions" />
+    </div> -->
   </div>
 </template>
-
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import SearchBox from "./components/search-box/SearchBox.vue";
