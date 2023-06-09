@@ -251,7 +251,7 @@ const options = {
 
 - `isInStock` - a function to determine whether given product is in stock. It receives a full original document from search results. If product is out of stock, it cannot be added to the cart;
 
-- `idKey` - a key that references a unique document identifier. Used in analytics to track document clicks.
+- `idKey` - a key that references a unique document identifier. Used in analytics to track document clicks. Defaults to `id`. If your key is different than `id`, it must be set explicitly, as it might lead to unexpected behaviour othervise. 
 
 - `titleKey` - a key that references a document title (name). Used to report events to your tracker.
 
