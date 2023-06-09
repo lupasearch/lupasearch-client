@@ -1,6 +1,7 @@
 <template>
   <div
     class="lupa-dynamic-badge"
+    :class="customClassName"
     :style="{ background: badge.backgroundColor, color: badge.color }"
   >
     <span class="lupa-badge-title">
@@ -48,6 +49,10 @@ export default class SearchResultGeneratedBadge extends Vue {
       Boolean(this.badge?.titleText) &&
       typeof this.badge?.titleText === "string"
     );
+  }
+
+  get customClassName(): string {
+    return this.options.generate?.customClass?.(this.badge) ?? "";
   }
 }
 </script>
