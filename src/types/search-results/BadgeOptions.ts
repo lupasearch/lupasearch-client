@@ -15,6 +15,7 @@ export type BadgeGenerateOptions<T = Record<string, any>> = {
   key?: string;
   keyMap?: Record<keyof BadgeGenerateSeed, keyof T>;
   image?: (field: BadgeGenerateSeed) => string | undefined;
+  showTitle?: (field: BadgeGenerateSeed) => boolean;
 };
 
 export type BadgeOptions = {
