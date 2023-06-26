@@ -1,31 +1,25 @@
-<template>
-  <ProductList :options="productListOptions" ref="productList" />
-</template>
+<script lang="ts" setup>
+import { cloneDeep } from 'lodash'
+import { type Ref, ref, computed } from 'vue'
+import { type ProductListOptions, ProductList } from '@getlupa/vue'
 
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import cloneDeep from "lodash.clonedeep";
-import ProductList from "./components/product-list/ProductList.vue";
-import { ProductListOptions } from "./types/product-list/ProductListOptions";
+const props = defineProps<{
+  productListOptions: ProductListOptions
+}>()
 
-@Component({
-  name: "productList",
-  components: {
-    ProductList,
-  },
+const productList: Ref<null | any> = ref(null)
+
+const fullProductListOptions = computed((): ProductListOptions => {
+  return cloneDeep(props.productListOptions)
 })
-export default class ProductListEntry extends Vue {
-  @Prop() productListOptions!: ProductListOptions;
 
-  get fullProductListOptions(): ProductListOptions {
-    return cloneDeep(this.productListOptions);
-  }
-
-  fetch(): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.$refs.productList as any)?.fetch();
-  }
+const fetch = (): void => {
+  productList.value?.fetch()
 }
+
+defineExpose({ fetch })
 </script>
+
+<template>
+  <ProductList :options="fullProductListOptions" ref="productList" />
+</template>

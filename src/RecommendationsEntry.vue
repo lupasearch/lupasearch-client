@@ -1,29 +1,18 @@
-<template>
-  <Recommendations
-    :options="recommendationOptions"
-    ref="productRecommendations"
-  />
-</template>
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { type ProductRecommendationOptions, Recommendations } from '@getlupa/vue'
 
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import Recommendations from "./components/recommendations/Recommendations.vue";
-import { ProductRecommendationOptions } from "./types/recommendations/RecommendationsOptions";
+defineProps<{ recommendationOptions: ProductRecommendationOptions }>()
 
-@Component({
-  name: "recommendationsEntry",
-  components: {
-    Recommendations,
-  },
-})
-export default class RecommendationsEntry extends Vue {
-  @Prop() recommendationOptions!: ProductRecommendationOptions;
+const productRecommendations = ref(null)
 
-  fetch(): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.$refs.productRecommendations as any)?.fetch();
-  }
+const fetch = (): void => {
+  ;(productRecommendations as any)?.fetch()
 }
+
+defineExpose({ fetch })
 </script>
+
+<template>
+  <Recommendations :options="recommendationOptions" ref="productRecommendations" />
+</template>

@@ -1,34 +1,27 @@
+<script lang="ts" setup>
+import { cloneDeep, merge } from 'lodash'
+import { DEFAULT_SEARCH_BOX_OPTIONS } from './contstants/searchBox.const'
+import { computed, ref, type Ref } from 'vue'
+import { type SearchBoxOptions, SearchBox } from '@getlupa/vue'
+
+const props = defineProps<{
+  searchBoxOptions: SearchBoxOptions
+}>()
+
+const searchBox: Ref<null | any> = ref(null)
+
+const fullSearchBoxOptions = computed((): SearchBoxOptions => {
+  const options = cloneDeep(props.searchBoxOptions)
+  return merge(DEFAULT_SEARCH_BOX_OPTIONS, options)
+})
+
+const fetch = (): void => {
+  searchBox.value?.handleCurrentValueSearch()
+}
+
+defineExpose({ fetch })
+</script>
+
 <template>
   <SearchBox :options="fullSearchBoxOptions" ref="searchBox" />
 </template>
-
-<script lang="ts">
-import { SearchBoxOptions } from "@/types/search-box/SearchBoxOptions";
-import Vue from "vue";
-import Component from "vue-class-component";
-import { Prop } from "vue-property-decorator";
-import cloneDeep from "lodash.clonedeep";
-import SearchBox from "./components/search-box/SearchBox.vue";
-import { DEFAULT_SEARCH_BOX_OPTIONS } from "@/constants/searchBox.const";
-import { merge } from "@/utils/merger.utils";
-
-@Component({
-  name: "searchBox",
-  components: {
-    SearchBox,
-  },
-})
-export default class SearchBoxEntry extends Vue {
-  @Prop() searchBoxOptions!: SearchBoxOptions;
-
-  get fullSearchBoxOptions(): SearchBoxOptions {
-    const options = cloneDeep(this.searchBoxOptions);
-    return merge(DEFAULT_SEARCH_BOX_OPTIONS, options);
-  }
-
-  fetch(): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.$refs.searchBox as any)?.handleCurrentValueSearch();
-  }
-}
-</script>

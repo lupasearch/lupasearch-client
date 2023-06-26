@@ -3,7 +3,7 @@ import scss from "rollup-plugin-scss";
 export default {
   input: "styles/searchContainer/searchContainer.js",
   output: {
-    file: "dist/containerStyle.js",
+    file: "dist/lupaContainerStyle.js",
     format: "esm",
   },
   plugins: [
