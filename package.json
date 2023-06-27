@@ -5,7 +5,7 @@
   "module": "dist/index.mjs",
   "types": "dist/src/index.d.ts",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite & yarn css:watch",
     "css:watch": "rollup --config build/rollupContainerDev.config.js --bundleConfigAsCjs --watch",
     "build": "yarn build-only && yarn css",
     "css": "rollup --config build/lupaStyle.config.js --bundleConfigAsCjs",

@@ -192,7 +192,6 @@ const productList = (options: ProductListOptions, mountOptions?: MountOptions): 
 
 const searchContainer = (options: SearchContainerOptions, mountOptions?: MountOptions): void => {
   const existingInstance = app.searchContainer[options.trigger] as any
-  console.log(existingInstance)
   if (existingInstance) {
     existingInstance.searchContainerOptions.value = options
     existingInstance.reloadOptions()

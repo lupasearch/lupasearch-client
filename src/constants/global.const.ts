@@ -1,1 +1,1 @@
-export const DEFAULT_CONTAINER_STYLE = 'containerStyle.css'
+export const DEFAULT_CONTAINER_STYLE = '/containerStyle.css'

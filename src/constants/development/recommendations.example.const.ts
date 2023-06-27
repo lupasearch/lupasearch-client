@@ -4,7 +4,7 @@ import { SEARCH_RESULTS_CONFIGURATION } from './searchResultsDev.const'
 export const RECOMMENDATIONS_OPTIONS: ProductRecommendationOptions = {
   ...SEARCH_RESULTS_CONFIGURATION,
   containerSelector: '',
-  queryKey: 'lohywq8d066a',
+  queryKey: 'jnovl7k0kkvd',
   itemId: '1',
   abTesting: {
     enabled: false

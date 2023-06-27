@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { cloneDeep } from 'lodash'
+import { computed, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { type SearchContainerOptions, SearchContainer } from '@getlupa/vue'
 import { QUERY_PARAMS } from '../constants/queryParams.const'
 
@@ -53,7 +53,6 @@ const mountOpenListeners = (): void => {
 }
 
 onMounted(() => {
-  console.log('mounted')
   mountOpenListeners()
   checkExistingQuery()
   isOpen.value = Boolean(containerOptions.value?.options?.isOpenInitially)
