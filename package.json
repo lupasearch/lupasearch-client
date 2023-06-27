@@ -9,11 +9,13 @@
     "css:watch": "rollup --config build/rollupContainerDev.config.js --bundleConfigAsCjs --watch",
     "build": "yarn build-only && yarn css",
     "css": "rollup --config build/lupaStyle.config.js --bundleConfigAsCjs",
+    "cypress": "cypress",
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "test:e2e": "cypress run"
   },
   "dependencies": {
     "@getlupa/vue": "0.0.2",
@@ -29,6 +31,7 @@
     "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/test-utils": "^2.3.2",
     "@vue/tsconfig": "^0.4.0",
+    "cypress": "^10.6.0",
     "eslint": "^8.39.0",
     "eslint-plugin-vue": "^9.11.0",
     "jest-junit": "^16.0.0",
