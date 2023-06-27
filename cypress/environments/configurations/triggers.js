@@ -1,18 +1,14 @@
-import {
-  trackingOptions,
-  searchBoxOptions,
-  searchResultsOptions,
-} from "./base.js";
+import { trackingOptions, searchBoxOptions, searchResultsOptions } from './base.js'
 
-const lupaSearch = window.lupaSearch;
+const lupaSearch = window.lupaSearch
 
-lupaSearch.tracking(trackingOptions);
+lupaSearch.tracking(trackingOptions)
 lupaSearch.searchBox({
   ...searchBoxOptions,
-  searchTriggers: ["#trigger1", "#trigger2"],
-  minInputLength: 3,
-});
+  searchTriggers: ['#trigger1', '#trigger2'],
+  minInputLength: 3
+})
 getLupa.searchResults({
   ...searchResultsOptions,
-  disallowEmptyQuery: true,
-});
+  disallowEmptyQuery: true
+})

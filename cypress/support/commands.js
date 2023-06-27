@@ -25,14 +25,14 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("waitTimes", (alias, count) => {
+Cypress.Commands.add('waitTimes', (alias, count) => {
   for (; count; count--) {
-    cy.wait(alias);
+    cy.wait(alias)
   }
-});
+})
 
 Cypress.Commands.add(`hasBeenCalledTimes`, (alias, expectedNumberOfCalls) => {
   cy.get(`${alias}.all`).then((calls) => {
-    cy.wrap(calls.length).should(`equal`, expectedNumberOfCalls);
-  });
-});
+    cy.wrap(calls.length).should(`equal`, expectedNumberOfCalls)
+  })
+})

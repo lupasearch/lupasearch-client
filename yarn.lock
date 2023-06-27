@@ -193,10 +193,10 @@
   dependencies:
     ts-loader "^9.2.6"
 
-"@getlupa/vue@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.0.3.tgz#9e80141556ed1e19f0fb69bf8c99ce23db044324"
-  integrity sha512-mrCBozwnRjOgDIIPI5HyR5DJZN6XG7hALSxVl1iPaQDLr5v1LAPM1y3Muii5Wi/1F1ePlLWIYAOjv7yXQndMsg==
+"@getlupa/vue@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.0.5.tgz#8643e470f322bbe6adca33a16dd916f5d8b423b9"
+  integrity sha512-8UMC7UWeqmHZeph57g0waYU0jvhoXHA2wg4vch4mXcNeFnjLa8X0nn2yfeooU3wTBR9CzECPgoIVc/RwyXEl+w==
   dependencies:
     vue-slider-component "^4.1.0-beta.7"
 

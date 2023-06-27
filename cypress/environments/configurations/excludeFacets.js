@@ -1,13 +1,9 @@
-import {
-  trackingOptions,
-  searchBoxOptions,
-  searchResultsOptions,
-} from "./base.js";
+import { trackingOptions, searchBoxOptions, searchResultsOptions } from './base.js'
 
-const lupaSearch = window.lupaSearch;
+const lupaSearch = window.lupaSearch
 
-lupaSearch.tracking(trackingOptions);
-lupaSearch.searchBox(searchBoxOptions);
+lupaSearch.tracking(trackingOptions)
+lupaSearch.searchBox(searchBoxOptions)
 
 lupaSearch.searchResults({
   ...searchResultsOptions,
@@ -15,7 +11,7 @@ lupaSearch.searchResults({
     ...searchResultsOptions.filters,
     facets: {
       ...searchResultsOptions.filters.facets,
-      exclude: ["brand"],
-    },
-  },
-});
+      exclude: ['brand']
+    }
+  }
+})

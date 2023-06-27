@@ -161,7 +161,7 @@ export const SEARCH_RESULTS_CONFIGURATION = {
       key: 'name',
       isHtml: false,
       link: false,
-      className: "bold",
+      className: 'bold',
       maxLines: 2
     },
     {
