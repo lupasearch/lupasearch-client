@@ -1,42 +1,23 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/style.css" />
+    <script src="../../dist/lupaSearch.iife.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <link
-    rel="stylesheet"
-    href="../../dist/style.css"
-  />
-  <script src="../../dist/lupaSearch.iife.js"></script>
-</head>
+  <body>
+    <div style="height: 100vh; display: flex; flex-direction: column; margin: 10px">
+      <button id="trigger1" data-cy="lupa-trigger-test-button-1">Trigger search</button>
+      <button id="trigger2" data-cy="lupa-trigger-test-button-2">Trigger search</button>
+      <button id="trigger3" data-cy="lupa-trigger-test-button-invalid">Don't trigger search</button>
 
-<body>
-  <div style="height: 100vh; display: flex; flex-direction: column;margin: 10px;">
-    <button
-      id="trigger1"
-      data-cy="lupa-trigger-test-button-1"
-    >Trigger search</button>
-    <button
-      id="trigger2"
-      data-cy="lupa-trigger-test-button-2"
-    >Trigger search</button>
-    <button
-      id="trigger3"
-      data-cy="lupa-trigger-test-button-invalid"
-    >Don't trigger search</button>
-
-
-    <div id="searchBox"></div>
-    <div id="searchResultsContainer"></div>
-  </div>
-  <script
-    type="module"
-    src="./configurations/triggers.js"
-  ></script>
-</body>
-
+      <div>
+        <input type="text" id="searchBox" />
+      </div>
+      <div id="searchResultsContainer"></div>
+    </div>
+    <script type="module" src="./configurations/triggers.js"></script>
+  </body>
 </html>

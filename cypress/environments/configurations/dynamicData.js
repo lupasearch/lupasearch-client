@@ -60,7 +60,7 @@ lupaSearch.searchResults({
               dynamicPrice: (index + 1) * 10,
             }))
           );
-        }, 500)
+        }, 1500)
       );
     },
   },
