@@ -389,4 +389,32 @@ export type {
   RecommendationABTestingOptions
 }
 
+declare global {
+  interface Window {
+    getLupa: {
+      searchBox: (options: SearchBoxOptions) => void
+      searchResults: (options: SearchResultsOptions) => void
+      tracking: (options: TrackingOptions) => void
+      productList: (options: ProductListOptions) => void
+      clearSearchBox: () => void
+      clearSearchResults: () => void
+      clearProductList: () => void
+    }
+    lupaSearch: {
+      searchBox: (options: SearchBoxOptions) => void
+      searchResults: (options: SearchResultsOptions) => void
+      tracking: (options: TrackingOptions) => void
+      productList: (options: ProductListOptions) => void
+      clearSearchBox: () => void
+      clearSearchResults: () => void
+      clearProductList: () => void
+    }
+  }
+}
+
+if (window) {
+  window.getLupa = lupaSearch
+  window.lupaSearch = lupaSearch
+}
+
 export default lupaSearch

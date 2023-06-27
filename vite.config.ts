@@ -19,5 +19,8 @@ export default defineConfig({
       fileName: 'lupaSearch',
       formats: ['es', 'umd', 'iife', 'cjs']
     }
+  },
+  define: {
+    'process.env.NODE_ENV': '"production"'
   }
 })

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { AnchorPosition } from '@/types/search-results/SearchResultsProductCardOptions'
-import type { FacetStyle } from '@/types/search-results/SearchResultsOptions'
+
+import { AnchorPosition, FacetStyle } from '..'
 
 export const DEFAULT_OPTIONS_RESULTS = {
   options: {

@@ -1,1 +1,1 @@
-import '@getlupa/vue/dist/containerStyle.css'
+import '../../node_modules/@getlupa/vue/dist/containerStyle.css'
