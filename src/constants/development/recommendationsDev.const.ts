@@ -1,4 +1,4 @@
-import type { ProductRecommendationOptions } from '@/types/recommendations/RecommendationsOptions'
+import { ProductRecommendationOptions } from '@getlupa/vue'
 import { SEARCH_RESULTS_CONFIGURATION } from './searchResultsDev.const'
 
 export const RECOMMENDATIONS_OPTIONS: ProductRecommendationOptions = {

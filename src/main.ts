@@ -1,8 +1,7 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
+import { LupaSearch } from '@getlupa/vue'
 import AppProductList from './AppProductList.vue'
 import AppContainer from './AppContainer.vue'
 import AppRecommender from './AppRecommender.vue'
@@ -16,5 +15,6 @@ const Main = App
 const app = createApp(Main)
 
 app.use(createPinia())
+app.use(LupaSearch)
 
 app.mount('#app')

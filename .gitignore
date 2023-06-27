@@ -26,3 +26,8 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+src/constants/development/recommendationsDev.const.ts
+src/constants/development/searchBoxDev.const.ts
+src/constants/development/searchResultsDev.const.ts
+src/constants/development/searchContainerDev.const.ts

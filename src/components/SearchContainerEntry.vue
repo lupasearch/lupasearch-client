@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { cloneDeep } from 'lodash'
 import { type SearchContainerOptions, SearchContainer } from '@getlupa/vue'
-import { QUERY_PARAMS } from './contstants/queryParams.const'
+import { QUERY_PARAMS } from '../constants/queryParams.const'
 
 const props = defineProps<{
   searchContainerOptions: SearchContainerOptions

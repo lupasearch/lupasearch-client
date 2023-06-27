@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { cloneDeep, merge } from 'lodash'
-import { DEFAULT_SEARCH_BOX_OPTIONS } from './contstants/searchBox.const'
+import { DEFAULT_SEARCH_BOX_OPTIONS } from '../constants/searchBox.const'
 import { computed, ref, type Ref } from 'vue'
 import { type SearchBoxOptions, SearchBox } from '@getlupa/vue'
 

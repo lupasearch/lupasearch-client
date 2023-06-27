@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { cloneDeep, merge } from 'lodash'
 import { type Ref, ref, computed } from 'vue'
-import { DEFAULT_OPTIONS_RESULTS } from './contstants/searchResults.const'
+import { DEFAULT_OPTIONS_RESULTS } from '../constants/searchResults.const'
 
 import { type SearchResultsOptions, SearchResults } from '@getlupa/vue'
 
