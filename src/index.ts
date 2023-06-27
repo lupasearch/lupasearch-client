@@ -52,7 +52,7 @@ import SearchResultsEntry from '@/components/SearchResultsEntry.vue'
 import ProductListEntry from '@/components/ProductListEntry.vue'
 import SearchContainerEntry from '@/components/SearchContainerEntry.vue'
 import RecommendationsEntry from '@/components/RecommendationsEntry.vue'
-import { DEFAULT_CONTAINER_STYLE } from '@/contstants/global.const'
+import { DEFAULT_CONTAINER_STYLE } from '@/constants/global.const'
 import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
 
 type AppInstance = Record<string, Partial<ComponentPublicInstance> | null>
