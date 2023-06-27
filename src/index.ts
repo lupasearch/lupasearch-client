@@ -47,13 +47,13 @@ import { DocumentElementType, setupTracking } from '@getlupa/vue'
 
 import { createApp, type Component, type ComponentPublicInstance, reactive } from 'vue'
 
-import SearchBoxEntry from './SearchBoxEntry.vue'
-import SearchResultsEntry from './SearchResultsEntry.vue'
-import ProductListEntry from './ProductListEntry.vue'
-import SearchContainerEntry from './SearchContainerEntry.vue'
-import RecommendationsEntry from './RecommendationsEntry.vue'
-import { DEFAULT_CONTAINER_STYLE } from './contstants/global.const'
-import { attatchShadowDom, createShadowDom } from './utils/shadowDom.utils'
+import SearchBoxEntry from '@/components/SearchBoxEntry.vue'
+import SearchResultsEntry from '@/components/SearchResultsEntry.vue'
+import ProductListEntry from '@/components/ProductListEntry.vue'
+import SearchContainerEntry from '@/components/SearchContainerEntry.vue'
+import RecommendationsEntry from '@/components/RecommendationsEntry.vue'
+import { DEFAULT_CONTAINER_STYLE } from '@/contstants/global.const'
+import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
 
 type AppInstance = Record<string, Partial<ComponentPublicInstance> | null>
 
