@@ -2,7 +2,6 @@ import { searchBoxInput } from 'cypress/fields/SearchBox.fields.spec'
 import {
   searchResultsAllFilters,
   searchResultsCurrentFilters,
-  searchResultsFilterLabel,
   searchResultsFilterValue
 } from 'cypress/fields/Filters.fields.spec'
 import { filtersInterceptions } from 'cypress/utils/interceptions.utils'

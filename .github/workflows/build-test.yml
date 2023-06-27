@@ -18,4 +18,5 @@ jobs:
       - uses: c-hive/gha-yarn-cache@v2
       - run: yarn install
       - run: yarn build
+      - run: yarn lint
       - run: yarn test:e2e

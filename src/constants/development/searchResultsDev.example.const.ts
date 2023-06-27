@@ -1,9 +1,4 @@
-import {
-  SdkOptions,
-  SearchResultsSortOptions,
-  BadgeGenerateSeed,
-  DocumentElement
-} from '@getlupa/vue'
+import { SdkOptions, SearchResultsSortOptions, DocumentElement } from '@getlupa/vue'
 
 export const SEARCH_RESULTS_CONFIGURATION = {
   options: {
