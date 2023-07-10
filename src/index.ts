@@ -1,347 +1,334 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Vue from "vue";
-import Vuex from "vuex";
-import SearchBoxEntry from "./SearchBoxEntry.vue";
-import SearchResultsEntry from "./SearchResultsEntry.vue";
-import ProductListEntry from "./ProductListEntry.vue";
-import SearchContainerEntry from "./SearchContainerEntry.vue";
-import RecommendationsEntry from "./RecommendationsEntry.vue";
-import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
-import {
-  CallbackContext,
-  DynamicData,
-  FacetFilterQuery,
-  FacetStyle,
-  ResultFacetOptions,
-  SearchResultEventCallbacks,
-  SearchResultsFilterOptions,
-  SearchResultsOptions,
-} from "./types/search-results/SearchResultsOptions";
-import store from "./store";
-import {
-  SdkOptions,
-  TrackingOptions,
+import { Pinia, createPinia } from 'pinia'
+import type {
   Environment,
+  SdkOptions,
   SortDirection,
-} from "./types/General";
-import { initTracking } from "./utils/tracking.utils";
-import {
-  CategoryFilterOptions,
-  ProductListOptions,
-} from "./types/product-list/ProductListOptions";
-import {
-  AddToCartElement,
-  CustomDocumentElement,
-  CustomHtmlElement,
-  DescriptionDocumentElement,
+  TrackingOptions,
   DocumentElement,
-  DocumentElementType,
   ImageDocumentElement,
-  PriceElement,
-  RatingElement,
-  RegularPriceDocumentElement,
-  SingleStarRatingElement,
   TitleDocumentElement,
-} from "./types/DocumentElement";
-import { SearchBoxPanelType } from "./types/search-box/SearchBoxPanel";
-import { RoutingBehavior } from "./types/search-results/RoutingBehavior";
-import { AnchorPosition } from "./types/search-results/SearchResultsProductCardOptions";
-import {
-  BadgeGenerateOptions,
-  BadgeGenerateSeed,
-  BadgeOptions,
-  BadgeType,
-  SearchResultBadgeElement,
-  SearchResultBadgeType,
-} from "./types/search-results/BadgeOptions";
-import {
-  SearchResultsSortOptions,
-  SortOptions,
-} from "./types/search-results/SearchResultsSort";
-import { CombinedVueInstance } from "vue/types/vue";
-import {
-  SearchContainerConfigOptions,
-  SearchContainerOptions,
-} from "./types/search-container/SearchContainerOptions";
-import { attatchShadowDom, createShadowDom } from "./utils/shadowDom.utils";
-import { DEFAULT_CONTAINER_STYLE } from "./constants/global.const";
-import {
+  DescriptionDocumentElement,
+  CustomDocumentElement,
+  PriceElement,
+  RegularPriceDocumentElement,
+  RatingElement,
+  AddToCartElement,
+  CustomHtmlElement,
+  SingleStarRatingElement,
+  ProductListOptions,
+  CategoryFilterOptions,
   ProductRecommendationOptions,
   RecommendationABTestingOptions,
-} from "./types/recommendations/RecommendationsOptions";
+  SearchBoxOptions,
+  SearchBoxPanelType,
+  SearchContainerOptions,
+  SearchContainerConfigOptions,
+  BadgeType,
+  SearchResultBadgeType,
+  SearchResultBadgeElement,
+  BadgeGenerateSeed,
+  BadgeGenerateOptions,
+  BadgeOptions,
+  RoutingBehavior,
+  SearchResultsOptions,
+  FacetStyle,
+  SearchResultEventCallbacks,
+  CallbackContext,
+  FacetFilterQuery,
+  SearchResultsFilterOptions,
+  ResultFacetOptions,
+  DynamicData,
+  AnchorPosition,
+  SortOptions,
+  SearchResultsSortOptions
+} from '@getlupa/vue'
 
-type AppInstance = Record<
-  string,
-  CombinedVueInstance<
-    Vue,
-    Record<string, any>,
-    Record<string, any>,
-    Record<string, any>,
-    Record<never, any>
-  >
->;
+import { DocumentElementType, setupTracking } from '@getlupa/vue'
+
+import { createApp, type Component, type ComponentPublicInstance, reactive } from 'vue'
+
+import SearchBoxEntry from '@/components/SearchBoxEntry.vue'
+import SearchResultsEntry from '@/components/SearchResultsEntry.vue'
+import ProductListEntry from '@/components/ProductListEntry.vue'
+import SearchContainerEntry from '@/components/SearchContainerEntry.vue'
+import RecommendationsEntry from '@/components/RecommendationsEntry.vue'
+import { DEFAULT_CONTAINER_STYLE } from '@/constants/global.const'
+import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
+
+type AppInstance = Record<string, Partial<ComponentPublicInstance> | null>
+
 type AppInstances = Record<
-  "box" | "results" | "productList" | "searchContainer" | "recommendations",
+  'box' | 'results' | 'productList' | 'searchContainer' | 'recommendations',
   AppInstance
->;
+>
 
-type MountOptions = { fetch: boolean };
+type MountOptions = { fetch: boolean }
 
 const app: AppInstances = {
   box: {},
   results: {},
   productList: {},
   searchContainer: {},
-  recommendations: {},
-};
+  recommendations: {}
+}
+
+let piniaInstance: Pinia | null = null
+
+const initPinia = () => {
+  if (piniaInstance) {
+    return piniaInstance
+  }
+  const pinia = createPinia()
+  piniaInstance = pinia
+  return pinia
+}
 
 const tracking = (options: TrackingOptions): void => {
-  initTracking(options);
-  store.commit("options/setTrackingOptions", { options });
-};
+  setupTracking(options)
+}
 
-const applySearchBox = (
-  options: SearchBoxOptions,
-  mountOptions?: MountOptions
-): void => {
-  const existingInstance = app.box[options.inputSelector];
+const createVue = (
+  selector: string | Element,
+  rootComponent: Component,
+  options: Record<string, unknown>,
+  mountToParent = false
+) => {
+  const pinia = initPinia()
+  const element = typeof selector === 'string' ? document.querySelector(selector) : selector
+
+  const parent = element?.parentElement
+
+  const mountElement = mountToParent ? parent : element
+
+  if (!mountElement) {
+    console.error(`Cannot mount LupaSearch componbent. Element "${selector}" not found`)
+    return
+  }
+
+  const props = reactive({ ...options })
+  const app = createApp(rootComponent, props)
+
+  app.use(pinia)
+  const mountedApp = app.mount(mountElement)
+
+  if (mountToParent) {
+    element?.remove()
+  }
+
+  return mountedApp
+}
+
+const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
+  const existingInstance = app.box[options.inputSelector] as any
   if (existingInstance) {
-    existingInstance.searchBoxOptions = options;
+    existingInstance.searchBoxOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.();
-      });
+        existingInstance.fetch?.()
+      })
     }
-    return;
+    return
   }
-  Vue.use(Vuex);
-  const SearchBoxEntryComponent = Vue.component(
-    "SearchBoxEntry",
-    SearchBoxEntry
-  );
-  const instance = new SearchBoxEntryComponent({
-    el: options.inputSelector,
-    propsData: { searchBoxOptions: options },
-    store,
-  });
-  app.box[options.inputSelector] = instance;
-};
+  const instance = createVue(
+    options.inputSelector,
+    SearchBoxEntry,
+    { searchBoxOptions: options },
+    true
+  )
+  if (!instance) {
+    return
+  }
+  app.box[options.inputSelector] = instance
+}
 
-const searchBox = (
-  options: SearchBoxOptions,
-  mountOptions?: MountOptions
-): void => {
+const searchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
   // Support for multiple search box selectors separated by a comma
   // Quite often multiple search boxes are required, since mobile and desktop has different inputs in html layout
-  const inputs = options.inputSelector?.split(",");
+  const inputs = options.inputSelector?.split(',')
   for (const input of inputs) {
-    applySearchBox({ ...options, inputSelector: input.trim() }, mountOptions);
+    applySearchBox({ ...options, inputSelector: input.trim() }, mountOptions)
   }
-};
+}
 
-const searchResults = (
-  options: SearchResultsOptions,
-  mountOptions?: MountOptions
-): void => {
-  const existingInstance = app.results[options.containerSelector];
+const searchResults = (options: SearchResultsOptions, mountOptions?: MountOptions): void => {
+  const existingInstance = app.results[options.containerSelector] as any
   if (existingInstance) {
-    existingInstance.searchResultsOptions = options;
+    existingInstance.searchResultsOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.();
-      });
+        existingInstance.fetch?.()
+      })
     }
-    return;
+    return
   }
-  Vue.use(Vuex);
-  const SearchResultsEntryComponent = Vue.component(
-    "SearchResultsEntry",
-    SearchResultsEntry
-  );
-  const instance = new SearchResultsEntryComponent({
-    el: options.containerSelector,
-    propsData: { searchResultsOptions: options },
-    store,
-  });
-  app.results[options.containerSelector] = instance;
-};
+  const instance = createVue(options.containerSelector, SearchResultsEntry, {
+    searchResultsOptions: options
+  })
+  if (!instance) {
+    return
+  }
+  app.results[options.containerSelector] = instance
+}
 
-const productList = (
-  options: ProductListOptions,
-  mountOptions?: MountOptions
-): void => {
-  const existingInstance = app.productList[options.containerSelector];
+const productList = (options: ProductListOptions, mountOptions?: MountOptions): void => {
+  const existingInstance = app.productList[options.containerSelector] as any
   if (existingInstance) {
-    existingInstance.productListOptions = options;
+    existingInstance.productListOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.();
-      });
+        existingInstance.fetch?.()
+      })
     }
-    return;
+    return
   }
-  Vue.use(Vuex);
-  const ProductListEntryComponent = Vue.component(
-    "ProductListEntry",
-    ProductListEntry
-  );
-  const instance = new ProductListEntryComponent({
-    el: options.containerSelector,
-    propsData: { productListOptions: options },
-    store,
-  });
-  app.productList[options.containerSelector] = instance;
-};
+  const instance = createVue(options.containerSelector, ProductListEntry, {
+    productsListOptions: options
+  })
+  if (!instance) {
+    return
+  }
+  app.productList[options.containerSelector] = instance
+}
 
-const searchContainer = (
-  options: SearchContainerOptions,
-  mountOptions?: MountOptions
-): void => {
-  const existingInstance = app.searchContainer[options.trigger];
+const searchContainer = (options: SearchContainerOptions, mountOptions?: MountOptions): void => {
+  const existingInstance = app.searchContainer[options.trigger] as any
   if (existingInstance) {
-    existingInstance.searchContainerOptions = options;
-    existingInstance.reloadOptions();
+    existingInstance.searchContainerOptions.value = options
+    existingInstance.reloadOptions()
+    console.log(existingInstance)
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.();
-      });
+        existingInstance.fetch?.()
+      })
     }
-    return;
+    return
   }
-  Vue.use(Vuex);
-  const id = "lupa-search-container-manager";
-  const shadowId = "lupa-shadow-id";
-  const { host, manager } = createShadowDom(shadowId, id);
+  const id = 'lupa-search-container-manager'
+  const shadowId = 'lupa-shadow-id'
+  const { host, manager } = createShadowDom(shadowId, id)
   attatchShadowDom({
     host,
     manager,
     styleUrl: options.options?.styleLink ?? DEFAULT_CONTAINER_STYLE,
-    options: options.options,
-  });
-  document.body.appendChild(host);
-  const SearchContainerEntryComponent = Vue.component(
-    "SearchContainerEntry",
-    SearchContainerEntry
-  );
-  const instance = new SearchContainerEntryComponent({
-    el: manager,
-    propsData: { searchContainerOptions: options },
-    store,
-  });
-  app.searchContainer[options.trigger] = instance;
-};
+    options: options.options
+  })
+  document.body.appendChild(host)
+  const instance = createVue(manager, SearchContainerEntry, {
+    searchContainerOptions: options
+  })
+  if (!instance) {
+    return
+  }
+  app.searchContainer[options.trigger] = instance
+}
 
 const recommendations = (
   options: ProductRecommendationOptions,
   mountOptions?: MountOptions
 ): void => {
-  const existingInstance = app.recommendations[options.containerSelector];
+  const existingInstance = app.recommendations[options.containerSelector] as any
   if (existingInstance) {
-    existingInstance.recommendationOptions = options;
+    existingInstance.recommendationOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.();
-      });
+        existingInstance.fetch?.()
+      })
     }
-    return;
+    return
   }
-  Vue.use(Vuex);
-  const RecommendationsEntryComponent = Vue.component(
-    "SearchResultsEntry",
-    RecommendationsEntry
-  );
-  const instance = new RecommendationsEntryComponent({
-    el: options.containerSelector,
-    propsData: { recommendationOptions: options },
-    store,
-  });
-  app.recommendations[options.containerSelector] = instance;
-};
+
+  const instance = createVue(options.containerSelector, RecommendationsEntry, {
+    recommendationOptions: options
+  })
+  if (!instance) {
+    return
+  }
+
+  app.recommendations[options.containerSelector] = instance
+}
+
+const clearInstance = (selector: string) => {
+  const element = document.querySelector(selector)
+  if (!element) {
+    return
+  }
+  document.body.removeChild(element)
+}
 
 const clearSearchBox = (selector?: string): void => {
   try {
     if (selector) {
-      const instance = app.box[selector];
-      instance?.$destroy();
-      return;
+      app.box[selector] = null
+      clearInstance(selector)
     }
     for (const key in app.box) {
-      const instance = app.box[key];
-      instance?.$destroy();
+      clearInstance(key)
     }
-    app.box = {};
+    app.box = {}
   } catch {
     // do nothing, already destroyed;
   }
-};
+}
 
 const clearSearchResults = (selector?: string): void => {
   try {
     if (selector) {
-      const instance = app.results[selector];
-      instance?.$destroy();
-      return;
+      app.results[selector] = null
+      clearInstance(selector)
     }
     for (const key in app.results) {
-      const instance = app.results[key];
-      instance?.$destroy();
+      clearInstance(key)
     }
-    app.results = {};
+    app.results = {}
   } catch {
     // do nothing, already destroyed;
   }
-};
+}
 
 const clearProductList = (selector?: string): void => {
   try {
     if (selector) {
-      const instance = app.productList[selector];
-      instance?.$destroy();
-      return;
+      app.productList[selector] = null
+      clearInstance(selector)
     }
     for (const key in app.productList) {
-      const instance = app.productList[key];
-      instance?.$destroy();
+      clearInstance(key)
     }
-    app.productList = {};
+    app.productList = {}
   } catch {
     // do nothing, already destroyed;
   }
-};
+}
 
 const clearSearchContainer = (selector?: string): void => {
   try {
     if (selector) {
-      const instance = app.searchContainer[selector];
-      instance?.$destroy();
-      return;
+      app.searchContainer[selector] = null
+      clearInstance(selector)
     }
     for (const key in app.searchContainer) {
-      const instance = app.searchContainer[key];
-      instance?.$destroy();
+      clearInstance(key)
     }
-    app.searchContainer = {};
+    app.searchContainer = {}
   } catch {
     // do nothing, already destroyed;
   }
-};
+}
 
 const clearRecommendations = (selector?: string): void => {
   try {
     if (selector) {
-      const instance = app.recommendations[selector];
-      instance?.$destroy();
-      return;
+      app.recommendations[selector] = null
+      clearInstance(selector)
     }
     for (const key in app.recommendations) {
-      const instance = app.recommendations[key];
-      instance?.$destroy();
+      clearInstance(key)
     }
-    app.recommendations = {};
+    app.recommendations = {}
   } catch {
     // do nothing, already destroyed;
   }
-};
+}
 
 const lupaSearch = {
   searchBox,
@@ -354,22 +341,21 @@ const lupaSearch = {
   clearSearchResults,
   clearProductList,
   clearSearchContainer,
-  clearRecommendations,
-};
+  clearRecommendations
+}
 
-export {
+export { DocumentElementType, SearchBoxPanelType, BadgeType }
+
+export type {
   TrackingOptions,
   SearchBoxOptions,
   SearchResultsOptions,
   ProductListOptions,
   SdkOptions,
-  DocumentElementType,
-  SearchBoxPanelType,
   FacetStyle,
   Environment,
   RoutingBehavior,
   AnchorPosition,
-  BadgeType,
   SortDirection,
   DocumentElement,
   ImageDocumentElement,
@@ -400,7 +386,35 @@ export {
   SingleStarRatingElement,
   DynamicData,
   ProductRecommendationOptions,
-  RecommendationABTestingOptions,
-};
+  RecommendationABTestingOptions
+}
 
-export default lupaSearch;
+declare global {
+  interface Window {
+    getLupa: {
+      searchBox: (options: SearchBoxOptions) => void
+      searchResults: (options: SearchResultsOptions) => void
+      tracking: (options: TrackingOptions) => void
+      productList: (options: ProductListOptions) => void
+      clearSearchBox: () => void
+      clearSearchResults: () => void
+      clearProductList: () => void
+    }
+    lupaSearch: {
+      searchBox: (options: SearchBoxOptions) => void
+      searchResults: (options: SearchResultsOptions) => void
+      tracking: (options: TrackingOptions) => void
+      productList: (options: ProductListOptions) => void
+      clearSearchBox: () => void
+      clearSearchResults: () => void
+      clearProductList: () => void
+    }
+  }
+}
+
+if (window) {
+  window.getLupa = lupaSearch
+  window.lupaSearch = lupaSearch
+}
+
+export default lupaSearch

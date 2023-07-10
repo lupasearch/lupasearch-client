@@ -1,46 +1,46 @@
 export const DEFAULT_SEARCH_BOX_OPTIONS = {
-  inputSelector: "#searchBox",
+  inputSelector: '#searchBox',
   options: {
-    environment: "production",
+    environment: 'production'
   },
   showTotalCount: false,
   minInputLength: 1,
   inputAttributes: {
-    name: "q",
+    name: 'q'
   },
   debounce: 0,
   labels: {
-    placeholder: "Search for products...",
-    noResults: "There are no results found.",
-    moreResults: "Show more results",
-    currency: "€",
-    defaultFacetLabel: "Category:",
+    placeholder: 'Search for products...',
+    noResults: 'There are no results found.',
+    moreResults: 'Show more results',
+    currency: '€',
+    defaultFacetLabel: 'Category:'
   },
   links: {
-    searchResults: "/search",
+    searchResults: '/search'
   },
   panels: [
     {
-      type: "suggestion",
-      queryKey: "",
+      type: 'suggestion',
+      queryKey: '',
       highlight: true,
-      limit: 5,
+      limit: 5
     },
     {
-      type: "document",
-      queryKey: "",
+      type: 'document',
+      queryKey: '',
       limit: 5,
       searchBySuggestion: false,
       links: {
-        details: "{url}",
+        details: '{url}'
       },
-      titleKey: "name",
-      elements: [],
-    },
+      titleKey: 'name',
+      elements: []
+    }
   ],
   history: {
     labels: {
-      clear: "Clear History",
-    },
-  },
-};
+      clear: 'Clear History'
+    }
+  }
+}

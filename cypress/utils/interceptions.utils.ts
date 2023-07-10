@@ -1,23 +1,23 @@
-import { FilterGroup, Document } from "@getlupa/client-sdk/Types";
-import data from "../fixtures/data.json";
+import { FilterGroup, Document } from '@getlupa/client-sdk/Types'
+import data from '../fixtures/data.json'
 
 export type InterceptionFilterInfo = {
-  filters?: FilterGroup;
-  slice?: number;
-};
+  filters?: FilterGroup
+  slice?: number
+}
 
 export const tracingInterceptions = (): void => {
-  searchBoxInterceptions();
-  fetchAdditionalPanelsInterception();
-  fetchResultsInterception();
-};
+  searchBoxInterceptions()
+  fetchAdditionalPanelsInterception()
+  fetchResultsInterception()
+}
 
 export const searchBoxInterceptions = (): void => {
-  fetchSuggestionsInterception();
-  fetchDocumentInterception();
-  trackEventInterception();
-  fetchFacetSuggestionsInterception();
-};
+  fetchSuggestionsInterception()
+  fetchDocumentInterception()
+  trackEventInterception()
+  fetchFacetSuggestionsInterception()
+}
 
 export const searchResultsInterceptions = (
   sort?: boolean,
@@ -25,53 +25,49 @@ export const searchResultsInterceptions = (
   limit?: number,
   total?: number
 ): void => {
-  fetchAdditionalPanelsInterception();
+  fetchAdditionalPanelsInterception()
 
-  let items = data.document.items;
+  let items = data.document.items
   if (more) {
     for (let i = 0; i < 5; i++) {
-      items = items.concat(data.document.items);
+      items = items.concat(data.document.items)
     }
   }
   if (sort) {
     items = items.sort((a, b) =>
-      Number(a.final_cardholder_price) > Number(b.final_cardholder_price)
-        ? 1
-        : -1
-    );
+      Number(a.final_cardholder_price) > Number(b.final_cardholder_price) ? 1 : -1
+    )
   }
-  fetchResultsInterception(items, limit, total);
-};
+  fetchResultsInterception(items, limit, total)
+}
 
-export const filtersInterceptions = (
-  filterInfo?: InterceptionFilterInfo
-): void => {
+export const filtersInterceptions = (filterInfo?: InterceptionFilterInfo): void => {
   if (filterInfo) {
-    fetchResultsWithFilterInterception(filterInfo);
+    fetchResultsWithFilterInterception(filterInfo)
   } else {
-    fetchResultsInterception();
+    fetchResultsInterception()
   }
-};
+}
 
 export const fetchSimilarQueriesResultsInterception = (): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "*/query/results",
+      method: 'POST',
+      url: '*/query/results'
     },
     data.similarQueriesDocument
-  ).as("fetchResults");
-};
+  ).as('fetchResults')
+}
 
 const fetchAdditionalPanelsInterception = (): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "*/query/additionalPanels",
+      method: 'POST',
+      url: '*/query/additionalPanels'
     },
     data.document
-  ).as("fetchAdditionalPanels");
-};
+  ).as('fetchAdditionalPanels')
+}
 const fetchResultsInterception = (
   items: Document[] = data.document.items,
   limit = 5,
@@ -79,67 +75,65 @@ const fetchResultsInterception = (
 ): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "*/query/results",
+      method: 'POST',
+      url: '*/query/results'
     },
     {
       ...data.document,
       items: items.slice(0, limit),
       limit,
-      total,
+      total
     }
-  ).as("fetchResults");
-};
-const fetchResultsWithFilterInterception = (
-  filterInfo: InterceptionFilterInfo
-): void => {
+  ).as('fetchResults')
+}
+const fetchResultsWithFilterInterception = (filterInfo: InterceptionFilterInfo): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "*/query/results",
+      method: 'POST',
+      url: '*/query/results'
     },
     {
       ...data.document,
       filters: filterInfo.filters || {},
-      items: data.document.items.slice(filterInfo.slice || 0),
+      items: data.document.items.slice(filterInfo.slice || 0)
     }
-  ).as("fetchResults");
-};
+  ).as('fetchResults')
+}
 const fetchSuggestionsInterception = (): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "**/query/suggestion",
+      method: 'POST',
+      url: '**/query/suggestion'
     },
     data.suggestions
-  ).as("fetchSuggestions");
-};
+  ).as('fetchSuggestions')
+}
 
 const fetchFacetSuggestionsInterception = (): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "**/query/facet-suggestion",
+      method: 'POST',
+      url: '**/query/facet-suggestion'
     },
     data.facetSuggestions
-  ).as("fetchFacetSuggestions");
-};
+  ).as('fetchFacetSuggestions')
+}
 
 const fetchDocumentInterception = (): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "**/query/document",
+      method: 'POST',
+      url: '**/query/document'
     },
     data.document
-  ).as("fetchDocument");
-};
+  ).as('fetchDocument')
+}
 const trackEventInterception = (): void => {
   cy.intercept(
     {
-      method: "POST",
-      url: "*/events",
+      method: 'POST',
+      url: '*/events'
     },
     data.eventResponse
-  ).as("trackEvent");
-};
+  ).as('trackEvent')
+}

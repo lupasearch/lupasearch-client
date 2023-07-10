@@ -1,38 +1,33 @@
-.DS_Store
-node_modules
-/dist
-
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+/cypress/videos/
+/cypress/screenshots/
 
 # Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
-.vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-/cypress/integration/examples
-/cypress/videos/
-/cypress/screenshots/
-
-# Development configuration
-
+src/constants/development/recommendationsDev.const.ts
 src/constants/development/searchBoxDev.const.ts
 src/constants/development/searchResultsDev.const.ts
-src/constants/development/searchProductListDev.const.ts
-src/constants/development/recommendationsDev.const.ts
-
-# Dynamic container css
-
-public/containerStyle.css
+src/constants/development/searchContainerDev.const.ts

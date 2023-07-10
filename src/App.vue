@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { merge } from './utils/merger.utils'
+import { SEARCH_BOX_CONFIGURATION } from './constants/development/searchBoxDev.const'
+import { SEARCH_RESULTS_CONFIGURATION } from './constants/development/searchResultsDev.const'
+import { DEFAULT_SEARCH_BOX_OPTIONS } from './constants/searchBox.const'
+import { DEFAULT_OPTIONS_RESULTS } from './constants/searchResults.const'
+import { SearchBox, SearchBoxOptions, SearchResults, SearchResultsOptions } from '@getlupa/vue'
+import '@getlupa/vue/dist/style.css'
+
+const fullSearchBoxOptions = computed((): SearchBoxOptions => {
+  return merge(DEFAULT_SEARCH_BOX_OPTIONS, SEARCH_BOX_CONFIGURATION as unknown as SearchBoxOptions)
+})
+
+const fullSearchResultsOptions = computed((): SearchResultsOptions => {
+  return merge(DEFAULT_OPTIONS_RESULTS, SEARCH_RESULTS_CONFIGURATION as unknown as SearchBoxOptions)
+})
+</script>
+
 <template>
   <div id="app" class="wrapper">
     <!-- Following icon fonts are available during the plugin development only -->
@@ -11,69 +30,14 @@
       href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css"
       rel="stylesheet"
     />
-    <div class="recommendations-wrapper">
-      <Recommendations :options="recommendationsOptions" />
+    <div class="box-wrapper">
+      <SearchBox :options="fullSearchBoxOptions" />
+    </div>
+    <div class="result-wrapper">
+      <SearchResults :options="fullSearchResultsOptions" />
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import SearchBox from "./components/search-box/SearchBox.vue";
-import SearchResults from "./components/search-results/SearchResults.vue";
-import { DEFAULT_SEARCH_BOX_OPTIONS } from "./constants/searchBox.const";
-import { DEFAULT_OPTIONS_RESULTS } from "./constants/searchResults.const";
-import { SearchBoxOptions } from "./types/search-box/SearchBoxOptions";
-import { SearchResultsOptions } from "./types/search-results/SearchResultsOptions";
-import { merge } from "./utils/merger.utils";
-import "../styles/clients/lupa/lupa";
-import { SEARCH_BOX_CONFIGURATION } from "./constants/development/searchBoxDev.const";
-import { SEARCH_RESULTS_CONFIGURATION } from "./constants/development/searchResultsDev.const";
-import { PRODUCT_LIST_CONFIGURATION } from "./constants/development/searchProductListDev.const";
-import { ProductListOptions } from "./types/product-list/ProductListOptions";
-import ProductList from "./components/product-list/ProductList.vue";
-import { ProductRecommendationOptions } from "./types/recommendations/RecommendationsOptions";
-import { RECOMMENDATIONS_OPTIONS } from "./constants/development/recommendationsDev.const";
-import Recommendations from "./components/recommendations/Recommendations.vue";
-
-@Component({
-  name: "getLupa",
-  components: {
-    SearchBox,
-    SearchResults,
-    ProductList,
-    Recommendations,
-  },
-})
-export default class App extends Vue {
-  get fullSearchBoxOptions(): SearchBoxOptions {
-    return merge(
-      DEFAULT_SEARCH_BOX_OPTIONS,
-      SEARCH_BOX_CONFIGURATION as unknown as SearchBoxOptions
-    );
-  }
-
-  get fullSearchResultsOptions(): SearchResultsOptions {
-    return merge(
-      DEFAULT_OPTIONS_RESULTS,
-      SEARCH_RESULTS_CONFIGURATION as unknown as SearchBoxOptions
-    );
-  }
-
-  get fullProductListOptions(): ProductListOptions {
-    return {
-      ...this.fullSearchResultsOptions,
-      ...PRODUCT_LIST_CONFIGURATION,
-    };
-  }
-
-  get recommendationsOptions(): ProductRecommendationOptions {
-    console.log(RECOMMENDATIONS_OPTIONS.options);
-    return RECOMMENDATIONS_OPTIONS;
-  }
-}
-</script>
-
 <style lang="scss">
 #app {
   height: auto;

@@ -15,7 +15,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./commands";
+import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -32,8 +32,8 @@ declare global {
        * @param alias - {string|number} the alias or seconds to wait for
        * @param count - {number} number of times to wait for
        */
-      waitTimes(alias: string | number, count: number): Chainable<Element>;
-      hasBeenCalledTimes(alias: string, count: number): Chainable<Element>;
+      waitTimes(alias: string | number, count: number): Chainable<Element>
+      hasBeenCalledTimes(alias: string, count: number): Chainable<Element>
     }
   }
 }

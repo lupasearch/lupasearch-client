@@ -1,28 +1,19 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../dist/style.css" />
+    <script src="../../dist/lupaSearch.iife.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <link
-    rel="stylesheet"
-    href="../../dist/style.css"
-  />
-  <script src="../../dist/iife/index.min.js"></script>
-</head>
-
-<body>
-  <div style="height: 100vh; display: flex; flex-direction: column;margin: 10px;">
-    <div id="searchBox"></div>
-    <div id="searchResultsContainer"></div>
-  </div>
-  <script
-    type="module"
-    src="./configurations/dynamicData.js"
-  ></script>
-</body>
-
+  <body>
+    <div style="height: 100vh; display: flex; flex-direction: column; margin: 10px">
+      <div>
+        <input type="text" id="searchBox" />
+      </div>
+      <div id="searchResultsContainer"></div>
+    </div>
+    <script type="module" src="./configurations/dynamicData.js"></script>
+  </body>
 </html>

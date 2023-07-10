@@ -1,26 +1,21 @@
-import Vue from "vue";
-import App from "./App.vue";
-import store from "./store";
-import { initTracking } from "./utils/tracking.utils";
-import { TrackingOptions } from "./types/General";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import { LupaSearch } from '@getlupa/vue'
+import AppProductList from './AppProductList.vue'
+import AppContainer from './AppContainer.vue'
+import AppRecommender from './AppRecommender.vue'
 
-Vue.config.productionTip = false;
+// For Dev: select feature:
+// const Main = AppRecommender
+const Main = AppContainer
+// const Main = AppProductList
+// const Main = App
 
-new Vue({
-  store,
-  render: (h) => h(App),
-}).$mount("#app");
+const app = createApp(Main)
 
-const options: TrackingOptions = {
-  trackBase: true,
-  trackSession: true,
-  trackUser: true,
-  analytics: {
-    enabled: true,
-    parentEventName: "LupaSearch",
-    type: "debug",
-  },
-};
+app.use(createPinia())
+app.use(LupaSearch)
 
-initTracking(options);
-store.commit("options/setTrackingOptions", { options });
+app.mount('#app')

@@ -1,11 +1,4 @@
-import basePluginConfig from "./basePlugin.config";
-import iifePlugin from "./iifePlugin";
-import lupaContainerStyleConfig from "./lupaContainerStyle.config";
-import lupaStyleConfig from "./lupaStyle.config";
+import lupaContainerStyleConfig from './lupaContainerStyle.config'
+import lupaStyleConfig from './lupaContainerStyle.config'
 
-export default [
-  basePluginConfig,
-  iifePlugin,
-  lupaStyleConfig,
-  lupaContainerStyleConfig,
-];
+export default [lupaContainerStyleConfig, lupaStyleConfig]

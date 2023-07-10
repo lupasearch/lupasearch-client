@@ -1,197 +1,196 @@
-import { SdkOptions } from "@/types/General";
-import { DocumentElement } from "@/types/DocumentElement";
-import { SearchResultBadgeOptions } from "@/types/search-results/SearchResultsProductCardOptions";
-import { SearchResultsSortOptions } from "@/types/search-results/SearchResultsSort";
+import { SdkOptions, SearchResultsSortOptions, DocumentElement } from '@getlupa/vue'
 
 export const SEARCH_RESULTS_CONFIGURATION = {
   options: {
-    environment: "production",
+    environment: 'production'
   } as SdkOptions,
-  queryKey: "0zcly1frbyyi",
+  queryKey: 'jnovl7k0kkvd',
   labels: {
-    pageSize: "Page size:",
-    sortBy: "Sort by:",
-    itemCount: "Items {1} of {2}",
-    currency: "€",
-    priceSeparator: ",",
-    showMore: "Show more",
-    emptyResults: "There are no results for the query:",
-    noItemsInPage: "There are no results in this page",
-    backToFirstPage: "Go back to the first page",
-    mobileFilterButton: "Filter",
-    htmlTitleTemplate: "Search Query: '{1}'",
-    noResultsSuggestion: "No results found for this query: {1}",
-    didYouMean: "Did you mean to search: {1}",
-    similarQuery: "Search results for phrase {1}",
-    similarQueries: "Similar queries:",
-    aiSuggestions: "Other suggestions:",
+    pageSize: 'Page size:',
+    sortBy: 'Sort by:',
+    itemCount: 'Items {1} of {2}',
+    currency: '€',
+    priceSeparator: ',',
+    showMore: 'Show more',
+    emptyResults: 'There are no results for the query:',
+    noItemsInPage: 'There are no results in this page',
+    backToFirstPage: 'Go back to the first page',
+    mobileFilterButton: 'Filter',
+    htmlTitleTemplate: "Search Query: '{1}' zeeawaw",
+    noResultsSuggestion: 'No results found for this query: {1}',
+    didYouMean: 'Did you mean to search: {1}',
+    similarQuery: 'Search results for phrase {1}',
+    similarQueries: 'Similar queries:',
+    aiSuggestions: 'Other suggestions:'
   },
   toolbar: {
-    totalCount: true,
+    totalCount: true
   },
   grid: {
     columns: {
-      xl: 3,
-      l: 3,
+      xl: 5,
+      l: 4,
       md: 3,
       sm: 3,
-      xs: 2,
-    },
+      xs: 2
+    }
   },
   pagination: {
     sizeSelection: {
       position: {
         top: true,
-        bottom: false,
+        bottom: false
       },
-      sizes: [12, 24, 36, 72],
+      sizes: [12, 24, 36, 72]
     },
     pageSelection: {
       position: {
         top: false,
-        bottom: true,
+        bottom: true
       },
-      display: 5,
-    },
+      display: 5
+    }
   },
   sort: [
     {
-      key: "relevance",
-      label: "Relevance",
-      config: [{ _relevance: "desc" }],
+      key: 'relevance',
+      label: 'Relevance',
+      config: [{ _relevance: 'desc' }]
     },
     {
-      key: "nameDesc",
-      label: "Name (Descending)",
-      config: [{ product_name: "desc" }],
+      key: 'nameDesc',
+      label: 'Name (Descending)',
+      config: [{ product_name: 'desc' }]
     },
     {
-      key: "nameAsc",
-      label: "Name (Ascending)",
-      config: [{ product_name: "asc" }],
+      key: 'nameAsc',
+      label: 'Name (Ascending)',
+      config: [{ product_name: 'asc' }]
     },
     {
-      key: "priceDesc",
-      label: "Price (High to Low)",
-      config: [{ discount_price: "desc" }],
+      key: 'priceDesc',
+      label: 'Price (High to Low)',
+      config: [{ discount_price: 'desc' }]
     },
     {
-      key: "priceAsc",
-      label: "Price (Low to High)",
-      config: [{ discount_price: "asc" }],
+      key: 'priceAsc',
+      label: 'Price (Low to High)',
+      config: [{ discount_price: 'asc' }]
     },
     {
-      key: "discountDesc",
-      label: "Biggest Discount",
-      config: [{ discount: "desc" }],
-    },
+      key: 'discountDesc',
+      label: 'Biggest Discount',
+      config: [{ discount: 'desc' }]
+    }
   ] as SearchResultsSortOptions[],
   filters: {
     currentFilters: {
       visibility: {
-        mobileSidebar: true,
+        mobileSidebar: false,
         mobileToolbar: true,
         desktopToolbar: false,
-        desktopSidebar: true,
+        desktopSidebar: true
       },
       labels: {
-        title: "Current filters:",
-        clearAll: "Clear all",
+        title: 'Current filters:',
+        clearAll: 'Clear all'
       },
       mobileSidebar: {
         showFilterCount: false,
-        activeFiltersExpanded: false,
+        activeFiltersExpanded: true
       },
       desktopToolbar: {
-        activeFiltersExpanded: false,
-      },
+        activeFiltersExpanded: true
+      }
     },
     facets: {
       labels: {
-        title: "Filters:",
-        showAll: "Show more",
-        showLess: "Show less",
-        facetFilter: "Filter...",
+        title: 'Filters:',
+        showAll: 'Show more',
+        showLess: 'Show less',
+        facetFilter: 'Filter...'
       },
       hierarchy: {
         maxInitialLevel: 2,
         topLevelValueCountLimit: 0,
-        filterable: false,
+        filterable: false
       },
       stats: {
         slider: true,
         inputs: true,
         labels: {
-          from: "From:",
-          to: "To:",
-        },
+          from: 'From:',
+          to: 'To:'
+        }
       },
       filterable: {
-        minValues: 10,
+        minValues: 10
       },
       facetValueCountLimit: 15,
-      showDocumentCount: true,
-    },
+      showDocumentCount: true
+    }
   },
-  isInStock: (): boolean => {
-    return true;
+  isInStock: (doc: any): boolean => {
+    return Boolean(doc)
   },
-  badges: {} as SearchResultBadgeOptions,
   links: {
-    details: "{url}",
+    details: '{url}'
   },
-  idKey: "id",
-  titleKey: "name",
+  idKey: 'id',
+  titleKey: 'name',
   elements: [
     {
-      type: "image",
+      type: 'image',
+      key: 'image',
       placeholder:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/638px-Placeholder_view_vector.svg.png",
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/638px-Placeholder_view_vector.svg.png'
     },
     {
-      type: "title",
-      key: "product_name",
+      type: 'custom',
+      key: 'brand',
+      className: 'lupa-custom-brand',
+      action: (doc: any) => console.log('brand click', doc)
+    },
+    {
+      type: 'title',
+      key: 'name',
       isHtml: false,
       link: false,
-      maxLines: 2,
+      className: 'bold',
+      maxLines: 2
     },
     {
-      type: "custom",
-      key: "id",
-      className: "lupa-custom-id",
+      type: 'description',
+      key: 'description',
+      maxLines: 3
     },
     {
-      type: "custom",
-      key: "brand",
-      className: "lupa-custom-brand",
-    },
-    {
-      type: "customHtml",
-      display: (doc: Record<string, string>) =>
-        doc.discount_price < doc.regular_price,
+      type: 'customHtml',
+      display: (doc: Record<string, string>) => doc.price < doc.price,
       html: (doc: Record<string, string>) => {
-        const discountPrice = parseFloat(doc.discount_price)
-          ?.toFixed(2)
-          ?.replace(".", ",");
-        const regularPrice = parseFloat(doc.regular_price)
-          ?.toFixed(2)
-          ?.replace(".", ",");
-        const discount = `<span class="lupa-discount">${discountPrice} €</span>`;
-        const regular = `<span class="lupa-regular">${regularPrice} €</span>`;
-        return discount + regular;
+        const discountPrice = parseFloat(doc.price)?.toFixed(2)?.replace('.', ',')
+        const regularPrice = parseFloat(doc.price)?.toFixed(2)?.replace('.', ',')
+        const discount = `<span class="lupa-discount">${discountPrice} €</span>`
+        const regular = `<span class="lupa-regular">${regularPrice} €</span>`
+        return discount + regular
       },
+      action: (doc: any) => console.log('price 1 click', doc)
     },
     {
-      type: "customHtml",
-      display: (doc: Record<string, string>) =>
-        doc.discount_price >= doc.regular_price,
+      type: 'customHtml',
+      display: (doc: Record<string, string>) => doc.price >= doc.price,
       html: (doc: Record<string, string>) => {
-        const price = parseFloat(doc.regular_price)
-          ?.toFixed(2)
-          ?.replace(".", ",");
-        return `<span class="lupa-final">${price} €</span>`;
+        const price = parseFloat(doc.price)?.toFixed(2)?.replace('.', ',')
+        return `<span class="lupa-final">${price} €</span>`
       },
-    },
+      action: (doc: any) => console.log('price 2 click', doc)
+    }
   ] as DocumentElement[],
-  breadcrumbs: [{ label: "Main", link: "/" }, { label: "Search: {1}" }],
-};
+  breadcrumbs: [{ label: 'Main', link: '/link-to-someplace/' }, { label: 'Search: {1}' }],
+  dynamicData: {
+    enabled: true,
+    handler: async (ids: string[]) => {
+      console.log('requesting dynamic data for ids', ids)
+    }
+  }
+}

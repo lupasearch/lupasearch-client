@@ -1,19 +1,24 @@
-import { ProductRecommendationOptions } from "@/types/recommendations/RecommendationsOptions";
-import { SEARCH_RESULTS_CONFIGURATION } from "./searchResultsDev.const";
+import { ProductRecommendationOptions } from '@getlupa/vue'
+import { SEARCH_RESULTS_CONFIGURATION } from './searchResultsDev.const'
 
 export const RECOMMENDATIONS_OPTIONS: ProductRecommendationOptions = {
   ...SEARCH_RESULTS_CONFIGURATION,
-  containerSelector: "",
-  queryKey: "lohywq8d066a",
-  itemId: "1",
+  containerSelector: '',
+  queryKey: 'jnovl7k0kkvd',
+  itemId: '1',
   abTesting: {
-    enabled: false,
+    enabled: false
   },
   carousel: {
-    pageSizes: [
-      // browser width x, item count per carousel page
-      [768, 3],
-      [1024, 4],
-    ],
-  },
-};
+    scrollPerPage: 4,
+    itemsToShow: 8,
+    breakpoints: {
+      768: {
+        itemsToShow: 4
+      },
+      1024: {
+        itemsToShow: 5
+      }
+    }
+  }
+}
