@@ -193,12 +193,10 @@
   dependencies:
     ts-loader "^9.2.6"
 
-"@getlupa/vue@0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.0.5.tgz#8643e470f322bbe6adca33a16dd916f5d8b423b9"
-  integrity sha512-8UMC7UWeqmHZeph57g0waYU0jvhoXHA2wg4vch4mXcNeFnjLa8X0nn2yfeooU3wTBR9CzECPgoIVc/RwyXEl+w==
-  dependencies:
-    vue-slider-component "^4.1.0-beta.7"
+"@getlupa/vue@0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.0.14.tgz#c6ed75b80a945349c4bb4a73e2fa5d6ba7e3f2ad"
+  integrity sha512-o0Q5OxrvaMR7DJamCmc0aEjQDQOS75i645gltEiNyCKPwpnXMQTiWBgXKP2ysPeKij7zPm5u/aPqZa+GMiVxJA==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
@@ -4235,11 +4233,6 @@ vue-eslint-parser@^9.1.1, vue-eslint-parser@^9.3.0:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
-
-vue-slider-component@^4.1.0-beta.7:
-  version "4.1.0-beta.7"
-  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-4.1.0-beta.7.tgz#f6aaac2557df8b9d5460482e2576a009d0ed2dae"
-  integrity sha512-Qb7K920ZG7PoQswoF6Ias+i3W2rd3k4fpk04JUl82kEUcN86Yg6et7bVSKWt/7VpQe8a5IT3BqCKSCOZ7AJgCA==
 
 vue-template-compiler@^2.7.14:
   version "2.7.14"
