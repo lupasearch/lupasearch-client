@@ -43,7 +43,7 @@ export const facetFilterCommonTestSteps = (): void => {
     const priceFacet = cy.get(searchResultFacetDisplay).last()
     priceFacet.trigger('click')
 
-    priceFacet.find('div.vue-slider-dot').first().type('{rightarrow}')
+    priceFacet.find('.lupa-stats-slider-wrapper .slider-handle').first().type('{rightarrow}')
 
     cy.get(searchResultsProducts).find(searchResultsProductCard).should('have.length', 2)
   })
