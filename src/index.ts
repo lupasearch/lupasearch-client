@@ -107,8 +107,8 @@ const createVue = (
 
   const props = reactive({ ...options })
   const app = createApp(rootComponent, props)
-
   app.use(pinia)
+
   const mountedApp = app.mount(mountElement)
 
   if (mountToParent) {
