@@ -167,9 +167,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@eslint-community/regexpp@^4.4.0":
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/@eslint-community/regexpp/-/regexpp-4.6.0.tgz#5b63f0df5528a44e28aa8578d393de908cc3d4d0"
-  integrity sha512-uiPeRISaglZnaZk8vwrjQZ1CxogZeY/4IYft6gBOTqu1WhVXWmCmZMWxUv2Q/pxSvPdp1JPaO62kLOcOkMqWrw==
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@eslint-community/regexpp/-/regexpp-4.6.1.tgz#0b371c118b8e4ebf9dbddb56120ab4befd791211"
+  integrity sha512-O7x6dMstWLn2ktjcoiNLDkAGG2EjveHL+Vvc+n0fXumkJYAcSqcVYKtwDU+hDZ0uDUsnUagSYaZrOLAYE8un1A==
 
 "@eslint/eslintrc@^2.1.0":
   version "2.1.0"
@@ -198,10 +198,10 @@
   dependencies:
     ts-loader "^9.2.6"
 
-"@getlupa/vue@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.0.14.tgz#c6ed75b80a945349c4bb4a73e2fa5d6ba7e3f2ad"
-  integrity sha512-o0Q5OxrvaMR7DJamCmc0aEjQDQOS75i645gltEiNyCKPwpnXMQTiWBgXKP2ysPeKij7zPm5u/aPqZa+GMiVxJA==
+"@getlupa/vue@0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.0.15.tgz#f2035e269d43337a02e439c4daec7a5c1f19a177"
+  integrity sha512-5pJbj99GcXyMX/HcP9XCRkFuzkJlmTtZXVAXVO47iQ5pHcsjujY1iTlsQTGEcTAqobQbQyrnicNK53TJDzIklg==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"

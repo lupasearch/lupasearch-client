@@ -1,4 +1,3 @@
-import { Pinia, createPinia } from 'pinia'
 import type {
   Environment,
   SdkOptions,
@@ -43,7 +42,7 @@ import type {
   SearchResultsSortOptions
 } from '@getlupa/vue'
 
-import { DocumentElementType, setupTracking } from '@getlupa/vue'
+import { DocumentElementType, setupTracking, initPinia } from '@getlupa/vue'
 
 import { createApp, type Component, type ComponentPublicInstance, reactive } from 'vue'
 
@@ -72,16 +71,7 @@ const app: AppInstances = {
   recommendations: {}
 }
 
-let piniaInstance: Pinia | null = null
-
-const initPinia = () => {
-  if (piniaInstance) {
-    return piniaInstance
-  }
-  const pinia = createPinia()
-  piniaInstance = pinia
-  return pinia
-}
+let piniaInstance: any | null = null
 
 const tracking = (options: TrackingOptions): void => {
   setupTracking(options)
@@ -182,7 +172,7 @@ const productList = (options: ProductListOptions, mountOptions?: MountOptions): 
     return
   }
   const instance = createVue(options.containerSelector, ProductListEntry, {
-    productsListOptions: options
+    productListOptions: options
   })
   if (!instance) {
     return
