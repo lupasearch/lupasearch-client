@@ -3,31 +3,31 @@
 Search Box configuration usage, including default value for each property:
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
 const options = {
-  inputSelector: "#searchBox",
+  inputSelector: '#searchBox',
   minInputLength: 2,
-  searchTriggers: ["#searchButton"],
+  searchTriggers: ['#searchButton'],
   debounce: 100,
   inputAttributes: {
-    name: "q",
+    name: 'q'
   },
   showTotalCount: true,
   labels: {
-    placeholder: "Search for products...",
-    noResults: "There are no results found.",
-    moreResults: "Show more results",
-    currency: "€",
-    priceSeparator: ",",
-    defaultFacetLabel: "Category:",
+    placeholder: 'Search for products...',
+    noResults: 'There are no results found.',
+    moreResults: 'Show more results',
+    currency: '€',
+    priceSeparator: ',',
+    defaultFacetLabel: 'Category:'
   },
   links: {
-    searchResults: "/search",
-  },
-};
+    searchResults: '/search'
+  }
+}
 
-lupaSearch.searchBox(options);
+lupaSearch.searchBox(options)
 ```
 
 - `inputSelector` - css selector to find your search input element;
@@ -72,13 +72,13 @@ Individual elements will have different classes applied, so you could use CSS (`
 const options = {
   panels: [
     {
-      type: "suggestion",
+      type: 'suggestion'
     },
     {
-      type: "document",
-    },
-  ],
-};
+      type: 'document'
+    }
+  ]
+}
 ```
 
 There are two available `panel` types: `suggestion` and `document`. `suggestion` panel is for displaying a list of suggestions to autocomplete user search query, and `document` panel displays a list of documents that match user query.
@@ -89,13 +89,13 @@ There are two available `panel` types: `suggestion` and `document`. `suggestion`
 const options = {
   panels: [
     {
-      type: "suggestion",
-      queryKey: "",
+      type: 'suggestion',
+      queryKey: '',
       highlight: true,
-      limit: 5,
-    },
-  ],
-};
+      limit: 5
+    }
+  ]
+}
 ```
 
 The configuration above adds a suggestion panel which autocompletes user searches with suggestion phrases from GetLupa suggestion query, referenced by `queryKey`.
@@ -112,63 +112,78 @@ The configuration above adds a suggestion panel which autocompletes user searche
 const options = {
   panels: [
     {
-      type: "document",
-      queryKey: "",
+      type: 'document',
+      queryKey: '',
       limit: 5,
       links: {
-        details: "/{id}",
+        details: '/{id}'
       },
-      titleKey: "name",
-      idKey: "id",
+      titleKey: 'name',
+      idKey: 'id',
       searchBySuggestion: true,
+      isInStock: (doc: any): boolean => {
+        return Boolean(doc)
+      },
       elements: [
         {
-          type: "image",
-          key: "image",
-          placeholder: "placeholder.png",
-          baseUrl: "https://lupasearch.com/images/",
+          type: 'image',
+          key: 'image',
+          placeholder: 'placeholder.png',
+          baseUrl: 'https://lupasearch.com/images/',
           customUrl: (document) => {
-            return `${baseUrl}/${document.image}?quality=150`;
-          },
+            return `${baseUrl}/${document.image}?quality=150`
+          }
         },
         {
-          type: "title",
-          key: "name",
-          isHtml: false,
+          type: 'title',
+          key: 'name',
+          isHtml: false
         },
         {
-          type: "custom",
-          key: "author",
-          className: "customClassName",
+          type: 'custom',
+          key: 'author',
+          className: 'customClassName',
           isHtml: false,
           action: (document) => {
-            console.log("author was clicked", document);
-          },
+            console.log('author was clicked', document)
+          }
         },
         {
-          type: "description",
-          key: "description",
-          isHtml: true,
+          type: 'description',
+          key: 'description',
+          isHtml: true
         },
         {
-          type: "price",
-          key: "regular_price",
+          type: 'price',
+          key: 'regular_price',
           display: (document) => {
-            return true;
-          },
+            return true
+          }
         },
         {
-          type: "customHtml",
-          className: "lupa-card-discount",
+          type: 'customHtml',
+          className: 'lupa-card-discount',
           html: (doc) => `<div>${doc.id} ${doc.name}</div>`,
           action: (document) => {
-            console.log("custom element was clicked", document);
-          },
+            console.log('custom element was clicked', document)
+          }
         },
-      ],
-    },
-  ],
-};
+        {
+          type: 'addToCart',
+          labels: {
+            addToCart: 'Į krepšelį'
+          },
+          display: (doc: any) => {
+            return true
+          },
+          action: async (doc: any) => {
+            console.log('adding to the cart', doc)
+          }
+        }
+      ]
+    }
+  ]
+}
 ```
 
 Document panel can be used to display products or other items that match given search query best. You can have multiple document panels in your search box, each with different search query key.
@@ -186,6 +201,8 @@ Document panel can be used to display products or other items that match given s
 - `searchBySuggestion` - if `true`, will display products that match first suggestion instead of search query.
 
 - `elements` - a list of elements to display in each product panel. For a full list of elements and configurations, see "Document panel fields" section.
+
+- `isInStock` - an optional function that should check if document is in stock. Used to enable/disable add to cart element if used in elements.
 
 ## Document panel fields
 
@@ -233,16 +250,22 @@ This is the list of available search box document fields. By convention, image e
 
   - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
 
+  - `addToCart` - add to cart button.
+
+  - `action` - action to execute when user clicks the Add to Cart button in the . Described as a function, which receives `document` and `amount` parameters. Document parameter is an item, returned with the search results, and contains properties, defined in `selectFields` option. The function may optionally return a promise, so a loading indicator could be displayed while adding to cart is in progress;
+
+  - `labels.addToCart` - a label for add to cart button.
+
 ## Search History
 
 ```js
 const options = {
   history: {
     labels: {
-      clear: "Clear History",
-    },
-  },
-};
+      clear: 'Clear History'
+    }
+  }
+}
 ```
 
 Search history tracks recent user searches in browser local storage.
