@@ -19,11 +19,8 @@ import type {
   ProductRecommendationOptions,
   RecommendationABTestingOptions,
   SearchBoxOptions,
-  SearchBoxPanelType,
   SearchContainerOptions,
   SearchContainerConfigOptions,
-  BadgeType,
-  SearchResultBadgeType,
   SearchResultBadgeElement,
   BadgeGenerateSeed,
   BadgeGenerateOptions,
@@ -42,9 +39,16 @@ import type {
   SearchResultsSortOptions
 } from '@getlupa/vue'
 
-import { DocumentElementType, setupTracking, initPinia } from '@getlupa/vue'
+import {
+  DocumentElementType,
+  SearchBoxPanelType,
+  BadgeType,
+  SearchResultBadgeType,
+  setupTracking,
+  initPinia
+} from '@getlupa/vue'
 
-import { createApp, type Component, type ComponentPublicInstance, reactive } from 'vue'
+import { createApp, type Component, type ComponentPublicInstance, reactive, h } from 'vue'
 
 import SearchBoxEntry from '@/components/SearchBoxEntry.vue'
 import SearchResultsEntry from '@/components/SearchResultsEntry.vue'
@@ -54,7 +58,14 @@ import RecommendationsEntry from '@/components/RecommendationsEntry.vue'
 import { DEFAULT_CONTAINER_STYLE } from '@/constants/global.const'
 import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
 
-type AppInstance = Record<string, Partial<ComponentPublicInstance> | null>
+type AppInstance = Record<
+  string,
+  {
+    mountedApp: Partial<ComponentPublicInstance> | null
+    props: Record<string, unknown>
+    mountedComponent: any | null
+  }
+>
 
 type AppInstances = Record<
   'box' | 'results' | 'productList' | 'searchContainer' | 'recommendations',
@@ -70,8 +81,6 @@ const app: AppInstances = {
   searchContainer: {},
   recommendations: {}
 }
-
-let piniaInstance: any | null = null
 
 const tracking = (options: TrackingOptions): void => {
   setupTracking(options)
@@ -91,12 +100,16 @@ const createVue = (
   const mountElement = mountToParent ? parent : element
 
   if (!mountElement) {
-    console.error(`Cannot mount LupaSearch componbent. Element "${selector}" not found`)
+    console.error(`Cannot mount LupaSearch component. Element "${selector}" not found`)
     return
   }
 
+  let mountedComponent = null
+
   const props = reactive({ ...options })
-  const app = createApp(rootComponent, props)
+  const app = createApp({
+    render: () => (mountedComponent = h(rootComponent, props))
+  })
   app.use(pinia)
 
   const mountedApp = app.mount(mountElement)
@@ -105,16 +118,16 @@ const createVue = (
     element?.remove()
   }
 
-  return mountedApp
+  return { mountedApp, mountedComponent, props }
 }
 
 const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
   const existingInstance = app.box[options.inputSelector] as any
   if (existingInstance) {
-    existingInstance.searchBoxOptions = options
+    existingInstance.props.searchBoxOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.()
+        existingInstance.mountedComponent?.component?.exposed?.fetch?.()
       })
     }
     return
@@ -143,10 +156,10 @@ const searchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void
 const searchResults = (options: SearchResultsOptions, mountOptions?: MountOptions): void => {
   const existingInstance = app.results[options.containerSelector] as any
   if (existingInstance) {
-    existingInstance.searchResultsOptions = options
+    existingInstance.props.searchResultsOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.()
+        existingInstance.mountedComponent?.component?.exposed?.fetch?.()
       })
     }
     return
@@ -163,10 +176,10 @@ const searchResults = (options: SearchResultsOptions, mountOptions?: MountOption
 const productList = (options: ProductListOptions, mountOptions?: MountOptions): void => {
   const existingInstance = app.productList[options.containerSelector] as any
   if (existingInstance) {
-    existingInstance.productListOptions = options
+    existingInstance.props.productListOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.()
+        existingInstance.mountedComponent?.component?.exposed?.fetch?.()
       })
     }
     return
@@ -183,12 +196,11 @@ const productList = (options: ProductListOptions, mountOptions?: MountOptions): 
 const searchContainer = (options: SearchContainerOptions, mountOptions?: MountOptions): void => {
   const existingInstance = app.searchContainer[options.trigger] as any
   if (existingInstance) {
-    existingInstance.searchContainerOptions.value = options
-    existingInstance.reloadOptions()
-    console.log(existingInstance)
+    existingInstance.props.searchContainerOptions = options
+    existingInstance.mountedComponent?.component?.exposed?.reloadOptions?.()
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.()
+        existingInstance.mountedComponent?.component?.exposed?.fetch?.()
       })
     }
     return
@@ -218,10 +230,10 @@ const recommendations = (
 ): void => {
   const existingInstance = app.recommendations[options.containerSelector] as any
   if (existingInstance) {
-    existingInstance.recommendationOptions = options
+    existingInstance.props.recommendationOptions = options
     if (mountOptions?.fetch) {
       setTimeout(() => {
-        existingInstance.fetch?.()
+        existingInstance.mountedComponent?.component?.exposed?.fetch?.()
       })
     }
     return
