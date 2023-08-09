@@ -48,7 +48,7 @@ import {
   initPinia
 } from '@getlupa/vue'
 
-import { createApp, type Component, type ComponentPublicInstance, reactive, h } from 'vue'
+import { createApp, type Component, type ComponentPublicInstance, reactive, h, App } from 'vue'
 
 import SearchBoxEntry from '@/components/SearchBoxEntry.vue'
 import SearchResultsEntry from '@/components/SearchResultsEntry.vue'
@@ -64,6 +64,8 @@ type AppInstance = Record<
     mountedApp: Partial<ComponentPublicInstance> | null
     props: Record<string, unknown>
     mountedComponent: any | null
+    app: App<Element>
+    mountElement: Element
   }
 >
 
@@ -118,7 +120,7 @@ const createVue = (
     element?.remove()
   }
 
-  return { mountedApp, mountedComponent, props }
+  return { mountedApp, mountedComponent, props, app, mountElement }
 }
 
 const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
@@ -249,22 +251,20 @@ const recommendations = (
   app.recommendations[options.containerSelector] = instance
 }
 
-const clearInstance = (selector: string) => {
-  const element = document.querySelector(selector)
-  if (!element) {
-    return
-  }
-  document.body.removeChild(element)
+const clearInstance = (element: Element, app: App<Element>) => {
+  const content = element.innerHTML
+  app?.unmount?.()
+  element.innerHTML = content
 }
 
 const clearSearchBox = (selector?: string): void => {
   try {
     if (selector) {
       app.box[selector] = null
-      clearInstance(selector)
+      clearInstance(app.box[selector].mountElement, app.box[selector].app)
     }
     for (const key in app.box) {
-      clearInstance(key)
+      clearInstance(app.box[key].mountElement, app.box[key].app)
     }
     app.box = {}
   } catch {
@@ -276,10 +276,10 @@ const clearSearchResults = (selector?: string): void => {
   try {
     if (selector) {
       app.results[selector] = null
-      clearInstance(selector)
+      clearInstance(app.results[selector].mountElement, app.results[selector].app)
     }
     for (const key in app.results) {
-      clearInstance(key)
+      clearInstance(app.results[key].mountElement, app.results[key].app)
     }
     app.results = {}
   } catch {
@@ -291,10 +291,10 @@ const clearProductList = (selector?: string): void => {
   try {
     if (selector) {
       app.productList[selector] = null
-      clearInstance(selector)
+      clearInstance(app.productList[selector].mountElement, app.productList[selector].app)
     }
     for (const key in app.productList) {
-      clearInstance(key)
+      clearInstance(app.productList[key].mountElement, app.productList[key].app)
     }
     app.productList = {}
   } catch {
@@ -306,10 +306,10 @@ const clearSearchContainer = (selector?: string): void => {
   try {
     if (selector) {
       app.searchContainer[selector] = null
-      clearInstance(selector)
+      clearInstance(app.searchContainer[selector].mountElement, app.searchContainer[selector].app)
     }
     for (const key in app.searchContainer) {
-      clearInstance(key)
+      clearInstance(app.searchContainer[key].mountElement, app.searchContainer[key].app)
     }
     app.searchContainer = {}
   } catch {
@@ -321,10 +321,10 @@ const clearRecommendations = (selector?: string): void => {
   try {
     if (selector) {
       app.recommendations[selector] = null
-      clearInstance(selector)
+      clearInstance(app.recommendations[selector].mountElement, app.recommendations[selector].app)
     }
     for (const key in app.recommendations) {
-      clearInstance(key)
+      clearInstance(app.recommendations[key].mountElement, app.recommendations[key].app)
     }
     app.recommendations = {}
   } catch {
