@@ -414,9 +414,9 @@ declare global {
   }
 }
 
-if (window) {
-  window.getLupa = lupaSearch
-  window.lupaSearch = lupaSearch
+if (typeof window !== 'undefined') {
+  window.getLupa = lupaSearch;
+  window.lupaSearch = lupaSearch;
 }
 
 export default lupaSearch
