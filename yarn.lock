@@ -191,17 +191,17 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.44.0.tgz#961a5903c74139390478bdc808bcde3fc45ab7af"
   integrity sha512-Ag+9YM4ocKQx9AarydN0KY2j0ErMHNIocPDrVo8zAE44xLTjEtz81OdR68/cydGtk6m6jDb5Za3r2useMzYmSw==
 
-"@getlupa/client-sdk@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@getlupa/client-sdk/-/client-sdk-1.3.1.tgz#4a51c21bceb95064d491a609ff8fabd287d908e1"
-  integrity sha512-weyRLrnocGL4lt+xPM1kZ5G5JUUvO99JqtsXIOVXiq0bPwdnUV/ca3f0BT001YRWp2jQe9YprP3rohZXyBBe0Q==
+"@getlupa/client-sdk@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@getlupa/client-sdk/-/client-sdk-1.3.4.tgz#eb3396eb39ea1e33d2cbbc75e07b2ee9989bcc93"
+  integrity sha512-qM7HPjk77YxUjq7wY7t4flKDnkjH3HgFCAsyrcegaYI7+j4d3sohJii65a6nPE0DDvTfWa7otRLosNabkUu32Q==
   dependencies:
     ts-loader "^9.2.6"
 
-"@getlupa/vue@0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.1.9.tgz#27aa3af00f846514eb174c44ce7131848596c18f"
-  integrity sha512-AbSSgffcrmMhjx+dS9ByFdfwfYIlcW+Ik6rCrRvHwc23b5oaZnKQVKpI1ohOlg7g7aq0VLwJKcdSr/bHMJ2KpA==
+"@getlupa/vue@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.2.0.tgz#59879a240c54aa35cbc49b39ba257963b28c2b79"
+  integrity sha512-kmEj/K5BOidffnH6BSZIC8+wJdN7C96WhZGNjNEZk2riqTTC8QpRvmsfSr8nJiYWhw9pWoPDmhwFLVgj6UFrlw==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
