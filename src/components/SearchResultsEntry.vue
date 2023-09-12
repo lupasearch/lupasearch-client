@@ -13,7 +13,7 @@ const searchResults: Ref<null | any> = ref(null)
 
 const fullSearchResultsOptions = computed((): SearchResultsOptions => {
   const options = cloneDeep(props.searchResultsOptions)
-  return merge(DEFAULT_OPTIONS_RESULTS, options)
+  return merge(cloneDeep(DEFAULT_OPTIONS_RESULTS), options)
 })
 
 const fetch = (): void => {

@@ -12,7 +12,7 @@ const searchBox: Ref<null | any> = ref(null)
 
 const fullSearchBoxOptions = computed((): SearchBoxOptions => {
   const options = cloneDeep(props.searchBoxOptions)
-  return merge(DEFAULT_SEARCH_BOX_OPTIONS, options)
+  return merge(cloneDeep(DEFAULT_SEARCH_BOX_OPTIONS), options)
 })
 
 const fetch = (): void => {

@@ -3,10 +3,8 @@ import { searchResultsProducts } from 'cypress/fields/SearchResults.fields.spec'
 import {
   simiarQueryValue,
   similarQueries,
-  similarQueryCorssed,
   similarQueryLabel
 } from 'cypress/fields/SimilarQueries.fields.spec'
-import { getTrimedText } from 'cypress/utils/getter.utils'
 import { fetchSimilarQueriesResultsInterception } from 'cypress/utils/interceptions.utils'
 import data from '../../fixtures/data.json'
 
