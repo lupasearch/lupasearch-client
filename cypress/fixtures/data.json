@@ -153,6 +153,7 @@
       {
         "count": 3,
         "query": "shoes",
+        "displayQuery": "shoes <del>unsupported</del>",
         "items": [
           {
             "regular_price": 59.99,
@@ -199,6 +200,7 @@
       {
         "count": 3,
         "query": "unsupported",
+        "displayQuery": "<del>shoes</del> unsupported",
         "items": [
           {
             "regular_price": 59.99,

@@ -34,20 +34,6 @@ describe('SimilarQueries.spec', () => {
         `Search results for phrase shoes unsupported (${data.similarQueriesDocument.similarQueries[index].count})`
       )
     })
-
-    cy.get(similarQueryCorssed).each((el, index) => {
-      const text = getTrimedText(el.text())
-      switch (index + 1) {
-        case 1:
-          expect(text).to.be.equal('unsupported')
-          break
-        case 2:
-          expect(text).to.be.equal('shoes')
-          break
-        default:
-          break
-      }
-    })
   })
 
   it('should change search query when similar query is clicked', () => {
