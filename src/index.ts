@@ -30,6 +30,7 @@ import type {
   FacetStyle,
   SearchResultEventCallbacks,
   CallbackContext,
+  SortCallbackContext,
   FacetFilterQuery,
   SearchResultsFilterOptions,
   ResultFacetOptions,
@@ -373,6 +374,7 @@ export type {
   SearchResultsSortOptions,
   SearchResultEventCallbacks,
   CallbackContext,
+  SortCallbackContext,
   FacetFilterQuery,
   CategoryFilterOptions,
   SearchResultsFilterOptions,
@@ -415,8 +417,8 @@ declare global {
 }
 
 if (typeof window !== 'undefined') {
-  window.getLupa = lupaSearch;
-  window.lupaSearch = lupaSearch;
+  window.getLupa = lupaSearch
+  window.lupaSearch = lupaSearch
 }
 
 export default lupaSearch
