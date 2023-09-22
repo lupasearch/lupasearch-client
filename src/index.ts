@@ -37,7 +37,8 @@ import type {
   DynamicData,
   AnchorPosition,
   SortOptions,
-  SearchResultsSortOptions
+  SearchResultsSortOptions,
+  ChatOptions
 } from '@getlupa/vue'
 
 import {
@@ -46,7 +47,8 @@ import {
   BadgeType,
   SearchResultBadgeType,
   setupTracking,
-  initPinia
+  initPinia,
+  ChatContainer
 } from '@getlupa/vue'
 
 import { createApp, type Component, type ComponentPublicInstance, reactive, h, App } from 'vue'
@@ -71,7 +73,7 @@ type AppInstance = Record<
 >
 
 type AppInstances = Record<
-  'box' | 'results' | 'productList' | 'searchContainer' | 'recommendations',
+  'box' | 'results' | 'productList' | 'searchContainer' | 'recommendations' | 'chat',
   AppInstance
 >
 
@@ -82,7 +84,8 @@ const app: AppInstances = {
   results: {},
   productList: {},
   searchContainer: {},
-  recommendations: {}
+  recommendations: {},
+  chat: {}
 }
 
 const tracking = (options: TrackingOptions): void => {
@@ -252,6 +255,27 @@ const recommendations = (
   app.recommendations[options.containerSelector] = instance
 }
 
+const chat = (options: ChatOptions, mountOptions?: MountOptions): void => {
+  const existingInstance = app.chat[options.displayOptions.containerSelector] as any
+  if (existingInstance) {
+    existingInstance.props.options = options
+    if (mountOptions?.fetch) {
+      setTimeout(() => {
+        existingInstance.mountedComponent?.component?.exposed?.fetch?.()
+      })
+    }
+    return
+  }
+
+  const instance = createVue(options.displayOptions.containerSelector, ChatContainer, {
+    recommendationOptions: options
+  })
+  if (!instance) {
+    return
+  }
+  app.chat[options.displayOptions.containerSelector] = instance
+}
+
 const clearInstance = (element: Element, app: App<Element>) => {
   const content = element.innerHTML
   app?.unmount?.()
@@ -333,6 +357,21 @@ const clearRecommendations = (selector?: string): void => {
   }
 }
 
+const clearChat = (selector?: string): void => {
+  try {
+    if (selector) {
+      app.chat[selector] = null
+      clearInstance(app.chat[selector].mountElement, app.chat[selector].app)
+    }
+    for (const key in app.chat) {
+      clearInstance(app.chat[key].mountElement, app.chat[key].app)
+    }
+    app.chat = {}
+  } catch {
+    // do nothing, already destroyed;
+  }
+}
+
 const lupaSearch = {
   searchBox,
   searchResults,
@@ -344,7 +383,9 @@ const lupaSearch = {
   clearSearchResults,
   clearProductList,
   clearSearchContainer,
-  clearRecommendations
+  clearRecommendations,
+  chat,
+  clearChat
 }
 
 export { DocumentElementType, SearchBoxPanelType, BadgeType }
@@ -390,7 +431,8 @@ export type {
   SingleStarRatingElement,
   DynamicData,
   ProductRecommendationOptions,
-  RecommendationABTestingOptions
+  RecommendationABTestingOptions,
+  ChatOptions
 }
 
 declare global {
@@ -400,18 +442,22 @@ declare global {
       searchResults: (options: SearchResultsOptions) => void
       tracking: (options: TrackingOptions) => void
       productList: (options: ProductListOptions) => void
+      chat: (options: ChatOptions) => void
       clearSearchBox: () => void
       clearSearchResults: () => void
       clearProductList: () => void
+      clearChat: () => void
     }
     lupaSearch: {
       searchBox: (options: SearchBoxOptions) => void
       searchResults: (options: SearchResultsOptions) => void
       tracking: (options: TrackingOptions) => void
       productList: (options: ProductListOptions) => void
+      chat: (options: ChatOptions) => void
       clearSearchBox: () => void
       clearSearchResults: () => void
       clearProductList: () => void
+      clearChat: () => void
     }
   }
 }
