@@ -268,7 +268,7 @@ const chat = (options: ChatOptions, mountOptions?: MountOptions): void => {
   }
 
   const instance = createVue(options.displayOptions.containerSelector, ChatContainer, {
-    recommendationOptions: options
+    options: options
   })
   if (!instance) {
     return
