@@ -3,33 +3,33 @@
 Page configuration usage, including default value for each property:
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
 const options = {
-  containerSelector: "#searchResultsContainer",
+  containerSelector: '#searchResultsContainer',
   labels: {
-    pageSize: "Page size:",
-    sortBy: "Sort by:",
-    itemCount: "Items {1} from {2}",
-    currency: "€",
-    showMore: "Show more",
-    searchResults: "Search Query: ",
-    emptyResults: "There are no results for the query:",
-    noItemsInPage: "There are no results in this page",
-    backToFirstPage: "Go back to the first page",
-    mobileFilterButton: "Filter",
+    pageSize: 'Page size:',
+    sortBy: 'Sort by:',
+    itemCount: 'Items {1} from {2}',
+    currency: '€',
+    showMore: 'Show more',
+    searchResults: 'Search Query: ',
+    emptyResults: 'There are no results for the query:',
+    noItemsInPage: 'There are no results in this page',
+    backToFirstPage: 'Go back to the first page',
+    mobileFilterButton: 'Filter',
     htmlTitleTemplate: "Search Query: '{1}'",
-    noResultsSuggestion: "No results found for this query: {1}",
-    didYouMean: "Did you mean to search: {1}",
-    similarQuery: "Search results for phrase {1}",
-    similarQueries: "Similar queries:",
-    filteredItemCount: "Filtered items {1} from {2}",
-    outOfStock: "Out of stock",
-    aiSuggestions: "Other suggestions:",
-  },
-};
+    noResultsSuggestion: 'No results found for this query: {1}',
+    didYouMean: 'Did you mean to search: {1}',
+    similarQuery: 'Search results for phrase {1}',
+    similarQueries: 'Similar queries:',
+    filteredItemCount: 'Filtered items {1} from {2}',
+    outOfStock: 'Out of stock',
+    aiSuggestions: 'Other suggestions:'
+  }
+}
 
-lupaSearch.searchResults(options);
+lupaSearch.searchResults(options)
 ```
 
 - `inputSelector` - css selector to find your search input element;
@@ -102,10 +102,10 @@ const options = {
       l: 3,
       md: 2,
       sm: 2,
-      xs: 1,
-    },
-  },
-};
+      xs: 1
+    }
+  }
+}
 ```
 
 Configure product grid and number of columns per row on each resolution.
@@ -116,8 +116,8 @@ An list of custom breadcrumb segments, at the top of search page:
 
 ```js
 const options = {
-  breadcrumbs: [{ label: "Home", link: "/" }, { label: "Search Query: {1}" }],
-};
+  breadcrumbs: [{ label: 'Home', link: '/' }, { label: 'Search Query: {1}' }]
+}
 ```
 
 The above configuration would be rendered like this: `Home / Search Query: Current Query Text`, with their respective links.
@@ -133,12 +133,12 @@ Additional classes to add to specific elements. Can be used if custom css is not
 ```js
 const options = {
   classMap: {
-    layoutSelectionGrid: "grid",
-    layoutSelectionGridActive: "grid-active",
-    layoutSelectionList: "list",
-    layoutSelectionListActive: "list-active",
-  },
-};
+    layoutSelectionGrid: 'grid',
+    layoutSelectionGridActive: 'grid-active',
+    layoutSelectionList: 'list',
+    layoutSelectionListActive: 'list-active'
+  }
+}
 ```
 
 ## Products
@@ -146,112 +146,112 @@ const options = {
 ```js
 const options = {
   isInStock: (document) => {
-    return true;
+    return true
   },
   badges: {
-    anchor: "tr",
+    anchor: 'tr',
     elements: [
       {
-        type: "text",
-        key: "text_labels",
-        prefix: "- ",
-        maxItems: 1,
+        type: 'text',
+        key: 'text_labels',
+        prefix: '- ',
+        maxItems: 1
       },
       {
-        type: "image",
-        key: "image_labels",
-        rootImageUrl: "https://lupasearch.com/media/",
-        maxItems: 1,
+        type: 'image',
+        key: 'image_labels',
+        rootImageUrl: 'https://lupasearch.com/media/',
+        maxItems: 1
       },
       {
-        type: "customHtml",
-        className: "new-product",
+        type: 'customHtml',
+        className: 'new-product',
         html: (doc) => {
-          return `<span>(N)</span>`;
+          return `<span>(N)</span>`
         },
-        display: (doc) => Boolean(doc.isNewProduct),
-      },
-    ],
+        display: (doc) => Boolean(doc.isNewProduct)
+      }
+    ]
   },
   links: {
-    details: "/{id}",
+    details: '/{id}'
   },
-  idKey: "id",
-  titleKey: "name",
+  idKey: 'id',
+  titleKey: 'name',
   elements: [
     {
-      type: "image",
-      key: "image",
-      placeholder: "placeholder.png",
+      type: 'image',
+      key: 'image',
+      placeholder: 'placeholder.png',
       customUrl: (document) => {
-        return `${baseUrl}/${document.image}?quality=150`;
-      },
+        return `${baseUrl}/${document.image}?quality=150`
+      }
     },
     {
-      type: "title",
-      key: "name",
+      type: 'title',
+      key: 'name',
       link: false,
-      maxLines: 2,
+      maxLines: 2
     },
     {
-      type: "description",
-      key: "description",
-      maxLines: 3,
+      type: 'description',
+      key: 'description',
+      maxLines: 3
     },
     {
-      type: "custom",
-      className: "customClassName",
-      key: "author",
+      type: 'custom',
+      className: 'customClassName',
+      key: 'author',
       action: (document) => {
-        console.log("author was clicked", document);
-      },
+        console.log('author was clicked', document)
+      }
     },
     {
-      type: "rating",
-      key: "ratings",
-      totalKey: "ratingsCount",
+      type: 'rating',
+      key: 'ratings',
+      totalKey: 'ratingsCount',
       labels: {
-        numberOfRatings: "Total ratings: ",
+        numberOfRatings: 'Total ratings: '
       },
       links: {
-        ratingDetails: "/{id}#ratings",
+        ratingDetails: '/{id}#ratings'
       },
-      display: (doc) => Boolean(doc.hasRating),
+      display: (doc) => Boolean(doc.hasRating)
     },
     {
-      type: "price",
-      key: "discountPrice",
+      type: 'price',
+      key: 'discountPrice'
     },
     {
-      type: "regularPrice",
-      key: "regularPrice",
+      type: 'regularPrice',
+      key: 'regularPrice'
     },
     {
-      type: "addToCart",
+      type: 'addToCart',
       labels: {
-        addToCart: "Add to Cart",
+        addToCart: 'Add to Cart'
       },
       action: (document, amount) => {},
-      group: "cart",
+      group: 'cart'
     },
     {
-      type: "customHtml",
-      className: "best-offer",
+      type: 'customHtml',
+      className: 'best-offer',
       html: (doc) => {
-        return `<div>This is the best offer: ${doc.price}!</div>`;
+        return `<div>This is the best offer: ${doc.price}!</div>`
       },
       display: (doc) => Boolean(doc.isBestOffer),
       action: (document) => {
-        console.log("custom element was clicked", document);
-      },
-    },
-  ],
-};
+        console.log('custom element was clicked', document)
+      }
+    }
+  ]
+}
 ```
 
 - `isInStock` - a function to determine whether given product is in stock. It receives a full original document from search results. If product is out of stock, it cannot be added to the cart;
 
-- `idKey` - a key that references a unique document identifier. Used in analytics to track document clicks. Defaults to `id`. If your key is different than `id`, it must be set explicitly, as it might lead to unexpected behaviour othervise. 
+- `idKey` - a key that references a unique document identifier. Used in analytics to track document clicks. Defaults to `id`. If your key is different than `id`, it must be set explicitly, as it might lead to unexpected behaviour othervise.
 
 - `titleKey` - a key that references a document title (name). Used to report events to your tracker.
 
@@ -385,55 +385,55 @@ const options = {
         mobileSidebar: true,
         mobileToolbar: true,
         desktopToolbar: false,
-        desktopSidebar: true,
+        desktopSidebar: true
       },
       labels: {
-        title: "Current filters:",
-        clearAll: "Clear all",
+        title: 'Current filters:',
+        clearAll: 'Clear all'
       },
       mobileSidebar: {
         showFilterCount: false,
-        activeFiltersExpanded: false,
+        activeFiltersExpanded: false
       },
       desktopToolbar: {
-        activeFiltersExpanded: false,
-      },
+        activeFiltersExpanded: false
+      }
     },
     facets: {
       labels: {
-        title: "Filters:",
-        showAll: "Show more",
-        showLess: "Show less",
-        facetFilter: "Filter...",
+        title: 'Filters:',
+        showAll: 'Show more',
+        showLess: 'Show less',
+        facetFilter: 'Filter...'
       },
       hierarchy: {
         maxInitialLevel: 2,
-        topLevelValueCountLimit: 5,
+        topLevelValueCountLimit: 5
       },
       stats: {
         slider: true,
         inputs: false,
         labels: {
-          from: "From:",
-          to: "To:",
-        },
+          from: 'From:',
+          to: 'To:'
+        }
       },
       filterable: {
-        minValues: 5,
+        minValues: 5
       },
       facetValueCountLimit: 20,
       showDocumentCount: true,
       style: {
-        type: "top-dropdown",
+        type: 'top-dropdown'
       },
-      exclude: ["price", "category"],
-      expand: ["regular_price"],
+      exclude: ['price', 'category'],
+      expand: ['regular_price'],
       facetFilterQueries: {
-        tag: { queryKey: "" },
-      },
-    },
-  },
-};
+        tag: { queryKey: '' }
+      }
+    }
+  }
+}
 ```
 
 - `currentFilters` - show a summary of currently active filters;
@@ -508,23 +508,23 @@ If user changes any filter value, current page is reset to the first one.
 const options = {
   sort: [
     {
-      key: "priceDesc",
-      label: "Price (Descending)",
+      key: 'priceDesc',
+      label: 'Price (Descending)',
       default: true,
-      config: [{ price: "desc" }],
+      config: [{ price: 'desc' }]
     },
     {
-      key: "priceAsc",
-      label: "Price (Ascending)",
-      config: [{ in_stock: "desc" }, { price: "asc" }],
+      key: 'priceAsc',
+      label: 'Price (Ascending)',
+      config: [{ in_stock: 'desc' }, { price: 'asc' }]
     },
     {
-      key: "relevance",
-      label: "Relevance",
-      config: [{ in_stock: "desc" }, { _relevance: "desc" }],
-    },
-  ],
-};
+      key: 'relevance',
+      label: 'Relevance',
+      config: [{ in_stock: 'desc' }, { _relevance: 'desc' }]
+    }
+  ]
+}
 ```
 
 Define any additional options for search result page.
@@ -540,18 +540,18 @@ const options = {
   sizeSelection: {
     position: {
       top: true,
-      bottom: true,
+      bottom: true
     },
-    sizes: [12, 24, 36, 72],
+    sizes: [12, 24, 36, 72]
   },
   pageSelection: {
     position: {
       top: false,
-      bottom: true,
+      bottom: true
     },
-    display: 5,
-  },
-};
+    display: 5
+  }
+}
 ```
 
 - `sizeSelection` - page size/item limit selection configuration;
@@ -578,10 +578,10 @@ const options = {
       sm: [15, 30, 45, 60],
       md: [15, 30, 45, 60],
       l: [12, 24, 36, 60],
-      xl: [15, 30, 45, 60],
-    },
-  },
-};
+      xl: [15, 30, 45, 60]
+    }
+  }
+}
 ```
 
 ## Toolbar
@@ -594,9 +594,9 @@ const options = {
     layoutSelector: true,
     itemSummary: true,
     clearFilters: false,
-    totalCount: false,
-  },
-};
+    totalCount: false
+  }
+}
 ```
 
 - `layoutSelector` - show layout (regular or full page width product cards) selector buttons;
@@ -613,8 +613,8 @@ Control search title position:
 
 ```js
 const options = {
-  searchTitlePosition: "page-top",
-};
+  searchTitlePosition: 'page-top'
+}
 ```
 
 Available options:
@@ -631,32 +631,32 @@ Search results has an ability to display a number of additional product panels, 
 const options = {
   additionalPanels: [
     {
-      location: "top",
-      queryKey: "",
+      location: 'top',
+      queryKey: '',
       initialCountLimit: 2,
       totalCountLimit: 12,
       labels: {
-        showMore: "Show more ({1})",
-        showLess: "Show less",
+        showMore: 'Show more ({1})',
+        showLess: 'Show less'
       },
       links: {
-        details: "/{id}",
+        details: '/{id}'
       },
       elements: [
         {
-          type: "title",
-          key: "name",
-          maxLines: 2,
+          type: 'title',
+          key: 'name',
+          maxLines: 2
         },
         {
-          type: "description",
-          key: "simplifiedDescription",
-          maxLines: 3,
-        },
-      ],
-    },
-  ],
-};
+          type: 'description',
+          key: 'simplifiedDescription',
+          maxLines: 3
+        }
+      ]
+    }
+  ]
+}
 ```
 
 - `location` - location of the panel. Available values: `top` and `bottom`;
@@ -681,8 +681,8 @@ By default, search result pages queries all documents if there is no query strin
 
 ```js
 const options = {
-  disallowEmptyQuery: true,
-};
+  disallowEmptyQuery: true
+}
 ```
 
 ## Dynamic data
@@ -702,13 +702,14 @@ const options = {
   // other configuration
   callbacks: {
     onMounted: () => {},
-    onSearchResults: (context: CallbackContext) => {},
+    onSearchResults: (context: ResultCallbackContext) => {},
     onAdditionalPanelResults: (context: CallbackContext) => {},
     onCategoryFilterResults: (context: CallbackContext) => {},
     onUrlQueryChange: (context: CallbackContext) => {},
     onProductClick: (context: CallbackContext) => {},
-  },
-};
+    onSortChange: (context: SortCallbackContext) => {}
+  }
+}
 ```
 
 - `onSearchResults` - all products loaded;
@@ -719,23 +720,58 @@ const options = {
 
 - `onUrlQueryChange` - LupaSearch url query changes (page, sort, filter parameters are changed).
 
+- `onSortChange` - fires when user changes current sort option.
+
 Where `CallbackContext` is:
 
 ```ts
 type CallbackContext = {
-  queryKey: string;
-  hasResults?: boolean;
-  urlQueryString?: string;
-  productId?: string;
-};
+  queryKey: string
+  hasResults?: boolean
+  urlQueryString?: string
+  productId?: string
+}
+```
+
+`ResultCallbackContext` additionally has current parameters value:
+
+```ts
+type ResultCallbackContext = CallbackContext & {
+  params: Record<string, any>
+}
+```
+
+Example:
+
+```json
+{
+  "hasResults": true,
+  "queryKey": "",
+  "params": {
+    "query": "",
+    "sort": "nameDesc",
+    "filters": {
+      "color": ["Yellow"]
+    }
+  }
+}
+```
+
+`SortCallbackContext` contains the following parameters:
+
+```ts
+type SortCallbackContext = {
+  selectedSortKey: string
+  previousSortKey?: string
+}
 ```
 
 ## Routing behavior
 
 ```js
 const options = {
-  routingBehavior: "event",
-};
+  routingBehavior: 'event'
+}
 ```
 
 Search results supports two ways of product card routing `routingBehavior` settings:
@@ -745,9 +781,9 @@ Search results supports two ways of product card routing `routingBehavior` setti
 - `event` - when user clicks on the product (title or image), a special event `lupaRedirect` is emitted on the window object. The event can then be handled by the plugin user:
 
 ```js
-window.addEventListener("lupaRedirect", (data) => {
+window.addEventListener('lupaRedirect', (data) => {
   // data.detail - redirect url
-});
+})
 ```
 
 # Statistics
