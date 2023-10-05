@@ -24,7 +24,9 @@ const options = {
   },
   links: {
     searchResults: '/search'
-  }
+  },
+  showNoResultsPanel: false
+  hideMoreResultsButtonOnNoResults: false
 }
 
 lupaSearch.searchBox(options)
@@ -41,6 +43,10 @@ lupaSearch.searchBox(options)
 - `inputAttributes` - key value pairs of custom html attributes to apply to the main search box input element.
 
 - `showTotalCount` - defines whether to show total result count near the `moreResults` label.
+
+- `showNoResultsPanel` - show no results panel when none of the search box panels returns any results.
+
+- `hideMoreResultsButtonOnNoResults` - hide  `moreResults` button panel on no search box results.
 
 - `labels.placeholder` - input placeholder text to display when search input is empty;
 
@@ -273,6 +279,32 @@ Search history tracks recent user searches in browser local storage.
 Search history, if enabled, is shown when user clicks on empty search input. History can be cleared item by item or all at once.
 
 - `history.labels.clear` - the text to display on "Clear all History" action.
+
+## Event callbacks
+
+Lupa can emit callbacks on certain events:
+
+```ts
+const options = {
+  // ... other configuration
+  callbacks: {
+    onSearchResults: (context: SearchBoxResultCallbackContext) => {}
+  }
+}
+```
+
+Where `SearchBoxResultCallbackContext` is
+
+```ts
+type SearchBoxResultCallbackContext = {
+  hasAnyResults?: boolean
+  docResults?: Record<string, SearchQueryResult>
+  suggestionResults?: Record<string, DisplaySuggestion[]>
+  totalCount?: number
+  panelItemCounts?: { queryKey: string; count: number }[]
+  inputValue?: string
+}
+```
 
 ## Statistics
 
