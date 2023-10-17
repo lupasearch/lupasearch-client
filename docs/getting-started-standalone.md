@@ -10,7 +10,7 @@ Import the latest Lupa script into the `head` section of your website:
 <html>
   <head>
     <!-- Stylesheets, metadata, and main scripts -->
-    <script src="https://cdn.lupasearch.com/client/getlupa-latest.min.js"></script>
+    <script src="https://cdn.lupasearch.com/client/lupasearch-latest.min.js"></script>
     <!-- Other scripts -->
   </head>
 </html>
@@ -67,8 +67,8 @@ You can apply your own styles to existing Lupa component classes, or you can use
 <html>
   <head>
     <!-- Stylesheets, metadata, and main scripts -->
-    <link rel="stylesheet" href="https://cdn.lupasearch.com/client/default.css" />
-    <script src="https://cdn.lupasearch.com/client/getlupa-latest.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.lupasearch.com/client/lupa/style-1.4.2.css" />
+    <script src="https://cdn.lupasearch.com/client/lupasearch-latest.min.js"></script>
     <!-- Other scripts -->
   </head>
 </html>
