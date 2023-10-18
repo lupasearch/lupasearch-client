@@ -198,10 +198,10 @@
   dependencies:
     ts-loader "^9.2.6"
 
-"@getlupa/vue@0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.5.2.tgz#43e6f1c54b4d5d868b4831873d151b8412f67ebd"
-  integrity sha512-hkFvoiKzPm4wsw+En4I/ewAB+y9FZLuOGzwKvRcl0jgqMXSY/YmTPZ6mNYfoflD5K2JS4/OeYbk2msDTuW/WKA==
+"@getlupa/vue@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.6.0.tgz#6f3b0ac0df159e386ffc1feb4ac1ac7649a1b698"
+  integrity sha512-OQMiovNlyJ6fUFaDdOsLlOPVY64cZIKhnrdaW28F5ZubpAIJ18azGflamzX/733PZU8V3Z8bQLIaWHOzTEtijQ==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
