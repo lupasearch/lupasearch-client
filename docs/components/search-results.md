@@ -25,7 +25,8 @@ const options = {
     similarQueries: 'Similar queries:',
     filteredItemCount: 'Filtered items {1} from {2}',
     outOfStock: 'Out of stock',
-    aiSuggestions: 'Other suggestions:'
+    aiSuggestions: 'Other suggestions:',
+    similarResultsLabel: "Related to your query:"
   }
 }
 
@@ -68,7 +69,9 @@ lupaSearch.searchResults(options)
 
 - `labels.outOfStock` - product out of stock overlay label;
 
-- `labels.aiSuggestions` - label for similar query with AI suggestions.
+- `labels.aiSuggestions` - label for similar query with AI suggestions;
+
+- `labels.similarResultsLabel` - label to show when similar results functionality is enabled.
 
 # Query parameters
 
