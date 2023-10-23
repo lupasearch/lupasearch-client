@@ -47,7 +47,7 @@ lupaSearch.searchBox(options)
 
 - `showNoResultsPanel` - show no results panel when none of the search box panels returns any results.
 
-- `hideMoreResultsButtonOnNoResults` - hide  `moreResults` button panel on no search box results.
+- `hideMoreResultsButtonOnNoResults` - hide `moreResults` button panel on no search box results.
 
 - `expandOnSinglePanel` - if set to true, it will try to hide suggestions panel if there are no suggestions returned. Note that your custom css might override this functionality.
 
@@ -291,7 +291,8 @@ Lupa can emit callbacks on certain events:
 const options = {
   // ... other configuration
   callbacks: {
-    onSearchResults: (context: SearchBoxResultCallbackContext) => {}
+    onSearchResults: (context: SearchBoxResultCallbackContext) => {},
+    onSearchResultsNavigate: (context: SearchBoxResultsNavigateContext) => {}
   }
 }
 ```
@@ -306,6 +307,14 @@ type SearchBoxResultCallbackContext = {
   totalCount?: number
   panelItemCounts?: { queryKey: string; count: number }[]
   inputValue?: string
+}
+```
+
+And `SearchBoxResultsNavigateContext` is
+
+```ts
+type SearchBoxResultsNavigateContext = {
+  params: QueryParams & { query: string }
 }
 ```
 
