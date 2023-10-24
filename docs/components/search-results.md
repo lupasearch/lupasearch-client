@@ -26,7 +26,7 @@ const options = {
     filteredItemCount: 'Filtered items {1} from {2}',
     outOfStock: 'Out of stock',
     aiSuggestions: 'Other suggestions:',
-    similarResultsLabel: "Related to your query:"
+    similarResultsLabel: 'Related to your query:'
   }
 }
 
@@ -188,6 +188,9 @@ const options = {
       placeholder: 'placeholder.png',
       customUrl: (document) => {
         return `${baseUrl}/${document.image}?quality=150`
+      },
+      alt: (document) => {
+        return `This is alt text for item: ${document.name}`
       }
     },
     {
@@ -312,7 +315,9 @@ Available card element types:
 
   - `placeholder` - placeholder image to show if item does not have an image;
 
-  - `customUrl` - Provide a function that returns image url from document. Overrides all other image options.
+  - `customUrl` - Provide a function that returns image url from document. Overrides all other image options;
+
+  - `alt` - Provide a function that returns an alt image text for a given document.
 
 - `title` - title of the product.
 
