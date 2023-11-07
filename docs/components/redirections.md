@@ -32,7 +32,7 @@ const options = {
     enabled: true,
     queryKey: '',
     cacheSeconds: 3600,
-    urlTransfromer: (url: string) => {
+    urlTransformer: (url: string) => {
       return `${url}`
     }
   }
@@ -47,4 +47,4 @@ For consistent behavior, ensure that the configurations for both Search Box and 
 
 - `cacheSeconds` - to reduce unnecessary API calls and enhance performance, redirection rules can be cached. A higher value is advisable if redirection rules change infrequently.
 
-- `urlTransfromer` - customize or append to the redirection URL as needed. Useful for language-specific routing or other URL modifications.
+- `urlTransformer` - customize or append to the redirection URL as needed. Useful for language-specific routing or other URL modifications.

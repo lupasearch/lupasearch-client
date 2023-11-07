@@ -38,7 +38,8 @@ import type {
   AnchorPosition,
   SortOptions,
   SearchResultsSortOptions,
-  ChatOptions
+  ChatOptions,
+  RedirectionOptions
 } from '@getlupa/vue'
 
 import {
@@ -432,7 +433,8 @@ export type {
   DynamicData,
   ProductRecommendationOptions,
   RecommendationABTestingOptions,
-  ChatOptions
+  ChatOptions,
+  RedirectionOptions
 }
 
 declare global {
