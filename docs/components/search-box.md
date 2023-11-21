@@ -101,7 +101,10 @@ const options = {
       type: 'suggestion',
       queryKey: '',
       highlight: true,
-      limit: 5
+      limit: 5,
+      labels: {
+        topResultsTitle: 'Popular searches:'
+      }
     }
   ]
 }
@@ -320,6 +323,37 @@ And `SearchBoxResultsNavigateContext` is
 ```ts
 type SearchBoxResultsNavigateContext = {
   params: QueryParams & { query: string }
+}
+```
+
+## Show most popular search terms / items
+
+- For suggestions: turn on "Top suggestions on empty query:" in suggestion search query configuration;
+
+- For documents: define a new rule with "Is Empty" search text condition with your custom sorting/boosting rules;
+
+- Make sure to set `minInputLength` to `0`;
+
+- Set panel label:
+
+```js
+const options = {
+  panels: [
+    {
+      type: 'suggestion',
+      // ... Other panel settings
+      labels: {
+        topResultsTitle: 'Popular searches:'
+      }
+    },
+    {
+      type: 'document',
+      // ... Other panel settings
+      labels: {
+        topResultsTitle: 'Popular products:'
+      }
+    }
+  ]
 }
 ```
 
