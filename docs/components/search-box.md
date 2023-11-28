@@ -20,7 +20,8 @@ const options = {
     moreResults: 'Show more results',
     currency: '€',
     priceSeparator: ',',
-    defaultFacetLabel: 'Category:'
+    defaultFacetLabel: 'Category:',
+    searchInputAriaLabel: 'Search for products'
   },
   links: {
     searchResults: '/search'
@@ -61,7 +62,9 @@ lupaSearch.searchBox(options)
 
 - `labels.priceSeparator` - decimal separator for price value (19,85 €)
 
-- `labels.defaultFacetLabel` - label to show for the first suggestion that has multiple facets returned. For example: (`books 'in category': entertainment`).
+- `labels.defaultFacetLabel` - label to show for the first suggestion that has multiple facets returned. For example: (`books 'in category': entertainment`);
+
+- `labels.searchInputAriaLabel` - accessibility aria label for search input.
 
 - `links.searchResults` - url of the full search result page that user should be redirected to, when clicks ENTER or "More results" button. These query parameters will be appended to the search results url: `?q=` - user search string; `&f.{facetKey}=` - if user clicks on a suggestion that is grouped by facet, it's key and value is added to the query string.
 

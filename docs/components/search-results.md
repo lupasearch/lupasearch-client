@@ -423,7 +423,10 @@ const options = {
         inputs: false,
         labels: {
           from: 'From:',
-          to: 'To:'
+          to: 'To:',
+          ariaFrom: 'From',
+          ariaTo: 'To',
+          sliderDotAriaLabel: 'Slider dot'
         }
       },
       filterable: {
@@ -485,6 +488,12 @@ const options = {
   - `labels.from` - input "from" label;
 
   - `labels.to` - input "to" label;
+
+  - `labels.ariaFrom` - aria accessibility label for 'from' input field;
+
+  - `labels.ariaTo` - aria accessibility label for 'to' input field;
+
+  - `labels.sliderDotAriaLabel` - aria accessibility label for slider dot input. Is combined with facet label.
 
 - `facets.labels.title` - a title of the facet section;
 
