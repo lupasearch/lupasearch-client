@@ -181,6 +181,12 @@ const options = {
   },
   idKey: 'id',
   titleKey: 'name',
+  customDocumentHtmlAttributes: (doc: any) => {
+    return {
+      'data-id': doc.id,
+      'data-name': doc.name
+    }
+  },
   elements: [
     {
       type: 'image',
@@ -260,6 +266,8 @@ const options = {
 - `idKey` - a key that references a unique document identifier. Used in analytics to track document clicks. Defaults to `id`. If your key is different than `id`, it must be set explicitly, as it might lead to unexpected behaviour othervise.
 
 - `titleKey` - a key that references a document title (name). Used to report events to your tracker.
+
+- `customDocumentHtmlAttributes` - provide your own custom attributes that will be added to each document html element. Receives document object as a parameter.
 
 Configure product card. Configuration consists of two main sections: `badges` and `card`. Badges are small items, describing the product, placed on the product card.
 
