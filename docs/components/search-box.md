@@ -139,6 +139,12 @@ const options = {
       isInStock: (doc: any): boolean => {
         return Boolean(doc)
       },
+      customDocumentHtmlAttributes: (doc: any) => {
+        return {
+          'data-id': doc.id,
+          'data-name': doc.name
+        }
+      },
       elements: [
         {
           type: 'image',
@@ -221,6 +227,8 @@ Document panel can be used to display products or other items that match given s
 - `elements` - a list of elements to display in each product panel. For a full list of elements and configurations, see "Document panel fields" section.
 
 - `isInStock` - an optional function that should check if document is in stock. Used to enable/disable add to cart element if used in elements.
+
+- `customDocumentHtmlAttributes` - provide your own custom attributes that will be added to each document html element. Receives document object as a parameter.
 
 ## Document panel fields
 
