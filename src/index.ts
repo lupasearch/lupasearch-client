@@ -61,6 +61,13 @@ import SearchContainerEntry from '@/components/SearchContainerEntry.vue'
 import RecommendationsEntry from '@/components/RecommendationsEntry.vue'
 import { DEFAULT_CONTAINER_STYLE } from '@/constants/global.const'
 import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
+import {
+  PreconfiguredSearchContainerOptions,
+  SearchBoxDemoOptions,
+  SearchDemoFields,
+  SearchResultDemoOptions
+} from './types/PreconfiguredSearchContainerOptions'
+import SearchContainerConfigurationService from './modules/preconfiguredContainer/SearchContainerConfigurationService'
 
 type AppInstance = Record<
   string,
@@ -231,6 +238,27 @@ const searchContainer = (options: SearchContainerOptions, mountOptions?: MountOp
   app.searchContainer[options.trigger] = instance
 }
 
+const preconfiguredSearchContainer = (
+  preconfiguredSearchContainerOptions: PreconfiguredSearchContainerOptions,
+  mountOptions?: MountOptions
+) => {
+  const searchBox = SearchContainerConfigurationService.getSearchBoxComponent(
+    preconfiguredSearchContainerOptions
+  )
+  const searchResults = SearchContainerConfigurationService.getSearchResultsComponent(
+    preconfiguredSearchContainerOptions
+  )
+  searchContainer(
+    {
+      trigger: preconfiguredSearchContainerOptions.trigger,
+      searchBox,
+      searchResults,
+      options: preconfiguredSearchContainerOptions.configuration
+    },
+    mountOptions
+  )
+}
+
 const recommendations = (
   options: ProductRecommendationOptions,
   mountOptions?: MountOptions
@@ -386,7 +414,10 @@ const lupaSearch = {
   clearSearchContainer,
   clearRecommendations,
   chat,
-  clearChat
+  clearChat,
+  preconfiguredSearchContainer,
+  getSearchBoxComponent: SearchContainerConfigurationService.getSearchBoxComponent,
+  getSearchResultsComponent: SearchContainerConfigurationService.getSearchResultsComponent
 }
 
 export { DocumentElementType, SearchBoxPanelType, BadgeType }
@@ -434,7 +465,11 @@ export type {
   ProductRecommendationOptions,
   RecommendationABTestingOptions,
   ChatOptions,
-  RedirectionOptions
+  RedirectionOptions,
+  PreconfiguredSearchContainerOptions,
+  SearchBoxDemoOptions,
+  SearchResultDemoOptions,
+  SearchDemoFields
 }
 
 declare global {
@@ -449,6 +484,13 @@ declare global {
       clearSearchResults: () => void
       clearProductList: () => void
       clearChat: () => void
+      preconfiguredSearchContainer: (
+        preconfiguredSearchContainerOptions: PreconfiguredSearchContainerOptions
+      ) => void
+      getSearchBoxComponent: (options: PreconfiguredSearchContainerOptions) => SearchBoxOptions
+      getSearchResultsComponent: (
+        options: PreconfiguredSearchContainerOptions
+      ) => SearchResultsOptions
     }
     lupaSearch: {
       searchBox: (options: SearchBoxOptions) => void
@@ -460,6 +502,13 @@ declare global {
       clearSearchResults: () => void
       clearProductList: () => void
       clearChat: () => void
+      preconfiguredSearchContainer: (
+        preconfiguredSearchContainerOptions: PreconfiguredSearchContainerOptions
+      ) => void
+      getSearchBoxComponent: (options: PreconfiguredSearchContainerOptions) => SearchBoxOptions
+      getSearchResultsComponent: (
+        options: PreconfiguredSearchContainerOptions
+      ) => SearchResultsOptions
     }
   }
 }
