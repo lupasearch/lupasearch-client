@@ -37,7 +37,7 @@ const getSearchBoxComponent = ({
             highlight: true,
             limit: 8,
             labels: {
-              topResultsTitle: labels.searchBox.topSuggestionsTitle
+              topResultsTitle: labels?.searchBox?.topSuggestionsTitle
             }
           }
         ]
@@ -52,26 +52,26 @@ const getSearchBoxComponent = ({
               {
                 type: 'image',
                 placeholder: placeholderImage,
-                key: searchBoxOptions.fields.imageKey,
-                baseUrl: searchBoxOptions.fields.baseImageUrl
+                key: searchBoxOptions.fields?.imageKey,
+                baseUrl: searchBoxOptions.fields?.baseImageUrl
               },
               {
                 type: 'title',
-                key: searchBoxOptions.fields.titleKey,
+                key: searchBoxOptions.fields?.titleKey,
                 maxLines: 2
               },
               {
                 type: 'regularPrice',
-                key: searchBoxOptions.fields.regularPriceKey,
+                key: searchBoxOptions.fields?.regularPriceKey,
                 display: (doc: Record<string, string>) =>
-                  searchBoxOptions.fields.regularPriceKey &&
-                  searchBoxOptions.fields.discountPriceKey &&
-                  parseFloat(doc[searchBoxOptions.fields.regularPriceKey]) >
-                    parseFloat(doc[searchBoxOptions.fields.discountPriceKey])
+                  searchBoxOptions.fields?.regularPriceKey &&
+                  searchBoxOptions.fields?.discountPriceKey &&
+                  parseFloat(doc[searchBoxOptions.fields?.regularPriceKey]) >
+                    parseFloat(doc[searchBoxOptions.fields?.discountPriceKey])
               },
               {
                 type: 'price',
-                key: searchBoxOptions.fields.discountPriceKey
+                key: searchBoxOptions.fields?.discountPriceKey
               }
             ]
           }
@@ -89,9 +89,9 @@ const getSearchBoxComponent = ({
     },
     showTotalCount: true,
     expandOnSinglePanel: true,
-    minInputLength: searchBoxOptions.fields.minInputLength ?? 0,
+    minInputLength: searchBoxOptions.fields?.minInputLength ?? 0,
     debounce: 250,
-    labels: labels.searchBox,
+    labels: labels?.searchBox,
     links: {
       searchResults: ''
     },
@@ -99,7 +99,7 @@ const getSearchBoxComponent = ({
     redirections,
     history: {
       labels: {
-        clear: labels.searchBox.clearHistory
+        clear: labels?.searchBox?.clearHistory
       }
     }
   }
@@ -123,15 +123,15 @@ const getSearchResultsComponent = ({
           },
           labels: {
             title: '',
-            clearAll: labels.facets?.clearAll
+            clearAll: labels?.facets?.clearAll
           }
         },
         facets: {
           labels: {
-            title: labels.facets.facetTitle,
-            showAll: labels.facets.showAll,
-            facetFilter: labels.facets.facetFilter,
-            facetClear: labels.facets.facetClear
+            title: labels?.facets?.facetTitle,
+            showAll: labels?.facets?.showAll,
+            facetFilter: labels?.facets?.facetFilter,
+            facetClear: labels?.facets?.facetClear
           },
           filterable: {
             minValues: 5
@@ -196,8 +196,8 @@ const getSearchResultsComponent = ({
     queryKey: searchResultOptions.queryKey,
     containerSelector: searchResultOptions.containerSelector,
     searchTitlePosition: 'search-results-top',
-    titleKey: searchResultOptions.fields.titleKey,
-    labels: labels.searchResults,
+    titleKey: searchResultOptions.fields?.titleKey,
+    labels: labels?.searchResults,
     grid: {
       columns
     } as ProductGrid,
@@ -229,8 +229,8 @@ const getSearchResultsComponent = ({
     },
     ...badges,
     links: {
-      details: searchResultOptions.fields.productUrl
-        ? `{${searchResultOptions.fields.productUrl}}`
+      details: searchResultOptions.fields?.productUrl
+        ? `{${searchResultOptions.fields?.productUrl}}`
         : undefined
     },
     callbacks,
@@ -240,37 +240,37 @@ const getSearchResultsComponent = ({
       {
         type: 'image',
         placeholder: placeholderImage,
-        key: searchResultOptions.fields.imageKey,
-        baseUrl: searchResultOptions.fields.baseImageUrl,
-        display: () => searchResultOptions.fields.imageKey
+        key: searchResultOptions.fields?.imageKey,
+        baseUrl: searchResultOptions.fields?.baseImageUrl,
+        display: () => searchResultOptions.fields?.imageKey
       },
       addFieldIfKeyExists('_emphasis', searchResultOptions.fields?.emphasizedField, {
         type: 'custom',
         className: 'lupa-custom-emphasis',
-        key: searchResultOptions.fields.emphasizedField,
+        key: searchResultOptions.fields?.emphasizedField,
         display: () => true
       }),
       {
         type: 'title',
-        key: searchResultOptions.fields.titleKey,
+        key: searchResultOptions.fields?.titleKey,
         maxLines: searchResultOptions.maxLines ?? 2,
         display: (doc: Record<string, string>) =>
-          searchResultOptions.fields.titleKey && Boolean(doc[searchResultOptions.fields.titleKey])
+          searchResultOptions.fields?.titleKey && Boolean(doc[searchResultOptions.fields?.titleKey])
       },
       ...getAdditionalElements(additionalFields),
-      addFieldIfKeyExists('_discountPrice', searchResultOptions.fields.discountPriceKey, {
-        key: searchResultOptions.fields.discountPriceKey,
+      addFieldIfKeyExists('_discountPrice', searchResultOptions.fields?.discountPriceKey, {
+        key: searchResultOptions.fields?.discountPriceKey,
         type: 'customHtml',
         className: 'lupa-price lupa-price-discounted',
         display: (doc: Record<string, string>) =>
           displayDiscountedPriceSection(doc, searchResultOptions),
         html: (doc: Record<string, string>) => {
-          const currency = escapeHtml(searchResultOptions.fields.currency || '€')
+          const currency = escapeHtml(searchResultOptions.fields?.currency || '€')
           const discountPrice = parseFloat(
-            doc[searchResultOptions.fields.discountPriceKey ?? '']
+            doc[searchResultOptions.fields?.discountPriceKey ?? '']
           )?.toFixed(2)
           const regularPrice = parseFloat(
-            doc[searchResultOptions.fields.regularPriceKey ?? '']
+            doc[searchResultOptions.fields?.regularPriceKey ?? '']
           )?.toFixed(2)
           const discount = `<span class="lupa-discount">${escapeHtml(
             discountPrice
@@ -281,17 +281,17 @@ const getSearchResultsComponent = ({
           return discount + regular
         }
       }),
-      addFieldIfKeyExists('_regularPrice', searchResultOptions.fields.regularPriceKey, {
-        key: searchResultOptions.fields.regularPriceKey,
+      addFieldIfKeyExists('_regularPrice', searchResultOptions.fields?.regularPriceKey, {
+        key: searchResultOptions.fields?.regularPriceKey,
         type: 'customHtml',
         className: 'lupa-price lupa-price-single',
         display: (doc: Record<string, string>) =>
           displayRegularPriceSection(doc, searchResultOptions),
         html: (doc: Record<string, string>) => {
-          const currency = escapeHtml(searchResultOptions.fields.currency || '€')
+          const currency = escapeHtml(searchResultOptions.fields?.currency || '€')
           const price = parseFloat(
-            doc[searchResultOptions.fields.regularPriceKey ?? ''] ??
-              doc[searchResultOptions.fields.discountPriceKey ?? '']
+            doc[searchResultOptions.fields?.regularPriceKey ?? ''] ??
+              doc[searchResultOptions.fields?.discountPriceKey ?? '']
           )?.toFixed(2)
           return `<span class="lupa-final">${escapeHtml(price)} ${currency}</span>`
         }
