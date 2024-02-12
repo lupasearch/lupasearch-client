@@ -811,6 +811,28 @@ window.addEventListener('lupaRedirect', (data) => {
 })
 ```
 
+## Scroll to results after page/filter change
+
+LupaSearch supports automatic scrolling to the top of the search results page, when user is navigating through pages or facet filter value is changed.
+
+You can control this behavior with the following options:
+
+```js
+const options = {
+  scrollToResults: {
+    enabled: true,
+    timeout: 500,
+    scrollToContainerSelector: '#app'
+  }
+}
+```
+
+- `enabled` - whether scroll functionality is enabled. Defaults to `true`;
+
+- `timeout` - how many ms to wait after user action before initiating scroll. Defaults to `500`;
+
+- `scrollToContainerSelector` - override container element, which indicates the top of the search results window. Defaults to `#lupa-search-results`.
+
 # Statistics
 
 By using tracking API, the plugin should be able to track these events in the search results page:
