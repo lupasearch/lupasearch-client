@@ -179,7 +179,7 @@ const getSearchResultsComponent = ({
             display: (doc: Record<string, string>) => Boolean(doc._relevance !== undefined)
           }
         ]),
-        ...(searchResultOptions.boostedMarker?.enabled && [
+        ...((searchResultOptions.boostedMarker?.enabled ?? false) && [
           {
             key: '',
             type: 'customHtml' as SearchResultBadgeType,
