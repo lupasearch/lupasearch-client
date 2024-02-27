@@ -165,23 +165,32 @@ const getSearchResultsComponent = ({
     xs: searchResultOptions.maxColumns ?? 1
   }
 
-  const badges = searchResultOptions.showRelevance
-    ? {
-        badges: {
-          anchor: 'tr' as AnchorPosition,
-          elements: [
-            {
-              key: '',
-              type: 'customHtml' as SearchResultBadgeType,
-              className: 'relevance',
-              html: (doc: Record<string, string>) =>
-                `${toMaxDecimalPlaces(escapeHtml(doc._relevance), 3)}`,
-              display: (doc: Record<string, string>) => Boolean(doc._relevance !== undefined)
-            }
-          ]
-        }
-      }
-    : {}
+  const badges = {
+    badges: {
+      anchor: 'tr' as AnchorPosition,
+      elements: [
+        ...(searchResultOptions.showRelevance && [
+          {
+            key: '',
+            type: 'customHtml' as SearchResultBadgeType,
+            className: 'relevance',
+            html: (doc: Record<string, string>) =>
+              `${toMaxDecimalPlaces(escapeHtml(doc._relevance), 3)}`,
+            display: (doc: Record<string, string>) => Boolean(doc._relevance !== undefined)
+          }
+        ]),
+        ...((searchResultOptions.boostedMarker?.enabled ?? false) && [
+          {
+            key: '',
+            type: 'customHtml' as SearchResultBadgeType,
+            className: 'boosted-marker',
+            html: () => `${escapeHtml(searchResultOptions.boostedMarker?.label)}`,
+            display: (doc: Record<string, unknown>) => doc._boosted === true
+          }
+        ])
+      ]
+    }
+  }
 
   return {
     options: {
