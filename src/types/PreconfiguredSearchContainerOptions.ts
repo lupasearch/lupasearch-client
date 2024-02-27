@@ -44,6 +44,10 @@ export type SearchResultDemoOptions = {
   customHeaders?: Record<string, string>
   gridConfiguration?: Record<string, number>
   showRelevance?: boolean
+  boostedMarker?: {
+    enabled: boolean
+    label: string
+  }
   errorHandler?: (errorResponse: any) => unknown
 }
 
