@@ -136,6 +136,9 @@ const options = {
       titleKey: 'name',
       idKey: 'id',
       searchBySuggestion: true,
+      labels: {
+        title: 'Matching products'
+      },
       isInStock: (doc: any): boolean => {
         return Boolean(doc)
       },
@@ -229,6 +232,8 @@ Document panel can be used to display products or other items that match given s
 - `isInStock` - an optional function that should check if document is in stock. Used to enable/disable add to cart element if used in elements.
 
 - `customDocumentHtmlAttributes` - provide your own custom attributes that will be added to each document html element. Receives document object as a parameter.
+
+- `labels.title` - give a name for the search box panel.
 
 ## Document panel fields
 
