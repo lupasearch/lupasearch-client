@@ -1,6 +1,6 @@
 {
   "name": "@getlupa/client",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "main": "dist/lupaSearch.js",
   "module": "dist/index.mjs",
   "types": "dist/src/index.d.ts",
