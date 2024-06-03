@@ -429,6 +429,7 @@ const options = {
       stats: {
         slider: true,
         inputs: false,
+        interval: 0.01,
         labels: {
           from: 'From:',
           to: 'To:',
@@ -492,6 +493,8 @@ const options = {
   - `slider` - display range slider;
 
   - `inputs` - display numeric range slider inputs;
+  
+  - `interval` - default slider slider step interval. Defaults to `1`;
 
   - `labels.from` - input "from" label;
 
