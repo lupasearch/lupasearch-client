@@ -21,7 +21,8 @@ const options = {
     currency: '€',
     priceSeparator: ',',
     defaultFacetLabel: 'Category:',
-    searchInputAriaLabel: 'Search for products'
+    searchInputAriaLabel: 'Search for products',
+    closePanel: '✖'
   },
   links: {
     searchResults: '/search'
@@ -65,6 +66,8 @@ lupaSearch.searchBox(options)
 - `labels.defaultFacetLabel` - label to show for the first suggestion that has multiple facets returned. For example: (`books 'in category': entertainment`);
 
 - `labels.searchInputAriaLabel` - accessibility aria label for search input.
+
+- `labels.closePanel` - optional button to close the opened search panel.
 
 - `links.searchResults` - url of the full search result page that user should be redirected to, when clicks ENTER or "More results" button. These query parameters will be appended to the search results url: `?q=` - user search string; `&f.{facetKey}=` - if user clicks on a suggestion that is grouped by facet, it's key and value is added to the query string.
 
