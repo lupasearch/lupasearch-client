@@ -27,6 +27,12 @@ const options = {
   links: {
     searchResults: '/search'
   },
+  queryParameterNames: {
+    q: 'text',
+    p: 'page',
+    l: 'limit',
+    s: 'sort'
+  },
   showNoResultsPanel: false
   hideMoreResultsButtonOnNoResults: false,
   expandOnSinglePanel: false
@@ -70,6 +76,8 @@ lupaSearch.searchBox(options)
 - `labels.closePanel` - optional button to close the opened search panel.
 
 - `links.searchResults` - url of the full search result page that user should be redirected to, when clicks ENTER or "More results" button. These query parameters will be appended to the search results url: `?q=` - user search string; `&f.{facetKey}=` - if user clicks on a suggestion that is grouped by facet, it's key and value is added to the query string.
+
+- `queryParameterNames` - control the names of query url parameters, that will be added into the search url address: `q` - search query; `p` - page number; `l` - limit of results per page; `s` - sort order.
 
 Search Box configuration can also include additional parameters. If you need to hide suggestion or product panel, just omit it from the configuration.
 
