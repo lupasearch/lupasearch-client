@@ -159,6 +159,31 @@ const options = {
           'data-name': doc.name
         }
       },
+      badges: {
+        anchorElementKey: 'brand',
+        elements: [
+          {
+            type: 'text',
+            key: 'text_labels',
+            prefix: '- ',
+            maxItems: 1
+          },
+          {
+            type: 'image',
+            key: 'image_labels',
+            rootImageUrl: 'https://lupasearch.com/media/',
+            maxItems: 1
+          },
+          {
+            type: 'customHtml',
+            className: 'new-product',
+            html: (doc) => {
+              return `<span>(N)</span>`
+            },
+            display: (doc) => Boolean(doc.isNewProduct)
+          }
+        ]
+      },
       elements: [
         {
           type: 'image',
@@ -245,6 +270,12 @@ Document panel can be used to display products or other items that match given s
 - `customDocumentHtmlAttributes` - provide your own custom attributes that will be added to each document html element. Receives document object as a parameter.
 
 - `labels.title` - give a name for the search box panel.
+
+### Badges
+
+- `anchorElementKey` - badges will be placed next to this element.
+
+See all badge options: ([Search result configuration](/docs/components/search-results.md)).
 
 ## Document panel fields
 
