@@ -7,6 +7,7 @@ import lupaSearch from '@getlupa/client'
 
 const options = {
   containerSelector: '#searchResultsContainer',
+  hideResultsOnReload: false,
   labels: {
     pageSize: 'Page size:',
     sortBy: 'Sort by:',
@@ -72,6 +73,8 @@ lupaSearch.searchResults(options)
 - `labels.aiSuggestions` - label for similar query with AI suggestions;
 
 - `labels.similarResultsLabel` - label to show when similar results functionality is enabled.
+
+- `hideResultsOnReload` - results will be hidden, while new configuration is loading when plugin is reloaded with new options and `fetch: true`.
 
 # Query parameters
 
