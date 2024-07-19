@@ -200,6 +200,12 @@ const options = {
       },
       alt: (document) => {
         return `This is alt text for item: ${document.name}`
+      },
+      hoverImages: {
+        key: 'additionalImages',
+        cycleInterval: 3000,
+        maxImages: 3,
+        display: (document) => document.myImages.map((i) => i.src)
       }
     },
     {
@@ -329,6 +335,16 @@ Available card element types:
   - `customUrl` - Provide a function that returns image url from document. Overrides all other image options;
 
   - `alt` - Provide a function that returns an alt image text for a given document.
+
+  - `hoverImages` - additional images that are shown on hover.
+
+  - `hoverImages.key` - a key of field in a document to look for additional images. Field should be a list of absolute or relative image urls;
+
+  - `hoverImages.cycleInterval` - time in ms to cycle through images. Defaults to `2000`;
+
+  - `hoverImages.maxImages` - max number of images to display on hover. Defaults to `5`;
+
+  - `hoverImages.display` - a function that receives a document object and should return a list of image urls to display on hover. Will take precedence over `key` option.
 
 - `title` - title of the product.
 
@@ -496,7 +512,7 @@ const options = {
   - `slider` - display range slider;
 
   - `inputs` - display numeric range slider inputs;
-  
+
   - `interval` - default slider slider step interval. Defaults to `1`;
 
   - `labels.from` - input "from" label;
