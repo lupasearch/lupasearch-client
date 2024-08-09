@@ -40,7 +40,7 @@ export const DEFAULT_OPTIONS_RESULTS = {
         top: false,
         bottom: true
       },
-      sizes: [10, 20, 25, 50]
+      sizes: [12, 24, 36]
     },
     pageSelection: {
       position: {
