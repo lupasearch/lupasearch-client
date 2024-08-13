@@ -68,6 +68,7 @@ import {
   SearchResultDemoOptions
 } from './types/PreconfiguredSearchContainerOptions'
 import SearchContainerConfigurationService from './modules/preconfiguredContainer/SearchContainerConfigurationService'
+import { createVue } from './utils/mounting.utils'
 
 type AppInstance = Record<
   string,
@@ -85,7 +86,7 @@ type AppInstances = Record<
   AppInstance
 >
 
-type MountOptions = { fetch: boolean }
+type MountOptions = { fetch?: boolean; mountingBehavior?: 'replace' | 'append' | 'prepend' }
 
 const app: AppInstances = {
   box: {},
@@ -98,41 +99,6 @@ const app: AppInstances = {
 
 const tracking = (options: TrackingOptions): void => {
   setupTracking(options)
-}
-
-const createVue = (
-  selector: string | Element,
-  rootComponent: Component,
-  options: Record<string, unknown>,
-  mountToParent = false
-) => {
-  const pinia = initPinia()
-  const element = typeof selector === 'string' ? document.querySelector(selector) : selector
-
-  const parent = element?.parentElement
-
-  const mountElement = mountToParent ? parent : element
-
-  if (!mountElement) {
-    console.error(`Cannot mount LupaSearch component. Element "${selector}" not found`)
-    return
-  }
-
-  let mountedComponent = null
-
-  const props = reactive({ ...options })
-  const app = createApp({
-    render: () => (mountedComponent = h(rootComponent, props))
-  })
-  app.use(pinia)
-
-  const mountedApp = app.mount(mountElement)
-
-  if (mountToParent) {
-    element?.remove()
-  }
-
-  return { mountedApp, mountedComponent, props, app, mountElement }
 }
 
 const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
@@ -148,6 +114,7 @@ const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions):
   }
   const instance = createVue(
     options.inputSelector,
+    mountOptions?.mountingBehavior,
     SearchBoxEntry,
     { searchBoxOptions: options },
     true
@@ -178,9 +145,14 @@ const searchResults = (options: SearchResultsOptions, mountOptions?: MountOption
     }
     return
   }
-  const instance = createVue(options.containerSelector, SearchResultsEntry, {
-    searchResultsOptions: options
-  })
+  const instance = createVue(
+    options.containerSelector,
+    mountOptions?.mountingBehavior,
+    SearchResultsEntry,
+    {
+      searchResultsOptions: options
+    }
+  )
   if (!instance) {
     return
   }
@@ -198,9 +170,14 @@ const productList = (options: ProductListOptions, mountOptions?: MountOptions): 
     }
     return
   }
-  const instance = createVue(options.containerSelector, ProductListEntry, {
-    productListOptions: options
-  })
+  const instance = createVue(
+    options.containerSelector,
+    mountOptions?.mountingBehavior,
+    ProductListEntry,
+    {
+      productListOptions: options
+    }
+  )
   if (!instance) {
     return
   }
@@ -229,7 +206,7 @@ const searchContainer = (options: SearchContainerOptions, mountOptions?: MountOp
     options: options.options
   })
   document.body.appendChild(host)
-  const instance = createVue(manager, SearchContainerEntry, {
+  const instance = createVue(manager, mountOptions?.mountingBehavior, SearchContainerEntry, {
     searchContainerOptions: options
   })
   if (!instance) {
@@ -274,9 +251,14 @@ const recommendations = (
     return
   }
 
-  const instance = createVue(options.containerSelector, RecommendationsEntry, {
-    recommendationOptions: options
-  })
+  const instance = createVue(
+    options.containerSelector,
+    mountOptions?.mountingBehavior,
+    RecommendationsEntry,
+    {
+      recommendationOptions: options
+    }
+  )
   if (!instance) {
     return
   }
@@ -296,9 +278,14 @@ const chat = (options: ChatOptions, mountOptions?: MountOptions): void => {
     return
   }
 
-  const instance = createVue(options.displayOptions.containerSelector, ChatContainer, {
-    options: options
-  })
+  const instance = createVue(
+    options.displayOptions.containerSelector,
+    mountOptions?.mountingBehavior,
+    ChatContainer,
+    {
+      options: options
+    }
+  )
   if (!instance) {
     return
   }
