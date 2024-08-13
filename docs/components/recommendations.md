@@ -7,26 +7,26 @@ This is a component that allows to display similar product recommendations for g
 Basic usage:
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
 const options = {
   // ... Pass all other options from search results component configuration
   ...SEARCH_RESULTS_OPTIONS,
-  containerSelector: "#container-to-render-recommender",
-  queryKey: "main-query-key",
-  itemId: "1",
+  containerSelector: '#container-to-render-recommender',
+  queryKey: 'main-query-key',
+  itemId: '1',
   carousel: {
     pageSizes: [
       [768, 3],
-      [1024, 4],
+      [1024, 4]
     ],
-    nextLabel: "<i> ▶ </i>",
-    prevLabel: "<i> ▶ </i>",
-    scrollPerPage: false,
-  },
-};
+    nextLabel: '<i> ▶ </i>',
+    prevLabel: '<i> ▶ </i>',
+    scrollPerPage: false
+  }
+}
 
-lupaSearch.recommendations(options);
+lupaSearch.recommendations(options)
 ```
 
 - `containerSelector` - container selector to render recommendation carousel in;
@@ -37,27 +37,42 @@ lupaSearch.recommendations(options);
 
 - `carousel` - additional options for product carousel.
 
+**Recommendations for multiple products**
+
+To display recommendations for multiple products (for example, in the cart or before the checkout), it is possible to pass multiple `itemId` values:
+
+```js
+import lupaSearch from '@getlupa/client'
+
+const options = {
+  // ... All other options
+  itemId: ['1', '2', '3']
+}
+
+lupaSearch.recommendations(options)
+```
+
 **Carousel options**
 
 Product recommendation requires all options from the search result conmponent (to display correct product card elements in recommendations).
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
 const options = {
   // ... Other options
   carousel: {
     pageSizes: [
       [768, 3],
-      [1024, 4],
+      [1024, 4]
     ],
-    nextLabel: "<i> ▶ </i>",
-    prevLabel: "<i> ▶ </i>",
-    scrollPerPage: false,
-  },
-};
+    nextLabel: '<i> ▶ </i>',
+    prevLabel: '<i> ▶ </i>',
+    scrollPerPage: false
+  }
+}
 
-lupaSearch.recommendations(options);
+lupaSearch.recommendations(options)
 ```
 
 - `pageSizes` - pass array of **screen width** and **item count** pair. Products carousel will use different number of max displayed items in a single carousel page;
@@ -73,9 +88,9 @@ lupaSearch.recommendations(options);
 Use `clearRecommendations` to cleanup the component after your page is destroyed (important on single-page applications):
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
-lupaSearch.clearRecommendations("#my-recommendations-container");
+lupaSearch.clearRecommendations('#my-recommendations-container')
 ```
 
 ## Analytics and AB testing
@@ -83,17 +98,17 @@ lupaSearch.clearRecommendations("#my-recommendations-container");
 AB testing allows to compare your old recommender and LupaSaerch recommender converion rate by sending recommender click events to analytics aggregator, configured using [Tracking](/docs/components/recommendations.md).
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
 {
   const options = {
     // ... Other recommendation options
     abTesting: {
       enabled: true,
-      originalIds: ["2", "4", "8"],
-      oldRecommenderDisplayRatio: 0.5,
-    },
-  };
+      originalIds: ['2', '4', '8'],
+      oldRecommenderDisplayRatio: 0.5
+    }
+  }
 }
 ```
 
