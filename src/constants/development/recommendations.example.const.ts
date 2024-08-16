@@ -4,20 +4,20 @@ import { SEARCH_RESULTS_CONFIGURATION } from './searchResultsDev.const'
 export const RECOMMENDATIONS_OPTIONS: ProductRecommendationOptions = {
   ...SEARCH_RESULTS_CONFIGURATION,
   containerSelector: '',
-  queryKey: 'jnovl7k0kkvd',
+  queryKey: '	r-h5oxch3bw2hq',
   itemId: '1',
   abTesting: {
     enabled: false
   },
   carousel: {
     scrollPerPage: 4,
-    itemsToShow: 8,
+    itemsToShow: 5,
     breakpoints: {
       768: {
-        itemsToShow: 4
+        itemsToShow: 3
       },
       1024: {
-        itemsToShow: 5
+        itemsToShow: 4
       }
     }
   }
