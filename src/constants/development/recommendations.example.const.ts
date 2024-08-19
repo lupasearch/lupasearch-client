@@ -9,6 +9,9 @@ export const RECOMMENDATIONS_OPTIONS: ProductRecommendationOptions = {
   abTesting: {
     enabled: false
   },
+  recommendationLabels: {
+    title: 'You may also like',
+  },
   carousel: {
     scrollPerPage: 4,
     itemsToShow: 5,
