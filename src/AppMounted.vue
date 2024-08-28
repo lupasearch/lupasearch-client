@@ -5,7 +5,7 @@ import { SEARCH_BOX_CONFIGURATION } from './constants/development/searchBoxDev.c
 import { SEARCH_RESULTS_CONFIGURATION } from './constants/development/searchResultsDev.const'
 import { DEFAULT_SEARCH_BOX_OPTIONS } from './constants/searchBox.const'
 import { DEFAULT_OPTIONS_RESULTS } from './constants/searchResults.const'
-import { SearchBox, SearchBoxOptions, SearchResults, SearchResultsOptions } from '@getlupa/vue'
+import { SearchBoxOptions, SearchResultsOptions } from '@getlupa/vue'
 import '@getlupa/vue/dist/style.css'
 import lupaSearch from '.'
 

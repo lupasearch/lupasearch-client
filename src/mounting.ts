@@ -1,5 +1,4 @@
 import type {
-  TrackingOptions,
   ProductListOptions,
   ProductRecommendationOptions,
   SearchBoxOptions,

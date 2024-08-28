@@ -133,6 +133,7 @@ const applyStyles = async (configuration: ExtendedPluginElementsConfiguration) =
 
 const mountSearchBox = async (configuration: ExtendedPluginElementsConfiguration, fetch = true) => {
   if (!configuration.searchBox) {
+    return;
   }
   const resolvedConfiguration: SearchBoxOptions = eval(`(${configuration.searchBox})`)
   const visible = await waitForElementToBeVisible(resolvedConfiguration.inputSelector)
