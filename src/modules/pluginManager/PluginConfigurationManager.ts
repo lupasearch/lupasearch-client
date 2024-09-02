@@ -126,7 +126,8 @@ const applyStyles = async (configuration: ExtendedPluginElementsConfiguration) =
     styleElement.innerHTML = `
       @import url('${baseStyleLink}');
       @import url('https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css') 
-      ${configuration.customStyles ?? ''}`
+      ${configuration.customStyles ?? ''}
+    `
   }
   document.head.appendChild(styleElement)
 }
