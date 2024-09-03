@@ -15,6 +15,14 @@ export const tryLoadFromLocalStorage = <T>(key: string): T | null => {
   }
 }
 
+export const removeFromLocalStorage = (key: string) => {
+  try {
+    localStorage.removeItem(key)
+  } catch {
+    // local storage not available, do nothing
+  }
+}
+
 export const saveToSessionStorage = (key: string, value: any) => {
   try {
     sessionStorage.setItem(key, JSON.stringify(value))
@@ -29,5 +37,13 @@ export const tryLoadFromSessionStorage = <T>(key: string): T | null => {
     return item ? JSON.parse(item) : null
   } catch {
     return null
+  }
+}
+
+export const removeFromSessionStorage = (key: string) => {
+  try {
+    sessionStorage.removeItem(key)
+  } catch {
+    // session storage not available, do nothing
   }
 }
