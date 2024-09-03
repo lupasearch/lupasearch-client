@@ -49,7 +49,6 @@ const app: AppInstances = {
   chat: {}
 }
 
-
 export const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
   const existingInstance = app.box[options.inputSelector] as any
   if (existingInstance) {
@@ -133,7 +132,10 @@ export const productList = (options: ProductListOptions, mountOptions?: MountOpt
   app.productList[options.containerSelector] = instance
 }
 
-export const searchContainer = (options: SearchContainerOptions, mountOptions?: MountOptions): void => {
+export const searchContainer = (
+  options: SearchContainerOptions,
+  mountOptions?: MountOptions
+): void => {
   const existingInstance = app.searchContainer[options.trigger] as any
   if (existingInstance) {
     existingInstance.props.searchContainerOptions = options
