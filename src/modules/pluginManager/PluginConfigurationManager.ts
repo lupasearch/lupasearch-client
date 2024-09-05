@@ -21,7 +21,7 @@ import {
 } from '@getlupa/vue'
 
 const PREVIEW_PARAMETER = 'lupaSearchPreview'
-const MAX_ELEMENT_MOUNT_RETRIES = 25;
+const MAX_ELEMENT_MOUNT_RETRIES = 25
 
 let styleElement: HTMLStyleElement | null = null
 
@@ -129,7 +129,7 @@ const mountSearchBox = async (
   if (!configuration.searchBox) {
     return
   }
-  const resolvedConfiguration: SearchBoxOptions = eval(`(${configuration.searchBox})`)
+  const resolvedConfiguration: SearchBoxOptions = JSON.parse(configuration.searchBox)
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.inputSelector,
     0,
@@ -153,7 +153,7 @@ const mountSearchResults = async (
   if (!configuration.searchResults) {
     return
   }
-  const resolvedConfiguration: SearchResultsOptions = eval(`(${configuration.searchResults})`)
+  const resolvedConfiguration: SearchResultsOptions = JSON.parse(configuration.searchResults)
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,
@@ -177,10 +177,10 @@ const mountProductList = async (
   if (!configuration.productList) {
     return
   }
-  const resolvedSearchResultsConfiguration: SearchResultsOptions = eval(
-    `(${configuration.searchResults})`
+  const resolvedSearchResultsConfiguration: SearchResultsOptions = JSON.parse(
+    configuration.searchResults
   )
-  const resolvedConfiguration: ProductListOptions = eval(`(${configuration.productList})`)
+  const resolvedConfiguration: ProductListOptions = JSON.parse(configuration.productList)
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,
@@ -207,11 +207,11 @@ const mountRecommendations = async (
   if (!configuration.recommendations) {
     return
   }
-  const resolvedSearchResultsConfiguration: SearchResultsOptions = eval(
-    `(${configuration.searchResults})`
+  const resolvedSearchResultsConfiguration: SearchResultsOptions = JSON.parse(
+    configuration.searchResults
   )
-  const resolvedConfiguration: ProductRecommendationOptions = eval(
-    `(${configuration.recommendations})`
+  const resolvedConfiguration: ProductRecommendationOptions = JSON.parse(
+    configuration.recommendations
   )
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
@@ -239,10 +239,10 @@ const mountChat = async (
   if (!configuration.genAiChat) {
     return
   }
-  const resolvedSearchResultsConfiguration: SearchResultsOptions = eval(
-    `(${configuration.searchResults})`
+  const resolvedSearchResultsConfiguration: SearchResultsOptions = JSON.parse(
+    configuration.searchResults
   )
-  const resolvedConfiguration = eval(`(${configuration.genAiChat})`)
+  const resolvedConfiguration = JSON.parse(configuration.genAiChat)
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,

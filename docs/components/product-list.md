@@ -9,38 +9,38 @@ In addition to the options below, product list page supports **all of the option
 See available configuration options:
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
 const options = {
   initialFilters: {
-    categoryId: ["123"],
+    categoryId: ['123']
   },
   categories: {
-    queryKey: "",
+    queryKey: '',
     keys: {
-      titleKey: "name",
-      urlKey: "url",
+      titleKey: 'name',
+      urlKey: 'url'
     },
     filters: {
-      parentCategoryId: ["123"],
+      parentCategoryId: ['123']
     },
     back: {
-      title: "Title page",
-      url: "/title-page",
+      title: 'Title page',
+      url: '/title-page'
     },
     parent: {
-      title: "Parent page",
-      url: "/title-page/parent-page",
+      title: 'Parent page',
+      url: '/title-page/parent-page'
     },
     current: {
-      title: "Current category",
-      description: "Lorem ipsum",
+      title: 'Current category',
+      description: 'Lorem ipsum'
     },
-    routingBehavior: "direct-link",
-  },
-};
+    routingBehavior: 'direct-link'
+  }
+}
 
-lupaSearch.productList(options);
+lupaSearch.productList(options)
 ```
 
 - `initialFilters` - a LupaSearch filter object, used to set initial filters for the documents (products), displayed in the product list. For example, it can be used to filter out products of a specific category, products with a discount. Initial filters are not shown in the active filter section.
@@ -86,7 +86,26 @@ Category filter, configured above, supports two ways of routing fot the categori
 - `event` - when user clicks on the category, a special event `lupaRedirect` is emitted on the window object. The event can then be handled by the plugin user:
 
 ```js
-window.addEventListener("lupaRedirect", (data) => {
+window.addEventListener('lupaRedirect', (data) => {
   // data.detail - redirect url
-});
+})
 ```
+
+## Extracting initial filters from your page
+
+You can also use extraction options, provided by LupaSearch, to extract initial filters (for example, current category id) from your page:
+
+```js
+const options = {
+  initialFilters: {
+    categoryId: {
+      extractFrom: 'url',
+      regex: '/(\\d+)/?$',
+      default: '1'
+    },
+    scope: ['channel-1']
+  }
+}
+```
+
+For full extraction options, see [Extraction](/docs/components/extraction.md).

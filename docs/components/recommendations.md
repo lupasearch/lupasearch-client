@@ -93,6 +93,23 @@ import lupaSearch from '@getlupa/client'
 lupaSearch.clearRecommendations('#my-recommendations-container')
 ```
 
+## Extracting itemId (s) from your page
+
+You can also use extraction to get `itemId` values from your page:
+
+```js
+const options = {
+  // ... All other options
+  itemId: {
+    extractFrom: 'localStorage',
+    key: '_itemIdForLupaSearchRecommender',
+    default: '1'
+  }
+}
+```
+
+For full extraction options, see [Extraction](/docs/components/extraction.md).
+
 ## Analytics and AB testing
 
 AB testing allows to compare your old recommender and LupaSaerch recommender converion rate by sending recommender click events to analytics aggregator, configured using [Tracking](/docs/components/recommendations.md).
