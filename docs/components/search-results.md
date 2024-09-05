@@ -855,6 +855,138 @@ const options = {
 
 - `scrollToContainerSelector` - override container element, which indicates the top of the search results window. Defaults to `#lupa-search-results`.
 
+## Dynamic display
+
+In some environments (like plugin configurator) it is not possible to use custom functions.
+
+Each option that supports dynamic display option, allows to use dynamic display condition configuration.
+
+Examples:
+
+The following configuration will display the element only if the document has a `price` field:
+
+```js
+const options = {
+  elements: [
+    {
+      type: 'price',
+      key: 'price',
+      display: {
+        condition: 'exists',
+        fields: ['price']
+      }
+    }
+  ]
+}
+```
+
+In a similar way, you can use `lessThan` condition to set document stock status if the `stock` field is less than 1:
+
+```js
+const options = {
+  isInStock: {
+    condition: 'lessThan',
+    fields: ['stock', 1]
+  }
+}
+```
+
+Full list of available conditions: `exists`, `equals`, `notEquals`, `greaterThan`, `lessThan`, `greaterThanOrEquals`, `lessThanOrEquals`.
+
+It is also possible to use nested keys in the condition configuration:
+
+```js
+const options = {
+  elements: [
+    {
+      type: 'customHtml',
+      html: '<div class="my-class">This is the best offer: {{price.value}} {{price.currency}}</div>',
+      display: {
+        condition: 'exists',
+        fields: ['price.value']
+      }
+    }
+  ]
+}
+```
+
+This would work with the following document fields:
+
+```json
+{
+  "id": "123",
+  "price": {
+    "value": 100,
+    "currency": "EUR"
+  }
+}
+```
+
+## Custom Html element template
+
+In some cases, you might need to use a custom HTML template for some elements without using custom functions. You can use the following configuration:
+
+```js
+const options = {
+  elements: [
+    {
+      type: 'customHtml',
+      html: '<div class="my-class">This is the best offer: {{price}} EUR</div>'
+    }
+  ]
+}
+```
+
+For example, if document has the following fields:
+
+```json
+{
+  "id": "123",
+  "price": 100
+}
+```
+
+The above configuration will render the following HTML:
+
+```html
+<div class="my-class">This is the best offer: 100 EUR</div>
+```
+
+You can also use nested fields in the template:
+
+```js
+const options = {
+  elements: [
+    {
+      type: 'customHtml',
+      html: '<div class="my-class">This is the best offer: {{price.value}} {{price.currency}}</div>'
+    }
+  ]
+}
+```
+
+For example, if document has the following fields:
+
+```json
+{
+  "id": "123",
+  "price": {
+    "value": 100,
+    "currency": "EUR"
+  }
+}
+```
+
+The above configuration will render the following HTML:
+
+```html
+<div class="my-class">This is the best offer: 100 EUR</div>
+```
+
+You can use html templates in all plugin options where custom html elements are supported, like `badges`, `elements`, `additionalPanels`, etc. by replacing `html` function with string template value.
+
+Both templates and document values are sanitized before rendering, which means that certain HTML tags, like `img` are removed from the rendered HTML.
+
 # Statistics
 
 By using tracking API, the plugin should be able to track these events in the search results page:
