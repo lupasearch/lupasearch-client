@@ -987,6 +987,42 @@ You can use html templates in all plugin options where custom html elements are 
 
 Both templates and document values are sanitized before rendering, which means that certain HTML tags, like `img` are removed from the rendered HTML.
 
+## Related queries
+
+Search results page can display related queries, based on the current search query. Related queries are displayed at the top of the search results page.
+
+```js
+const options = {
+  relatedQueries: {
+    queryKey: '',
+    source: {
+      type: 'facets',
+      key: 'category',
+      count: 4
+    },
+    labels: {
+      title: 'Related queries:'
+    },
+    image: {
+      type: 'image',
+      key: 'image',
+      placeholder: 'placeholder.png'
+    },
+    showCount: true
+  }
+}
+```
+
+- `source` - source of related queries. Available options: `facets`. If `facets` is selected, you need to provide a `key` of the facet to use as a source (will take the first `count` values from facet result);
+
+- `queryKey` - defines which query key to use to load the first element for each related query. If not provided, the main query key is used;
+
+- `labels.title` - a title of the related queries section;
+
+- `image` - an image element options for related query. If not provided, default image element from `elements` will be used;
+
+- `showCount` - show a count of items for each related query.
+
 # Statistics
 
 By using tracking API, the plugin should be able to track these events in the search results page:
