@@ -158,6 +158,19 @@ const options = {
     anchor: 'tr',
     elements: [
       {
+        type: 'discount',
+        className: 'custom-discount',
+        regularPriceKey: 'regularPrice',
+        finalPriceKey: 'discountPrice',
+        // discountKey: "discount",
+        discountType: 'percentage',
+        labels: {
+          prefix: '- ',
+          postfix: ' %'
+        },
+        display: (doc) => Boolean(doc.discountPrice < doc.regularPrice)
+      },
+      {
         type: 'text',
         key: 'text_labels',
         prefix: '- ',
@@ -230,6 +243,7 @@ const options = {
     {
       type: 'rating',
       key: 'ratings',
+      maxRating: 5,
       totalKey: 'ratingsCount',
       labels: {
         numberOfRatings: 'Total ratings: '
@@ -252,6 +266,7 @@ const options = {
       labels: {
         addToCart: 'Add to Cart'
       },
+      emitEvent: 'addToCart',
       action: (document, amount) => {},
       group: 'cart'
     },
@@ -312,6 +327,20 @@ Available badge types:
 
   - `html` a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated.
 
+- `discount` - discount badge. Displays a discount value, calculated from `regularPrice` and `finalPrice` fields;
+
+  - `regularPriceKey` - a key of a field in a document, that contains a regular price of a product;
+
+  - `finalPriceKey` - a key of a field in a document, that contains a final price of a product;
+
+  - `discountKey` - a key of a field in a document, that contains a discount value. If not provided, discount is calculated from `regularPriceKey` and `finalPriceKey`;
+
+  - `discountType` - a type of a discount value. Available values: `percentage`, `absolute`;
+
+  - `labels.prefix` - a custom prefix to append to value of the badge, defaults to `-`;
+
+  - `labels.postfix` - a custom postfix to append to value of the badge, defaults to `%` for percentage discount.
+
 ### Elements
 
 Define elements on the product card. Elements are placed in order, from top to bottom, in the product card. Each element is placed on a separate row.
@@ -364,6 +393,8 @@ Available card element types:
 
   - `key` - a key that determines a percentage of product rating.
 
+  - `maxRating` - a maximum rating value. `key` value will be divided by this value to get a percentage.
+
   - `getRatingPercentage` - a function that receives a document item and should return a percentage (0 - 100) of a rating value. Should not be used together with `key`.
 
   - `totalKey` - a document key that determines a total number of ratings for that product.
@@ -393,6 +424,8 @@ Available card element types:
   - `action` - action to execute when user clicks the Add to Cart button. Described as a function, which receives `document` and `amount` parameters. Document parameter is an item, returned with the search results, and contains properties, defined in `selectFields` option. The function may optionally return a promise, so a loading indicator could be displayed while adding to cart is in progress;
 
   - `labels.addToCart` - a label for add to cart button.
+
+  - `emitEvent` - an event name to emit when user clicks the Add to Cart button. This event can be caught: `document.addEventListener('addToCart', function(event) { const item = event.detail.item; });`, if `addToCart` is your `emitEvent` value;
 
 - `custom` - a custom field that is rendered as a simple text;
 
