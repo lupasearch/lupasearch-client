@@ -234,7 +234,7 @@ const options = {
         {
           type: 'addToCart',
           labels: {
-            addToCart: 'Į krepšelį'
+            addToCart: 'Add to cart'
           },
           display: (doc: any) => {
             return true
@@ -330,6 +330,8 @@ This is the list of available search box document fields. By convention, image e
   - `action` - action to execute when user clicks the Add to Cart button in the . Described as a function, which receives `document` and `amount` parameters. Document parameter is an item, returned with the search results, and contains properties, defined in `selectFields` option. The function may optionally return a promise, so a loading indicator could be displayed while adding to cart is in progress;
 
   - `labels.addToCart` - a label for add to cart button.
+
+  - `emitEvent` - an event name to emit when user clicks the Add to Cart button. This event can be caught: `document.addEventListener('addToCart', function(event) { const item = event.detail.item; });`, if `addToCart` is your `emitEvent` value;
 
 ## Search History
 
