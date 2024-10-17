@@ -1,4 +1,10 @@
 import { chat, productList, recommendations, searchBox, searchResults } from '@/mounting'
+import {
+  ResolvedProductListOptions,
+  ResolvedProductRecommendationOptions,
+  ResolvedSearchBoxOptions,
+  ResolvedSearchResultOptions
+} from '@/types/ResolvedOptions'
 import { waitForElementToBeVisible } from '@/utils/document.utils'
 import {
   removeFromLocalStorage,
@@ -129,7 +135,8 @@ const mountSearchBox = async (
   if (!configuration.searchBox) {
     return
   }
-  const resolvedConfiguration: SearchBoxOptions = JSON.parse(configuration.searchBox)
+  const resolvedConfiguration: ResolvedSearchBoxOptions = JSON.parse(configuration.searchBox)
+  const allowedMountUrls = resolvedConfiguration.allowedMountUrls
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.inputSelector,
     0,
@@ -141,7 +148,7 @@ const mountSearchBox = async (
     )
     return
   }
-  searchBox({ ...resolvedConfiguration, options }, { fetch })
+  searchBox({ ...resolvedConfiguration, options }, { fetch, allowedMountUrls })
 }
 
 const mountSearchResults = async (
@@ -153,7 +160,9 @@ const mountSearchResults = async (
   if (!configuration.searchResults) {
     return
   }
-  const resolvedConfiguration: SearchResultsOptions = JSON.parse(configuration.searchResults)
+  const resolvedConfiguration: ResolvedSearchResultOptions = JSON.parse(configuration.searchResults)
+  const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,
@@ -165,7 +174,7 @@ const mountSearchResults = async (
     )
     return
   }
-  searchResults({ ...resolvedConfiguration, options }, { fetch })
+  searchResults({ ...resolvedConfiguration, options }, { fetch, allowedMountUrls })
 }
 
 const mountProductList = async (
@@ -180,7 +189,9 @@ const mountProductList = async (
   const resolvedSearchResultsConfiguration: SearchResultsOptions = JSON.parse(
     configuration.searchResults
   )
-  const resolvedConfiguration: ProductListOptions = JSON.parse(configuration.productList)
+  const resolvedConfiguration: ResolvedProductListOptions = JSON.parse(configuration.productList)
+  const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,
@@ -194,7 +205,7 @@ const mountProductList = async (
   }
   productList(
     { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration, options },
-    { fetch }
+    { fetch, allowedMountUrls }
   )
 }
 
@@ -210,9 +221,11 @@ const mountRecommendations = async (
   const resolvedSearchResultsConfiguration: SearchResultsOptions = JSON.parse(
     configuration.searchResults
   )
-  const resolvedConfiguration: ProductRecommendationOptions = JSON.parse(
+  const resolvedConfiguration: ResolvedProductRecommendationOptions = JSON.parse(
     configuration.recommendations
   )
+  const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,
@@ -226,7 +239,7 @@ const mountRecommendations = async (
   }
   recommendations(
     { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration, options },
-    { fetch }
+    { fetch, allowedMountUrls }
   )
 }
 
@@ -243,6 +256,8 @@ const mountChat = async (
     configuration.searchResults
   )
   const resolvedConfiguration = JSON.parse(configuration.genAiChat)
+  const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,
@@ -254,7 +269,10 @@ const mountChat = async (
     )
     return
   }
-  chat({ ...resolvedSearchResultsConfiguration, ...resolvedConfiguration, options }, { fetch })
+  chat(
+    { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration, options },
+    { fetch, allowedMountUrls }
+  )
 }
 
 const mount = async (

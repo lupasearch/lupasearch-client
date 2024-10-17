@@ -20,7 +20,7 @@ import { DEFAULT_CONTAINER_STYLE } from '@/constants/global.const'
 import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
 import { PreconfiguredSearchContainerOptions } from './types/PreconfiguredSearchContainerOptions'
 import SearchContainerConfigurationService from './modules/preconfiguredContainer/SearchContainerConfigurationService'
-import { createVue } from './utils/mounting.utils'
+import { canMount, createVue } from './utils/mounting.utils'
 
 type AppInstance = Record<
   string,
@@ -38,7 +38,11 @@ type AppInstances = Record<
   AppInstance
 >
 
-type MountOptions = { fetch?: boolean; mountingBehavior?: 'replace' | 'append' | 'prepend' }
+type MountOptions = {
+  fetch?: boolean
+  mountingBehavior?: 'replace' | 'append' | 'prepend'
+  allowedMountUrls?: string[]
+}
 
 const app: AppInstances = {
   box: {},
@@ -74,6 +78,9 @@ export const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOp
 }
 
 export const searchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
+  if (!canMount(mountOptions?.allowedMountUrls)) {
+    return
+  }
   // Support for multiple search box selectors separated by a comma
   // Quite often multiple search boxes are required, since mobile and desktop has different inputs in html layout
   const inputs = options.inputSelector?.split(',')
@@ -83,6 +90,9 @@ export const searchBox = (options: SearchBoxOptions, mountOptions?: MountOptions
 }
 
 export const searchResults = (options: SearchResultsOptions, mountOptions?: MountOptions): void => {
+  if (!canMount(mountOptions?.allowedMountUrls)) {
+    return
+  }
   const existingInstance = app.results[options.containerSelector] as any
   if (existingInstance) {
     existingInstance.props.searchResultsOptions = options
@@ -108,6 +118,9 @@ export const searchResults = (options: SearchResultsOptions, mountOptions?: Moun
 }
 
 export const productList = (options: ProductListOptions, mountOptions?: MountOptions): void => {
+  if (!canMount(mountOptions?.allowedMountUrls)) {
+    return
+  }
   const existingInstance = app.productList[options.containerSelector] as any
   if (existingInstance) {
     existingInstance.props.productListOptions = options
@@ -136,6 +149,9 @@ export const searchContainer = (
   options: SearchContainerOptions,
   mountOptions?: MountOptions
 ): void => {
+  if (!canMount(mountOptions?.allowedMountUrls)) {
+    return
+  }
   const existingInstance = app.searchContainer[options.trigger] as any
   if (existingInstance) {
     existingInstance.props.searchContainerOptions = options
@@ -170,6 +186,9 @@ export const preconfiguredSearchContainer = (
   preconfiguredSearchContainerOptions: PreconfiguredSearchContainerOptions,
   mountOptions?: MountOptions
 ) => {
+  if (!canMount(mountOptions?.allowedMountUrls)) {
+    return
+  }
   const searchBox = SearchContainerConfigurationService.getSearchBoxComponent(
     preconfiguredSearchContainerOptions
   )
@@ -191,6 +210,9 @@ export const recommendations = (
   options: ProductRecommendationOptions,
   mountOptions?: MountOptions
 ): void => {
+  if (!canMount(mountOptions?.allowedMountUrls)) {
+    return
+  }
   const existingInstance = app.recommendations[options.containerSelector] as any
   if (existingInstance) {
     existingInstance.props.recommendationOptions = options
@@ -218,6 +240,9 @@ export const recommendations = (
 }
 
 export const chat = (options: ChatOptions, mountOptions?: MountOptions): void => {
+  if (!canMount(mountOptions?.allowedMountUrls)) {
+    return
+  }
   const existingInstance = app.chat[options.displayOptions.containerSelector] as any
   if (existingInstance) {
     existingInstance.props.options = options
