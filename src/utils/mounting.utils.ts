@@ -1,7 +1,11 @@
 import { initPinia } from '@getlupa/vue'
 import { createApp, type Component, reactive, h } from 'vue'
 
-const getMountElement = (element: Element, mountingBehavior = 'replace', mountToParent: boolean) => {
+const getMountElement = (
+  element: Element,
+  mountingBehavior = 'replace',
+  mountToParent: boolean
+) => {
   const parent = element?.parentElement
   if (mountingBehavior === 'replace') {
     let mountElement = element
@@ -56,4 +60,12 @@ export const createVue = (
   }
 
   return { mountedApp, mountedComponent, props, app, mountElement }
+}
+
+export const canMount = (allowedMountUrls?: string[]) => {
+  if (allowedMountUrls && Array.isArray(allowedMountUrls) && allowedMountUrls.length) {
+    const currentUrl = window.location.href
+    return allowedMountUrls?.some((url) => currentUrl.includes(url))
+  }
+  return true
 }
