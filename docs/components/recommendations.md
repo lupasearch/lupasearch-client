@@ -15,6 +15,7 @@ const options = {
   containerSelector: '#container-to-render-recommender',
   queryKey: 'main-query-key',
   itemId: '1',
+  lazyLoad: false,
   carousel: {
     pageSizes: [
       [768, 3],
@@ -35,7 +36,9 @@ lupaSearch.recommendations(options)
 
 - `itemId` - item (product) id to retrieve recommendations for;
 
-- `carousel` - additional options for product carousel.
+- `carousel` - additional options for product carousel.\
+
+- `lazyLoad` - defaults to `false`. If set to `true`, recommendations will be lazy loaded when it comes into the viewport.
 
 **Recommendations for multiple products**
 
