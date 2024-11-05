@@ -476,12 +476,15 @@ const options = {
       },
       hierarchy: {
         maxInitialLevel: 2,
-        topLevelValueCountLimit: 5
+        topLevelValueCountLimit: 5,
+        behavior: 'replace',
+        filterable: true
       },
       stats: {
         slider: true,
         inputs: false,
         interval: 0.01,
+        pricePrecisionDigits: 2,
         labels: {
           from: 'From:',
           to: 'To:',
@@ -540,6 +543,8 @@ const options = {
 
   - `filterable` - determines whether client side hierarchy facet value filtering should be shown;
 
+  - `behavior` - behavior of hierarchy facet values. Available options: `replace` - replace current filter value with a new one; `append` (default) - add a new option as an OR filter to existing values; 
+
 - `facets.stats` - range - stats facet specific settings;
 
   - `slider` - display range slider;
@@ -547,6 +552,8 @@ const options = {
   - `inputs` - display numeric range slider inputs;
 
   - `interval` - default slider slider step interval. Defaults to `1`;
+
+  - `pricePrecisionDigits` - number of digits after the decimal point for price range slider;
 
   - `labels.from` - input "from" label;
 
