@@ -9,11 +9,11 @@ For a list of all event types see Statistics section for Search Box and Search R
 To enable tracking, add this block of code, above all other `lupaSaerch` configuration:
 
 ```js
-import lupaSearch from "@getlupa/client";
+import lupaSearch from '@getlupa/client'
 
 lupaSearch.tracking({
-  trackBase: true,
-});
+  trackBase: true
+})
 ```
 
 ## Configuring user-specific events
@@ -24,8 +24,21 @@ For each user or session, the plugin can generate a random unique string, that c
 lupaSearch.tracking({
   trackBase: true,
   trackSession: true,
+  trackUser: true
+})
+```
+
+## Delayed click tracking
+
+Set `delayedClickTracking` to `true`, to emit click events after navigation to the clicked document. This might help to avoid canceled requests, if the user navigates to another page before the request is completed.
+
+```js
+lupaSearch.tracking({
+  trackBase: true,
+  trackSession: true,
   trackUser: true,
-});
+  delayedClickTracking: true
+})
 ```
 
 ## Emit events directly to your Google Analytics
