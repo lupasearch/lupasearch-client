@@ -543,7 +543,7 @@ const options = {
 
   - `filterable` - determines whether client side hierarchy facet value filtering should be shown;
 
-  - `behavior` - behavior of hierarchy facet values. Available options: `replace` - replace current filter value with a new one; `append` (default) - add a new option as an OR filter to existing values; 
+  - `behavior` - behavior of hierarchy facet values. Available options: `replace` - replace current filter value with a new one; `append` (default) - add a new option as an OR filter to existing values;
 
 - `facets.stats` - range - stats facet specific settings;
 
@@ -1038,7 +1038,8 @@ const options = {
     source: {
       type: 'facets',
       key: 'category',
-      count: 4
+      count: 4,
+      mode: 'query'
     },
     labels: {
       title: 'Related queries:'
@@ -1061,7 +1062,43 @@ const options = {
 
 - `image` - an image element options for related query. If not provided, default image element from `elements` will be used;
 
-- `showCount` - show a count of items for each related query.
+- `showCount` - show a count of items for each related query;
+
+- `source.mode`- mode of related queries. Available options: `query` - clicking on related query will issue a new search query with that query text; `filter` - clicking on related query will filter the current search results by that query text with.
+
+## Redirection suggestions
+
+Search results page can display redirection suggestions if certain characters or words are found in a current search text. This could be useful to suggest a search in a different language.
+
+```js
+const options = {
+  redirectionSuggestions: [
+    {
+      matchCharacters: 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+      label: ' Вы хотели искать на русском языке? {1}',
+      link: '/ru/search'
+    }
+  ]
+}
+```
+
+- `matchCharacters` - a list of characters to match in the search query text;
+- `label` - a label to display as a suggestion. `{1}` is replaced by the current search text;
+- `link` - a search results link to redirect user to, if the suggestion is clicked.
+
+```js
+const options = {
+  redirectionSuggestions: [
+    {
+      matchWords: ['special', 'product'],
+      label: 'We sell these products in a specialized website here.',
+      link: 'https://our-specialized-website.com/search'
+    }
+  ]
+}
+```
+
+- `matchWords` - a list of words to match in the search query text.
 
 # Statistics
 
