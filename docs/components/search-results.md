@@ -1027,6 +1027,37 @@ You can use html templates in all plugin options where custom html elements are 
 
 Both templates and document values are sanitized before rendering, which means that certain HTML tags, like `img` are removed from the rendered HTML.
 
+## Dynamic attributes
+
+Search box and search result elements support adding dynamic attributes to the HTML elements. Using templates. You can use the `dynamicAttributes` configuration with any type of element:
+
+```js
+const options = {
+  elements: [
+    {
+      type: 'addToCart',
+      key: 'id',
+      dynamicAttributes: [
+        {
+          key: 'data-id',
+          value: '{{id}}'
+        },
+        {
+          key: 'data-method',
+          value: 'ajax-post'
+        },
+        {
+          key: 'data-name-en',
+          value: 'Name: {{name.en}}'
+        }
+      ]
+    }
+  ]
+}
+```
+
+Important: only attribute keys that start with `data-` are allowed.
+
 ## Related queries
 
 Search results page can display related queries, based on the current search query. Related queries are displayed at the top of the search results page.
