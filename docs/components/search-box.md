@@ -35,7 +35,8 @@ const options = {
   },
   showNoResultsPanel: false
   hideMoreResultsButtonOnNoResults: false,
-  expandOnSinglePanel: false
+  expandOnSinglePanel: false,
+  showMoreResultsButton: true,
 }
 
 lupaSearch.searchBox(options)
@@ -58,6 +59,8 @@ lupaSearch.searchBox(options)
 - `hideMoreResultsButtonOnNoResults` - hide `moreResults` button panel on no search box results.
 
 - `expandOnSinglePanel` - if set to true, it will try to hide suggestions panel if there are no suggestions returned. Note that your custom css might override this functionality.
+
+- `showMoreResultsButton` - show "More results" button at the bottom of the search box that leads user to search results page.
 
 - `labels.placeholder` - input placeholder text to display when search input is empty;
 
