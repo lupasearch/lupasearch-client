@@ -70,3 +70,24 @@ If the page has the following HTML:
 ```
 
 The extracted attribute value will be `123`.
+
+## Extracting from cookie
+
+```js
+const options = {
+  initialFilters: {
+    categoryId: {
+      extractFrom: 'cookie',
+      cookieName: 'category_id'
+    }
+  }
+}
+```
+
+If the page has the following cookies:
+
+```
+category_id=123
+```
+
+The extracted attribute value will be `123`.

@@ -1131,6 +1131,18 @@ const options = {
 
 - `matchWords` - a list of words to match in the search query text.
 
+## Initial filters
+
+You can set initial filters for the search results page. Initial filters are applied for all of the search result queries, user can't remove them and they are not shown in the filters panel.
+
+```js
+const options = {
+  initialFilters: {
+    categoryId: ['123']
+  }
+}
+```
+
 # Statistics
 
 By using tracking API, the plugin should be able to track these events in the search results page:

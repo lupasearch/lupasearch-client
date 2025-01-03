@@ -420,6 +420,18 @@ const options = {
 }
 ```
 
+## Initial filters
+
+You can set initial filters for the search box. Initial filters are applied for all of the search box document queries, user can't remove them and they are not shown in the filters panel. Initial filters will not affect search box suggestions.
+
+```js
+const options = {
+  initialFilters: {
+    categoryId: ['123']
+  }
+}
+```
+
 ## Statistics
 
 By using tracking API, the plugin should be able to track these events in the search box:
