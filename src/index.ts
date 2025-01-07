@@ -73,6 +73,7 @@ import {
   preconfiguredSearchContainer
 } from './mounting'
 import PluginConfigurationManager from './modules/pluginManager/PluginConfigurationManager'
+import { OptionOverrides } from './types/OptionOverrides'
 
 type MountOptions = { fetch?: boolean; mountingBehavior?: 'replace' | 'append' | 'prepend' }
 
@@ -80,8 +81,12 @@ const tracking = (options: TrackingOptions): void => {
   setupTracking(options)
 }
 
-const init = (configurationKey: string, options?: SdkOptions) => {
-  return PluginConfigurationManager.init(configurationKey, options)
+const init = (
+  configurationKey: string,
+  options?: SdkOptions,
+  optionOverrides?: OptionOverrides
+) => {
+  return PluginConfigurationManager.init(configurationKey, options, optionOverrides)
 }
 
 const lupaSearch = {

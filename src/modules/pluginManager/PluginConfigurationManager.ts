@@ -1,4 +1,5 @@
 import { chat, productList, recommendations, searchBox, searchResults } from '@/mounting'
+import { OptionOverrides } from '@/types/OptionOverrides'
 import {
   ResolvedProductListOptions,
   ResolvedProductRecommendationOptions,
@@ -6,6 +7,7 @@ import {
   ResolvedSearchResultOptions
 } from '@/types/ResolvedOptions'
 import { waitForElementToBeVisible } from '@/utils/document.utils'
+import { merge } from '@/utils/merger.utils'
 import {
   removeFromLocalStorage,
   removeFromSessionStorage,
@@ -18,10 +20,7 @@ import { getQueryParam } from '@/utils/url.utils'
 import {
   PluginConfiguration,
   PluginElementsConfiguration,
-  ProductListOptions,
-  ProductRecommendationOptions,
   SdkOptions,
-  SearchBoxOptions,
   SearchResultsOptions,
   fetchPluginConfiguration
 } from '@getlupa/vue'
@@ -42,7 +41,7 @@ export type ExtendedPluginConfiguration = PluginConfiguration & {
 
 const loadAndSaveConfigurationFromServer = async (
   configurationKey: string,
-  options?: SdkOptions
+  options: SdkOptions = { environment: 'production' }
 ) => {
   const configuration = (await fetchPluginConfiguration(
     options,
@@ -73,7 +72,8 @@ const checkIsPreviewMode = () => {
 const loadConfigurations = async (
   configurationKey: string,
   isPreviewMode?: boolean,
-  options?: SdkOptions
+  options?: SdkOptions,
+  optionOverrides?: OptionOverrides
 ): Promise<ExtendedPluginConfiguration | null> => {
   if (isPreviewMode) {
     return loadAndSaveConfigurationFromServer(configurationKey, options)
@@ -94,7 +94,7 @@ const loadConfigurations = async (
         ? newestConfiguration.previewConfiguration ?? newestConfiguration.configuration
         : newestConfiguration.configuration
       if (configuration) {
-        await mount(configuration, options, false, true)
+        await mount(configuration, options, optionOverrides, false, true)
       } else {
         removeFromLocalStorage(configurationKey)
         window.location.reload()
@@ -129,6 +129,7 @@ const applyStyles = async (configuration: ExtendedPluginElementsConfiguration) =
 const mountSearchBox = async (
   configuration: ExtendedPluginElementsConfiguration,
   options?: SdkOptions,
+  optionOverrides?: OptionOverrides,
   fetch = true,
   remount = false
 ) => {
@@ -148,12 +149,14 @@ const mountSearchBox = async (
     )
     return
   }
-  searchBox({ ...resolvedConfiguration, options }, { fetch, allowedMountUrls })
+  const mergedOptions = merge(resolvedConfiguration, optionOverrides?.searchBox ?? {})
+  searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls })
 }
 
 const mountSearchResults = async (
   configuration: ExtendedPluginElementsConfiguration,
   options?: SdkOptions,
+  optionOverrides?: OptionOverrides,
   fetch = true,
   remount = false
 ) => {
@@ -174,12 +177,14 @@ const mountSearchResults = async (
     )
     return
   }
-  searchResults({ ...resolvedConfiguration, options }, { fetch, allowedMountUrls })
+  const mergedOptions = merge(resolvedConfiguration, optionOverrides?.searchResults ?? {})
+  searchResults({ ...mergedOptions, options }, { fetch, allowedMountUrls })
 }
 
 const mountProductList = async (
   configuration: ExtendedPluginElementsConfiguration,
   options?: SdkOptions,
+  optionOverrides?: OptionOverrides,
   fetch = true,
   remount = false
 ) => {
@@ -203,15 +208,17 @@ const mountProductList = async (
     )
     return
   }
-  productList(
-    { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration, options },
-    { fetch, allowedMountUrls }
+  const mergedOptions = merge(
+    { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration },
+    optionOverrides?.productList ?? {}
   )
+  productList({ ...mergedOptions, options }, { fetch, allowedMountUrls })
 }
 
 const mountRecommendations = async (
   configuration: ExtendedPluginElementsConfiguration,
   options?: SdkOptions,
+  optionOverrides?: OptionOverrides,
   fetch = true,
   remount = false
 ) => {
@@ -237,10 +244,11 @@ const mountRecommendations = async (
     )
     return
   }
-  recommendations(
-    { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration, options },
-    { fetch, allowedMountUrls }
+  const mergedOptions = merge(
+    { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration },
+    optionOverrides?.recommendations ?? {}
   )
+  recommendations({ ...mergedOptions, options }, { fetch, allowedMountUrls })
 }
 
 const mountChat = async (
@@ -279,30 +287,35 @@ const mount = async (
   configuration: PluginElementsConfiguration & {
     baseStyleLink?: string
   },
-  options?: SdkOptions,
+  options: SdkOptions = { environment: 'production' },
+  optionOverrides: OptionOverrides = {},
   fetch = true,
   remount = false
 ) => {
   await applyStyles(configuration)
   const mountPromises = [
-    mountSearchBox(configuration, options, fetch, remount),
-    mountSearchResults(configuration, options, fetch, remount),
-    mountProductList(configuration, options, fetch, remount),
-    mountRecommendations(configuration, options, fetch, remount),
+    mountSearchBox(configuration, options, optionOverrides, fetch, remount),
+    mountSearchResults(configuration, options, optionOverrides, fetch, remount),
+    mountProductList(configuration, options, optionOverrides, fetch, remount),
+    mountRecommendations(configuration, options, optionOverrides, fetch, remount),
     mountChat(configuration, options, fetch, remount)
   ]
   await Promise.all(mountPromises)
 }
 
-const init = async (configurationKey: string, options?: SdkOptions) => {
+const init = async (
+  configurationKey: string,
+  options: SdkOptions = { environment: 'production' },
+  optionOverrides: OptionOverrides = {}
+) => {
   const isPreviewMode = checkIsPreviewMode()
-  const plugin = await loadConfigurations(configurationKey, isPreviewMode, options)
+  const plugin = await loadConfigurations(configurationKey, isPreviewMode, options, optionOverrides)
   const configuration = isPreviewMode
     ? plugin.previewConfiguration ?? plugin.configuration
     : plugin.configuration
 
   if (configuration) {
-    await mount(configuration, options)
+    await mount(configuration, options, optionOverrides)
   }
 }
 
