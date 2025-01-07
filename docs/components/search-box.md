@@ -422,13 +422,19 @@ const options = {
 
 ## Initial filters
 
-You can set initial filters for the search box. Initial filters are applied for all of the search box document queries, user can't remove them and they are not shown in the filters panel. Initial filters will not affect search box suggestions.
+You can set initial filters for the search box. Initial filters can be applied for document query in chosen panel(s). Initial filters cannot be used for search box suggestions.
 
 ```js
 const options = {
-  initialFilters: {
-    categoryId: ['123']
-  }
+  panels: [
+    {
+      type: 'document',
+      // ... Other panel settings
+      initialFilters: {
+        categoryId: ['123']
+      }
+    }
+  ]
 }
 ```
 
