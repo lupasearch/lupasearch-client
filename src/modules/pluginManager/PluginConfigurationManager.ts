@@ -24,6 +24,7 @@ import {
   SearchResultsOptions,
   fetchPluginConfiguration
 } from '@getlupa/vue'
+import PluginConfigurationMerger from './PluginConfigurationMerger'
 
 const PREVIEW_PARAMETER = 'lupaSearchPreview'
 const MAX_ELEMENT_MOUNT_RETRIES = 25
@@ -149,7 +150,10 @@ const mountSearchBox = async (
     )
     return
   }
-  const mergedOptions = merge(resolvedConfiguration, optionOverrides?.searchBox ?? {})
+  const mergedOptions = PluginConfigurationMerger.mergeSearchBoxConfiguration(
+    resolvedConfiguration,
+    optionOverrides?.searchBox ?? {}
+  )
   searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls })
 }
 
@@ -177,7 +181,10 @@ const mountSearchResults = async (
     )
     return
   }
-  const mergedOptions = merge(resolvedConfiguration, optionOverrides?.searchResults ?? {})
+  const mergedOptions = PluginConfigurationMerger.mergeSearchResultsConfiguration(
+    resolvedConfiguration,
+    optionOverrides?.searchResults ?? {}
+  )
   searchResults({ ...mergedOptions, options }, { fetch, allowedMountUrls })
 }
 
