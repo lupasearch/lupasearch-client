@@ -293,14 +293,14 @@ const mountChat = async (
 }
 
 const initTracking = async (configuration: ExtendedPluginElementsConfiguration) => {
-  if (!configuration.tracking) {
-    return
+  let trackingOptions: TrackingOptions = { trackBase: false }
+  if (configuration.tracking) {
+    const resolvedConfiguration: TrackingOptions = JSON.parse(configuration.tracking)
+    if (resolvedConfiguration.trackBase) {
+      trackingOptions = resolvedConfiguration
+    }
   }
-  const resolvedConfiguration: TrackingOptions = JSON.parse(configuration.tracking)
-  if (!resolvedConfiguration.trackBase) {
-    return
-  }
-  setupTracking(resolvedConfiguration)
+  setupTracking(trackingOptions)
 }
 
 const mount = async (
