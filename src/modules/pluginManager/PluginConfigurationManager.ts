@@ -22,7 +22,9 @@ import {
   PluginElementsConfiguration,
   SdkOptions,
   SearchResultsOptions,
-  fetchPluginConfiguration
+  TrackingOptions,
+  fetchPluginConfiguration,
+  setupTracking
 } from '@getlupa/vue'
 import PluginConfigurationMerger from './PluginConfigurationMerger'
 
@@ -290,6 +292,17 @@ const mountChat = async (
   )
 }
 
+const initTracking = async (configuration: ExtendedPluginElementsConfiguration) => {
+  let trackingOptions: TrackingOptions = { trackBase: false }
+  if (configuration.tracking) {
+    const resolvedConfiguration: TrackingOptions = JSON.parse(configuration.tracking)
+    if (resolvedConfiguration.trackBase) {
+      trackingOptions = resolvedConfiguration
+    }
+  }
+  setupTracking(trackingOptions)
+}
+
 const mount = async (
   configuration: PluginElementsConfiguration & {
     baseStyleLink?: string
@@ -308,6 +321,7 @@ const mount = async (
     mountChat(configuration, options, fetch, remount)
   ]
   await Promise.all(mountPromises)
+  initTracking(configuration)
 }
 
 const init = async (
