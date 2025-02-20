@@ -198,10 +198,10 @@
   dependencies:
     ts-loader "^9.2.6"
 
-"@getlupa/vue@0.15.16":
-  version "0.15.16"
-  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.15.16.tgz#4061fd81ef341a400139624766b3b85b9b278b4a"
-  integrity sha512-sVMG9j7oo+ZYY2TvhLEe+vxSdNPpQls3xnCGQkCwVYp0y1yf4EWgXl8NI9L2dVETha/Aoe8YMS95HHo/Xf0kOg==
+"@getlupa/vue@0.16.0":
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.16.0.tgz#c57c8a8bfb4215379f868f380f1eb480b476c518"
+  integrity sha512-hXsTIaBOvszyKr0Nfd9fK5o7wM2mFeEjHm7qKr0SjUYrTpAR0X9UXTSGjqvjOKde+kk9KABzZ34cM0GHg/umsA==
   dependencies:
     mustache "^4.2.0"
     sanitize-html "^2.13.0"

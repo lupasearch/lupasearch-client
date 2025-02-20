@@ -19,6 +19,7 @@ const options = {
     noItemsInPage: 'There are no results in this page',
     backToFirstPage: 'Go back to the first page',
     mobileFilterButton: 'Filter',
+    mobileFilterCloseButton: 'Close',
     htmlTitleTemplate: "Search Query: '{1}'",
     noResultsSuggestion: 'No results found for this query: {1}',
     didYouMean: 'Did you mean to search: {1}',
@@ -55,6 +56,8 @@ lupaSearch.searchResults(options)
 - `labels.backToFirstPage` - when there are no items in current page, this label will guide user to the first page of the results.
 
 - `labels.mobileFilterButton` - a label of a button that is visible on mobile resolutions and toggles the mobile search result filter sidebar.
+
+- `labels.mobileFilterCloseButton` - a label of a button that is visible on all resolutions and closes the search result filter sidebar.
 
 - `labels.htmlTitleTemplate` - dynamic web page tab title template. `{1}` is replaced by a current search query text;
 
@@ -474,6 +477,7 @@ const options = {
         showLess: 'Show less',
         facetFilter: 'Filter...'
       },
+      disableMobileBodyScrollLock: false,
       hierarchy: {
         maxInitialLevel: 2,
         topLevelValueCountLimit: 5,
@@ -587,7 +591,9 @@ If user changes any filter value, current page is reset to the first one.
 
 - `facets.expand` - given facet panels are expanded by default;
 
-- `facets.facetFilterQueries.[facetKey].key` - provide query key to load additional facet parameters. Query should contain the same query fields as the main query and should only contain aggregation for that facet key. Use case example: the main search query is configured to load up to 100 facet values. However, if user opens facet panel, this query key could be used to load remaining facet values.
+- `facets.facetFilterQueries.[facetKey].key` - provide query key to load additional facet parameters. Query should contain the same query fields as the main query and should only contain aggregation for that facet key. Use case example: the main search query is configured to load up to 100 facet values. However, if user opens facet panel, this query key could be used to load remaining facet values;
+
+- `facets.disableMobileBodyScrollLock` - disable body scroll lock on mobile resolution when sidebar filters are opened.
 
 ## Sort
 
@@ -681,7 +687,8 @@ const options = {
     layoutSelector: true,
     itemSummary: true,
     clearFilters: false,
-    totalCount: false
+    totalCount: false,
+    filtersCloseButton: false
   }
 }
 ```
@@ -693,6 +700,8 @@ const options = {
 - `clearFilters` - show clear all filters button in the toolbar;
 
 - `totalCount` - display total result count value in the search title summary;
+
+- `filtersCloseButton` - show a close button in the toolbar that closes filters sidebar.
 
 ## Search title position
 
