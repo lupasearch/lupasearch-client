@@ -125,7 +125,7 @@ An list of custom breadcrumb segments, at the top of search page:
 
 ```js
 const options = {
-  breadcrumbs: [{ label: 'Home', link: '/' }, { label: 'Search Query: {1}' }]
+  breadcrumbs: [{ label: 'Home', link: '/', separator: '/' }, { label: 'Search Query: {1}' }]
 }
 ```
 
@@ -134,6 +134,8 @@ The above configuration would be rendered like this: `Home / Search Query: Curre
 - `label` - a label for a breadcrumb segment. The last segment can have a parameter `{1}` that is replaced with a current search query text;
 
 - `link` - an optional link the segment refers to.
+
+- `separator` - a separator between breadcrumb segments. Defaults to `/`.
 
 ## Class map
 
@@ -451,6 +453,7 @@ Available card element types:
 ```js
 const options = {
   filters: {
+    visibility: true,
     currentFilters: {
       visibility: {
         mobileSidebar: true,
@@ -514,6 +517,8 @@ const options = {
   }
 }
 ```
+
+- `visibility` - show default filters section, defaults to `true`;
 
 - `currentFilters` - show a summary of currently active filters;
 
