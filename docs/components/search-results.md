@@ -19,6 +19,8 @@ const options = {
     noItemsInPage: 'There are no results in this page',
     backToFirstPage: 'Go back to the first page',
     mobileFilterButton: 'Filter',
+    mobileFilterButtonActive: 'Active filters',
+    mobileFilterButtonOpen: 'Open filters',
     mobileFilterCloseButton: 'Close',
     htmlTitleTemplate: "Search Query: '{1}'",
     noResultsSuggestion: 'No results found for this query: {1}',
@@ -56,6 +58,10 @@ lupaSearch.searchResults(options)
 - `labels.backToFirstPage` - when there are no items in current page, this label will guide user to the first page of the results.
 
 - `labels.mobileFilterButton` - a label of a button that is visible on mobile resolutions and toggles the mobile search result filter sidebar.
+
+- `labels.mobileFilterButtonActive` - a label of a mobile filter button when the filter sidebar is open and has at least one active filter.
+
+- `labels.mobileFilterButtonOpen` - a label for a mobile filter button when the filter sidebar is open.
 
 - `labels.mobileFilterCloseButton` - a label of a button that is visible on all resolutions and closes the search result filter sidebar.
 
