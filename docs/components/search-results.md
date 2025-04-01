@@ -8,6 +8,7 @@ import lupaSearch from '@getlupa/client'
 const options = {
   containerSelector: '#searchResultsContainer',
   hideResultsOnReload: false,
+  splitExpensiveRequests: false,
   labels: {
     pageSize: 'Page size:',
     sortBy: 'Sort by:',
@@ -81,9 +82,13 @@ lupaSearch.searchResults(options)
 
 - `labels.aiSuggestions` - label for similar query with AI suggestions;
 
-- `labels.similarResultsLabel` - label to show when similar results functionality is enabled.
+- `labels.similarResultsLabel` - label to show when similar results functionality is enabled;
+
+- `labels.refinersLoadingNotice` - label to show when refiner values are loading;
 
 - `hideResultsOnReload` - results will be hidden, while new configuration is loading when plugin is reloaded with new options and `fetch: true`.
+
+- `splitExpensiveRequests` - if set to true, facet and refiner requests will be issued separately, instead of being included in the main search query. This is useful for large datasets.
 
 # Query parameters
 
