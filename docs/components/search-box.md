@@ -343,7 +343,8 @@ const options = {
   history: {
     labels: {
       clear: 'Clear History'
-    }
+    },
+    historyLimit: 5
   }
 }
 ```
@@ -353,6 +354,8 @@ Search history tracks recent user searches in browser local storage.
 Search history, if enabled, is shown when user clicks on empty search input. History can be cleared item by item or all at once.
 
 - `history.labels.clear` - the text to display on "Clear all History" action.
+
+- `historyLimit` - the number of history items on display
 
 ## Event callbacks
 
