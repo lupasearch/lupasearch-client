@@ -14,6 +14,8 @@ const options = {
     sortBy: 'Sort by:',
     itemCount: 'Items {1} from {2}',
     currency: '€',
+    priceSeparator: ',',
+    currencyTemplate: '{1} €'
     showMore: 'Show more',
     searchResults: 'Search Query: ',
     emptyResults: 'There are no results for the query:',
@@ -47,6 +49,10 @@ lupaSearch.searchResults(options)
 - `labels.itemCount` - label for item count title. `{1}` is replaced by indices of currently visible items, and `{2}` is total number of search results;
 
 - `labels.currency` - label for currency, where price is used;
+
+- `labels.priceSeparator` - decimal separator for price value (19,85 €);
+
+- `labels.currencyTemplate` - if set, it will be used to format the price. Value {1} will be replaced with the price value. For example: `€ {1}` will display `€ 19,85` for a price of 19.85 (formatted using your chosen priceSeparator);
 
 - `labels.showMore` - pagination label to show more results and go to the next page;
 

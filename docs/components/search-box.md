@@ -20,6 +20,7 @@ const options = {
     moreResults: 'Show more results',
     currency: '€',
     priceSeparator: ',',
+    currencyTemplate: '€ {1}'
     defaultFacetLabel: 'Category:',
     searchInputAriaLabel: 'Search for products',
     closePanel: '✖'
@@ -71,6 +72,8 @@ lupaSearch.searchBox(options)
 - `labels.currency` - label of the currency, where price is displayed;
 
 - `labels.priceSeparator` - decimal separator for price value (19,85 €)
+
+- `labels.currencyTemplate` - if set, it will be used to format the price. Value {1} will be replaced with the price value. For example: `€ {1}` will display `€ 19,85` for a price of 19.85 (formatted using your chosen priceSeparator);
 
 - `labels.defaultFacetLabel` - label to show for the first suggestion that has multiple facets returned. For example: (`books 'in category': entertainment`);
 
