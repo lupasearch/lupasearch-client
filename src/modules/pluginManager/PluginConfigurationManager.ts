@@ -141,6 +141,7 @@ const mountSearchBox = async (
   }
   const resolvedConfiguration: ResolvedSearchBoxOptions = JSON.parse(configuration.searchBox)
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+  const domPingIntervalMs = resolvedConfiguration.domPingIntervalMs
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.inputSelector,
     0,
@@ -156,7 +157,7 @@ const mountSearchBox = async (
     resolvedConfiguration,
     optionOverrides?.searchBox ?? {}
   )
-  searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls })
+  searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls, domPingIntervalMs })
 }
 
 const mountSearchResults = async (

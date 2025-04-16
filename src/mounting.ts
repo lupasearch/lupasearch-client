@@ -20,7 +20,7 @@ import { DEFAULT_CONTAINER_STYLE } from '@/constants/global.const'
 import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
 import { PreconfiguredSearchContainerOptions } from './types/PreconfiguredSearchContainerOptions'
 import SearchContainerConfigurationService from './modules/preconfiguredContainer/SearchContainerConfigurationService'
-import { canMount, createVue } from './utils/mounting.utils'
+import { canMount, createVue, startDomPing } from './utils/mounting.utils'
 
 type AppInstance = Record<
   string,
@@ -42,6 +42,7 @@ type MountOptions = {
   fetch?: boolean
   mountingBehavior?: 'replace' | 'append' | 'prepend'
   allowedMountUrls?: string[]
+  domPingIntervalMs?: number
 }
 
 const app: AppInstances = {
@@ -86,6 +87,9 @@ export const searchBox = (options: SearchBoxOptions, mountOptions?: MountOptions
   const inputs = options.inputSelector?.split(',')
   for (const input of inputs) {
     applySearchBox({ ...options, inputSelector: input.trim() }, mountOptions)
+  }
+  if (mountOptions.domPingIntervalMs) {
+    startDomPing(mountOptions.domPingIntervalMs)
   }
 }
 
