@@ -1,6 +1,39 @@
 import { initPinia } from '@getlupa/vue'
 import { createApp, type Component, reactive, h } from 'vue'
 
+export const createDomPing = () => {
+  let intervalId: number | null = null
+  let remaining = 0
+
+  return (intervalMs: number = 100, count: number = 50) => {
+    if (intervalId !== null) {
+      clearInterval(intervalId)
+    }
+
+    remaining = count
+
+    const flush = () => {
+      if (remaining-- <= 0) {
+        if (intervalId !== null) {
+          clearInterval(intervalId)
+          intervalId = null
+        }
+        return
+      }
+      const el = document.createElement('div')
+      el.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;'
+      el.setAttribute('data-nudge', Date.now().toString())
+      document.body.appendChild(el)
+      document.body.removeChild(el)
+    }
+
+    flush() // trigger one immediately
+    intervalId = window.setInterval(flush, intervalMs)
+  }
+}
+
+export const startDomPing = createDomPing()
+
 const getMountElement = (
   element: Element,
   mountingBehavior = 'replace',

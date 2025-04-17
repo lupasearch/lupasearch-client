@@ -20,7 +20,7 @@ import { DEFAULT_CONTAINER_STYLE } from '@/constants/global.const'
 import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
 import { PreconfiguredSearchContainerOptions } from './types/PreconfiguredSearchContainerOptions'
 import SearchContainerConfigurationService from './modules/preconfiguredContainer/SearchContainerConfigurationService'
-import { canMount, createVue } from './utils/mounting.utils'
+import { canMount, createVue, startDomPing } from './utils/mounting.utils'
 
 type AppInstance = Record<
   string,
@@ -42,6 +42,10 @@ type MountOptions = {
   fetch?: boolean
   mountingBehavior?: 'replace' | 'append' | 'prepend'
   allowedMountUrls?: string[]
+  domPing?: {
+    intervalMs?: number
+    count?: number
+  }
 }
 
 const app: AppInstances = {
@@ -51,6 +55,60 @@ const app: AppInstances = {
   searchContainer: {},
   recommendations: {},
   chat: {}
+}
+
+const addSearchBoxDomPingIfConfigured = (
+  options: SearchBoxOptions,
+  mountOptions?: MountOptions
+): SearchBoxOptions => {
+  if (!mountOptions?.domPing?.count) {
+    return options
+  }
+  const newOptions: SearchBoxOptions = {
+    ...options,
+    callbacks: {
+      onMounted: () => {
+        options.callbacks?.onMounted?.()
+        startDomPing(mountOptions.domPing.intervalMs, mountOptions.domPing.count)
+      },
+      onBlurred: () => {
+        options.callbacks?.onBlurred?.()
+        startDomPing(mountOptions.domPing.intervalMs, mountOptions.domPing.count)
+      },
+      onFocused: () => {
+        options.callbacks?.onFocused?.()
+        startDomPing(mountOptions.domPing.intervalMs, mountOptions.domPing.count)
+      },
+      onSearchBoxInput: (...args) => {
+        options.callbacks?.onSearchBoxInput?.(...args)
+        startDomPing(mountOptions.domPing.intervalMs, mountOptions.domPing.count)
+      }
+    }
+  }
+  return newOptions
+}
+
+const addSearchResultsDomPingIfConfigured = (
+  options: SearchResultsOptions,
+  mountOptions?: MountOptions
+): SearchResultsOptions => {
+  if (!mountOptions?.domPing?.count) {
+    return options
+  }
+  const newOptions: SearchResultsOptions = {
+    ...options,
+    callbacks: {
+      onMounted: () => {
+        options.callbacks?.onMounted?.()
+        startDomPing(mountOptions.domPing.intervalMs, mountOptions.domPing.count)
+      },
+      onUrlQueryChange: (...args) => {
+        options.callbacks?.onUrlQueryChange?.(...args)
+        startDomPing(mountOptions.domPing.intervalMs, mountOptions.domPing.count)
+      }
+    }
+  }
+  return newOptions
 }
 
 export const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
@@ -81,11 +139,12 @@ export const searchBox = (options: SearchBoxOptions, mountOptions?: MountOptions
   if (!canMount(mountOptions?.allowedMountUrls)) {
     return
   }
+  const transformedOptions = addSearchBoxDomPingIfConfigured(options, mountOptions)
   // Support for multiple search box selectors separated by a comma
   // Quite often multiple search boxes are required, since mobile and desktop has different inputs in html layout
   const inputs = options.inputSelector?.split(',')
   for (const input of inputs) {
-    applySearchBox({ ...options, inputSelector: input.trim() }, mountOptions)
+    applySearchBox({ ...transformedOptions, inputSelector: input.trim() }, mountOptions)
   }
 }
 
@@ -103,12 +162,13 @@ export const searchResults = (options: SearchResultsOptions, mountOptions?: Moun
     }
     return
   }
+  const transformedOptions = addSearchResultsDomPingIfConfigured(options, mountOptions)
   const instance = createVue(
     options.containerSelector,
     mountOptions?.mountingBehavior,
     SearchResultsEntry,
     {
-      searchResultsOptions: options
+      searchResultsOptions: transformedOptions
     }
   )
   if (!instance) {

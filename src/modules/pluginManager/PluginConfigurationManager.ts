@@ -141,6 +141,7 @@ const mountSearchBox = async (
   }
   const resolvedConfiguration: ResolvedSearchBoxOptions = JSON.parse(configuration.searchBox)
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+  const domPing = resolvedConfiguration.domPing
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.inputSelector,
     0,
@@ -156,7 +157,7 @@ const mountSearchBox = async (
     resolvedConfiguration,
     optionOverrides?.searchBox ?? {}
   )
-  searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls })
+  searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls, domPing })
 }
 
 const mountSearchResults = async (
@@ -171,6 +172,7 @@ const mountSearchResults = async (
   }
   const resolvedConfiguration: ResolvedSearchResultOptions = JSON.parse(configuration.searchResults)
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+  const domPing = resolvedConfiguration.domPing
 
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
@@ -187,7 +189,7 @@ const mountSearchResults = async (
     resolvedConfiguration,
     optionOverrides?.searchResults ?? {}
   )
-  searchResults({ ...mergedOptions, options }, { fetch, allowedMountUrls })
+  searchResults({ ...mergedOptions, options }, { fetch, allowedMountUrls, domPing })
 }
 
 const mountProductList = async (

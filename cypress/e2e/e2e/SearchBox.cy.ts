@@ -25,7 +25,7 @@ describe('SearchBox', () => {
 
   it('close main panel when user clicks outside', () => {
     cy.get(searchBoxMainPanel)
-
+    cy.wait(1000)
     clickEmptySpace()
 
     cy.get(searchBoxMainPanel).should('not.exist')

@@ -368,8 +368,13 @@ Lupa can emit callbacks on certain events:
 const options = {
   // ... other configuration
   callbacks: {
-    onSearchResults: (context: SearchBoxResultCallbackContext) => {},
-    onSearchResultsNavigate: (context: SearchBoxResultsNavigateContext) => {}
+    onSearchBoxResults: (context: SearchBoxResultCallbackContext) => {},
+    onSearchResultsNavigate: (context: SearchBoxResultsNavigateContext) => {},
+    onMounted: () => {},
+    onFocused: () => {},
+    onBlurred: () => {},
+    onClosed: () => {},
+    onSearchBoxInput: (input: string) => {}
   }
 }
 ```
