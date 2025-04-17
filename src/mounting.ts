@@ -61,7 +61,7 @@ const addSearchBoxDomPingIfConfigured = (
   options: SearchBoxOptions,
   mountOptions?: MountOptions
 ): SearchBoxOptions => {
-  if (!mountOptions.domPing?.count) {
+  if (!mountOptions?.domPing?.count) {
     return options
   }
   const newOptions: SearchBoxOptions = {
@@ -92,7 +92,7 @@ const addSearchResultsDomPingIfConfigured = (
   options: SearchResultsOptions,
   mountOptions?: MountOptions
 ): SearchResultsOptions => {
-  if (!mountOptions.domPing?.count) {
+  if (!mountOptions?.domPing?.count) {
     return options
   }
   const newOptions: SearchResultsOptions = {
