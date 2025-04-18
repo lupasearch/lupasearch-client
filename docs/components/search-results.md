@@ -630,7 +630,7 @@ const options = {
     translations: {
       keyTranslations: {
         color: 'Color',
-        size: 'Size'
+        size: 'Size',
         attr_x18: 'Weight'
       },
       valueTranslations: {
