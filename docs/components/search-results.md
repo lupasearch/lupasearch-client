@@ -617,6 +617,41 @@ If user changes any filter value, current page is reset to the first one.
 
 - `facets.disableMobileBodyScrollLock` - disable body scroll lock on mobile resolution when sidebar filters are opened.
 
+### Filter / facet translations
+
+LupaSearch plugin supports translations (product feed filter attribute string replacements). This can be handy if you want to show different labels for the same filter value, depending on the language of the user, or simply to show a more user-friendly label.
+
+Configuration example:
+
+```js
+const options = {
+  filters: {
+    // ... Other filter options
+    translations: {
+      keyTranslations: {
+        color: 'Color',
+        size: 'Size',
+        attr_x18: 'Weight'
+      },
+      valueTranslations: {
+        color: {
+          color_red: 'Red',
+          color_blue: 'Blue',
+        },
+        isInStock: {
+          "0": 'Out of stock',
+          "1": 'In stock'
+        }
+      }
+    }
+    
+  }
+}
+```
+
+`translations.keyTranslations` - a map of your facet filter keys to their translated labels.
+`translations.valueTranslations` - a map of your facet filter keys to their translated labels. Each key in the map is a facet filter key, and the value is a map of the facet filter values to their translated labels.
+
 ## Sort
 
 ```js
