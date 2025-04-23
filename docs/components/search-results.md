@@ -997,7 +997,7 @@ const options = {
 }
 ```
 
-Full list of available conditions: `exists`, `equals`, `notEquals`, `greaterThan`, `lessThan`, `greaterThanOrEquals`, `lessThanOrEquals`.
+Full list of available conditions: `exists`, `notExists`, `equals`, `notEquals`, `greaterThan`, `lessThan`, `greaterThanOrEquals`, `lessThanOrEquals`.
 
 It is also possible to use nested keys in the condition configuration:
 
