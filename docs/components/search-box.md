@@ -9,6 +9,7 @@ const options = {
   inputSelector: '#searchBox',
   minInputLength: 2,
   searchTriggers: ['#searchButton'],
+  searchBoxCloseTriggers: ['#searchBoxClose'],
   debounce: 100,
   inputAttributes: {
     name: 'q'
@@ -46,6 +47,8 @@ lupaSearch.searchBox(options)
 - `inputSelector` - css selector to find your search input element;
 
 - `searchTriggers` - an optional list of html selectors that plugin will bind to to trigger the search event with a current search input value;
+
+- `searchBoxCloseTriggers` - an optional list of html selectors that plugin will bind to to trigger the search box close event;
 
 - `minInputLength` - minimum user input length to perform suggestion/document search;
 
