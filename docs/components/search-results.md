@@ -526,6 +526,10 @@ const options = {
         type: 'top-dropdown'
       },
       exclude: ['price', 'category'],
+      excludeValues: {
+        color: { Red: true, 'Navy Blue': true },
+        size: { S: true }
+      },
       expand: ['regular_price'],
       facetFilterQueries: {
         tag: { queryKey: '' }
@@ -611,6 +615,8 @@ If user changes any filter value, current page is reset to the first one.
 
 - `facets.exclude` - exclude any returned facets from display by their key (field name).
 
+- `facets.excludeValues` - exclude any returned facet values from display by parent facet key and value name.
+
 - `facets.expand` - given facet panels are expanded by default;
 
 - `facets.facetFilterQueries.[facetKey].key` - provide query key to load additional facet parameters. Query should contain the same query fields as the main query and should only contain aggregation for that facet key. Use case example: the main search query is configured to load up to 100 facet values. However, if user opens facet panel, this query key could be used to load remaining facet values;
@@ -636,15 +642,14 @@ const options = {
       valueTranslations: {
         color: {
           color_red: 'Red',
-          color_blue: 'Blue',
+          color_blue: 'Blue'
         },
         isInStock: {
-          "0": 'Out of stock',
-          "1": 'In stock'
+          0: 'Out of stock',
+          1: 'In stock'
         }
       }
     }
-    
   }
 }
 ```
