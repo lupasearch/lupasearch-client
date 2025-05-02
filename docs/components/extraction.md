@@ -71,6 +71,49 @@ If the page has the following HTML:
 
 The extracted attribute value will be `123`.
 
+## Extract from HTML element attribute
+
+```js
+const options = {
+  initialFilters: {
+    categoryId: {
+      extractFrom: 'htmlElementAttribute',
+      querySelector: '.category-id',
+      attribute: 'data-category-id',
+      default: '1'
+    }
+  }
+}
+```
+
+If the page has the following HTML:
+
+```html
+<div class="category-id" data-category-id="123"></div>
+```
+The extracted attribute value will be `123`.
+
+HTML input elements are also supported:
+
+```js
+const options = {
+  initialFilters: {
+    categoryId: {
+      extractFrom: 'htmlElementAttribute',
+      querySelector: 'input[name="category-id"]',
+      attribute: 'value',
+      default: '1'
+    }
+  }
+}
+```
+If the page has the following HTML:
+
+```html
+<input type="hidden" name="category-id" value="123">
+```
+The extracted attribute value will be `123`.
+
 ## Extracting from cookie
 
 ```js
