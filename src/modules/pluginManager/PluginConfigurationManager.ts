@@ -227,21 +227,13 @@ const mountProductList = async (
 }
 
 const mountRecommendations = async (
-  configuration: ExtendedPluginElementsConfiguration,
+  resolvedSearchResultsConfiguration: SearchResultsOptions,
+  resolvedConfiguration: ResolvedProductRecommendationOptions,
   options?: SdkOptions,
   optionOverrides?: OptionOverrides,
   fetch = true,
   remount = false
 ) => {
-  if (!configuration.recommendations) {
-    return
-  }
-  const resolvedSearchResultsConfiguration: SearchResultsOptions = JSON.parse(
-    configuration.searchResults
-  )
-  const resolvedConfiguration: ResolvedProductRecommendationOptions = JSON.parse(
-    configuration.recommendations
-  )
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
 
   const visible = await waitForElementToBeVisible(
@@ -260,6 +252,46 @@ const mountRecommendations = async (
     optionOverrides?.recommendations ?? {}
   )
   recommendations({ ...mergedOptions, options }, { fetch, allowedMountUrls })
+}
+
+const mountAllRecommendations = async (
+  configuration: ExtendedPluginElementsConfiguration,
+  options?: SdkOptions,
+  optionOverrides?: OptionOverrides,
+  fetch = true,
+  remount = false
+) => {
+  if (!configuration.recommendations) {
+    return
+  }
+  const resolvedSearchResultsConfiguration: SearchResultsOptions = JSON.parse(
+    configuration.searchResults
+  )
+  const resolvedConfiguration:
+    | ResolvedProductRecommendationOptions
+    | ResolvedProductRecommendationOptions[] = JSON.parse(configuration.recommendations)
+  if (Array.isArray(resolvedConfiguration)) {
+    const mountPromises = resolvedConfiguration.map((recommendation) =>
+      mountRecommendations(
+        resolvedSearchResultsConfiguration,
+        recommendation,
+        options,
+        optionOverrides,
+        fetch,
+        remount
+      )
+    )
+    await Promise.all(mountPromises)
+  } else {
+    await mountRecommendations(
+      resolvedSearchResultsConfiguration,
+      resolvedConfiguration,
+      options,
+      optionOverrides,
+      fetch,
+      remount
+    )
+  }
 }
 
 const mountChat = async (
@@ -319,7 +351,7 @@ const mount = async (
     mountSearchBox(configuration, options, optionOverrides, fetch, remount),
     mountSearchResults(configuration, options, optionOverrides, fetch, remount),
     mountProductList(configuration, options, optionOverrides, fetch, remount),
-    mountRecommendations(configuration, options, optionOverrides, fetch, remount),
+    mountAllRecommendations(configuration, options, optionOverrides, fetch, remount),
     mountChat(configuration, options, fetch, remount)
   ]
   await Promise.all(mountPromises)

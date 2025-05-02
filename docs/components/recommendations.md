@@ -141,3 +141,28 @@ import lupaSearch from '@getlupa/client'
 Using the configuration above, there is a 50% chance that recommender will display products with ids `2`, `4`, `8` instead of LupaSearch recommender to compare which recommender produces better results.
 
 Make sure to enable [tracking](/docs/components/recommendations.md) for analytics AB testing to work.
+
+## Callbacks
+
+Recommendation options support some additional callbacks to be executed on certain events:
+
+```js
+import lupaSearch from '@getlupa/client'
+
+{
+  const options = {
+    // ... Other recommendation options
+    callbacks: {
+      onMounted: () => {
+        console.log('Recommendations mounted')
+      },
+      onRecommenderResults: (results: Document[]) => {
+        console.log('Recommendations results', results)
+      }
+    }
+  }
+}
+```
+
+- `onMounted` - callback that is executed when recommender is mounted;
+- `onRecommenderResults` - callback that is executed when recommender results are received. It receives an array of recommended products as a parameter.
