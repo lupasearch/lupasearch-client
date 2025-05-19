@@ -895,7 +895,8 @@ type CallbackContext = {
 
 ```ts
 type ResultCallbackContext = CallbackContext & {
-  params: Record<string, any>
+  params: Record<string, any>,
+  results:  Record<string, any>,
 }
 ```
 
@@ -911,6 +912,19 @@ Example:
     "filters": {
       "color": ["Yellow"]
     }
+  },
+  "results": {
+    "total": 100,
+    "items": [
+      {
+        "id": "123",
+        "name": "Product 1"
+      },
+      {
+        "id": "456",
+        "name": "Product 2"
+      }
+    ]
   }
 }
 ```
