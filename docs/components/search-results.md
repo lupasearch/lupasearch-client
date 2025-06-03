@@ -219,6 +219,7 @@ const options = {
   },
   idKey: 'id',
   titleKey: 'name',
+  isLink: false,
   customDocumentHtmlAttributes: (doc: any) => {
     return {
       'data-id': doc.id,
@@ -312,6 +313,8 @@ const options = {
 - `idKey` - a key that references a unique document identifier. Used in analytics to track document clicks. Defaults to `id`. If your key is different than `id`, it must be set explicitly, as it might lead to unexpected behaviour othervise.
 
 - `titleKey` - a key that references a document title (name). Used to report events to your tracker.
+
+- `isLink` - set to `true` to make whole product card clickable, and redirect user to the product link, defined in `links.details` setting. Defaults to `false`.
 
 - `customDocumentHtmlAttributes` - provide your own custom attributes that will be added to each document html element. Receives document object as a parameter.
 
