@@ -518,6 +518,10 @@ const options = {
           ariaFrom: 'From',
           ariaTo: 'To',
           sliderDotAriaLabel: 'Slider dot'
+        },
+        units: {
+          lenght: 'mm',
+          height: 'cm'
         }
       },
       filterable: {
@@ -597,6 +601,8 @@ const options = {
   - `labels.ariaTo` - aria accessibility label for 'to' input field;
 
   - `labels.sliderDotAriaLabel` - aria accessibility label for slider dot input. Is combined with facet label.
+ 
+  - `units` - define other type of sliders values;
 
 - `facets.labels.title` - a title of the facet section;
 
