@@ -1056,6 +1056,21 @@ This would work with the following document fields:
 }
 ```
 
+If there is a need for multiple conditions you can add them like this:
+
+```js
+const options = {
+ isInStock: [
+  { condition: 'exists',
+    fields: ['stock'] },
+  { condition: 'greaterThanOrEquals',
+    fields: ['stock', 1] },
+  { condition: 'notEquals',
+    fields: ['metadata.onSale', false] }
+ ]
+}
+```
+
 ## Custom Html element template
 
 In some cases, you might need to use a custom HTML template for some elements without using custom functions. You can use the following configuration:
