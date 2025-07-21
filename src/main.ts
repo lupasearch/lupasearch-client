@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { createApp } from 'vue'
 import App from './App.vue'
 import { LupaSearch, initPinia } from '@getlupa/vue'

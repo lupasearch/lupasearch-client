@@ -23,5 +23,5 @@ defineExpose({ fetch })
 </script>
 
 <template>
-  <SearchBox :options="fullSearchBoxOptions" ref="searchBox" />
+  <SearchBox ref="searchBox" :options="fullSearchBoxOptions" />
 </template>

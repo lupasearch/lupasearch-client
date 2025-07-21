@@ -14,5 +14,5 @@ defineExpose({ fetch })
 </script>
 
 <template>
-  <Recommendations :options="recommendationOptions" ref="productRecommendations" />
+  <Recommendations ref="productRecommendations" :options="recommendationOptions" />
 </template>

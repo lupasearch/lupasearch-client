@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 const isObject = (item: Record<string, unknown>) => typeof item === 'object' && !Array.isArray(item)
 
 // Modified version of https://stackoverflow.com/a/53092443

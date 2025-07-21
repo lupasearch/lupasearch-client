@@ -21,5 +21,5 @@ defineExpose({ fetch })
 </script>
 
 <template>
-  <ProductList :options="fullProductListOptions" ref="productList" />
+  <ProductList ref="productList" :options="fullProductListOptions" />
 </template>

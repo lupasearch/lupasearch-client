@@ -37,7 +37,7 @@ onMounted(() => {
       rel="stylesheet"
     />
     <div class="box-wrapper">
-      <input type="text" id="searchBox" />
+      <input id="searchBox" type="text" />
     </div>
     <div class="result-wrapper">
       <div id="searchResultsContainer">

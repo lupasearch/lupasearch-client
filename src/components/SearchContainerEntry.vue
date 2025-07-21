@@ -78,8 +78,8 @@ defineExpose({ fetch, reloadOptions })
   <div>
     <SearchContainer
       v-if="containerOptions && isOpen"
-      :options="containerOptions"
       ref="productList"
+      :options="containerOptions"
       @hook:mounted="focus"
       @close="close"
     />
