@@ -19,7 +19,7 @@
     "test:e2e": "cypress run"
   },
   "devDependencies": {
-    "@getlupa/client-sdk": "^1.3.4",
+    "@getlupa/client-sdk": "^1.8.1",
     "@getlupa/vue": "0.18.5",
     "@rushstack/eslint-patch": "^1.12.0",
     "@tsconfig/node18": "^2.0.1",
