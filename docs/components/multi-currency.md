@@ -18,7 +18,7 @@ const options = {
 ```
 
 In this example, we define three currencies: Euro (EUR), US Dollar (USD), and British Pound (GBP). Each currency has a key, symbol, template for formatting, separator for decimal places, and a multiplier for conversion.
-
+-
 Prices with currency multipliers will be calculated automatically and displayed in :
 
 - `price` and `regularPrice` elements in search box and search results;
