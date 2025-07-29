@@ -3,7 +3,7 @@
   "version": "1.20.0",
   "main": "dist/lupaSearch.js",
   "module": "dist/lupaSearch.mjs",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite & yarn css:watch",
     "css:watch": "rollup --config build/rollupContainerDev.config.js --bundleConfigAsCjs --watch",
