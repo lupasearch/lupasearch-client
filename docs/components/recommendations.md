@@ -152,7 +152,7 @@ import lupaSearch from '@getlupa/client'
 {
   const options = {
     // ... Other recommendation options
-    callbacks: {
+    recommendationCallbacks: {
       onMounted: () => {
         console.log('Recommendations mounted')
       },
