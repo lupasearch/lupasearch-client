@@ -166,3 +166,23 @@ import lupaSearch from '@getlupa/client'
 
 - `onMounted` - callback that is executed when recommender is mounted;
 - `onRecommenderResults` - callback that is executed when recommender results are received. It receives an array of recommended products as a parameter.
+
+## Attatch custom parameters to the query
+
+To attach custom parameters to the query, you can use `options.customParams` setting:
+
+```js
+import lupaSearch from '@getlupa/client'
+
+const options = {
+  // ... Other recommendation options
+  options: {
+    customParams: {
+      myCustomParam: 'myCustomValue',
+      otherParams: ['param1', 'param2']
+    }
+  }
+}
+```
+
+These would be sent to the LupaSearch API as part of the query, allowing you to customize the recommendation results based on your specific needs (if custom param rule is enabled).
