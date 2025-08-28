@@ -115,6 +115,9 @@ const applyStyles = async (configuration: ExtendedPluginElementsConfiguration) =
     return
   }
   const baseStyleLink = configuration.baseStyleLink
+  if(!baseStyleLink && !configuration?.customStyles) {
+    return
+  }
   if (styleElement) {
     styleElement.remove()
   }
@@ -122,7 +125,7 @@ const applyStyles = async (configuration: ExtendedPluginElementsConfiguration) =
   if (baseStyleLink) {
     styleElement.innerHTML = `
       @import url('${baseStyleLink}');
-      @import url('https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css') 
+      @import url('https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css');
       ${configuration.customStyles ?? ''}
     `
   }
