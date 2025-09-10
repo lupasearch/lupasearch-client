@@ -21,6 +21,9 @@ import { attatchShadowDom, createShadowDom } from '@/utils/shadowDom.utils'
 import { PreconfiguredSearchContainerOptions } from './types/PreconfiguredSearchContainerOptions'
 import SearchContainerConfigurationService from './modules/preconfiguredContainer/SearchContainerConfigurationService'
 import { canMount, createVue, startDomPing } from './utils/mounting.utils'
+import { waitForElementToBeVisible } from './utils/document.utils'
+
+const MAX_ELEMENT_MOUNT_RETRIES = 25
 
 type AppInstance = Record<
   string,
@@ -111,7 +114,10 @@ const addSearchResultsDomPingIfConfigured = (
   return newOptions
 }
 
-export const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOptions): void => {
+export const applySearchBox = async (
+  options: SearchBoxOptions,
+  mountOptions?: MountOptions
+): Promise<void> => {
   const existingInstance = app.box[options.inputSelector] as any
   if (existingInstance) {
     existingInstance.props.searchBoxOptions = options
@@ -122,6 +128,7 @@ export const applySearchBox = (options: SearchBoxOptions, mountOptions?: MountOp
     }
     return
   }
+  await waitForElementToBeVisible(options.inputSelector, 0, MAX_ELEMENT_MOUNT_RETRIES)
   const instance = createVue(
     options.inputSelector,
     mountOptions?.mountingBehavior,
