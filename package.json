@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@getlupa/client-sdk": "^1.8.1",
-    "@getlupa/vue": "0.20.4",
+    "@getlupa/vue": "0.21.0",
     "@rushstack/eslint-patch": "^1.12.0",
     "@tsconfig/node18": "^18.2.4",
     "@types/jsdom": "^21.1.7",
