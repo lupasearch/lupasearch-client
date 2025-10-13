@@ -33,7 +33,11 @@ const options = {
     filteredItemCount: 'Filtered items {1} from {2}',
     outOfStock: 'Out of stock',
     aiSuggestions: 'Other suggestions:',
-    similarResultsLabel: 'Related to your query:'
+    similarResultsLabel: 'Related to your query:',
+    aria: {
+      pageSizeSelect: 'Select page size',
+      sortBySelect: 'Select sort by'
+    }
   }
 }
 
@@ -91,6 +95,10 @@ lupaSearch.searchResults(options)
 - `labels.similarResultsLabel` - label to show when similar results functionality is enabled;
 
 - `labels.refinersLoadingNotice` - label to show when refiner values are loading;
+
+- `labels.aria.pageSizeSelect` - aria accessibility label for page size select element;
+
+- `labels.aria.sortBySelect` - aria accessibility label for sort by select element;
 
 - `hideResultsOnReload` - results will be hidden, while new configuration is loading when plugin is reloaded with new options and `fetch: true`.
 
