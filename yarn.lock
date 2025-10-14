@@ -302,10 +302,10 @@
     jquery-param "^1.2.3"
     ts-loader "^9.2.6"
 
-"@getlupa/vue@0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.21.0.tgz#0b48033a315aa288e0b0bf164e05c85eeccf266e"
-  integrity sha512-NPYSGBcyIBklFahcBZp1U6Yja850PzppsLU0J+a1fVko1o+ykBuVv49ADYwhey1mdfEh0W+QPqkaemIfxfMvHA==
+"@getlupa/vue@0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@getlupa/vue/-/vue-0.21.1.tgz#19c7fe0ad19d93540da3981a4c8dfed1c5a6a798"
+  integrity sha512-N+7QC0RFW7Xbs0Y6zAx1hZTraEQlDrreHJ/uCtnryM1H6Z135v72V7mlFIwwX79TCjbSJvyfszYiiZPQxXDN7A==
   dependencies:
     mustache "^4.2.0"
     sanitize-html "^2.17.0"
