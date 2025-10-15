@@ -24,6 +24,13 @@ const options = {
     nextLabel: '<i> ▶ </i>',
     prevLabel: '<i> ▶ </i>',
     scrollPerPage: false
+  },
+  recommendationLabels: {
+    title: 'You may also like',
+    titleLink: 'https://example.com/all-recommendations'
+  },
+  recommendationFilters: {
+    price: { lte: 25 }
   }
 }
 
@@ -39,6 +46,12 @@ lupaSearch.recommendations(options)
 - `carousel` - additional options for product carousel;
 
 - `lazyLoad` - defaults to `false`. If set to `true`, recommendations will be lazy loaded when it comes into the viewport.
+
+- `recommendationLabels.title` - title to display above recommendations carousel;
+
+- `recommendationLabels.titleLink` - optional link for the title above recommendations carousel;
+
+- `recommendationFilters` - object with filters for recommendations with the same structure as filters in search results component. For example, you can filter recommendations by price or category.
 
 **Recommendations for multiple products**
 
