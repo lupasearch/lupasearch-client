@@ -110,9 +110,26 @@ const options = {
 If the page has the following HTML:
 
 ```html
-<input type="hidden" name="category-id" value="123">
+<input type="hidden" name="category-id" value="123" />
 ```
+
 The extracted attribute value will be `123`.
+
+Additionally, you can use regex to extract a part of the attribute value:
+
+````js
+const options = {
+  recommendationFilters: {
+    categoryId: {
+      extractFrom: 'htmlElementAttribute',
+      querySelector: 'input[name="category-id"]',
+      attribute: 'value',
+      regex: '(\\d+)',
+      default: '1'
+    }
+  }
+}
+
 
 ## Extracting from cookie
 
