@@ -546,6 +546,10 @@ const options = {
         size: { S: true }
       },
       expand: ['regular_price'],
+      expandAll: {
+        desktop: false,
+        mobile: false
+      },
       facetFilterQueries: {
         tag: { queryKey: '' }
       }
@@ -635,6 +639,8 @@ If user changes any filter value, current page is reset to the first one.
 - `facets.excludeValues` - exclude any returned facet values from display by parent facet key and value name.
 
 - `facets.expand` - given facet panels are expanded by default;
+
+- `facets.expandAll` - expand all facet panels by default on `desktop` and/or `mobile` resolutions;
 
 - `facets.facetFilterQueries.[facetKey].key` - provide query key to load additional facet parameters. Query should contain the same query fields as the main query and should only contain aggregation for that facet key. Use case example: the main search query is configured to load up to 100 facet values. However, if user opens facet panel, this query key could be used to load remaining facet values;
 
