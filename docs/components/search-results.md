@@ -310,7 +310,8 @@ const options = {
       display: (doc) => Boolean(doc.isBestOffer),
       action: (document) => {
         console.log('custom element was clicked', document)
-      }
+      },
+      stopPropagationOnClick: true
     }
   ]
 }
@@ -475,6 +476,8 @@ Available card element types:
   - `html` - a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated;
 
   - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
+
+  - `stopPropagationOnClick` - if set to `true`, click event on the custom html element will not propagate to parent elements. Useful when you have clickable product cards (with `isLink`), and do not want to trigger card click when user clicks on the custom html element.
 
 ## Filters
 
