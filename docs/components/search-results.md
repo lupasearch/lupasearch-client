@@ -730,7 +730,9 @@ const options = {
       top: false,
       bottom: true
     },
-    display: 5
+    display: 5,
+    displayMobile: 3,
+    renderAsLinks: false
   }
 }
 ```
@@ -746,6 +748,10 @@ const options = {
   - `position` - where page selection should be displayed: `top`, `bottom` of the results, or both.
 
   - `display` - maximum number of pages to display in pagination;
+
+  - `displayMobile` - maximum number of pages to display in pagination on mobile resolutions;
+
+  - `renderAsLinks` - render page numbers as links instead of buttons. Links can be opened in new tabs or windows. Also helps with SEO.
 
 ## Dynamic page sizes
 
