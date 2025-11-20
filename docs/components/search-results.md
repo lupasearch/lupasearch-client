@@ -342,19 +342,16 @@ Common badge keys:
 Available badge types:
 
 - `text` - text label. Displays a values from a provided text label array, defined with a `key`: `text_labels: ["15%", "New Product"]`;
-
   - `prefix` - a custom prefix to append to value of the badge;
 
   - `maxItems` - a maximum number of items to display for that specific key;
 
 - `image` - image label. Displays an image a from a document field, defined with a `key`: `image_labels: ["discount.jpg", "special-item.png"]`;
-
   - `rootImageUrl` - a root url of an image;
 
   - `maxItems` - a maximum number of items to display for that specific key;
 
 - `customHtml` - a badge, that is render as a custom html;
-
   - `className` - custom class name to add to the badge element;
 
   - `maxItems` - a maximum number of items to display for that specific key;
@@ -362,7 +359,6 @@ Available badge types:
   - `html` a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated.
 
 - `discount` - discount badge. Displays a discount value, calculated from `regularPrice` and `finalPrice` fields;
-
   - `regularPriceKey` - a key of a field in a document, that contains a regular price of a product;
 
   - `finalPriceKey` - a key of a field in a document, that contains a final price of a product;
@@ -390,7 +386,6 @@ Common element keys:
 Available card element types:
 
 - `image` - image of the product.
-
   - `key` - a key of field in a document;
 
   - `placeholder` - placeholder image to show if item does not have an image;
@@ -410,7 +405,6 @@ Available card element types:
   - `hoverImages.display` - a function that receives a document object and should return a list of image urls to display on hover. Will take precedence over `key` option.
 
 - `title` - title of the product.
-
   - `key` - a key of field in a document;
 
   - `link` - a flag to determine whether clicking on product title should redirect user to the product link, defined in `links.details` setting.
@@ -418,13 +412,11 @@ Available card element types:
   - `maxLines` - max number of lines, before the text is clipped.
 
 - `description` - description of the product.
-
   - `key` - a key of field in a document;
 
   - `maxLines` - max number of lines, before the text is clipped.
 
 - `rating` - rating of a product. Displayed as number of starts out of 5. `ratingKey`, `totalRatingsKey`;
-
   - `key` - a key that determines a percentage of product rating.
 
   - `maxRating` - a maximum rating value. `key` value will be divided by this value to get a percentage.
@@ -438,7 +430,6 @@ Available card element types:
   - `links.ratingDetails` - where should `numberOfRatings` label link to. Constructed using the same rules, as other product links.
 
 - `singleStarRating` - similar to rating, but instead of rendering 5 stars, just shows 1 start with an ability to display wanted rating text. Retains ability to show total number of ratings with a custom link.
-
   - `displayRating` - a function to return a custom rating text which will be rendered as a string.
 
   - `labels.numberOfRatings` - label for number of ratings;
@@ -446,15 +437,12 @@ Available card element types:
   - `links.ratingDetails` - where should `numberOfRatings` label link to. Constructed using the same rules, as other product links.
 
 - `price` - final price of the product, after any discounts;
-
   - `key` - a key of field in a document;
 
 - `regularPrice` - regular price of the product, before discount;
-
   - `key` - a key of field in a document;
 
 - `addToCart` - add to cart button.
-
   - `action` - action to execute when user clicks the Add to Cart button. Described as a function, which receives `document` and `amount` parameters. Document parameter is an item, returned with the search results, and contains properties, defined in `selectFields` option. The function may optionally return a promise, so a loading indicator could be displayed while adding to cart is in progress;
 
   - `labels.addToCart` - a label for add to cart button.
@@ -462,7 +450,6 @@ Available card element types:
   - `emitEvent` - an event name to emit when user clicks the Add to Cart button. This event can be caught: `document.addEventListener('addToCart', function(event) { const item = event.detail.item; });`, if `addToCart` is your `emitEvent` value;
 
 - `custom` - a custom field that is rendered as a simple text;
-
   - `key` - property key in a document;
 
   - `className` - custom class name that will be applied to the element;
@@ -470,7 +457,6 @@ Available card element types:
   - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
 
 - `customHtml` - an element, that is render as a custom html;
-
   - `className` - custom class name to add to the element;
 
   - `html` - a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated;
@@ -509,9 +495,13 @@ const options = {
         title: 'Filters:',
         showAll: 'Show more',
         showLess: 'Show less',
-        facetFilter: 'Filter...'
+        facetFilter: 'Filter...',
+        facetClear: 'Clear',
+        facetFilterButton: 'Apply',
+        facetClearAllButton: 'Clear all'
       },
       disableMobileBodyScrollLock: false,
+      filterBehavior: 'immediate',
       hierarchy: {
         maxInitialLevel: 2,
         topLevelValueCountLimit: 5,
@@ -541,7 +531,11 @@ const options = {
       facetValueCountLimit: 20,
       showDocumentCount: true,
       style: {
-        type: 'top-dropdown'
+        type: 'top-dropdown',
+        drawer: {
+          sidebarCloseDelay: 0,
+          expandSidebarOnFacetClick: false
+        }
       },
       exclude: ['price', 'category'],
       excludeValues: {
@@ -571,6 +565,12 @@ const options = {
 
 - `currentFilters.labels.facetFilter` - a placeholder for term facet value filter;
 
+- `currentFilters.labels.facetClear` - a label for a button that clears current facet filter;
+
+- `currentFilters.labels.facetFilterButton` - a label for a button that applies currently selected facets;
+
+- `currentFilters.labels.facetClearAllButton` - a label for a button that clears all facet filters;
+
 - `currentFilters.visibility.mobileSidebar` - whether to display current filters section in expandable mobile sidebar;
 
 - `currentFilters.visibility.mobileToolbar` - whether to display current filters on mobile resolution on page toolbar, at the top of the product list;
@@ -588,7 +588,6 @@ const options = {
 - `facets` - show a facet filter section;
 
 - `facets.hierarchy` - hierarchy-specific facet settings;
-
   - `maxInitialLevel` - maximum initial depth of facet category tree;
 
   - `topLevelValueCountLimit` - an initial limit of visible top-level facet values;
@@ -598,7 +597,6 @@ const options = {
   - `behavior` - behavior of hierarchy facet values. Available options: `replace` - replace current filter value with a new one; `append` (default) - add a new option as an OR filter to existing values;
 
 - `facets.stats` - range - stats facet specific settings;
-
   - `slider` - display range slider;
 
   - `inputs` - display numeric range slider inputs;
@@ -616,7 +614,6 @@ const options = {
   - `labels.ariaTo` - aria accessibility label for 'to' input field;
 
   - `labels.sliderDotAriaLabel` - aria accessibility label for slider dot input. Is combined with facet label.
- 
   - `units` - define other type of sliders values;
 
 - `facets.labels.title` - a title of the facet section;
@@ -635,7 +632,11 @@ If user changes any filter value, current page is reset to the first one.
 
 - `facets.showDocumentCount` - defines whether to show a product count with each term or hierarchy facet value.
 
-- `facets.style.type` - style of the facets. Two available options: `sidebar` - facets displayed at the left sidebar; `top-dropdown` - facets are displayed at the top of the product list, in separate dropdown panels.
+- `facets.style.type` - style of the facets. Three available options: `sidebar` - facets displayed at the left sidebar; `top-dropdown` - facets are displayed at the top of the product list, in separate dropdown panels; `drawer` - facets on desktop are displayed in a sidebar drawer, that slides from the right side of the screen;
+
+- `facets.style.drawer.sidebarCloseDelay` - time in milliseconds to wait before closing sidebar drawer after user closes it. Defaults to `0`. Can be used to add custom closing animation.
+
+- `facets.style.drawer.expandSidebarOnFacetClick` - on desktop resolutions, open sidebar drawer instead of opening facet dropdown directly, when user clicks on a facet title. Defaults to `false`.
 
 - `facets.exclude` - exclude any returned facets from display by their key (field name).
 
@@ -648,6 +649,8 @@ If user changes any filter value, current page is reset to the first one.
 - `facets.facetFilterQueries.[facetKey].key` - provide query key to load additional facet parameters. Query should contain the same query fields as the main query and should only contain aggregation for that facet key. Use case example: the main search query is configured to load up to 100 facet values. However, if user opens facet panel, this query key could be used to load remaining facet values;
 
 - `facets.disableMobileBodyScrollLock` - disable body scroll lock on mobile resolution when sidebar filters are opened.
+
+- `facets.filterBehavior` - behavior of filter application. Available options: `immediate` (default) - filters are applied immediately when user selects a facet value; `withFilterButton` - an apply button is shown at the bottom of the filters sidebar on mobile resolutions, and at the bottom of the facet dropdown on desktop resolutions. User must click this button to apply selected filters and close the sidebar/dropdown.
 
 ### Filter / facet translations
 
@@ -714,6 +717,36 @@ Define any additional options for search result page.
 
 - `sort` - custom sort options. Custom sort options are appended to the default option, which sorts search results by relevance. Sort options consist of unique sort key (which is used as a query parameter), and sort configuration, with the same syntax as in Search Query configuration. You can define multiple sort properties for one key. `default` option defines which sort value should be selected when no sort query parameters are defined.
 
+### Sort drawer
+
+On desktop resulutions, sort options can be displayed in a sidebar drawer, instead of a native dropdown menu.
+
+```js
+const options = {
+  sort: [
+    // your sort options here
+  ],
+  sortStyle: {
+    type: 'drawer',
+    drawer: {
+      labels: {
+        title: 'Sort by:',
+        clearLabel: 'Clear',
+        applyLabel: 'Apply'
+      }
+    }
+  }
+}
+```
+
+- `sortStyle.type` - style of the sort selector. Two available options: `dropdown` (default) - native dropdown menu; `drawer` - sidebar drawer that slides from the right side of the screen;
+
+- `sortStyle.drawer.labels.title` - title of the sort drawer;
+
+- `sortStyle.drawer.labels.clearLabel` - label of the button that clears current sort selection;
+
+- `sortStyle.drawer.labels.applyLabel` - label of the button that applies current sort selection;
+
 ## Pagination
 
 ```js
@@ -738,13 +771,11 @@ const options = {
 ```
 
 - `sizeSelection` - page size/item limit selection configuration;
-
   - `sizes` - a list of page sizes that user can select from. Default page size comes from a setting in your Search Query;
 
   - `position` - where size selection should be displayed: `top`, `bottom` of the results, or both.
 
 - `pageSelection` - pagination display settings;
-
   - `position` - where page selection should be displayed: `top`, `bottom` of the results, or both.
 
   - `display` - maximum number of pages to display in pagination;
@@ -927,8 +958,8 @@ type CallbackContext = {
 
 ```ts
 type ResultCallbackContext = CallbackContext & {
-  params: Record<string, any>,
-  results:  Record<string, any>,
+  params: Record<string, any>
+  results: Record<string, any>
 }
 ```
 
@@ -1083,14 +1114,11 @@ If there is a need for multiple conditions you can add them like this:
 
 ```js
 const options = {
- isInStock: [
-  { condition: 'exists',
-    fields: ['stock'] },
-  { condition: 'greaterThanOrEquals',
-    fields: ['stock', 1] },
-  { condition: 'notEquals',
-    fields: ['metadata.onSale', false] }
- ]
+  isInStock: [
+    { condition: 'exists', fields: ['stock'] },
+    { condition: 'greaterThanOrEquals', fields: ['stock', 1] },
+    { condition: 'notEquals', fields: ['metadata.onSale', false] }
+  ]
 }
 ```
 
