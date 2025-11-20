@@ -94,7 +94,7 @@ const loadConfigurations = async (
       }
       const isPreviewMode = checkIsPreviewMode()
       const configuration = isPreviewMode
-        ? newestConfiguration.previewConfiguration ?? newestConfiguration.configuration
+        ? (newestConfiguration.previewConfiguration ?? newestConfiguration.configuration)
         : newestConfiguration.configuration
       if (configuration) {
         await mount(configuration, options, optionOverrides, false, true)
@@ -115,7 +115,7 @@ const applyStyles = async (configuration: ExtendedPluginElementsConfiguration) =
     return
   }
   const baseStyleLink = configuration.baseStyleLink
-  if(!baseStyleLink && !configuration?.customStyles) {
+  if (!baseStyleLink && !configuration?.customStyles) {
     return
   }
   if (styleElement) {
@@ -145,6 +145,7 @@ const mountSearchBox = async (
   const resolvedConfiguration: ResolvedSearchBoxOptions = JSON.parse(configuration.searchBox)
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
   const domPing = resolvedConfiguration.domPing
+  const mountingBehavior = resolvedConfiguration.mountingBehavior ?? undefined
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.inputSelector,
     0,
@@ -160,7 +161,7 @@ const mountSearchBox = async (
     resolvedConfiguration,
     optionOverrides?.searchBox ?? {}
   )
-  searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls, domPing })
+  searchBox({ ...mergedOptions, options }, { fetch, allowedMountUrls, domPing, mountingBehavior })
 }
 
 const mountSearchResults = async (
@@ -176,7 +177,7 @@ const mountSearchResults = async (
   const resolvedConfiguration: ResolvedSearchResultOptions = JSON.parse(configuration.searchResults)
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
   const domPing = resolvedConfiguration.domPing
-
+  const mountingBehavior = resolvedConfiguration.mountingBehavior ?? undefined
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
     0,
@@ -192,7 +193,10 @@ const mountSearchResults = async (
     resolvedConfiguration,
     optionOverrides?.searchResults ?? {}
   )
-  searchResults({ ...mergedOptions, options }, { fetch, allowedMountUrls, domPing })
+  searchResults(
+    { ...mergedOptions, options },
+    { fetch, allowedMountUrls, domPing, mountingBehavior }
+  )
 }
 
 const mountProductList = async (
@@ -210,6 +214,7 @@ const mountProductList = async (
   )
   const resolvedConfiguration: ResolvedProductListOptions = JSON.parse(configuration.productList)
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+  const mountingBehavior = resolvedConfiguration.mountingBehavior ?? undefined
 
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
@@ -226,7 +231,7 @@ const mountProductList = async (
     { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration },
     optionOverrides?.productList ?? {}
   )
-  productList({ ...mergedOptions, options }, { fetch, allowedMountUrls })
+  productList({ ...mergedOptions, options }, { fetch, allowedMountUrls, mountingBehavior })
 }
 
 const mountRecommendations = async (
@@ -238,6 +243,7 @@ const mountRecommendations = async (
   remount = false
 ) => {
   const allowedMountUrls = resolvedConfiguration.allowedMountUrls
+  const mountingBehavior = resolvedConfiguration.mountingBehavior ?? undefined
 
   const visible = await waitForElementToBeVisible(
     resolvedConfiguration.containerSelector,
@@ -254,7 +260,7 @@ const mountRecommendations = async (
     { ...resolvedSearchResultsConfiguration, ...resolvedConfiguration },
     optionOverrides?.recommendations ?? {}
   )
-  recommendations({ ...mergedOptions, options }, { fetch, allowedMountUrls })
+  recommendations({ ...mergedOptions, options }, { fetch, allowedMountUrls, mountingBehavior })
 }
 
 const mountAllRecommendations = async (
@@ -369,7 +375,7 @@ const init = async (
   const isPreviewMode = checkIsPreviewMode()
   const plugin = await loadConfigurations(configurationKey, isPreviewMode, options, optionOverrides)
   const configuration = isPreviewMode
-    ? plugin.previewConfiguration ?? plugin.configuration
+    ? (plugin.previewConfiguration ?? plugin.configuration)
     : plugin.configuration
 
   if (configuration) {
