@@ -7,7 +7,7 @@ defineProps<{ recommendationOptions: ProductRecommendationOptions }>()
 const productRecommendations = ref(null)
 
 const fetch = (): void => {
-  ;(productRecommendations as any)?.fetch()
+  ;(productRecommendations?.value)?.fetch()
 }
 
 defineExpose({ fetch })
