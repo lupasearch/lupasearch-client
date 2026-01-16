@@ -24,7 +24,9 @@ const options = {
     currencyTemplate: '€ {1}'
     defaultFacetLabel: 'Category:',
     searchInputAriaLabel: 'Search for products',
-    closePanel: '✖'
+    closePanel: '✖',
+    showMore: 'Show more',
+    showLess: 'Show less'
   },
   links: {
     searchResults: '/search'
@@ -40,6 +42,7 @@ const options = {
   hideMoreResultsButtonOnEmptyQuery: false,
   expandOnSinglePanel: false,
   showMoreResultsButton: true,
+  noResultsCustomHtml: '<div class="no-results">No results found</div>'
 }
 
 lupaSearch.searchBox(options)
@@ -87,9 +90,15 @@ lupaSearch.searchBox(options)
 
 - `labels.closePanel` - optional button to close the opened search panel.
 
+- `labels.showMore` - label for "Show more" button in case of long document lists (when `uncollapsedDocumentCount` is set in a document panel);
+
+- `labels.showLess` - label for "Show less" button in case of long document lists (when `uncollapsedDocumentCount` is set in a document panel);
+
 - `links.searchResults` - url of the full search result page that user should be redirected to, when clicks ENTER or "More results" button. These query parameters will be appended to the search results url: `?q=` - user search string; `&f.{facetKey}=` - if user clicks on a suggestion that is grouped by facet, it's key and value is added to the query string.
 
 - `queryParameterNames` - control the names of query url parameters, that will be added into the search url address: `q` - search query; `p` - page number; `l` - limit of results per page; `s` - sort order.
+
+- `noResultsCustomHtml` - you can use your own custom html to show when there are no results found (instead of default LupaSearch label). **Important:** Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated.
 
 Search Box configuration can also include additional parameters. If you need to hide suggestion or product panel, just omit it from the configuration.
 
@@ -159,6 +168,8 @@ const options = {
       titleKey: 'name',
       idKey: 'id',
       searchBySuggestion: true,
+      uncollapsedDocumentCount: 3,
+      appendCustomHtml: '<div class="custom-html">Custom HTML content</div>',
       labels: {
         title: 'Matching products'
       },
@@ -275,6 +286,10 @@ Document panel can be used to display products or other items that match given s
 
 - `searchBySuggestion` - if `true`, will display products that match first suggestion instead of search query.
 
+- `uncollapsedDocumentCount` - max number of documents to show initially when there are more results than the defined `limit`. If not defined, all results up to `limit` are shown.
+
+- `appendCustomHtml` - append your own custom html at the bottom of the document panel. Can be used for promotions or ads. **Important:** make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated.
+
 - `elements` - a list of elements to display in each product panel. For a full list of elements and configurations, see "Document panel fields" section.
 
 - `isInStock` - an optional function that should check if document is in stock. Used to enable/disable add to cart element if used in elements.
@@ -300,7 +315,6 @@ Common panel fields:
 This is the list of available search box document fields. By convention, image element, if defined, will appear on the left of each document element.
 
 - `image` - displays an image.
-
   - `placeholder` - placeholder image to show if item does not have an image;
 
   - `baseUrl` - if defined, it will be prepended to image path for each each product.
@@ -310,11 +324,9 @@ This is the list of available search box document fields. By convention, image e
   - `alt` - Provide a function that returns an alt image text for a given document.
 
 - `title` - title of the product.
-
   - `isHtml` - if `true`, object property is rendered as html.
 
 - `description` - description of the product.
-
   - `isHtml` - if `true`, object property is rendered as html.
 
 - `price` - final price of the product, after any discounts;
@@ -322,7 +334,6 @@ This is the list of available search box document fields. By convention, image e
 - `regularPrice` - regular price of the product, before discount;
 
 - `custom` - a custom field that is rendered as a simple text;
-
   - `className` - custom class name that will be applied to the element;
 
   - `isHtml` - if `true`, object property is rendered as html;
@@ -330,7 +341,6 @@ This is the list of available search box document fields. By convention, image e
   - `action` - action to execute when user clicks on the custom html element. Receives `document` as a parameter.
 
 - `customHtml` a custom field, rendered as html.
-
   - `className` custom class name that will be applied to the element;
 
   - `html` a function that receives document object and should return an html string. Make sure to sanitize any document fields if any of the used document fields could be unsafe, or user-generated;
@@ -454,6 +464,18 @@ const options = {
   ]
 }
 ```
+
+## Disabling navigation to search results page
+
+If you want to use LupaSearch only as a search box, without navigating to the search results page, you can disable navigation with the following option:
+
+```js
+const options = {
+  disableNavigationToSearchResults: true
+}
+```
+
+This will prevent LupaSearch from navigating to the search results page when user submits a search query. Clicking on an autocomplete suggestion will fill the search box input with selected text, but will not navigate to the search results page.
 
 ## Statistics
 
