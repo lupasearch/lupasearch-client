@@ -64,6 +64,10 @@ lupaSearch.searchBox(options)
 
 - `showNoResultsPanel` - show no results panel when none of the search box panels returns any results.
 
+- `showClearButton` - show button to clear search input when there is some text in the search box.
+
+- `clearButtonPosition` - position of the clear button in the search input. Possible values: `start-of-input` or `end-of-input`. Default value is `start-of-input`.
+
 - `hideMoreResultsButtonOnNoResults` - hide `moreResults` button panel on no search box results.
 
 - `hideMoreResultsButtonOnEmptyQuery` - hide `moreResults` button panel on empty search input.
