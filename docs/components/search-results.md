@@ -9,6 +9,9 @@ const options = {
   containerSelector: '#searchResultsContainer',
   hideResultsOnReload: false,
   splitExpensiveRequests: false,
+  loadingSkeleton: {
+    enabled: true,
+  },
   labels: {
     pageSize: 'Page size:',
     sortBy: 'Sort by:',
@@ -103,6 +106,8 @@ lupaSearch.searchResults(options)
 - `hideResultsOnReload` - results will be hidden, while new configuration is loading when plugin is reloaded with new options and `fetch: true`.
 
 - `splitExpensiveRequests` - if set to true, facet and refiner requests will be issued separately, instead of being included in the main search query. This is useful for large datasets.
+
+- `loadingSkeleton.enabled` - show loading skeleton while search results are loading. Defaults to `false`. You can use your own css clases to adjust skeleton heights and appearance.
 
 # Query parameters
 
