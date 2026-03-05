@@ -11,6 +11,11 @@ const options = {
   splitExpensiveRequests: false,
   loadingSkeleton: {
     enabled: true,
+     showOnEveryFetch: {
+      results: false,
+      facets: false,
+      relatedQueries: false
+    }
   },
   labels: {
     pageSize: 'Page size:',
@@ -108,6 +113,8 @@ lupaSearch.searchResults(options)
 - `splitExpensiveRequests` - if set to true, facet and refiner requests will be issued separately, instead of being included in the main search query. This is useful for large datasets.
 
 - `loadingSkeleton.enabled` - show loading skeleton while search results are loading. Defaults to `false`. You can use your own css clases to adjust skeleton heights and appearance.
+
+- `loadingSkeleton.showOnEveryFetch` - show loading skeleton on every search query fetch, not only on the first one. You can choose to show skeleton for results, facets and similar queries separately.
 
 # Query parameters
 
