@@ -19,6 +19,9 @@ const mergeSearchBoxConfiguration = (
     if (!overridePanel || overridePanel.type !== SearchBoxPanelType.DOCUMENT || !overridePanel) {
       continue
     }
+    if (overridePanel.selectFields) {
+      panel.selectFields = overridePanel.selectFields
+    }
     panel.elements = panel.elements?.map((element) => {
       const overrideElement = overridePanel?.elements?.find((e) => e.key === element.key)
       if (!overrideElement) {
