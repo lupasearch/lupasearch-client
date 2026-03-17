@@ -25,6 +25,7 @@ const options = {
     defaultFacetLabel: 'Category:',
     searchInputAriaLabel: 'Search for products',
     closePanel: '✖',
+    closePanelInput: '✖',
     showMore: 'Show more',
     showLess: 'Show less'
   },
@@ -92,7 +93,9 @@ lupaSearch.searchBox(options)
 
 - `labels.searchInputAriaLabel` - accessibility aria label for search input.
 
-- `labels.closePanel` - optional button to close the opened search panel.
+- `labels.closePanel` - optional button to close the opened search panel. (Opens inside of dropdown panel)
+
+- `labels.closePanelInput` - optional button to close the opened search panel to the left of the search input.
 
 - `labels.showMore` - label for "Show more" button in case of long document lists (when `uncollapsedDocumentCount` is set in a document panel);
 
