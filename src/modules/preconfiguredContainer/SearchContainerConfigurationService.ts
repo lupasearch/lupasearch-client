@@ -204,6 +204,7 @@ const getSearchResultsComponent = ({
       customBaseUrl: searchResultOptions.customBaseUrl,
       customPayload: searchResultOptions.customPayload,
       customHeaders: searchResultOptions.customHeaders,
+      customRelatedQueriesUrl: searchResultOptions.customRelatedQueriesUrl,
       onError: searchResultOptions.errorHandler
     },
     queryKey: searchResultOptions.queryKey,
