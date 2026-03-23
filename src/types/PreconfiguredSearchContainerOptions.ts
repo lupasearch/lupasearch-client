@@ -40,6 +40,7 @@ export type SearchResultDemoOptions = {
   environment?: string
   customUrl?: string
   customBaseUrl?: string
+  customRelatedQueriesUrl?: string
   customPayload?: Record<string, unknown>
   customHeaders?: Record<string, string>
   gridConfiguration?: Record<string, number>
