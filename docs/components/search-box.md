@@ -144,6 +144,7 @@ const options = {
       queryKey: '',
       highlight: true,
       limit: 5,
+      showPanelZeroResults: false,
       labels: {
         topResultsTitle: 'Popular searches:'
       }
@@ -175,6 +176,7 @@ const options = {
       titleKey: 'name',
       idKey: 'id',
       searchBySuggestion: true,
+      showPanelZeroResults: false,
       uncollapsedDocumentCount: 3,
       appendCustomHtml: '<div class="custom-html">Custom HTML content</div>',
       labels: {
@@ -302,6 +304,8 @@ Document panel can be used to display products or other items that match given s
 - `isInStock` - an optional function that should check if document is in stock. Used to enable/disable add to cart element if used in elements.
 
 - `customDocumentHtmlAttributes` - provide your own custom attributes that will be added to each document html element. Receives document object as a parameter.
+
+- `showPanelZeroResults` - show separate zero results message, but for this panel only. Useful when you want to show zero results message for each panel separately. If not defined, global `showNoResultsPanel` option will be used.
 
 - `labels.title` - give a name for the search box panel.
 
