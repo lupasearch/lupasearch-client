@@ -9,6 +9,7 @@ const options = {
   containerSelector: '#searchResultsContainer',
   hideResultsOnReload: false,
   splitExpensiveRequests: false,
+  autoEscapeDocumentData: true,
   loadingSkeleton: {
     enabled: true,
      showOnEveryFetch: {
@@ -23,7 +24,7 @@ const options = {
     itemCount: 'Items {1} from {2}',
     currency: '€',
     priceSeparator: ',',
-    currencyTemplate: '{1} €'
+    currencyTemplate: '{1} €',
     showMore: 'Show more',
     searchResults: 'Search Query: ',
     emptyResults: 'There are no results for the query:',
@@ -111,6 +112,8 @@ lupaSearch.searchResults(options)
 - `hideResultsOnReload` - results will be hidden, while new configuration is loading when plugin is reloaded with new options and `fetch: true`.
 
 - `splitExpensiveRequests` - if set to true, facet and refiner requests will be issued separately, instead of being included in the main search query. This is useful for large datasets.
+
+- `autoEscapeDocumentData` - if set to true, special characters in document data will be automatically escaped.
 
 - `loadingSkeleton.enabled` - show loading skeleton while search results are loading. Defaults to `false`. You can use your own css clases to adjust skeleton heights and appearance.
 
