@@ -195,6 +195,8 @@ const options = {
 
 Clicks on products from deep search results are tracked with `deepSearch: true` in the event metadata. This applies to products in the best products panel and to search results with applied deep search filters in `regular` mode.
 
+To report in Google Analytics 4 whether deep search changed the results, and which A/B test variant a search ran on, see [A/B test and deep search dimensions](tracking.md#ab-test-and-deep-search-dimensions).
+
 # Styling
 
 All deep search elements use `lupa-deep-search-` class names, for example:
